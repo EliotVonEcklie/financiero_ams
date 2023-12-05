@@ -13,7 +13,7 @@ class PredioPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class PredioPolicy
      */
     public function view(User $user, Predio $predio): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class PredioPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class PredioPolicy
      */
     public function update(User $user, Predio $predio): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class PredioPolicy
      */
     public function delete(User $user, Predio $predio): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class PredioPolicy
      */
     public function restore(User $user, Predio $predio): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class PredioPolicy
      */
     public function forceDelete(User $user, Predio $predio): bool
     {
-        //
+        return true;
     }
 }

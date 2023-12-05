@@ -14,7 +14,7 @@ class PredioController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Predio::all());
     }
 
     /**
@@ -30,7 +30,25 @@ class PredioController extends Controller
      */
     public function store(StorePredioRequest $request)
     {
-        //
+        $errors = $request->errors();
+
+        if ($errors->any()) {
+            return response()->json($errors->all());
+        }
+
+        // The incoming request is valid...
+    
+        // Retrieve the validated input data...
+        $validated = $request->validated();
+    
+        // Store the predio...
+        $predio = Predio::create($validated);
+        $predio->id = $predio->cedulacatastral . $predio->tot . $predio-> ord;
+        $predio->save();
+
+        return response()->json([
+            'success' => 'Saved predio successfully!'
+        ]);
     }
 
     /**
@@ -38,7 +56,7 @@ class PredioController extends Controller
      */
     public function show(Predio $predio)
     {
-        //
+        return response()->json($predio);
     }
 
     /**
@@ -54,7 +72,25 @@ class PredioController extends Controller
      */
     public function update(UpdatePredioRequest $request, Predio $predio)
     {
-        //
+        $errors = $request->errors();
+
+        if ($errors->any()) {
+            return response()->json($errors->all());
+        }
+
+        // The incoming request is valid...
+    
+        // Retrieve the validated input data...
+        $validated = $request->validated();
+    
+        // Store the predio...
+        $predio->fill($validated);
+        $predio->id = $predio->cedulacatastral . $predio->tot . $predio-> ord;
+        $predio->save();
+
+        return response()->json([
+            'success' => 'Saved predio successfully!'
+        ]);
     }
 
     /**

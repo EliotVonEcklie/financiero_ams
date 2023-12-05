@@ -11,7 +11,7 @@ class UpdatePredioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,23 @@ class UpdatePredioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cedulacatastral' => ['required', 'string'],
+            'ord' => ['required', 'string'],
+            'tot' => ['required', 'string'],
+            'e' => ['nullable', 'string'],
+            'd' => ['nullable', 'string'],
+            'documento' => ['nullable', 'string'],
+            'nombrepropietario' => ['required', 'string'],
+            'direccion' => ['required', 'string'],
+            'ha' => ['nullable', 'string'],
+            'met2' => ['nullable', 'string'],
+            'areacon' => ['required', 'string'],
+            'avaluo' => ['required', 'decimal'],
+            'vigencia' => ['required', 'string'],
+            'estado' => ['required', 'string'],
+            'tipopredio' => ['required', 'string'],
+            'clasifica' => ['nullable', 'string'],
+            'estratos' => ['nullable', 'string']
         ];
     }
 }
