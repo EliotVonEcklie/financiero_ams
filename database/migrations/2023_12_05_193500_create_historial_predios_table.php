@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Predio;
+use App\Models\DestinoEconomico;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Predio::class)->constrained();
             $table->foreignIdFor(DestinoEconomico::class)->constrained();
+            $table->date('fecha');
             $table->string('tipo_documento', 2);
             $table->string('documento', 30);
             $table->tinyText('nombre_propietario');
@@ -25,7 +28,6 @@ return new class extends Migration
             $table->double('tasa_por_mil', 4, 1);
             $table->integer('estrato');
             $table->enum('tipo_predio', ['rural', 'urbano']);
-            $table->timestamps();
         });
     }
 

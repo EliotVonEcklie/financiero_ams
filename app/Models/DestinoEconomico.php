@@ -10,13 +10,6 @@ class DestinoEconomico extends Model
     use HasFactory;
 
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'destinos_economicos';
-
-        /**
      * The attributes that are mass assignable.
      *
      * @var array
