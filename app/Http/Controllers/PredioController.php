@@ -6,6 +6,7 @@ use App\Models\Predio;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePredioRequest;
 use App\Http\Requests\UpdatePredioRequest;
+use Illuminate\Http\Request;
 
 class PredioController extends Controller
 {
@@ -18,11 +19,24 @@ class PredioController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of resources based on a search query.
      */
-    public function create()
+    public function search(Request $request)
     {
-        //
+        $query = $request->input('query');
+        $page = $request->input('page');
+        $offset = ($page - 1) * 100;
+
+        $predios = Predio::where('cedulacatastral', 'like', '%' . $query . '%')
+                    ->orWhere('documento', 'like', '%' . $query . '%')
+                    ->orWhere('nombrepropietario', 'like', '%' . $query . '%')
+                    ->orWhere('direccion', 'like', '%' . $query . '%')
+                    ->orderBy('cedulacatastral', 'desc')
+                    ->skip($offset)
+                    ->take(100)
+                    ->get();
+
+        return response()->json($predios);
     }
 
     /**
@@ -60,14 +74,6 @@ class PredioController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Predio $predio)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdatePredioRequest $request, Predio $predio)
@@ -89,7 +95,7 @@ class PredioController extends Controller
         $predio->save();
 
         return response()->json([
-            'success' => 'Saved predio successfully!'
+            'success' => 'Updated predio successfully!'
         ]);
     }
 
@@ -98,6 +104,10 @@ class PredioController extends Controller
      */
     public function destroy(Predio $predio)
     {
-        //
+        $predio->delete();
+
+        return response()->json([
+            'success' => 'Deleted predio successfully!'
+        ]);
     }
 }

@@ -18,6 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('predios', PredioController::class)->only([
-    'index', 'show', 'store', 'update', 'destroy'
-]);
+Route::get('/predios/search', [PredioController::class, 'search']);
+Route::apiResource('predios', PredioController::class);
