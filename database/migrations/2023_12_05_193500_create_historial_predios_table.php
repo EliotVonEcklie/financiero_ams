@@ -19,14 +19,14 @@ return new class extends Migration
             $table->foreignIdFor(DestinoEconomico::class)->constrained();
             $table->date('fecha');
             $table->string('tipo_documento', 2);
-            $table->string('documento', 30);
+            $table->string('documento', 30)->nullable();
             $table->tinyText('nombre_propietario');
             $table->text('direccion');
             $table->double('hectareas', 8, 2);
             $table->double('metros_cuadrados', 8, 2);
             $table->double('area_construida', 8, 2);
             $table->double('tasa_por_mil', 4, 1);
-            $table->integer('estrato');
+            $table->integer('estrato')->nullable();
             $table->enum('tipo_predio', ['rural', 'urbano']);
         });
     }
