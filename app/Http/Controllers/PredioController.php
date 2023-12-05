@@ -24,17 +24,9 @@ class PredioController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $page = $request->input('page');
-        $offset = ($page - 1) * 100;
-
-        $predios = Predio::where('cedulacatastral', 'like', '%' . $query . '%')
-                    ->orWhere('documento', 'like', '%' . $query . '%')
-                    ->orWhere('nombrepropietario', 'like', '%' . $query . '%')
-                    ->orWhere('direccion', 'like', '%' . $query . '%')
-                    ->orderBy('cedulacatastral', 'desc')
-                    ->skip($offset)
-                    ->take(100)
-                    ->get();
+        $page = intval($request->input('page'));
+        
+        $predios = Predio::searchPaginated($query, $page);
 
         return response()->json($predios);
     }
