@@ -13,7 +13,7 @@ class DestinoEconomicoPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class DestinoEconomicoPolicy
      */
     public function view(User $user, DestinoEconomico $destinoEconomico): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class DestinoEconomicoPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class DestinoEconomicoPolicy
      */
     public function update(User $user, DestinoEconomico $destinoEconomico): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class DestinoEconomicoPolicy
      */
     public function delete(User $user, DestinoEconomico $destinoEconomico): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class DestinoEconomicoPolicy
      */
     public function restore(User $user, DestinoEconomico $destinoEconomico): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class DestinoEconomicoPolicy
      */
     public function forceDelete(User $user, DestinoEconomico $destinoEconomico): bool
     {
-        //
+        return true;
     }
 }

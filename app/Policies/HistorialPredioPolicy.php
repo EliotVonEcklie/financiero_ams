@@ -13,7 +13,7 @@ class HistorialPredioPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class HistorialPredioPolicy
      */
     public function view(User $user, HistorialPredio $historialPredio): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class HistorialPredioPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class HistorialPredioPolicy
      */
     public function update(User $user, HistorialPredio $historialPredio): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class HistorialPredioPolicy
      */
     public function delete(User $user, HistorialPredio $historialPredio): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class HistorialPredioPolicy
      */
     public function restore(User $user, HistorialPredio $historialPredio): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class HistorialPredioPolicy
      */
     public function forceDelete(User $user, HistorialPredio $historialPredio): bool
     {
-        //
+        return true;
     }
 }

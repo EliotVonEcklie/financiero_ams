@@ -13,7 +13,7 @@ class AvaluoPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class AvaluoPolicy
      */
     public function view(User $user, Avaluo $avaluo): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class AvaluoPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class AvaluoPolicy
      */
     public function update(User $user, Avaluo $avaluo): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class AvaluoPolicy
      */
     public function delete(User $user, Avaluo $avaluo): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class AvaluoPolicy
      */
     public function restore(User $user, Avaluo $avaluo): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class AvaluoPolicy
      */
     public function forceDelete(User $user, Avaluo $avaluo): bool
     {
-        //
+        return true;
     }
 }
