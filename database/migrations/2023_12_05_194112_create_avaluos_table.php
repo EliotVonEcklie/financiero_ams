@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreignIdFor(DestinoEconomico::class)->constrained();
             $table->year('vigencia');
             $table->boolean('pagado');
-            $table->double('valor_avaluo', 11, 2);
             $table->text('direccion');
+            $table->double('valor_avaluo', 11, 2);
             $table->double('hectareas', 8, 2);
             $table->double('metros_cuadrados', 8, 2);
             $table->double('area_construida', 8, 2);

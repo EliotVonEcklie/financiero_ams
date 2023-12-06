@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HistorialPredio;
+use App\Models\Predio;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreHistorialPredioRequest;
 use App\Http\Requests\UpdateHistorialPredioRequest;
@@ -10,19 +11,27 @@ use App\Http\Requests\UpdateHistorialPredioRequest;
 class HistorialPredioController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the latest historial predio for a predio
      */
-    public function index()
+    public function latest(Predio $predio)
     {
-        //
+        return response()->json($predio->latest_historial_predio());
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      */
-    public function create()
+    public function index(Predio $predio)
     {
-        //
+        return response()->json($predio->historial_predios);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexAdmin(Predio $predio)
+    {
+        return view('admin.predios.historial_predios.index')->with('historial_predios', HistorialPredio::where('predio_id', $predio->id)->orderBy('fecha', 'desc')->get());
     }
 
     /**
@@ -36,17 +45,9 @@ class HistorialPredioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(HistorialPredio $historialPredio)
+    public function show(Predio $predio, HistorialPredio $historial_predio)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(HistorialPredio $historialPredio)
-    {
-        //
+        return response()->json($historial_predio);
     }
 
     /**

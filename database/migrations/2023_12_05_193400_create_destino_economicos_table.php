@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('destino_economicos', function (Blueprint $table) {
             $table->id();
             $table->string('codigo', 2);
-            $table->timestamps();
-
-            $table->unique('id');
+            $table->string('nombre');
         });
     }
 

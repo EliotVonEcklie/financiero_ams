@@ -19,14 +19,33 @@ class PredioController extends Controller
     }
 
     /**
+     * Display a listing of the resource. Admin.
+     */
+    public function indexAdmin()
+    {
+        return view('admin.predios.index')->with('predios', Predio::all());
+    }
+
+    /**
      * Display a listing of resources based on a search query.
      */
     public function search(Request $request)
     {
+        if (!$request->has('query')) {
+            return response()->json(['errors' => [
+                ['message' => 'No query']
+            ]]);
+        }
+
         $query = $request->input('query');
-        $page = intval($request->input('page'));
+
+        if ($request->has('page')) {
+            $page = intval($request->input('page'));
         
-        $predios = Predio::searchPaginated($query, $page);
+            $predios = Predio::searchPaginated($query, $page);
+        } else {
+            $predios = Predio::search($query);
+        }
 
         return response()->json($predios);
     }
@@ -49,7 +68,6 @@ class PredioController extends Controller
     
         // Store the predio...
         $predio = Predio::create($validated);
-        $predio->id = $predio->cedulacatastral . $predio->tot . $predio-> ord;
         $predio->save();
 
         return response()->json([
@@ -83,7 +101,6 @@ class PredioController extends Controller
     
         // Store the predio...
         $predio->fill($validated);
-        $predio->id = $predio->cedulacatastral . $predio->tot . $predio-> ord;
         $predio->save();
 
         return response()->json([

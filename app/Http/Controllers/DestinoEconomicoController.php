@@ -14,7 +14,15 @@ class DestinoEconomicoController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(DestinoEconomico::all());
+    }
+
+    /**
+     * Display a listing of the resource. Admin.
+     */
+    public function indexAdmin()
+    {
+        return view('admin.destino_economicos.index')->with('destino_economicos', DestinoEconomico::all());
     }
 
     /**
@@ -30,7 +38,24 @@ class DestinoEconomicoController extends Controller
      */
     public function store(StoreDestinoEconomicoRequest $request)
     {
-        //
+        $errors = $request->errors();
+
+        if ($errors->any()) {
+            return response()->json($errors->all());
+        }
+
+        // The incoming request is valid...
+    
+        // Retrieve the validated input data...
+        $validated = $request->validated();
+    
+        // Store the destino economico...
+        $predio = DestinoEconomico::create($validated);
+        $predio->save();
+
+        return response()->json([
+            'success' => 'Saved destino economico successfully!'
+        ]);
     }
 
     /**
@@ -38,7 +63,7 @@ class DestinoEconomicoController extends Controller
      */
     public function show(DestinoEconomico $destinoEconomico)
     {
-        //
+        return response()->json($destinoEconomico);
     }
 
     /**

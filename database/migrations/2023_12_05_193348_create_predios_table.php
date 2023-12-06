@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('codigo_catastro', 30);
             $table->integer('total');
             $table->integer('orden');
-            $table->timestamps();
 
             $table->unique(['codigo_catastro', 'total', 'orden']);
         });
