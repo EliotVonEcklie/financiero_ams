@@ -74,6 +74,7 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
                 'metros_cuadrados' => $data_r1->metros_cuadrados,
                 'area_construida' => $data_r1->area_construida,
                 'tasa_por_mil' => 0,
+                'estrato' => 0,
                 'tipo_predio' => $data_r1->tipo_predio
             ]);
 
@@ -90,6 +91,7 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
                 'metros_cuadrados' => $data_r1->metros_cuadrados,
                 'area_construida' => $data_r1->area_construida,
                 'tasa_por_mil' => 0,
+                'estrato' => 0,
                 'tipo_predio' => $data_r1->tipo_predio
             ]);
 
