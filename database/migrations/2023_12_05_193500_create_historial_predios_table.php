@@ -26,7 +26,7 @@ return new class extends Migration
             $table->double('metros_cuadrados', 8, 2);
             $table->double('area_construida', 8, 2);
             $table->double('tasa_por_mil', 4, 1);
-            $table->integer('estrato')->nullable();
+            $table->integer('estrato');
             $table->enum('tipo_predio', ['rural', 'urbano']);
 
             $table->unique(['predio_id', 'fecha']);
