@@ -1,0 +1,156 @@
+<?php
+
+namespace App\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Predio;
+use App\Models\DestinoEconomico;
+use App\Models\Avaluo;
+use App\Models\HistorialPredio;
+
+class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 1500;
+
+    /**
+     * Create a new job instance.
+     */
+    public function __construct(public string $path_r1, public string $path_r2)
+    {}
+
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
+    {
+        // Read the stored files.
+        $contents_r1 = Storage::get($this->path_r1);
+        $contents_r2 = Storage::get($this->path_r2);
+
+        // Tokenize by new lines.
+        $separator = "\r\n";
+        $line_r1 = strtok($contents_r1, $separator);
+
+        while ($line_r1 !== false) {
+            $data_r1 = $this->parse_line_r1($line_r1);
+
+            // Find or create Predio object.
+            $predio = Predio::firstOrCreate([
+                'codigo_catastro' => $data_r1->codigo_catastro,
+                'total' => $data_r1->total,
+                'orden' => $data_r1->orden
+            ]);
+
+            // Find or create DestinoEconomico object.
+
+            $destino_economico = DestinoEconomico::firstOrCreate([
+                'codigo' => $data_r1->destino_economico
+            ]);
+
+            // Find or create HistorialPredio.
+
+            HistorialPredio::firstOrCreate([
+                'predio_id' => $predio->id,
+                'destino_economico_id' => $destino_economico->id,
+                'fecha' => $data_r1->vigencia,
+                'tipo_documento' => $data_r1->tipo_documento,
+                'documento' => $data_r1->documento,
+                'nombre_propietario' => $data_r1->nombre_propietario,
+                'direccion' => $data_r1->direccion,
+                'hectareas' => $data_r1->hectareas,
+                'metros_cuadrados' => $data_r1->metros_cuadrados,
+                'area_construida' => $data_r1->area_construida,
+                'tasa_por_mil' => 0,
+                'tipo_predio' => $data_r1->tipo_predio
+            ]);
+
+            // Find or create Avaluo.
+
+            Avaluo::firstOrCreate([
+                'predio_id' => $predio->id,
+                'destino_economico_id' => $destino_economico->id,
+                'vigencia' => $data_r1->vigencia,
+                'pagado' => false,
+                'direccion' => $data_r1->direccion,
+                'valor_avaluo' => 0,
+                'hectareas' => $data_r1->hectareas,
+                'metros_cuadrados' => $data_r1->metros_cuadrados,
+                'area_construida' => $data_r1->area_construida,
+                'tasa_por_mil' => 0,
+                'tipo_predio' => $data_r1->tipo_predio
+            ]);
+
+            $line_r1 = strtok($separator);
+        }
+
+        // Clear memory from strtok.
+        strtok('', '');
+
+        // Done parsing, delete the files.
+        Storage::delete($this->path_r1);
+        Storage::delete($this->path_r2);
+    }
+
+    /**
+     * Parse a line of an 312-wide R1 IGAC file.
+     */
+    private function parse_line_r1(string $line): object {
+        // codigo catastro
+        $codigo_catastro = substr($line, 5, 25);
+        // tipo predio
+        $tipo_predio = substr($codigo_catastro, 0, 2) == '01' ? 'urbano' : 'rural';
+        // orden
+        $orden = (int) substr($line, 31, 3);
+        // total
+        $total = (int) substr($line, 34, 3);
+        // nombre propietario
+        $nombre_propietario = rtrim(substr($line, 37, 100));
+        // tipo documento
+        $tipo_documento = substr($line, 138, 1);
+        // documento
+        $documento = rtrim(substr($line, 139, 12));
+        // direccion
+        $direccion = rtrim(substr($line, 151, 100));
+        // destino economico
+        $destino_economico = substr($line, 252, 1);
+        // area terreno (11=hectareas, 4=metros cuadrados)
+        $hectareas = (int) substr($line, 253, 11);
+        $metros_cuadrados = (int) substr($line, 263, 4);
+        // area construida
+        $area_construida = (int) substr($line, 268, 6);
+        // avaluo
+        $avaluo = (int) substr($line, 274, 15);
+        // vigencia (year only)
+        $vigencia = date_create(substr($line, 290, 4));
+
+        return (object) [
+            'codigo_catastro' => $codigo_catastro,
+            'total' => $total,
+            'orden' => $orden,
+            'nombre_propietario' => $nombre_propietario,
+            'tipo_documento' => $tipo_documento,
+            'documento' => $documento,
+            'direccion' => $direccion,
+            'destino_economico' => $destino_economico,
+            'hectareas' => $hectareas,
+            'metros_cuadrados' => $metros_cuadrados,
+            'area_construida' => $area_construida,
+            'avaluo' => $avaluo,
+            'vigencia' => $vigencia,
+            'tipo_predio' => $tipo_predio
+        ];
+    }
+}
