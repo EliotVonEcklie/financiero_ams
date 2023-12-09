@@ -36,31 +36,30 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
      */
     public function handle(): void
     {
-        // Read the stored files.
-        $contents_r1 = Storage::get($this->path_r1);
-        $contents_r2 = Storage::get($this->path_r2);
-
-        // Tokenize by new lines.
+        // Tokenize by new lines
         $separator = "\r\n";
+
+        // Do R1
+        $contents_r1 = Storage::get($this->path_r1);
         $line_r1 = strtok($contents_r1, $separator);
 
         while ($line_r1 !== false) {
             $data_r1 = $this->parse_line_r1($line_r1);
 
-            // Find or create Predio object.
+            // Find or create Predio object
             $predio = Predio::firstOrCreate([
                 'codigo_catastro' => $data_r1->codigo_catastro,
                 'total' => $data_r1->total,
                 'orden' => $data_r1->orden
             ]);
 
-            // Find or create DestinoEconomico object.
+            // Find or create DestinoEconomico object
 
             $destino_economico = DestinoEconomico::firstOrCreate([
                 'codigo' => $data_r1->destino_economico
             ]);
 
-            // Find or create HistorialPredio.
+            // Find or create HistorialPredio
 
             HistorialPredio::firstOrCreate([
                 'predio_id' => $predio->id,
@@ -78,7 +77,7 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
                 'tipo_predio' => $data_r1->tipo_predio
             ]);
 
-            // Find or create Avaluo.
+            // Find or create Avaluo
 
             Avaluo::firstOrCreate([
                 'predio_id' => $predio->id,
@@ -86,7 +85,7 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
                 'vigencia' => $data_r1->vigencia,
                 'pagado' => false,
                 'direccion' => $data_r1->direccion,
-                'valor_avaluo' => 0,
+                'valor_avaluo' => $data_r1->valor_avaluo,
                 'hectareas' => $data_r1->hectareas,
                 'metros_cuadrados' => $data_r1->metros_cuadrados,
                 'area_construida' => $data_r1->area_construida,
@@ -98,12 +97,30 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
             $line_r1 = strtok($separator);
         }
 
-        // Clear memory from strtok.
-        strtok('', '');
-
-        // Done parsing, delete the files.
+        // Done parsing, delete the file
         Storage::delete($this->path_r1);
+
+        // Do R2
+        $contents_r2 = Storage::get($this->path_r2);
+        $line_r2 = strtok($contents_r1, $separator);
+
+        while ($line_r2 !== true) {
+            $data_r2 = $this->parse_line_r2($line_r2);
+
+            // Find Predio
+            $predio = Predio::where('codigo_catastro', $data_r2->codigo_catastro)
+                ->where()
+                ->where()
+                ->firstOrFail();
+
+            $line_r2 = strtok($contents_r2, $separator);
+        }
+
+        // Done parsing, delete the file
         Storage::delete($this->path_r2);
+
+        // Clear memory from strtok
+        strtok('', '');
     }
 
     /**
@@ -133,8 +150,8 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
         $metros_cuadrados = (int) substr($line, 263, 4);
         // area construida
         $area_construida = (int) substr($line, 268, 6);
-        // avaluo
-        $avaluo = (int) substr($line, 274, 15);
+        // valor avaluo
+        $valor_avaluo = (int) substr($line, 274, 15);
         // vigencia (year only)
         $vigencia = date_create(substr($line, 290, 4));
 
@@ -150,9 +167,30 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
             'hectareas' => $hectareas,
             'metros_cuadrados' => $metros_cuadrados,
             'area_construida' => $area_construida,
-            'avaluo' => $avaluo,
+            'valor_avaluo' => $valor_avaluo,
             'vigencia' => $vigencia,
             'tipo_predio' => $tipo_predio
+        ];
+    }
+
+    /**
+     * Parse a line of an 312-wide R2 IGAC file.
+     */
+    private function parse_line_r2(string $line): object {
+        // codigo catastro
+        $codigo_catastro = substr($line, 5, 25);
+        // orden
+        $orden = (int) substr($line, 31, 3);
+        // total
+        $total = (int) substr($line, 34, 3);
+        // estrato
+        $estrato = (int) substr($line, 171, 1);
+        
+        return (object) [
+            'codigo_catastro' => $codigo_catastro,
+            'orden' => $orden,
+            'total' => $total,
+            'estrato' => $estrato
         ];
     }
 }
