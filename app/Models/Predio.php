@@ -45,7 +45,7 @@ class Predio extends Model
      * Get the latest historial predio for the predio.
      */
     public function latest_historial_predio() {
-        return HistorialPredio::where('predio_id', $this->id)
+        return $this->historial_predios()
             ->orderBy('fecha', 'desc')
             ->first();
     }
@@ -54,7 +54,7 @@ class Predio extends Model
      * Get the latest avaluo for the predio.
      */
     public function latest_avaluo() {
-        return Avaluo::where('predio_id', $this->id)
+        return $this->avaluos()
             ->orderBy('vigencia', 'desc')
             ->first();
     }

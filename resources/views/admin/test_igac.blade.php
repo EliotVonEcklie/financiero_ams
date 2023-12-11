@@ -3,12 +3,14 @@
 @section('title', 'Test IGAC')
  
 @section('content')
-    @if($success)
-        <span>{{ $success }}</span>
+    @if(session('success'))
+        <span>{{ session('success') }}</span>
     @endif
-    @if($errors)
-        <span>{{ $errors }}</span>
+    
+    @if(session('errors'))
+        <span>{{ session('success') }}</span>
     @endif
+
     <form action="{{ route('api.igac') }}" enctype="multipart/form-data" method="post">
         <label for="igac_r1">Seleccione archivo IGAC R1...</label>
         <input id="igac_r1" name="igac_r1" type="file" />

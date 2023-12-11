@@ -13,9 +13,8 @@ use App\Models\Predio;
 use App\Models\DestinoEconomico;
 use App\Models\Avaluo;
 use App\Models\HistorialPredio;
-use Symfony\Component\Process\Process;
 
-class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
+class ParseIgac implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -24,7 +23,7 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
      *
      * @var int
      */
-    public $timeout = 1500;
+    public $timeout = 2000;
 
     /**
      * Create a new job instance.
@@ -103,7 +102,7 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
 
         // Do R2
         $contents_r2 = Storage::get($this->path_r2);
-        $line_r2 = strtok($contents_r1, $separator);
+        $line_r2 = strtok($contents_r2, $separator);
 
         while ($line_r2 !== true) {
             $data_r2 = $this->parse_line_r2($line_r2);
