@@ -13,6 +13,7 @@ use App\Models\Predio;
 use App\Models\DestinoEconomico;
 use App\Models\Avaluo;
 use App\Models\HistorialPredio;
+use Symfony\Component\Process\Process;
 
 class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
 {
@@ -59,7 +60,7 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
                 'codigo' => $data_r1->destino_economico
             ]);
 
-            // Find or create HistorialPredio
+            // Create HistorialPredio
 
             HistorialPredio::firstOrCreate([
                 'predio_id' => $predio->id,
@@ -77,7 +78,7 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
                 'tipo_predio' => $data_r1->tipo_predio
             ]);
 
-            // Find or create Avaluo
+            // Create Avaluo
 
             Avaluo::firstOrCreate([
                 'predio_id' => $predio->id,
@@ -109,9 +110,19 @@ class ProcessIgacFile implements ShouldQueue//, ShouldBeUnique
 
             // Find Predio
             $predio = Predio::where('codigo_catastro', $data_r2->codigo_catastro)
-                ->where()
-                ->where()
+                ->where('total', $data_r2->total)
+                ->where('orden', $data_r2->orden)
                 ->firstOrFail();
+
+            // Find and update HistorialPredio
+            $historial_predio = $predio->latest_historial_predio();
+            $historial_predio->estrato = $data_r2->estrato;
+            $historial_predio->save();
+
+            // Find and update Avaluo
+            $avaluo = $predio->latest_avaluo();
+            $avaluo->estrato = $data_r2->estrato;
+            $avaluo->save();
 
             $line_r2 = strtok($contents_r2, $separator);
         }

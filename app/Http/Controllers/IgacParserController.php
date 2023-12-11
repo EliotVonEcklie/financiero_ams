@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessIgacFile;
+use App\Models\Predio;
+use App\Models\DestinoEconomico;
+use App\Models\Avaluo;
+use App\Models\HistorialPredio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class IgacFileParserController extends Controller
+class IgacParserController extends Controller
 {
     public function store(Request $request) {
         if (!$request->hasFile('igac_r1') || !$request->hasFile('igac_r2') || !$request->igac_r1->isValid() || !$request->igac_r2->isValid()) {

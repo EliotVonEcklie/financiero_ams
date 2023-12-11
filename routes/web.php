@@ -4,7 +4,7 @@ use App\Http\Controllers\DestinoEconomicoController;
 use App\Http\Controllers\HistorialPredioController;
 use App\Http\Controllers\AvaluoController;
 use App\Http\Controllers\PredioController;
-use App\Http\Controllers\IgacFileParserController;
+use App\Http\Controllers\IgacParserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +27,8 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
     Route::get('/predios/{predio}/historial_predios', [HistorialPredioController::class, 'indexAdmin'])->name('admin.predios.historial_predios.index');
     Route::get('/predios/{predio}/avaluos', [AvaluoController::class, 'indexAdmin'])->name('admin.predios.avaluos.index');
 
-    Route::get('/test_igac', [IgacFileParserController::class, 'create'])->name('admin.test_igac');
+    Route::get('/test_igac', [IgacParserController::class, 'create'])->name('admin.test_igac');
+    Route::get('/progress_igac', [IgacParserController::class, 'progress_igac'])->name('admin.progress_igac');
 });
 
 Route::get('/predios', function () { view('app.predios'); })->name('app.predios');

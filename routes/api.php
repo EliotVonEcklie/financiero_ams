@@ -4,7 +4,7 @@ use App\Http\Controllers\DestinoEconomicoController;
 use App\Http\Controllers\HistorialPredioController;
 use App\Http\Controllers\AvaluoController;
 use App\Http\Controllers\PredioController;
-use App\Http\Controllers\IgacFileParserController;
+use App\Http\Controllers\IgacParserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +34,4 @@ Route::apiResource('predios.historial_predios', HistorialPredioController::class
 Route::get('/predios/{predio}/avaluos/latest', [AvaluoController::class, 'latest'])->name('api.predios.avaluos.latest');
 Route::apiResource('predios.avaluos', AvaluoController::class);
 
-Route::post('/igac', [IgacFileParserController::class, 'store'])->name('api.igac');
+Route::post('/igac', [IgacParserController::class, 'store'])->name('api.igac');
