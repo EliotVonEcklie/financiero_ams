@@ -16,6 +16,7 @@ class Avaluo extends Model
         'predio_id',
         'destino_economico_id',
         'vigencia',
+        'pagado',
         'valor_avaluo',
         'direccion',
         'hectareas',

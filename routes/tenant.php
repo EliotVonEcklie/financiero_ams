@@ -40,8 +40,6 @@ Route::middleware([
         Route::get('/predios/{predio}', [PredioController::class, 'showAdmin'])->name('admin.predios.show');
         Route::get('/predios/{predio}/historial_predios', [HistorialPredioController::class, 'indexAdmin'])->name('admin.predios.historial_predios.index');
         Route::get('/predios/{predio}/avaluos', [AvaluoController::class, 'indexAdmin'])->name('admin.predios.avaluos.index');
-    
-        Route::get('/test_igac', [IgacParserController::class, 'create'])->name('admin.test_igac');
     });
     
     Route::get('/predios', function () { view('app.predios'); })->name('app.predios');

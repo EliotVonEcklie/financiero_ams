@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        DB::statement("SET SQL_MODE= ''");
+        //DB::statement("SET SQL_MODE= ''");
+        Model::preventSilentlyDiscardingAttributes($this->app->isLocal());
     }
 }

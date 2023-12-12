@@ -11,7 +11,7 @@ class IgacParserController extends Controller
 {
     public function store(Request $request) {
         if (!$request->hasFile('igac_r1') || !$request->hasFile('igac_r2') || !$request->igac_r1->isValid() || !$request->igac_r2->isValid()) {
-            return to_route('admin.test_igac', ['errors' => ['Invalid files']]);
+            return response('Invalid files', 400);
         }
 
         // Store the files while we process them.
@@ -19,16 +19,9 @@ class IgacParserController extends Controller
         $path_r2 = $request->igac_r2->store('igac');
 
         // Dispatch the jobs.
-
         Bus::chain([
             new ParseIgac($path_r1, $path_r2),
             new TransferPredios
         ])->dispatch();
-
-        return to_route('admin.test_igac')->with('success', 'Job started successfully');
-    }
-
-    public function create() {
-        return view('admin.test_igac');
     }
 }

@@ -41,30 +41,30 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
 
         // Do R1
         $contents_r1 = Storage::get($this->path_r1);
+        $contents_r1 = str_replace("\xEF\xBF\xBD", '?', $contents_r1); // Replace '�' for '?'
         $line_r1 = strtok($contents_r1, $separator);
 
         while ($line_r1 !== false) {
             $data_r1 = $this->parse_line_r1($line_r1);
 
-            // Find or create Predio object
+            // Find or create Predio
             $predio = Predio::firstOrCreate([
                 'codigo_catastro' => $data_r1->codigo_catastro,
                 'total' => $data_r1->total,
                 'orden' => $data_r1->orden
             ]);
 
-            // Find or create DestinoEconomico object
-
+            // Find or create DestinoEconomico
             $destino_economico = DestinoEconomico::firstOrCreate([
                 'codigo' => $data_r1->destino_economico
             ]);
 
-            // Create HistorialPredio
-
-            HistorialPredio::firstOrCreate([
+            // Update or create HistorialPredio
+            HistorialPredio::updateOrCreate([
                 'predio_id' => $predio->id,
+                'fecha' => date_format($data_r1->vigencia, 'Y-m-d')
+            ], [
                 'destino_economico_id' => $destino_economico->id,
-                'fecha' => $data_r1->vigencia,
                 'tipo_documento' => $data_r1->tipo_documento,
                 'documento' => $data_r1->documento,
                 'nombre_propietario' => $data_r1->nombre_propietario,
@@ -77,12 +77,12 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
                 'tipo_predio' => $data_r1->tipo_predio
             ]);
 
-            // Create Avaluo
-
-            Avaluo::firstOrCreate([
+            // Update or create Avaluo
+            Avaluo::updateOrCreate([
                 'predio_id' => $predio->id,
+                'vigencia' => date_format($data_r1->vigencia, 'Y')
+            ], [
                 'destino_economico_id' => $destino_economico->id,
-                'vigencia' => $data_r1->vigencia,
                 'pagado' => false,
                 'direccion' => $data_r1->direccion,
                 'valor_avaluo' => $data_r1->valor_avaluo,
@@ -102,6 +102,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
 
         // Do R2
         $contents_r2 = Storage::get($this->path_r2);
+        $contents_r2 = str_replace("\xEF\xBF\xBD", '?', $contents_r2); // Replace '�' for '?'
         $line_r2 = strtok($contents_r2, $separator);
 
         while ($line_r2 !== true) {
@@ -111,19 +112,23 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
             $predio = Predio::where('codigo_catastro', $data_r2->codigo_catastro)
                 ->where('total', $data_r2->total)
                 ->where('orden', $data_r2->orden)
-                ->firstOrFail();
+                ->first();
 
-            // Find and update HistorialPredio
+            if ($predio === null) {
+                continue;
+            }
+
+            // Find and update latest HistorialPredio
             $historial_predio = $predio->latest_historial_predio();
             $historial_predio->estrato = $data_r2->estrato;
             $historial_predio->save();
 
-            // Find and update Avaluo
+            // Find and update latest Avaluo
             $avaluo = $predio->latest_avaluo();
             $avaluo->estrato = $data_r2->estrato;
             $avaluo->save();
 
-            $line_r2 = strtok($contents_r2, $separator);
+            $line_r2 = strtok($separator);
         }
 
         // Done parsing, delete the file
@@ -138,32 +143,32 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
      */
     private function parse_line_r1(string $line): object {
         // codigo catastro
-        $codigo_catastro = substr($line, 5, 25);
+        $codigo_catastro = mb_substr($line, 5, 25);
         // tipo predio
-        $tipo_predio = substr($codigo_catastro, 0, 2) == '01' ? 'urbano' : 'rural';
+        $tipo_predio = mb_substr($codigo_catastro, 0, 2) == '01' ? 'urbano' : 'rural';
         // orden
-        $orden = (int) substr($line, 31, 3);
+        $orden = (int) mb_substr($line, 31, 3);
         // total
-        $total = (int) substr($line, 34, 3);
+        $total = (int) mb_substr($line, 34, 3);
         // nombre propietario
-        $nombre_propietario = rtrim(substr($line, 37, 100));
+        $nombre_propietario = rtrim(mb_substr($line, 37, 100));
         // tipo documento
-        $tipo_documento = substr($line, 138, 1);
+        $tipo_documento = mb_substr($line, 138, 1);
         // documento
-        $documento = rtrim(substr($line, 139, 12));
+        $documento = rtrim(mb_substr($line, 139, 12));
         // direccion
-        $direccion = rtrim(substr($line, 151, 100));
+        $direccion = rtrim(mb_substr($line, 151, 100));
         // destino economico
-        $destino_economico = substr($line, 252, 1);
+        $destino_economico = mb_substr($line, 252, 1);
         // area terreno (11=hectareas, 4=metros cuadrados)
-        $hectareas = (int) substr($line, 253, 11);
-        $metros_cuadrados = (int) substr($line, 263, 4);
+        $hectareas = (float) mb_substr($line, 253, 11);
+        $metros_cuadrados = (float) mb_substr($line, 264, 4);
         // area construida
-        $area_construida = (int) substr($line, 268, 6);
+        $area_construida = (float) mb_substr($line, 268, 6);
         // valor avaluo
-        $valor_avaluo = (int) substr($line, 274, 15);
-        // vigencia (year only)
-        $vigencia = date_create(substr($line, 290, 4));
+        $valor_avaluo = (float) mb_substr($line, 274, 15);
+        // vigencia
+        $vigencia = date_create_from_format('dmY', mb_substr($line, 289, 8));
 
         return (object) [
             'codigo_catastro' => $codigo_catastro,
@@ -188,13 +193,13 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
      */
     private function parse_line_r2(string $line): object {
         // codigo catastro
-        $codigo_catastro = substr($line, 5, 25);
+        $codigo_catastro = mb_substr($line, 5, 25);
         // orden
-        $orden = (int) substr($line, 31, 3);
+        $orden = (int) mb_substr($line, 31, 3);
         // total
-        $total = (int) substr($line, 34, 3);
+        $total = (int) mb_substr($line, 34, 3);
         // estrato
-        $estrato = (int) substr($line, 171, 1);
+        $estrato = (int) mb_substr($line, 171, 1);
         
         return (object) [
             'codigo_catastro' => $codigo_catastro,
