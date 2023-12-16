@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Predio;
 use App\Models\DestinoEconomico;
 use App\Models\Avaluo;
@@ -28,7 +29,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(public string $path_r1, public string $path_r2)
+    public function __construct(public string $path_r1, public string|null $path_r2)
     {}
 
     /**
@@ -36,6 +37,17 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
+        //Cache::put('parse_igac', (object) ['count' => 0, 'finished' => false]);
+
+        $this->process();
+
+        // Set finished status
+        //$status = Cache::get('parse_igac');
+        //$status->finished =  true;
+        //Cache::put('parse_igac', $status);
+    }
+
+    private function process() {
         // Tokenize by new lines
         $separator = "\r\n";
 
@@ -72,7 +84,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
                 'hectareas' => $data_r1->hectareas,
                 'metros_cuadrados' => $data_r1->metros_cuadrados,
                 'area_construida' => $data_r1->area_construida,
-                'tasa_por_mil' => 0,
+                'tasa_por_mil' => -1,
                 'estrato' => 0,
                 'tipo_predio' => $data_r1->tipo_predio
             ]);
@@ -89,10 +101,15 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
                 'hectareas' => $data_r1->hectareas,
                 'metros_cuadrados' => $data_r1->metros_cuadrados,
                 'area_construida' => $data_r1->area_construida,
-                'tasa_por_mil' => 0,
+                'tasa_por_mil' => -1,
                 'estrato' => 0,
                 'tipo_predio' => $data_r1->tipo_predio
             ]);
+
+            // Update count on status
+            //$status = Cache::get('parse_igac');
+            //$status->count++;
+            //Cache::put('parse_igac');
 
             $line_r1 = strtok($separator);
         }
@@ -100,7 +117,17 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
         // Done parsing, delete the file
         Storage::delete($this->path_r1);
 
+        // Clear memory from strtok
+        strtok('', '');
+
+        // Check R2
+
+        if ($this->path_r2 === null) {
+            return;
+        }
+
         // Do R2
+
         $contents_r2 = Storage::get($this->path_r2);
         $contents_r2 = str_replace("\xEF\xBF\xBD", '?', $contents_r2); // Replace '�' for '?'
         $line_r2 = strtok($contents_r2, $separator);
@@ -200,7 +227,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
         $total = (int) mb_substr($line, 34, 3);
         // estrato
         $estrato = (int) mb_substr($line, 171, 1);
-        
+
         return (object) [
             'codigo_catastro' => $codigo_catastro,
             'orden' => $orden,
