@@ -45,6 +45,8 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
      * @param Predio $predio The predio to transfer.
      */
     public function transfer_predio(Predio $predio) {
+
+        // Format data for old database
         $tesopredios_data = [
             'cedulacatastral' => $predio->codigo_catastro,
             'ord' => sprintf("%03d", $predio->orden),
@@ -90,6 +92,8 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
      */
     public function transfer_avaluos(Collection $avaluos) {
         foreach ($avaluos as $avaluo) {
+
+            // Format data for old database
             $tesoprediosavaluos_data = [
                 'vigencia' => $avaluo->vigencia,
                 'codigocatastral' => $avaluo->predio->codigo_catastro,

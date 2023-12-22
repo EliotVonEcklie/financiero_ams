@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\DestinoEconomico;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,9 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('destino_economicos', function (Blueprint $table) {
+        Schema::create('codigo_destino_economicos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable();
+            $table->string('codigo', 2)->unique();
+            $table->foreignIdFor(DestinoEconomico::class)->nullable();
+            $table->foreignIdFor(User::class, 'modified_by')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('destino_economicos');
+        Schema::dropIfExists('codigo_destino_economicos');
     }
 };

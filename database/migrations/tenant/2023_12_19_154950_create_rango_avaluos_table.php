@@ -12,9 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('destino_economicos', function (Blueprint $table) {
+        Schema::create('rango_avaluos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable();
+            $table->decimal('desde');
+            $table->decimal('hasta');
+            $table->softDeletes();
+            $table->foreignIdFor(User::class, 'modified_by')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('destino_economicos');
+        Schema::dropIfExists('rango_avaluos');
     }
 };

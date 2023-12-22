@@ -6,6 +6,7 @@ use App\Models\DestinoEconomico;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDestinoEconomicoRequest;
 use App\Http\Requests\UpdateDestinoEconomicoRequest;
+use App\Models\CodigoDestinoEconomico;
 
 class DestinoEconomicoController extends Controller
 {
@@ -14,15 +15,24 @@ class DestinoEconomicoController extends Controller
      */
     public function index()
     {
-        return response()->json(DestinoEconomico::all());
+        return inertia('DestinoEconomicos/Index', [
+            'destinoEconomicos' => DestinoEconomico::withTrashed()->get()->map(function ($destino_economico) {
+                return [
+                    'id' => $destino_economico->id,
+                    'nombre' => $destino_economico->nombre,
+                    'codigo_destino_economicos' => $destino_economico->codigo_destino_economicos,
+                    'trashed' => $destino_economico->trashed()
+                ];
+            })
+        ]);
     }
 
     /**
-     * Display a listing of the resource. Admin.
+     * Display a listing of the resource.
      */
-    public function indexAdmin()
+    public function indexApi()
     {
-        return view('admin.destino_economicos.index')->with('destino_economicos', DestinoEconomico::all());
+        return response()->json(DestinoEconomico::all());
     }
 
     /**
@@ -30,7 +40,14 @@ class DestinoEconomicoController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('DestinoEconomicos/Create', [
+            'codigoDestinoEconomicos' => CodigoDestinoEconomico::where('destino_economico_id', null)->get()->map(function ($codigo_destino_economico) {
+                return [
+                    'id' => $codigo_destino_economico->id,
+                    'codigo' => $codigo_destino_economico->codigo
+                ];
+            })
+        ]);
     }
 
     /**
@@ -45,10 +62,10 @@ class DestinoEconomicoController extends Controller
         }
 
         // The incoming request is valid...
-    
+
         // Retrieve the validated input data...
         $validated = $request->validated();
-    
+
         // Store the destino economico...
         $predio = DestinoEconomico::create($validated);
         $predio->save();
