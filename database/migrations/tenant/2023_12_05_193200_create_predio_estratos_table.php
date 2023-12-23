@@ -14,10 +14,9 @@ return new class extends Migration
     {
         Schema::create('predio_estratos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
             $table->integer('estrato');
             $table->softDeletes();
-            $table->foreignIdFor(User::class, 'modified_by')->nullable();
+            $table->foreignIdFor(User::class)->nullable();
             $table->timestamps();
         });
     }

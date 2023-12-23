@@ -14,7 +14,10 @@ return new class extends Migration
     {
         Schema::create('destino_economicos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable();
+            $table->string('nombre');
+            $table->softDeletes();
+            $table->foreignIdFor(User::class)->nullable();
+            $table->timestamps();
         });
     }
 

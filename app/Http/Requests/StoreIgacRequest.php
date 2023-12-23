@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDestinoEconomicoRequest extends FormRequest
+class StoreIgacRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,8 +22,9 @@ class StoreDestinoEconomicoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => ['required', 'string', 'max:255'],
-            'codigo_destino_economicos' => ['nullable', 'array'],
+            'igac_r1' => ['required', 'file', 'mimes:txt'],
+            'enable_r2' => ['required', 'boolean'],
+            'igac_r2' => ['nullable', 'file', 'mimes:txt']
         ];
     }
 }

@@ -7,7 +7,8 @@ use App\Http\Controllers\HistorialPredioController;
 use App\Http\Controllers\AvaluoController;
 use App\Http\Controllers\CodigoDestinoEconomicoController;
 use App\Http\Controllers\PredioController;
-use App\Http\Controllers\IgacParserController;
+use App\Http\Controllers\UploadIgacController;
+use App\Http\Controllers\RangoAvaluoController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -33,8 +34,11 @@ Route::middleware([
         return inertia('Welcome');
     })->name('index');
 
+    Route::resource('upload_igac', UploadIgacController::class);
+
     Route::resource('destino_economicos', DestinoEconomicoController::class);
     Route::resource('codigo_destino_economicos', CodigoDestinoEconomicoController::class);
+    Route::resource('rango_avaluos', RangoAvaluoController::class);
 });
 
 Route::middleware([
@@ -50,6 +54,4 @@ Route::middleware([
 
     Route::get('/predios/{predio}/avaluos/latest', [AvaluoController::class, 'latest'])->name('api.predios.avaluos.latest');
     Route::apiResource('predios.avaluos', AvaluoController::class);
-
-    Route::post('/igac', [IgacParserController::class, 'store'])->name('api.igac');
 });

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('codigo', 2)->unique();
             $table->foreignIdFor(DestinoEconomico::class)->nullable();
-            $table->foreignIdFor(User::class, 'modified_by')->nullable();
+            $table->foreignIdFor(User::class)->nullable();
             $table->timestamps();
         });
     }

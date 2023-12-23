@@ -22,7 +22,7 @@ return new class extends Migration
             $table->morphs('tarifa');
             $table->decimal('tasa');
             $table->softDeletes();
-            $table->foreignIdFor(User::class, 'modified_by')->nullable();
+            $table->foreignIdFor(User::class)->nullable();
             $table->timestamps();
         });
     }

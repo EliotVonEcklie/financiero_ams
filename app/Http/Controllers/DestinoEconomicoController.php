@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDestinoEconomicoRequest;
 use App\Http\Requests\UpdateDestinoEconomicoRequest;
 use App\Models\CodigoDestinoEconomico;
+use RuntimeException;
 
 class DestinoEconomicoController extends Controller
 {
@@ -25,14 +26,6 @@ class DestinoEconomicoController extends Controller
                 ];
             })
         ]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function indexApi()
-    {
-        return response()->json(DestinoEconomico::all());
     }
 
     /**
@@ -55,24 +48,16 @@ class DestinoEconomicoController extends Controller
      */
     public function store(StoreDestinoEconomicoRequest $request)
     {
-        $errors = $request->errors();
+        // Store the destino economico...
+        $destino_economico = DestinoEconomico::create($request->safe()->except('codigo_destino_economicos'));
 
-        if ($errors->any()) {
-            return response()->json($errors->all());
+        foreach ($request->safe()['codigo_destino_economicos'] as $codigo_destino_economico) {
+            $codigo_destino_economico = CodigoDestinoEconomico::find($codigo_destino_economico);
+            $codigo_destino_economico->destino_economico_id = $destino_economico->id;
+            $codigo_destino_economico->save();
         }
 
-        // The incoming request is valid...
-
-        // Retrieve the validated input data...
-        $validated = $request->validated();
-
-        // Store the destino economico...
-        $predio = DestinoEconomico::create($validated);
-        $predio->save();
-
-        return response()->json([
-            'success' => 'Saved destino economico successfully!'
-        ]);
+        return to_route('destino_economicos.index');
     }
 
     /**
@@ -80,7 +65,14 @@ class DestinoEconomicoController extends Controller
      */
     public function show(DestinoEconomico $destinoEconomico)
     {
-        return response()->json($destinoEconomico);
+        return inertia('DestinoEconomicos/Show', [
+            'destinoEconomico' => [
+                'id' => $destinoEconomico->id,
+                'nombre' => $destinoEconomico->nombre,
+                'codigo_destino_economicos' => $destinoEconomico->codigo_destino_economicos,
+                'trashed' => $destinoEconomico->trashed()
+            ]
+        ]);
     }
 
     /**
@@ -88,7 +80,20 @@ class DestinoEconomicoController extends Controller
      */
     public function edit(DestinoEconomico $destinoEconomico)
     {
-        //
+        return inertia('DestinoEconomicos/Edit', [
+            'destinoEconomico' => [
+                'id' => $destinoEconomico->id,
+                'nombre' => $destinoEconomico->nombre,
+                'codigo_destino_economicos' => $destinoEconomico->codigo_destino_economicos,
+                'trashed' => $destinoEconomico->trashed()
+            ],
+            'codigoDestinoEconomicos' => CodigoDestinoEconomico::where('destino_economico_id', null)->get()->map(function ($codigo_destino_economico) {
+                return [
+                    'id' => $codigo_destino_economico->id,
+                    'codigo' => $codigo_destino_economico->codigo
+                ];
+            })
+        ]);
     }
 
     /**
@@ -96,7 +101,7 @@ class DestinoEconomicoController extends Controller
      */
     public function update(UpdateDestinoEconomicoRequest $request, DestinoEconomico $destinoEconomico)
     {
-        //
+
     }
 
     /**

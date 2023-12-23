@@ -1,14 +1,18 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 import { onMounted } from 'vue'
 import { initDrawers } from 'flowbite'
 
 onMounted(() => {
     initDrawers()
 })
+
+defineProps({ title: String })
 </script>
 
 <template>
+    <Head :title="title"></Head>
+
     <main>
         <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
             <span class="sr-only">Abrir menú</span>
@@ -21,12 +25,12 @@ onMounted(() => {
             <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                 <ul class="space-y-2 font-medium">
                     <li>
-                        <Link :href="$route('destino_economicos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('DestinoEconomicos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <Link :href="route('destino_economicos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('DestinoEconomicos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <span class="ms-3">1. Destinos Economicos</span>
                         </Link>
                     </li>
                     <li>
-                        <Link :href="$route('destino_economicos.index')" :class="{ 'active': $page.component.startsWith('DestinoEconomicos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <Link :href="route('rango_avaluos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('RangoAvaluos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <span class="flex-1 ms-3 whitespace-nowrap">2. Rangos Avaluos</span>
                         </Link>
                     </li>
@@ -57,7 +61,7 @@ onMounted(() => {
         </aside>
 
         <div class="p-4 sm:ml-64 h-screen text-gray-900 dark:text-white">
-            <h1 class="text-3xl text-left"><slot name="title" /></h1>
+            <h1 class="text-3xl text-left">{{ title }}</h1>
 
             <div class="border-t-2 mt-2 pt-6">
                 <slot />

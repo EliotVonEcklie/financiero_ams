@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('desde');
             $table->decimal('hasta');
             $table->softDeletes();
-            $table->foreignIdFor(User::class, 'modified_by')->nullable();
+            $table->foreignIdFor(User::class)->nullable();
             $table->timestamps();
         });
     }
