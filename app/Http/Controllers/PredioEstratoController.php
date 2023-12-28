@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StorePredioEstratoRequest;
+use App\Http\Requests\UpdatePredioEstratoRequest;
+use App\Models\PredioEstrato;
 
 class PredioEstratoController extends Controller
 {
@@ -11,7 +13,18 @@ class PredioEstratoController extends Controller
      */
     public function index()
     {
-        //
+        return inertia('PredioEstratos/Index', [
+            'predioEstratos' => PredioEstrato::withTrashed()->map(function ($predioEstrato) {
+                return [
+                    'id' => $predioEstrato->id,
+                    'estrato' => $predioEstrato->estrato,
+                    'state' => !$predioEstrato->trashed(),
+                    'user' => [
+                        'name' =>  $predioEstrato->user->name
+                    ]
+                ];
+            })
+        ]);
     }
 
     /**
@@ -25,7 +38,7 @@ class PredioEstratoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePredioEstratoRequest $request)
     {
         //
     }
@@ -33,7 +46,7 @@ class PredioEstratoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(PredioEstrato $predioEstrato)
     {
         //
     }
@@ -41,7 +54,7 @@ class PredioEstratoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(PredioEstrato $predioEstrato)
     {
         //
     }
@@ -49,7 +62,7 @@ class PredioEstratoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePredioEstratoRequest $request, PredioEstrato $predioEstrato)
     {
         //
     }
@@ -57,7 +70,7 @@ class PredioEstratoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(PredioEstrato $predioEstrato)
     {
         //
     }
