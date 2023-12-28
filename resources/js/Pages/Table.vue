@@ -7,17 +7,17 @@ onMounted(() => {
 })
 
 const searchQuery = ref('')
-const allChecked = ref(false)
+const allSelected = ref(false)
 
-defineProps([
-    'headers',
-    'elements',
-    'emptyMessage',
-    'allowCreate',
-    'allowEdit',
-    'allowSoftDelete',
-    'allowDelete'
-])
+defineProps({
+    headers: Array,
+    elements: Array,
+    emptyMessage: String,
+    allowCreate: Boolean,
+    allowEdit: Boolean,
+    allowSoftDelete: Boolean,
+    allowDelete: Boolean
+})
 defineEmits(['search', 'create', 'softDelete', 'delete', 'edit'])
 </script>
 
@@ -38,10 +38,10 @@ defineEmits(['search', 'create', 'softDelete', 'delete', 'edit'])
                         <a @click="$emit('create')" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Crear</a>
                     </div>
                     <div v-if="elements.length > 0 && allowSoftDelete" class="py-1">
-                        <a @click="$emit('softDelete', allChecked)" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Activar/Desactivar</a>
+                        <a @click="$emit('softDelete', allSelected)" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Activar/Desactivar</a>
                     </div>
                     <div v-if="elements.length > 0 && allowDelete" class="py-1">
-                        <a @click="$emit('delete', allChecked)" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Eliminar</a>
+                        <a @click="$emit('delete', allSelected)" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Eliminar</a>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@ defineEmits(['search', 'create', 'softDelete', 'delete', 'edit'])
                     <tr>
                         <th scope="col" class="p-4">
                             <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" v-model="allChecked" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input id="checkbox-all-search" type="checkbox" v-model="allSelected" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checkbox-all-search" class="sr-only">checkbox</label>
                             </div>
                         </th>
@@ -73,7 +73,7 @@ defineEmits(['search', 'create', 'softDelete', 'delete', 'edit'])
                     <tr v-for="element in elements" :key="element.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
                             <div class="flex items-center">
-                                <input id="checkbox-table-search-1" type="checkbox" v-model="element.checked" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input id="checkbox-table-search-1" type="checkbox" v-model="element.selected" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                             </div>
                         </td>

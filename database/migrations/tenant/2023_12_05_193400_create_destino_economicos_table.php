@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->softDeletes();
-            $table->foreignIdFor(User::class)->nullable();
+            $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();
         });
     }

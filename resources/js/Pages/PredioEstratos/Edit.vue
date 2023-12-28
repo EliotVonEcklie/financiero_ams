@@ -1,23 +1,12 @@
 <script setup>
-import Layout from '../Layout.vue'
-import { useForm, router } from '@inertiajs/vue3'
+import Layout from '~Pages/Layout.vue'
+import { useForm } from '@inertiajs/vue3'
 
-const props = defineProps({ destinoEconomico: Object, codigoDestinoEconomicos: Object })
+const props = defineProps({ predioEstrato: Object })
 const form = useForm({
-    nombre: props.destinoEconomico.nombre,
-    codigo_destino_economicos: []
+    nombre: props.predioEstrato.nombre,
+    estrato: props.predioEstrato.estrato
 })
-
-function submit() {
-    console.log(props.codigoDestinoEconomicos)
-    form.codigo_destino_economicos = props.codigoDestinoEconomicos
-
-    form.put(route('destino_economicos.update', props.destinoEconomico.id), {
-        onSuccess: () => {
-            router.get(route('destino_economicos.index'))
-        }
-    })
-}
 </script>
 
 <template>

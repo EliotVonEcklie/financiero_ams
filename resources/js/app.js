@@ -1,7 +1,6 @@
-import './bootstrap'
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
-import { ZiggyVue } from '/vendor/tightenco/ziggy/dist/vue.es.js';
+import { ZiggyVue } from '~ziggy-vue'
 
 createInertiaApp({
     resolve: name => {

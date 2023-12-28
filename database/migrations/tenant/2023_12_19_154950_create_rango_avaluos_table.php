@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\UnidadMonetaria;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('rango_avaluos', function (Blueprint $table) {
             $table->id();
-            $table->decimal('desde');
-            $table->decimal('hasta');
+            $table->double('desde', 16, 2);
+            $table->double('hasta', 16, 2);
+            $table->foreignIdFor(UnidadMonetaria::class)->constrained();
             $table->softDeletes();
             $table->foreignIdFor(User::class)->nullable();
             $table->timestamps();

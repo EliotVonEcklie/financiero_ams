@@ -2,7 +2,6 @@
 import Layout from '../Layout.vue'
 import Form from './Form.vue'
 import Results from './Results.vue'
-import { useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
 const step = ref(1)

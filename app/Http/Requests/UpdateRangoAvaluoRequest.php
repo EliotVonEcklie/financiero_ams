@@ -11,7 +11,7 @@ class UpdateRangoAvaluoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateRangoAvaluoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'toggle' => ['nullable', 'boolean'],
+            'desde' => ['exclude_if:toggle,true', 'required', 'numeric'],
+            'hasta' => ['exclude_if:toggle,true', 'required', 'numeric'],
+            'unidad_monetaria_id' => ['exclude_if:toggle,true', 'required', 'integer']
         ];
     }
 }

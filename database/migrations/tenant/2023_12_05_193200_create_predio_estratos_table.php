@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->integer('estrato');
             $table->softDeletes();
-            $table->foreignIdFor(User::class)->nullable();
+            $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();
         });
     }

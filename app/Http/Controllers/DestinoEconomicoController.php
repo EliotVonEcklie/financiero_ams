@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDestinoEconomicoRequest;
 use App\Http\Requests\UpdateDestinoEconomicoRequest;
 use App\Models\CodigoDestinoEconomico;
+use Illuminate\Http\Request;
 use RuntimeException;
 
 class DestinoEconomicoController extends Controller
@@ -22,7 +23,7 @@ class DestinoEconomicoController extends Controller
                     'id' => $destino_economico->id,
                     'nombre' => $destino_economico->nombre,
                     'codigo_destino_economicos' => $destino_economico->codigo_destino_economicos,
-                    'trashed' => $destino_economico->trashed()
+                    'state' => !$destino_economico->trashed()
                 ];
             })
         ]);
@@ -52,9 +53,8 @@ class DestinoEconomicoController extends Controller
         $destino_economico = DestinoEconomico::create($request->safe()->except('codigo_destino_economicos'));
 
         foreach ($request->safe()['codigo_destino_economicos'] as $codigo_destino_economico) {
-            $codigo_destino_economico = CodigoDestinoEconomico::find($codigo_destino_economico);
-            $codigo_destino_economico->destino_economico_id = $destino_economico->id;
-            $codigo_destino_economico->save();
+            CodigoDestinoEconomico::find($codigo_destino_economico)
+                ->update(['destino_economico_id' => $destino_economico->id]);
         }
 
         return to_route('destino_economicos.index');
@@ -65,14 +65,7 @@ class DestinoEconomicoController extends Controller
      */
     public function show(DestinoEconomico $destinoEconomico)
     {
-        return inertia('DestinoEconomicos/Show', [
-            'destinoEconomico' => [
-                'id' => $destinoEconomico->id,
-                'nombre' => $destinoEconomico->nombre,
-                'codigo_destino_economicos' => $destinoEconomico->codigo_destino_economicos,
-                'trashed' => $destinoEconomico->trashed()
-            ]
-        ]);
+        //
     }
 
     /**
@@ -83,16 +76,19 @@ class DestinoEconomicoController extends Controller
         return inertia('DestinoEconomicos/Edit', [
             'destinoEconomico' => [
                 'id' => $destinoEconomico->id,
-                'nombre' => $destinoEconomico->nombre,
-                'codigo_destino_economicos' => $destinoEconomico->codigo_destino_economicos,
-                'trashed' => $destinoEconomico->trashed()
+                'nombre' => $destinoEconomico->nombre
             ],
-            'codigoDestinoEconomicos' => CodigoDestinoEconomico::where('destino_economico_id', null)->get()->map(function ($codigo_destino_economico) {
-                return [
-                    'id' => $codigo_destino_economico->id,
-                    'codigo' => $codigo_destino_economico->codigo
-                ];
-            })
+            'codigoDestinoEconomicos' => CodigoDestinoEconomico::
+                where('destino_economico_id', $destinoEconomico->id)
+                ->orWhere('destino_economico_id', null)
+                ->get()
+                ->map(function ($codigo_destino_economico) {
+                    return [
+                        'id' => $codigo_destino_economico->id,
+                        'codigo' => $codigo_destino_economico->codigo,
+                        'selected' => $codigo_destino_economico->destino_economico_id != null ? true : false,
+                    ];
+                })
         ]);
     }
 
@@ -101,7 +97,28 @@ class DestinoEconomicoController extends Controller
      */
     public function update(UpdateDestinoEconomicoRequest $request, DestinoEconomico $destinoEconomico)
     {
+        if ($request->safe()->has('toggle')) {
+            if ($destinoEconomico->trashed()) {
+                $destinoEconomico->restore();
+            } else {
+                $destinoEconomico->delete();
+            }
 
+            return;
+        }
+
+        // Update the destino economico...
+        $destinoEconomico->update($request->safe()->except('codigo_destino_economicos'));
+
+        foreach ($request->safe()['codigo_destino_economicos'] as $codigo_destino_economico) {
+            CodigoDestinoEconomico::find($codigo_destino_economico['id'])
+                ->update([
+                    'destino_economico_id' =>
+                        $codigo_destino_economico['selected'] ? $destinoEconomico->id : null
+                ]);
+        }
+
+        return to_route('destino_economicos.index');
     }
 
     /**
@@ -109,6 +126,10 @@ class DestinoEconomicoController extends Controller
      */
     public function destroy(DestinoEconomico $destinoEconomico)
     {
-        //
+        CodigoDestinoEconomico::where('destino_economico_id', $destinoEconomico->id)
+            ->update(['destino_economico_id' => null]);
+        $destinoEconomico->forceDelete();
+
+        return to_route('destino_economicos.index');
     }
 }

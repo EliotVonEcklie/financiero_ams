@@ -14,7 +14,15 @@ class UnidadMonetariaController extends Controller
      */
     public function index()
     {
-        //
+        return inertia('UnidadMonetarias/Index', [
+            'unidadMonetarias' => UnidadMonetaria::withTrashed()->get()->map(function ($unidadMonetaria) {
+                return [
+                    'id' => $unidadMonetaria->id,
+                    'tipo' => $unidadMonetaria->tipo,
+                    'state' => !$unidadMonetaria->trashed()
+                ];
+            })
+        ]);
     }
 
     /**
@@ -22,7 +30,7 @@ class UnidadMonetariaController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('UnidadMonetarias/Create');
     }
 
     /**
@@ -30,7 +38,10 @@ class UnidadMonetariaController extends Controller
      */
     public function store(StoreUnidadMonetariaRequest $request)
     {
-        //
+        // Store the unidad monetaria...
+        UnidadMonetaria::create($request->validated());
+
+        return to_route('unidad_monetarias.index');
     }
 
     /**
@@ -46,7 +57,12 @@ class UnidadMonetariaController extends Controller
      */
     public function edit(UnidadMonetaria $unidadMonetaria)
     {
-        //
+        return inertia('UnidadMonetarias/Edit', [
+            'unidadMonetaria' => [
+                'id' => $unidadMonetaria->id,
+                'tipo' => $unidadMonetaria->tipo
+            ]
+        ]);
     }
 
     /**
@@ -54,7 +70,20 @@ class UnidadMonetariaController extends Controller
      */
     public function update(UpdateUnidadMonetariaRequest $request, UnidadMonetaria $unidadMonetaria)
     {
-        //
+        if ($request->safe()->has('toggle')) {
+            if ($unidadMonetaria->trashed()) {
+                $unidadMonetaria->restore();
+            } else {
+                $unidadMonetaria->delete();
+            }
+
+            return;
+        }
+
+        // Update the unidad monetaria...
+        $unidadMonetaria->update($request->validated());
+
+        return to_route('unidad_monetarias.index');
     }
 
     /**
@@ -62,6 +91,8 @@ class UnidadMonetariaController extends Controller
      */
     public function destroy(UnidadMonetaria $unidadMonetaria)
     {
-        //
+        $unidadMonetaria->forceDelete();
+
+        return to_route('unidad_monetarias.index');
     }
 }

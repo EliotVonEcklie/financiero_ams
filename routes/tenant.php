@@ -9,6 +9,7 @@ use App\Http\Controllers\CodigoDestinoEconomicoController;
 use App\Http\Controllers\PredioController;
 use App\Http\Controllers\UploadIgacController;
 use App\Http\Controllers\RangoAvaluoController;
+use App\Http\Controllers\UnidadMonetariaController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -35,12 +36,12 @@ Route::middleware([
     })->name('index');
 
     Route::resource('upload_igac', UploadIgacController::class);
-
-    Route::resource('destino_economicos', DestinoEconomicoController::class);
     Route::resource('codigo_destino_economicos', CodigoDestinoEconomicoController::class);
-    Route::resource('rango_avaluos', RangoAvaluoController::class);
+    Route::resource('destino_economicos', DestinoEconomicoController::class)->withTrashed();
+    Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
+    Route::resource('unidad_monetarias', UnidadMonetariaController::class)->withTrashed();
 });
-
+/*
 Route::middleware([
     'api',
     InitializeTenancyBySubdomain::class,
@@ -55,3 +56,4 @@ Route::middleware([
     Route::get('/predios/{predio}/avaluos/latest', [AvaluoController::class, 'latest'])->name('api.predios.avaluos.latest');
     Route::apiResource('predios.avaluos', AvaluoController::class);
 });
+*/
