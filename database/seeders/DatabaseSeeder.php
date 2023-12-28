@@ -19,6 +19,15 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        \App\Models\Tenant::create([
+            'id' => 'rosalia',
+            'tenancy_db_name' => 'rosalia'
+        ])->domains()->create([
+            'domain' => 'rosalia'
+        ]);
+
+        /*
+
         \App\Models\UnidadMonetaria::create([
             'tipo' => 'UVT'
         ]);
@@ -31,119 +40,6 @@ class DatabaseSeeder extends Seeder
             'tipo' => 'Unidad'
         ]);
 
-        $codigo_destino_economico_a = \App\Models\CodigoDestinoEconomico::create([
-            'codigo' => 'A',
-            'nombre' => 'Habitacion'
-        ]);
-
-        $codigo_destino_economico_b = \App\Models\CodigoDestinoEconomico::create([
-            'codigo' => 'B',
-            'nombre' => 'Finca'
-        ]);
-
-        $predio = \App\Models\Predio::create([
-            'codigo_catastro' => '009800',
-            'total' => 1,
-            'orden' => 1
-        ]);
-
-        $historial_predio = \App\Models\HistorialPredio::create([
-            'predio_id' => $predio->id,
-            'destino_economico_id' => $codigo_destino_economico_a->id,
-            'fecha' => '2023-01-01',
-            'tipo_documento' => 'C',
-            'documento' => '112292211',
-            'nombre_propietario' => 'Ines Perado',
-            'direccion' => 'Radio Building #24-59',
-            'hectareas' => 12,
-            'metros_cuadrados' => 0,
-            'area_construida' => 1,
-            'tasa_por_mil' => 1.5,
-            'tipo_predio' => 'rural'
-        ]);
-
-        $avaluo_predio = \App\Models\Avaluo::create([
-            'predio_id' => $predio->id,
-            'destino_economico_id' => $codigo_destino_economico_a->id,
-            'vigencia' => '2023',
-            'pagado' => true,
-            'direccion' => 'Radio Building #24-59',
-            'valor_avaluo' => 5000000,
-            'hectareas' => 12,
-            'metros_cuadrados' => 0,
-            'area_construida' => 1,
-            'tasa_por_mil' => 1.5,
-            'tipo_predio' => 'rural'
-        ]);
-
-        $predio = \App\Models\Predio::create([
-            'codigo_catastro' => '008900',
-            'total' => 2,
-            'orden' => 1
-        ]);
-
-        $historial_predio = \App\Models\HistorialPredio::create([
-            'predio_id' => $predio->id,
-            'destino_economico_id' => $codigo_destino_economico_b->id,
-            'fecha' => '2023-01-01',
-            'tipo_documento' => 'C',
-            'documento' => '112292212',
-            'nombre_propietario' => 'Armando Casas',
-            'direccion' => 'Radio Building #24-60',
-            'hectareas' => 12,
-            'metros_cuadrados' => 0,
-            'area_construida' => 1,
-            'tasa_por_mil' => 1.5,
-            'tipo_predio' => 'rural'
-        ]);
-
-        $avaluo_predio = \App\Models\Avaluo::create([
-            'predio_id' => $predio->id,
-            'destino_economico_id' => $codigo_destino_economico_b->id,
-            'vigencia' => '2023',
-            'pagado' => true,
-            'direccion' => 'Radio Building #24-60',
-            'valor_avaluo' => 5000000,
-            'hectareas' => 12,
-            'metros_cuadrados' => 0,
-            'area_construida' => 1,
-            'tasa_por_mil' => 1.5,
-            'tipo_predio' => 'rural'
-        ]);
-
-        $predio = \App\Models\Predio::create([
-            'codigo_catastro' => '008900',
-            'total' => 2,
-            'orden' => 2
-        ]);
-
-        $historial_predio = \App\Models\HistorialPredio::create([
-            'predio_id' => $predio->id,
-            'destino_economico_id' => $codigo_destino_economico_b->id,
-            'fecha' => '2023-01-01',
-            'tipo_documento' => 'C',
-            'documento' => '112292213',
-            'nombre_propietario' => 'Armando Puertas',
-            'direccion' => 'Radio Building #24-60',
-            'hectareas' => 12,
-            'metros_cuadrados' => 0,
-            'area_construida' => 1,
-            'tasa_por_mil' => 1.5,
-            'tipo_predio' => 'rural'
-        ]);
-
-        $avaluo_predio = \App\Models\Avaluo::create([
-            'predio_id' => $predio->id,
-            'destino_economico_id' => $codigo_destino_economico_b->id,
-            'vigencia' => '2023',
-            'pagado' => true,
-            'direccion' => 'Radio Building #24-60',
-            'valor_avaluo' => 5000000,
-            'hectareas' => 12,
-            'metros_cuadrados' => 0,
-            'area_construida' => 1,
-            'tasa_por_mil' => 1.5,
-            'tipo_predio' => 'rural'
-        ]);
+        */
     }
 }

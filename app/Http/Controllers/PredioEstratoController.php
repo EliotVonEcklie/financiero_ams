@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Estrato;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreEstratoRequest;
-use App\Http\Requests\UpdateEstratoRequest;
+use Illuminate\Http\Request;
 
-class EstratoController extends Controller
+class PredioEstratoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +25,7 @@ class EstratoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEstratoRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -36,7 +33,7 @@ class EstratoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Estrato $estrato)
+    public function show(string $id)
     {
         //
     }
@@ -44,7 +41,7 @@ class EstratoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Estrato $estrato)
+    public function edit(string $id)
     {
         //
     }
@@ -52,7 +49,7 @@ class EstratoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEstratoRequest $request, Estrato $estrato)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -60,7 +57,7 @@ class EstratoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Estrato $estrato)
+    public function destroy(string $id)
     {
         //
     }

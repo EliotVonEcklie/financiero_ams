@@ -10,6 +10,8 @@ use App\Http\Controllers\PredioController;
 use App\Http\Controllers\UploadIgacController;
 use App\Http\Controllers\RangoAvaluoController;
 use App\Http\Controllers\UnidadMonetariaController;
+use App\Http\Controllers\VigenciaUnidadMonetariaController;
+
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -36,9 +38,12 @@ Route::middleware([
     })->name('index');
 
     Route::resource('upload_igac', UploadIgacController::class);
-    Route::resource('codigo_destino_economicos', CodigoDestinoEconomicoController::class);
+
     Route::resource('destino_economicos', DestinoEconomicoController::class)->withTrashed();
+    Route::resource('vigencia_unidad_monetarias', VigenciaUnidadMonetariaController::class)->withTrashed();
     Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
+    //Route::resource('predio_estratos', PredioEstratoController:class)->withTrashed();
+
     Route::resource('unidad_monetarias', UnidadMonetariaController::class)->withTrashed();
 });
 /*

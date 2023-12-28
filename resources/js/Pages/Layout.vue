@@ -21,7 +21,7 @@ defineProps({ title: String })
             </svg>
         </button>
 
-        <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Menú">
+        <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-80 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Menú">
             <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                 <ul class="space-y-2 font-medium">
                     <li>
@@ -65,7 +65,7 @@ defineProps({ title: String })
             </div>
         </aside>
 
-        <div class="p-4 sm:ml-64 h-screen text-gray-900 dark:text-white">
+        <div class="p-4 sm:ml-80 h-screen text-gray-900 dark:text-white">
             <h1 class="text-3xl text-left">{{ title }}</h1>
 
             <div class="border-t-2 mt-2 pt-6">
