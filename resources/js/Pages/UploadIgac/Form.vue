@@ -7,12 +7,20 @@ const form = useForm({
     enable_r2: false,
     igac_r2: null
 })
+const emit = defineEmits(['step'])
 
-defineEmits(['step'])
+function submit() {
+    form.post(route('upload_igac.store'), {
+        preserveScroll: true,
+        onSuccess: () => {
+            emit('step')
+        }
+    })
+}
 </script>
 
 <template>
-    <form @submit.prevent="$emit('step')" class="max-w-lg mx-auto">
+    <form @submit.prevent="submit" class="max-w-lg mx-auto">
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="igac_r1">Subir archivo R1</label>
         <input class="block mb-5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="igac_r1" @input="form.igac_r1 = $event.target.files[0]" type="file">
 
@@ -35,6 +43,6 @@ defineEmits(['step'])
             </progress>
         </Transition>
 
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Subir</button>
+        <button type="submit" :disabled="form.processing" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 disabled:bg-gray-700 dark:focus:ring-blue-800">Subir</button>
     </form>
 </template>

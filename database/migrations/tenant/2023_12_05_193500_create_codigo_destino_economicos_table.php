@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('codigo_destino_economicos', function (Blueprint $table) {
             $table->id();
             $table->string('codigo', 2)->unique();
-            $table->foreignIdFor(DestinoEconomico::class)->nullable();
-            $table->foreignIdFor(User::class)->nullable();
+            $table->foreignIdFor(DestinoEconomico::class)->nullable()->default(null);
+            $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();
         });
     }

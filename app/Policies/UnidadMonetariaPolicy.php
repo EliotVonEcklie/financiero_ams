@@ -13,7 +13,7 @@ class UnidadMonetariaPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class UnidadMonetariaPolicy
      */
     public function view(User $user, UnidadMonetaria $unidadMonetaria): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class UnidadMonetariaPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class UnidadMonetariaPolicy
      */
     public function update(User $user, UnidadMonetaria $unidadMonetaria): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class UnidadMonetariaPolicy
      */
     public function delete(User $user, UnidadMonetaria $unidadMonetaria): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class UnidadMonetariaPolicy
      */
     public function restore(User $user, UnidadMonetaria $unidadMonetaria): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class UnidadMonetariaPolicy
      */
     public function forceDelete(User $user, UnidadMonetaria $unidadMonetaria): bool
     {
-        //
+        return true;
     }
 }

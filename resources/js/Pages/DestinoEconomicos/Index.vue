@@ -1,20 +1,34 @@
 <script setup>
 import Table from '../Table.vue'
+import StateIndicator from '../StateIndicator.vue'
 import Layout from '../Layout.vue'
 import { router } from '@inertiajs/vue3'
+import axios from 'axios'
 
-defineProps(['destinoEconomicos'])
+const props = defineProps({ destinoEconomicos: Array })
+
+function softDelete(allSelected) {
+    props.destinoEconomicos.forEach(async x => {
+        if (allSelected || x.selected) {
+            console.log(route('destino_economicos.update', x.id))
+            await axios.put(route('destino_economicos.update', x.id), { 'toggle': true })
+        }
+    })
+
+    router.reload()
+}
 </script>
 
 <template>
     <Layout title="Destinos Económicos">
         <Table
             empty-message="No hay destinos económicos registrados."
-            :headers="['Id', 'Nombre', 'Códigos']"
+            :headers="['Id', 'Nombre', 'Códigos', 'Estado']"
             :elements="destinoEconomicos"
             :allow-create="true" :allow-edit="true" :allow-soft-delete="true" :allow-delete="false"
             @create="router.get(route('destino_economicos.create'))"
             @edit="(x) => router.get(route('destino_economicos.edit', x))"
+            @soft-delete="softDelete"
         >
             <template #id="{ element }">{{ element.id }}</template>
 
@@ -31,6 +45,10 @@ defineProps(['destinoEconomicos'])
                     <div v-else>
                         <p class="italic text-center">No hay códigos registrados para este destino económico.</p>
                     </div>
+                </td>
+
+                <td class="px-6 py-4">
+                    <StateIndicator :state="element.state" />
                 </td>
             </template>
         </Table>

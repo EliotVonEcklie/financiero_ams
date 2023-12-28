@@ -19,12 +19,24 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $destino_economico_a = \App\Models\DestinoEconomico::create([
+        \App\Models\UnidadMonetaria::create([
+            'tipo' => 'UVT'
+        ]);
+
+        \App\Models\UnidadMonetaria::create([
+            'tipo' => 'SMMLV'
+        ]);
+
+        \App\Models\UnidadMonetaria::create([
+            'tipo' => 'Unidad'
+        ]);
+
+        $codigo_destino_economico_a = \App\Models\CodigoDestinoEconomico::create([
             'codigo' => 'A',
             'nombre' => 'Habitacion'
         ]);
 
-        $destino_economico_b = \App\Models\DestinoEconomico::create([
+        $codigo_destino_economico_b = \App\Models\CodigoDestinoEconomico::create([
             'codigo' => 'B',
             'nombre' => 'Finca'
         ]);
@@ -37,7 +49,7 @@ class DatabaseSeeder extends Seeder
 
         $historial_predio = \App\Models\HistorialPredio::create([
             'predio_id' => $predio->id,
-            'destino_economico_id' => $destino_economico_a->id,
+            'destino_economico_id' => $codigo_destino_economico_a->id,
             'fecha' => '2023-01-01',
             'tipo_documento' => 'C',
             'documento' => '112292211',
@@ -52,7 +64,7 @@ class DatabaseSeeder extends Seeder
 
         $avaluo_predio = \App\Models\Avaluo::create([
             'predio_id' => $predio->id,
-            'destino_economico_id' => $destino_economico_a->id,
+            'destino_economico_id' => $codigo_destino_economico_a->id,
             'vigencia' => '2023',
             'pagado' => true,
             'direccion' => 'Radio Building #24-59',
@@ -72,7 +84,7 @@ class DatabaseSeeder extends Seeder
 
         $historial_predio = \App\Models\HistorialPredio::create([
             'predio_id' => $predio->id,
-            'destino_economico_id' => $destino_economico_b->id,
+            'destino_economico_id' => $codigo_destino_economico_b->id,
             'fecha' => '2023-01-01',
             'tipo_documento' => 'C',
             'documento' => '112292212',
@@ -87,7 +99,7 @@ class DatabaseSeeder extends Seeder
 
         $avaluo_predio = \App\Models\Avaluo::create([
             'predio_id' => $predio->id,
-            'destino_economico_id' => $destino_economico_b->id,
+            'destino_economico_id' => $codigo_destino_economico_b->id,
             'vigencia' => '2023',
             'pagado' => true,
             'direccion' => 'Radio Building #24-60',
@@ -107,7 +119,7 @@ class DatabaseSeeder extends Seeder
 
         $historial_predio = \App\Models\HistorialPredio::create([
             'predio_id' => $predio->id,
-            'destino_economico_id' => $destino_economico_b->id,
+            'destino_economico_id' => $codigo_destino_economico_b->id,
             'fecha' => '2023-01-01',
             'tipo_documento' => 'C',
             'documento' => '112292213',
@@ -122,7 +134,7 @@ class DatabaseSeeder extends Seeder
 
         $avaluo_predio = \App\Models\Avaluo::create([
             'predio_id' => $predio->id,
-            'destino_economico_id' => $destino_economico_b->id,
+            'destino_economico_id' => $codigo_destino_economico_b->id,
             'vigencia' => '2023',
             'pagado' => true,
             'direccion' => 'Radio Building #24-60',

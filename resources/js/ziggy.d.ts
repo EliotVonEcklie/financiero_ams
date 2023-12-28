@@ -11,27 +11,27 @@ declare module 'ziggy-js' {
         }
     ],
     "index": [],
-    "destino_economicos.index": [],
-    "destino_economicos.create": [],
-    "destino_economicos.store": [],
-    "destino_economicos.show": [
+    "upload_igac.index": [],
+    "upload_igac.create": [],
+    "upload_igac.store": [],
+    "upload_igac.show": [
         {
-            "name": "destino_economico"
+            "name": "upload_igac"
         }
     ],
-    "destino_economicos.edit": [
+    "upload_igac.edit": [
         {
-            "name": "destino_economico"
+            "name": "upload_igac"
         }
     ],
-    "destino_economicos.update": [
+    "upload_igac.update": [
         {
-            "name": "destino_economico"
+            "name": "upload_igac"
         }
     ],
-    "destino_economicos.destroy": [
+    "upload_igac.destroy": [
         {
-            "name": "destino_economico"
+            "name": "upload_igac"
         }
     ],
     "codigo_destino_economicos.index": [],
@@ -57,22 +57,48 @@ declare module 'ziggy-js' {
             "name": "codigo_destino_economico"
         }
     ],
+    "destino_economicos.index": [],
+    "destino_economicos.create": [],
+    "destino_economicos.store": [],
+    "destino_economicos.show": [
+        {
+            "name": "destino_economico"
+        }
+    ],
+    "destino_economicos.edit": [
+        {
+            "name": "destino_economico"
+        }
+    ],
+    "destino_economicos.update": [
+        {
+            "name": "destino_economico"
+        }
+    ],
+    "destino_economicos.destroy": [
+        {
+            "name": "destino_economico"
+        }
+    ],
     "rango_avaluos.index": [],
     "rango_avaluos.create": [],
     "rango_avaluos.store": [],
     "rango_avaluos.show": [
         {
-            "name": "rango_avaluo"
+            "name": "rango_avaluo",
+            "binding": "id"
         }
     ],
     "rango_avaluos.edit": [
         {
-            "name": "rango_avaluo"
+            "name": "rango_avaluo",
+            "binding": "id"
         }
     ],
     "rango_avaluos.update": [
         {
-            "name": "rango_avaluo"
+            "name": "rango_avaluo",
+            "binding": "id"
         }
     ],
     "rango_avaluos.destroy": [
@@ -80,113 +106,29 @@ declare module 'ziggy-js' {
             "name": "rango_avaluo"
         }
     ],
-    "api.predios.search": [],
-    "predios.index": [],
-    "predios.store": [],
-    "predios.show": [
+    "unidad_monetarias.index": [],
+    "unidad_monetarias.create": [],
+    "unidad_monetarias.store": [],
+    "unidad_monetarias.show": [
         {
-            "name": "predio",
-            "binding": "id"
+            "name": "unidad_monetaria"
         }
     ],
-    "predios.update": [
+    "unidad_monetarias.edit": [
         {
-            "name": "predio",
-            "binding": "id"
+            "name": "unidad_monetaria"
         }
     ],
-    "predios.destroy": [
+    "unidad_monetarias.update": [
         {
-            "name": "predio",
-            "binding": "id"
+            "name": "unidad_monetaria"
         }
     ],
-    "api.predios.historial_predios.latest": [
+    "unidad_monetarias.destroy": [
         {
-            "name": "predio",
-            "binding": "id"
+            "name": "unidad_monetaria"
         }
-    ],
-    "predios.historial_predios.index": [
-        {
-            "name": "predio",
-            "binding": "id"
-        }
-    ],
-    "predios.historial_predios.store": [
-        {
-            "name": "predio"
-        }
-    ],
-    "predios.historial_predios.show": [
-        {
-            "name": "predio",
-            "binding": "id"
-        },
-        {
-            "name": "historial_predio",
-            "binding": "id"
-        }
-    ],
-    "predios.historial_predios.update": [
-        {
-            "name": "predio"
-        },
-        {
-            "name": "historial_predio"
-        }
-    ],
-    "predios.historial_predios.destroy": [
-        {
-            "name": "predio"
-        },
-        {
-            "name": "historial_predio"
-        }
-    ],
-    "api.predios.avaluos.latest": [
-        {
-            "name": "predio"
-        }
-    ],
-    "predios.avaluos.index": [
-        {
-            "name": "predio"
-        }
-    ],
-    "predios.avaluos.store": [
-        {
-            "name": "predio"
-        }
-    ],
-    "predios.avaluos.show": [
-        {
-            "name": "predio"
-        },
-        {
-            "name": "avaluo",
-            "binding": "id"
-        }
-    ],
-    "predios.avaluos.update": [
-        {
-            "name": "predio"
-        },
-        {
-            "name": "avaluo",
-            "binding": "id"
-        }
-    ],
-    "predios.avaluos.destroy": [
-        {
-            "name": "predio"
-        },
-        {
-            "name": "avaluo",
-            "binding": "id"
-        }
-    ],
-    "api.igac": []
+    ]
 }
 }
 export {};

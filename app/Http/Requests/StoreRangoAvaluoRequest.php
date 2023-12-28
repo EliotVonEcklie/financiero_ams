@@ -11,7 +11,7 @@ class StoreRangoAvaluoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreRangoAvaluoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'desde' => ['required', 'numeric'],
+            'hasta' => ['required', 'numeric'],
+            'unidad_monetaria_id' => ['required', 'integer']
         ];
     }
 }

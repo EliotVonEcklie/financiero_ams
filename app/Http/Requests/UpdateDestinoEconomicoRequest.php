@@ -22,7 +22,9 @@ class UpdateDestinoEconomicoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'toggle' => ['nullable', 'boolean'],
+            'nombre' => ['exclude_if:toggle,true', 'required', 'string', 'max:255'],
+            'codigo_destino_economicos' => ['exclude_if:toggle,true', 'nullable', 'array'],
         ];
     }
 }

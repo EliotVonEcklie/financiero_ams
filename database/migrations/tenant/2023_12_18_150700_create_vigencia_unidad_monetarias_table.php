@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(PredioTipo::class);
             $table->decimal('valor', 32, 2);
             $table->softDeletes();
-            $table->foreignIdFor(User::class)->nullable();
+            $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();
         });
     }

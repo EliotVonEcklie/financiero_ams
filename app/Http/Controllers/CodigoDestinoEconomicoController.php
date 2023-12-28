@@ -30,24 +30,7 @@ class CodigoDestinoEconomicoController extends Controller
      */
     public function store(StoreCodigoDestinoEconomicoRequest $request)
     {
-        $errors = $request->errors();
-
-        if ($errors->any()) {
-            return response()->json($errors->all());
-        }
-
-        // The incoming request is valid...
-
-        // Retrieve the validated input data...
-        $validated = $request->validated();
-
-        // Store the destino economico...
-        $predio = CodigoDestinoEconomico::create($validated);
-        $predio->save();
-
-        return response()->json([
-            'success' => 'Saved destino economico successfully!'
-        ]);
+        //
     }
 
     /**

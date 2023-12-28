@@ -30,26 +30,31 @@ defineProps({ title: String })
                         </Link>
                     </li>
                     <li>
+                        <Link :href="route('vigencia_unidad_monetarias.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('VigenciaUnidadMonetarias') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="flex-1 ms-3 whitespace-nowrap">2. Vigencias Unidades Monetarias</span>
+                        </Link>
+                    </li>
+                    <li>
                         <Link :href="route('rango_avaluos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('RangoAvaluos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <span class="flex-1 ms-3 whitespace-nowrap">2. Rangos Avaluos</span>
+                            <span class="flex-1 ms-3 whitespace-nowrap">3. Rangos Avaluos</span>
                         </Link>
                     </li>
                     <li>
                         <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <span class="flex-1 ms-3 whitespace-nowrap">3. Estratos</span>
+                            <span class="flex-1 ms-3 whitespace-nowrap">4. Estratos</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <span class="flex-1 ms-3 whitespace-nowrap">4. Estratificaciones</span>
+                            <span class="flex-1 ms-3 whitespace-nowrap">5. Estratificaciones</span>
                         </a>
                     </li>
                 </ul>
                 <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
                     <li>
-                        <a href="#" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
-                            <span class="ms-3">A. Unidades Monetarias</span>
-                        </a>
+                        <Link :href="route('unidad_monetarias.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('UnidadMonetarias') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="flex-1 ms-3 whitespace-nowrap">A. Unidades Monetarias</span>
+                        </Link>
                     </li>
                     <li>
                         <a href="#" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">

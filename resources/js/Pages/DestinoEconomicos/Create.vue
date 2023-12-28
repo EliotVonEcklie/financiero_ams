@@ -1,13 +1,12 @@
 <script setup>
-import Layout from '../Layout.vue'
+import Layout from '~Pages/Layout.vue'
 import { useForm } from '@inertiajs/vue3'
-import { ref, onMounted } from 'vue'
 
+const props = defineProps({ codigoDestinoEconomicos: Object })
 const form = useForm({
     nombre: null,
     codigo_destino_economicos: []
 })
-const props = defineProps({ codigoDestinoEconomicos: Object })
 
 function submit() {
     form.codigo_destino_economicos = props.codigoDestinoEconomicos
@@ -28,8 +27,8 @@ function submit() {
             <div class="mb-5 w-full">
                 <div v-if="codigoDestinoEconomicos.length > 0">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccionar Códigos</label>
-                    <ul class="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        <li v-for="codigoDestinoEconomico in codigoDestinoEconomicos" :key="codigoDestinoEconomico.id" class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <ul class="w-full grid grid-cols-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <li v-for="codigoDestinoEconomico in codigoDestinoEconomicos" :key="codigoDestinoEconomico.id" class="w-full border-b border-r border-gray-200 dark:border-gray-600">
                             <div class="flex items-center ps-3">
                                 <input :id="codigoDestinoEconomico.id + '-checkbox'" type="checkbox" v-model="codigoDestinoEconomico.selected" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                 <label :for="codigoDestinoEconomico.id + '-checkbox'" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ codigoDestinoEconomico.codigo }}</label>
