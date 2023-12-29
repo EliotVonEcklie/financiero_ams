@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '../Layout.vue'
+import Layout from '~Pages/Layout.vue'
 import { useForm, router } from '@inertiajs/vue3'
 
 const props = defineProps({ predioTipo: Object })
