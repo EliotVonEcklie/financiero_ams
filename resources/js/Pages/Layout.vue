@@ -1,10 +1,10 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3'
 import { onMounted } from 'vue'
-import { initDrawers } from 'flowbite'
+import { initFlowbite } from 'flowbite'
 
 onMounted(() => {
-    initDrawers()
+    initFlowbite()
 })
 
 defineProps({ title: String })

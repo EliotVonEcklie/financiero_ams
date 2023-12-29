@@ -1,23 +1,23 @@
 <script setup>
-import Layout from '../Layout.vue'
+import Layout from '~Pages/Layout.vue'
 import { useForm, router } from '@inertiajs/vue3'
 
-const props = defineProps({ unidadMonetaria: Object })
+const props = defineProps({ predioTipo: Object })
 const form = useForm({
-    tipo: props.unidadMonetaria.tipo
+    tipo: props.predioTipo.tipo
 })
 
 function submit() {
-    form.put(route('unidad_monetarias.update', props.unidadMonetaria.id), {
+    form.put(route('predio_tipos.update', props.predioTipo.id), {
         onSuccess: () => {
-            router.get(route('unidad_monetarias.index'))
+            router.get(route('predio_tipos.index'))
         }
     })
 }
 </script>
 
 <template>
-    <Layout title="Editar Unidad Monetaria">
+    <Layout title="Editar tipo predio">
         <form @submit.prevent="submit" class="max-w-sm mx-auto">
             <div class="mb-5">
                 <label for="tipo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo</label>

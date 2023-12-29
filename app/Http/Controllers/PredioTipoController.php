@@ -58,7 +58,7 @@ class PredioTipoController extends Controller
     public function edit(PredioTipo $predioTipo)
     {
         return inertia('PredioTipos/Edit', [
-            'unidadMonetaria' => [
+            'predioTipo' => [
                 'id' => $predioTipo->id,
                 'tipo' => $predioTipo->tipo
             ]

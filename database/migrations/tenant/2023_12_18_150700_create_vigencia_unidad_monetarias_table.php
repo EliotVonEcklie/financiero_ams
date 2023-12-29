@@ -17,8 +17,7 @@ return new class extends Migration
         Schema::create('vigencia_unidad_monetarias', function (Blueprint $table) {
             $table->id();
             $table->year('vigencia');
-            $table->foreignIdFor(UnidadMonetaria::class);
-            $table->foreignIdFor(PredioTipo::class);
+            $table->foreignIdFor(UnidadMonetaria::class)->constrained();
             $table->decimal('valor', 32, 2);
             $table->softDeletes();
             $table->foreignIdFor(User::class)->nullable()->default(null);

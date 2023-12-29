@@ -11,7 +11,7 @@ class UpdateVigenciaUnidadMonetariaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateVigenciaUnidadMonetariaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'toggle' => ['nullable', 'boolean'],
+            'vigencia' => ['exclude_if:toggle,true', 'required', 'date_format:Y', 'after:1970', 'before:today'],
+            'unidad_monetaria_id' => ['exclude_if:toggle,true', 'required', 'integer'],
+            'valor' => ['exclude_if:toggle,true', 'required', 'numeric']
         ];
     }
 }

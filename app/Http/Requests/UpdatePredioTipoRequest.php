@@ -11,7 +11,7 @@ class UpdatePredioTipoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdatePredioTipoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+                'toggle' => ['nullable', 'boolean'],
+                'tipo' => ['exclude_if:toggle,true', 'required', 'string', 'max:255'],
         ];
     }
 }

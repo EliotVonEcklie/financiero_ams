@@ -22,8 +22,9 @@ class StoreVigenciaUnidadMonetariaRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'vigencia' => ['required', 'date_format:Y', 'after:1970', 'before:today'],
-           'unidad_monetaria_id' => ['required', 'integer']
+            'vigencia' => ['required', 'date_format:Y', 'after:1970', 'before:today'],
+            'unidad_monetaria_id' => ['required', 'integer'],
+            'valor' => ['required', 'numeric']
         ];
     }
 }

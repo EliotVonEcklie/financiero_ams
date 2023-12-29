@@ -5,7 +5,7 @@ import StateIndicator from '../StateIndicator.vue'
 import { router } from '@inertiajs/vue3'
 import axios from 'axios'
 
-const props = defineProps({vigenciaUnidadMonetarias: Array })
+const props = defineProps({ vigenciaUnidadMonetarias: Array })
 
 function softDelete(allSelected) {
     props.vigenciaUnidadMonetarias.forEach(async x => {
@@ -22,7 +22,7 @@ function softDelete(allSelected) {
     <Layout title="Vigencia Unidades Monetarias">
         <Table
             empty-message="No hay vigencias registradas."
-            :headers="['Id', 'Vigencia', 'Unidad Monetaria', 'Tipo Predio', 'Estado']"
+            :headers="['Id', 'Vigencia', 'Unidad Monetaria', 'Valor', 'Estado']"
             :elements="vigenciaUnidadMonetarias"
             :allow-create="true" :allow-edit="true" :allow-soft-delete="true" :allow-delete="false"
             @create="router.get(route('vigencia_unidad_monetarias.create'))"
@@ -41,7 +41,7 @@ function softDelete(allSelected) {
                 </td>
 
                 <td class="px-6 py-4">
-                    {{ element.predioTipo }}
+                    {{ '$ ' + element.valor }}
                 </td>
 
                 <td class="px-6 py-4">

@@ -19,10 +19,11 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        \App\Models\Tenant::create([
-            'id' => 'rosalia',
+        \App\Models\Tenant::firstOrCreate([
+            'id' => 'rosalia'
+        ], [
             'tenancy_db_name' => 'rosalia'
-        ])->domains()->create([
+        ])->domains()->firstOrCreate([
             'domain' => 'rosalia'
         ]);
 

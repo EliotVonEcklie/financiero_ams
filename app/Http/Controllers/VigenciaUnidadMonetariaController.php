@@ -20,10 +20,12 @@ class VigenciaUnidadMonetariaController extends Controller
                 return [
                     'id' => $vigenciaUnidadMonetaria->id,
                     'vigencia' => $vigenciaUnidadMonetaria->vigencia,
-                    'unidadMonetaria' => $vigenciaUnidadMonetaria->unidadMonetaria,
-                    'predioTipo' => $vigenciaUnidadMonetaria->predioTipo,
+                    'unidadMonetaria' => [
+                        'id' => $vigenciaUnidadMonetaria->unidadMonetaria->id,
+                        'tipo' => $vigenciaUnidadMonetaria->unidadMonetaria->tipo
+                    ],
+                    'valor' => $vigenciaUnidadMonetaria->valor,
                     'state' => !$vigenciaUnidadMonetaria->trashed()
-
                 ];
             })
         ]);
@@ -68,13 +70,19 @@ class VigenciaUnidadMonetariaController extends Controller
      */
     public function edit(VigenciaUnidadMonetaria $vigenciaUnidadMonetaria)
     {
-        return inertia('UnidadMonetarias/Edit', [
-            'unidadMonetaria' => [
+        return inertia('VigenciaUnidadMonetarias/Edit', [
+            'vigenciaUnidadMonetaria' => [
                 'id' => $vigenciaUnidadMonetaria->id,
                 'vigencia' => $vigenciaUnidadMonetaria->vigencia,
-                'unidadMonetaria' => $vigenciaUnidadMonetaria->unidadMonetaria,
-                'predioTipo' => $vigenciaUnidadMonetaria->predioTipo
-            ]
+                'unidad_monetaria_id' => $vigenciaUnidadMonetaria->unidadMonetaria->id,
+                'valor' => $vigenciaUnidadMonetaria->valor
+            ],
+            'unidadMonetarias' => UnidadMonetaria::all()->map(function ($unidadMonetaria) {
+                return [
+                    'id' => $unidadMonetaria->id,
+                    'tipo' => $unidadMonetaria->tipo
+                ];
+            })
         ]);
     }
 
@@ -83,7 +91,20 @@ class VigenciaUnidadMonetariaController extends Controller
      */
     public function update(UpdateVigenciaUnidadMonetariaRequest $request, VigenciaUnidadMonetaria $vigenciaUnidadMonetaria)
     {
-        //
+        if ($request->safe()->has('toggle')) {
+            if ($vigenciaUnidadMonetaria->trashed()) {
+                $vigenciaUnidadMonetaria->restore();
+            } else {
+                $vigenciaUnidadMonetaria->delete();
+            }
+
+            return;
+        }
+
+        // Update the unidad monetaria...
+        $vigenciaUnidadMonetaria->update($request->validated());
+
+        return to_route('vigencia_unidad_monetarias.index');
     }
 
     /**
@@ -91,6 +112,8 @@ class VigenciaUnidadMonetariaController extends Controller
      */
     public function destroy(VigenciaUnidadMonetaria $vigenciaUnidadMonetaria)
     {
-        //
+        $vigenciaUnidadMonetaria->forceDelete();
+
+        return to_route('vigencia_unidad_monetarias.index');
     }
 }

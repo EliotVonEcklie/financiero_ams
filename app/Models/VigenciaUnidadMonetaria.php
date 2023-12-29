@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VigenciaUnidadMonetaria extends Model
@@ -12,6 +13,12 @@ class VigenciaUnidadMonetaria extends Model
 
     protected $fillable = [
         'vigencia',
-        'unidad_monetaria_id'
+        'unidad_monetaria_id',
+        'valor'
     ];
+
+    public function unidadMonetaria(): BelongsTo
+    {
+        return $this->belongsTo(UnidadMonetaria::class);
+    }
 }
