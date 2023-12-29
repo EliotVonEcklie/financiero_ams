@@ -11,7 +11,7 @@ use App\Http\Controllers\UploadIgacController;
 use App\Http\Controllers\RangoAvaluoController;
 use App\Http\Controllers\UnidadMonetariaController;
 use App\Http\Controllers\VigenciaUnidadMonetariaController;
-
+use App\Http\Controllers\PredioTipoController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -45,6 +45,7 @@ Route::middleware([
     //Route::resource('predio_estratos', PredioEstratoController:class)->withTrashed();
 
     Route::resource('unidad_monetarias', UnidadMonetariaController::class)->withTrashed();
+    Route::resource('predio_tipos', PredioTipoController::class)->withTrashed();
 });
 /*
 Route::middleware([

@@ -57,9 +57,9 @@ defineProps({ title: String })
                         </Link>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
-                            <span class="ms-3">B. Tipos Predios</span>
-                        </a>
+                        <Link :href="route('predio_tipos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('PredioTipos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="flex-1 ms-3 whitespace-nowrap">B. Tipos Predios</span>
+                        </Link>
                     </li>
                 </ul>
             </div>

@@ -11,7 +11,7 @@ class StoreVigenciaUnidadMonetariaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreVigenciaUnidadMonetariaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+           'vigencia' => ['required', 'date_format:Y', 'after:1970', 'before:today'],
+           'unidad_monetaria_id' => ['required', 'integer']
         ];
     }
 }

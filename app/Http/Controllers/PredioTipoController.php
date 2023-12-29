@@ -14,7 +14,15 @@ class PredioTipoController extends Controller
      */
     public function index()
     {
-        //
+        return inertia('PredioTipos/Index', [
+            'predioTipos' => PredioTipo::withTrashed()->get()->map(function ($predioTipo) {
+                return [
+                    'id' => $predioTipo->id,
+                    'tipo' => $predioTipo->tipo,
+                    'state' => !$predioTipo->trashed()
+                ];
+            })
+        ]);
     }
 
     /**
@@ -22,7 +30,7 @@ class PredioTipoController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('PredioTipos/Create');
     }
 
     /**
@@ -30,7 +38,10 @@ class PredioTipoController extends Controller
      */
     public function store(StorePredioTipoRequest $request)
     {
-        //
+        // Store the unidad monetaria...
+        PredioTipo::create($request->validated());
+
+        return to_route('predio_tipos.index');
     }
 
     /**
@@ -46,7 +57,12 @@ class PredioTipoController extends Controller
      */
     public function edit(PredioTipo $predioTipo)
     {
-        //
+        return inertia('PredioTipos/Edit', [
+            'unidadMonetaria' => [
+                'id' => $predioTipo->id,
+                'tipo' => $predioTipo->tipo
+            ]
+        ]);
     }
 
     /**
@@ -54,7 +70,20 @@ class PredioTipoController extends Controller
      */
     public function update(UpdatePredioTipoRequest $request, PredioTipo $predioTipo)
     {
-        //
+        if ($request->safe()->has('toggle')) {
+            if ($predioTipo->trashed()) {
+                $predioTipo->restore();
+            } else {
+                $predioTipo->delete();
+            }
+
+            return;
+        }
+
+        // Update the unidad monetaria...
+        $predioTipo->update($request->validated());
+
+        return to_route('predio_tipos.index');
     }
 
     /**
@@ -62,6 +91,8 @@ class PredioTipoController extends Controller
      */
     public function destroy(PredioTipo $predioTipo)
     {
-        //
+        $predioTipo->forceDelete();
+
+        return to_route('predio_tipos.index');
     }
 }
