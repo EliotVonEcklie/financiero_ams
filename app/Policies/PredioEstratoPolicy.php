@@ -13,7 +13,7 @@ class PredioEstratoPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class PredioEstratoPolicy
      */
     public function view(User $user, PredioEstrato $predio_estrato): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class PredioEstratoPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class PredioEstratoPolicy
      */
     public function update(User $user, PredioEstrato $predio_estrato): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class PredioEstratoPolicy
      */
     public function delete(User $user, PredioEstrato $predio_estrato): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class PredioEstratoPolicy
      */
     public function restore(User $user, PredioEstrato $predio_estrato): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class PredioEstratoPolicy
      */
     public function forceDelete(User $user, PredioEstrato $predio_estrato): bool
     {
-        //
+        return true;
     }
 }

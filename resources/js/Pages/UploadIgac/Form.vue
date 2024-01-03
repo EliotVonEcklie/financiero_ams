@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
-import { Transition } from 'vue';
+import { Transition } from 'vue'
 
 const form = useForm({
     igac_r1: null,
@@ -11,7 +11,7 @@ const emit = defineEmits(['step'])
 
 function submit() {
     form.post(route('upload_igac.store'), {
-        preserveScroll: true,
+        preserveScroll: false,
         onSuccess: () => {
             emit('step')
         }
@@ -38,7 +38,7 @@ function submit() {
         </Transition>
 
         <Transition name="slide-fade">
-            <progress v-if="form.progress" :value="form.progress.percentage" max="100" class="">
+            <progress v-if="form.progress" :value="form.progress.percentage" max="100" class="w-full mb-5">
                 {{ form.progress.percentage }}%
             </progress>
         </Transition>

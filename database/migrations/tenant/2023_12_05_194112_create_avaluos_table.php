@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Predio;
-use App\Models\DestinoEconomico;
+use App\Models\CodigoDestinoEconomico;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('avaluos', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Predio::class)->constrained();
-            $table->foreignIdFor(DestinoEconomico::class)->constrained();
+            $table->foreignIdFor(CodigoDestinoEconomico::class)->constrained();
             $table->year('vigencia');
             $table->boolean('pagado');
             $table->text('direccion');

@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Predio;
-use App\Models\DestinoEconomico;
+use App\Models\CodigoDestinoEconomico;
 use App\Models\Avaluo;
 use App\Models\HistorialPredio;
 
@@ -37,14 +37,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        //Cache::put('parse_igac', (object) ['count' => 0, 'finished' => false]);
-
         $this->process();
-
-        // Set finished status
-        //$status = Cache::get('parse_igac');
-        //$status->finished =  true;
-        //Cache::put('parse_igac', $status);
     }
 
     private function process() {
@@ -67,7 +60,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
             ]);
 
             // Find or create DestinoEconomico
-            $destino_economico = DestinoEconomico::firstOrCreate([
+            $codigo_destino_economico = CodigoDestinoEconomico::firstOrCreate([
                 'codigo' => $data_r1->destino_economico
             ]);
 
@@ -76,7 +69,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
                 'predio_id' => $predio->id,
                 'fecha' => date_format($data_r1->vigencia, 'Y-m-d')
             ], [
-                'destino_economico_id' => $destino_economico->id,
+                'destino_economico_id' => null,
                 'tipo_documento' => $data_r1->tipo_documento,
                 'documento' => $data_r1->documento,
                 'nombre_propietario' => $data_r1->nombre_propietario,
@@ -105,11 +98,6 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
                 'estrato' => 0,
                 'tipo_predio' => $data_r1->tipo_predio
             ]);
-
-            // Update count on status
-            //$status = Cache::get('parse_igac');
-            //$status->count++;
-            //Cache::put('parse_igac');
 
             $line_r1 = strtok($separator);
         }

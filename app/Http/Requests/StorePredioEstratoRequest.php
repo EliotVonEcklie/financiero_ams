@@ -22,7 +22,7 @@ class StorePredioEstratoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'estrato' => ['required', 'integer'],
+            'estrato' => ['required', 'integer']
         ];
     }
 }

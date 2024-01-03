@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Predio;
-use App\Models\DestinoEconomico;
+use App\Models\CodigoDestinoEconomico;
 use App\Models\PredioEstrato;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('historial_predios', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Predio::class)->constrained();
-            $table->foreignIdFor(DestinoEconomico::class)->constrained();
+            $table->foreignIdFor(CodigoDestinoEconomico::class)->constrained();
             $table->date('fecha');
             $table->string('tipo_documento', 2);
             $table->string('documento', 30);

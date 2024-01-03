@@ -14,13 +14,14 @@ class PredioEstratoController extends Controller
     public function index()
     {
         return inertia('PredioEstratos/Index', [
-            'predioEstratos' => PredioEstrato::withTrashed()->map(function ($predioEstrato) {
+            'predioEstratos' => PredioEstrato::withTrashed()->get()->map(function ($predioEstrato) {
                 return [
                     'id' => $predioEstrato->id,
                     'estrato' => $predioEstrato->estrato,
                     'state' => !$predioEstrato->trashed(),
                     'user' => [
-                        'name' =>  $predioEstrato->user->name
+                        'id' => isset($predioEstrato->user) ? $predioEstrato->user->id : null,
+                        'name' =>  isset($predioEstrato->user) ? $predioEstrato->user->name : ''
                     ]
                 ];
             })
@@ -32,7 +33,7 @@ class PredioEstratoController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('PredioEstratos/Create');
     }
 
     /**
@@ -40,7 +41,10 @@ class PredioEstratoController extends Controller
      */
     public function store(StorePredioEstratoRequest $request)
     {
-        //
+        // Store the predio estrato...
+        PredioEstrato::create($request->validated());
+
+        return to_route('predio_estratos.index');
     }
 
     /**
@@ -56,7 +60,13 @@ class PredioEstratoController extends Controller
      */
     public function edit(PredioEstrato $predioEstrato)
     {
-        //
+        return inertia('PredioEstratos/Edit', [
+            'predioEstrato' => [
+                'id' => $predioEstrato->id,
+                'estrato' => $predioEstrato->estrato,
+                'state' => !$predioEstrato->trashed(),
+            ]
+        ]);
     }
 
     /**
@@ -64,7 +74,20 @@ class PredioEstratoController extends Controller
      */
     public function update(UpdatePredioEstratoRequest $request, PredioEstrato $predioEstrato)
     {
-        //
+        if ($request->safe()->has('toggle')) {
+            if ($predioEstrato->trashed()) {
+                $predioEstrato->restore();
+            } else {
+                $predioEstrato->delete();
+            }
+
+            return;
+        }
+
+        // Update the predio estrato...
+        $predioEstrato->update($request->validated());
+
+        return to_route('predio_estratos.index');
     }
 
     /**
@@ -72,6 +95,8 @@ class PredioEstratoController extends Controller
      */
     public function destroy(PredioEstrato $predioEstrato)
     {
-        //
+        $predioEstrato->forceDelete();
+
+        return to_route('predio_estratos.index');
     }
 }

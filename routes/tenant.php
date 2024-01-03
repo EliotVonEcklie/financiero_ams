@@ -6,7 +6,9 @@ use App\Http\Controllers\DestinoEconomicoController;
 use App\Http\Controllers\HistorialPredioController;
 use App\Http\Controllers\AvaluoController;
 use App\Http\Controllers\CodigoDestinoEconomicoController;
+use App\Http\Controllers\EstratificacionController;
 use App\Http\Controllers\PredioController;
+use App\Http\Controllers\PredioEstratoController;
 use App\Http\Controllers\UploadIgacController;
 use App\Http\Controllers\RangoAvaluoController;
 use App\Http\Controllers\UnidadMonetariaController;
@@ -42,7 +44,8 @@ Route::middleware([
     Route::resource('destino_economicos', DestinoEconomicoController::class)->withTrashed();
     Route::resource('vigencia_unidad_monetarias', VigenciaUnidadMonetariaController::class)->withTrashed();
     Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
-    //Route::resource('predio_estratos', PredioEstratoController:class)->withTrashed();
+    Route::resource('predio_estratos', PredioEstratoController::class)->withTrashed();
+    Route::resource('estratificaciones', EstratificacionController::class)->withTrashed();
 
     Route::resource('unidad_monetarias', UnidadMonetariaController::class)->withTrashed();
     Route::resource('predio_tipos', PredioTipoController::class)->withTrashed();

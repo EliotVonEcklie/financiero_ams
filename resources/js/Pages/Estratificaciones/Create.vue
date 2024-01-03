@@ -9,10 +9,10 @@ const form = useForm({
 </script>
 
 <template>
-    <Layout title="Crear Estrato">
-        <form @submit.prevent="form.post(route('predio_estratos.store'))" class="max-w-sm mx-auto">
+    <Layout title="Crear Estratificaciones">
+        <form @submit.prevent="form.post(route('estratificaciones.store'))" class="max-w-sm mx-auto">
             <div class="mb-5">
-                <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estrato</label>
+                <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estratificaciones</label>
                 <div class="relative flex items-center max-w-[8rem]">
                     <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input" class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                         <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">

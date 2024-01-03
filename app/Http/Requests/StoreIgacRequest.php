@@ -11,7 +11,7 @@ class StoreIgacRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreIgacRequest extends FormRequest
         return [
             'igac_r1' => ['required', 'file', 'mimes:txt'],
             'enable_r2' => ['required', 'boolean'],
-            'igac_r2' => ['nullable', 'file', 'mimes:txt']
+            'igac_r2' => ['exclude_if:enable_r2,false', 'required', 'file', 'mimes:txt']
         ];
     }
 }

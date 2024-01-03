@@ -13,7 +13,7 @@ class EstratificacionPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class EstratificacionPolicy
      */
     public function view(User $user, Estratificacion $estratificacion): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class EstratificacionPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class EstratificacionPolicy
      */
     public function update(User $user, Estratificacion $estratificacion): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class EstratificacionPolicy
      */
     public function delete(User $user, Estratificacion $estratificacion): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class EstratificacionPolicy
      */
     public function restore(User $user, Estratificacion $estratificacion): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class EstratificacionPolicy
      */
     public function forceDelete(User $user, Estratificacion $estratificacion): bool
     {
-        //
+        return true;
     }
 }

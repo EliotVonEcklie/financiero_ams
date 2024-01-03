@@ -1,14 +1,14 @@
 <script setup>
-import Layout from '../Layout.vue'
-import Form from './Form.vue'
-import Results from './Results.vue'
+import Layout from '~Pages/Layout.vue'
+import Form from '~Pages/UploadIgac/Form.vue'
+import Results from '~Pages/UploadIgac/Results.vue'
 import { ref } from 'vue'
 
 const step = ref(1)
 </script>
 
 <template>
-    <Layout title="Subir Información IGAC">
+    <Layout title="Importar Información Predial IGAC">
         <ol class="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
             <li :class="{ 'text-blue-600 dark:text-blue-500': step == 1 }" class="flex md:w-full items-center sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
@@ -20,7 +20,7 @@ const step = ref(1)
                     <div v-else>
                         <span class="me-2">1</span>
                     </div>
-                    Subir <span class="sm:inline-flex sm:ms-2">Archivos</span>
+                    Subir<span class="sm:inline-flex sm:ms-2">Archivos</span>
                 </span>
             </li>
             <li :class="{ 'text-blue-600 dark:text-blue-500': step == 2 }" class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
@@ -33,7 +33,7 @@ const step = ref(1)
                     <div v-else>
                         <span class="me-2">2</span>
                     </div>
-                    Ver <span class="sm:inline-flex sm:ms-2">Resultados</span>
+                    Ver<span class="sm:inline-flex sm:ms-2">Resultados</span>
                 </span>
             </li>
         </ol>

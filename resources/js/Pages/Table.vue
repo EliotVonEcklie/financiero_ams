@@ -8,7 +8,6 @@ onMounted(() => {
 
 const searchQuery = ref('')
 const allSelected = ref(false)
-
 defineProps({
     headers: Array,
     elements: Array,
@@ -24,7 +23,7 @@ defineEmits(['search', 'create', 'softDelete', 'delete', 'edit'])
 <template>
     <div class="relative overflow-x-auto min-h-[150px] shadow-md sm:rounded-lg">
         <div class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
-            <div>
+            <div v-if="allowCreate || allowSoftDelete || allowDelete">
                 <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
                     <span class="sr-only">Botón de acciones</span>
                     Acciones
@@ -33,7 +32,7 @@ defineEmits(['search', 'create', 'softDelete', 'delete', 'edit'])
                     </svg>
                 </button>
                 <!-- Dropdown menu -->
-                <div v-if="allowCreate || allowSoftDelete || allowDelete" id="dropdownAction" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                <div id="dropdownAction" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                     <div v-if="allowCreate" class="py-1">
                         <a @click="$emit('create')" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Crear</a>
                     </div>

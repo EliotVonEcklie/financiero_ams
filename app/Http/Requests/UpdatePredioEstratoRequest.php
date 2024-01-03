@@ -23,7 +23,7 @@ class UpdatePredioEstratoRequest extends FormRequest
     {
         return [
             'toggle' => ['nullable', 'boolean'],
-            'estrato' => ['exclude_if:toggle,true', 'required', 'integer'],
+            'estrato' => ['exclude_if:toggle,true', 'required', 'integer']
         ];
     }
 }

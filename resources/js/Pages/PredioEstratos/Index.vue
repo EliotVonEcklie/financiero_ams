@@ -23,20 +23,16 @@ function softDelete(allSelected) {
     <Layout title="Estratos">
         <Table
             empty-message="No hay estratos registrados."
-            :headers="['Id', 'Nombre', 'Estrato', 'Estado']"
+            :headers="['Id', 'Estrato', 'Estado']"
             :elements="predioEstratos"
             :allow-create="true" :allow-edit="true" :allow-soft-delete="true" :allow-delete="false"
             @create="router.get(route('predio_estratos.create'))"
-            @edit="(x) => router.get(route('predio_estratos.edit', x))"
+            @edit="x => router.get(route('predio_estratos.edit', x))"
             @soft-delete="softDelete"
         >
             <template #id="{ element }">{{ element.id }}</template>
 
             <template #row="{ element }">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ element.nombre }}
-                </th>
-
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ element.estrato }}
                 </th>

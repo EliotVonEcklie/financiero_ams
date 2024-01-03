@@ -13,7 +13,7 @@ class RangoAvaluoPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class RangoAvaluoPolicy
      */
     public function view(User $user, RangoAvaluo $rangoAvaluo): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class RangoAvaluoPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class RangoAvaluoPolicy
      */
     public function update(User $user, RangoAvaluo $rangoAvaluo): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class RangoAvaluoPolicy
      */
     public function delete(User $user, RangoAvaluo $rangoAvaluo): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class RangoAvaluoPolicy
      */
     public function restore(User $user, RangoAvaluo $rangoAvaluo): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class RangoAvaluoPolicy
      */
     public function forceDelete(User $user, RangoAvaluo $rangoAvaluo): bool
     {
-        //
+        return true;
     }
 }

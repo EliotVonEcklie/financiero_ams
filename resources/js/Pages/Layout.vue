@@ -25,29 +25,29 @@ defineProps({ title: String })
             <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                 <ul class="space-y-2 font-medium">
                     <li>
+                        <Link :href="route('upload_igac.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('UploadIgac') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="ms-3">1. Importar Información Predial</span>
+                        </Link>
+                    </li>
+                    <li>
                         <Link :href="route('destino_economicos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('DestinoEconomicos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <span class="ms-3">1. Destinos Economicos</span>
+                            <span class="ms-3">2. Destinos Economicos</span>
                         </Link>
                     </li>
                     <li>
                         <Link :href="route('vigencia_unidad_monetarias.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('VigenciaUnidadMonetarias') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <span class="flex-1 ms-3 whitespace-nowrap">2. Vigencias Unidades Monetarias</span>
+                            <span class="flex-1 ms-3 whitespace-nowrap">3. Vigencias Unidades Monetarias</span>
                         </Link>
                     </li>
                     <li>
                         <Link :href="route('rango_avaluos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('RangoAvaluos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <span class="flex-1 ms-3 whitespace-nowrap">3. Rangos Avaluos</span>
+                            <span class="flex-1 ms-3 whitespace-nowrap">4. Rangos Avaluos</span>
                         </Link>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <span class="flex-1 ms-3 whitespace-nowrap">4. Estratos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <Link :href="route('estratificaciones.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('Estratificaciones') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <span class="flex-1 ms-3 whitespace-nowrap">5. Estratificaciones</span>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
                 <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
@@ -59,6 +59,11 @@ defineProps({ title: String })
                     <li>
                         <Link :href="route('predio_tipos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('PredioTipos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <span class="flex-1 ms-3 whitespace-nowrap">B. Tipos Predios</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link :href="route('predio_estratos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('PredioEstratos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="flex-1 ms-3 whitespace-nowrap">C. Estratos</span>
                         </Link>
                     </li>
                 </ul>

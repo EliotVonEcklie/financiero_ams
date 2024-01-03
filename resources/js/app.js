@@ -1,8 +1,18 @@
 import { createApp, h } from 'vue'
-import { createInertiaApp } from '@inertiajs/vue3'
+import { createInertiaApp, router } from '@inertiajs/vue3'
 import { ZiggyVue } from '~ziggy-vue'
+import { initFlowbite } from 'flowbite'
+
+router.on('finish', (e) => {
+    if (e.detail.visit.completed) {
+        initFlowbite()
+    }
+})
 
 createInertiaApp({
+    progress: {
+        includeCSS: true
+    },
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
         return pages[`./Pages/${name}.vue`]
