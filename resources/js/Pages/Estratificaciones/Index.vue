@@ -23,7 +23,7 @@ function softDelete(allSelected) {
     <Layout title="Estratificaciones">
         <Table
             empty-message="No hay estratificaciones registradas."
-            :headers="['Id', 'Vigencia', 'Tipo Predio', 'Destino ', 'Tarifa', 'Tasa', 'Estado']"
+            :headers="['Id', 'Vigencia', 'Tipo Predio', 'Destino Económico', 'Tarifa', 'Tasa', 'Estado']"
             :elements="estratificaciones"
             :allow-create="true" :allow-edit="true" :allow-soft-delete="true" :allow-delete="false"
             @create="router.get(route('estratificaciones.create'))"

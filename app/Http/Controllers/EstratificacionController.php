@@ -8,6 +8,8 @@ use App\Models\PredioTipo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEstratificacionRequest;
 use App\Http\Requests\UpdateEstratificacionRequest;
+use App\Models\PredioEstrato;
+use App\Models\RangoAvaluo;
 
 class EstratificacionController extends Controller
 {
@@ -49,10 +51,27 @@ class EstratificacionController extends Controller
                     'tipo' => $predioTipo->tipo
                 ];
             }),
-            'destinosEconomicos' => DestinoEconomico::all()->map(function ($destinoEconomico) {
+            'destinoEconomicos' => DestinoEconomico::all()->map(function ($destinoEconomico) {
                 return [
                     'id' => $destinoEconomico->id,
                     'nombre' => $destinoEconomico->nombre
+                ];
+            }),
+            'rangoAvaluos' => RangoAvaluo::all()->map(function ($rangoAvaluo) {
+                return [
+                    'id' => $rangoAvaluo->id,
+                    'desde' => $rangoAvaluo->desde,
+                    'hasta' => $rangoAvaluo->hasta,
+                    'unidadMonetaria' => [
+                        'id' => $rangoAvaluo->unidad_monetaria->id,
+                        'tipo' => $rangoAvaluo->unidad_monetaria->tipo
+                    ]
+                ];
+            }),
+            'predioEstratos' => PredioEstrato::all()->map(function ($predioEstrato) {
+                return [
+                    'id' => $predioEstrato->id,
+                    'estrato' => $predioEstrato->estrato
                 ];
             })
         ]);
