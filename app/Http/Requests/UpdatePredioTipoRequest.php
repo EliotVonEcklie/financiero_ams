@@ -22,8 +22,9 @@ class UpdatePredioTipoRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'toggle' => ['nullable', 'boolean'],
-                'tipo' => ['exclude_if:toggle,true', 'required', 'string', 'max:255'],
+            'toggle' => ['nullable', 'boolean'],
+            'nombre' => ['exclude_if:toggle,true', 'required', 'string', 'max:255'],
+            'codigo' => ['exclude_if:toggle,true', 'required', 'string', 'max:2', 'unique:predio_tipos,codigo,' . $this->route('predio_tipo')->id],
         ];
     }
 }

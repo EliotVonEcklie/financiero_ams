@@ -22,7 +22,8 @@ class StorePredioTipoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipo' => ['required', 'string', 'max:255']
+            'nombre' => ['required', 'string', 'max:255'],
+            'codigo' => ['required', 'string', 'max:2', 'unique:predio_tipos,codigo']
         ];
     }
 }

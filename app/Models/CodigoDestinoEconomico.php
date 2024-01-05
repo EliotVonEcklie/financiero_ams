@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CodigoDestinoEconomico extends Model
 {
@@ -18,4 +19,9 @@ class CodigoDestinoEconomico extends Model
         'codigo',
         'destino_economico_id'
     ];
+
+    public function destino_economico(): BelongsTo
+    {
+        return $this->belongsTo(DestinoEconomico::class);
+    }
 }

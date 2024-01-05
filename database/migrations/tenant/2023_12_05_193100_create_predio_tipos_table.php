@@ -14,7 +14,8 @@ return new class extends Migration
     {
         Schema::create('predio_tipos', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo');
+            $table->string('nombre');
+            $table->string('codigo', 2)->unique();
             $table->softDeletes();
             $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();

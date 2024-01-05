@@ -11,7 +11,7 @@ class StoreEstratificacionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreEstratificacionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'vigencia' => ['required', 'date_format:Y', 'after:1970', 'before:today'],
+            'predio_tipo_id' => ['required', 'exists:predio_tipos,id'],
+            'destino_economico_id' => ['required', 'exists:destino_economicos,id'],
+            'tarifa' => ['required'],
+            'tasa' => ['required', 'numeric']
         ];
     }
 }

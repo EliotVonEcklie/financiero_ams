@@ -21,8 +21,8 @@ function softDelete(allSelected) {
 <template>
     <Layout title="Tipos Predios">
         <Table
-            empty-message="No hay tipos registradas."
-            :headers="['Id', 'Tipo', 'Estado']"
+            empty-message="No hay tipos registrados."
+            :headers="['Id', 'Nombre', 'Código', 'Estado']"
             :elements="predioTipos"
             :allow-create="true" :allow-edit="true" :allow-soft-delete="true" :allow-delete="false"
             @create="router.get(route('predio_tipos.create'))"
@@ -33,7 +33,11 @@ function softDelete(allSelected) {
 
             <template #row="{ element }">
                 <td class="px-6 py-4">
-                    {{ element.tipo }}
+                    {{ element.nombre }}
+                </td>
+
+                <td class="px-6 py-4">
+                    {{ element.codigo }}
                 </td>
 
                 <td class="px-6 py-4">

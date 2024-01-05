@@ -4,12 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PredioTipo extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $fillable = [
-        'tipo'
+        'nombre',
+        'codigo'
     ];
+
+    public function estratificaciones(): HasMany
+    {
+        return $this->hasMany(Estratificacion::class);
+    }
 }

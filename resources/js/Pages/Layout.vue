@@ -45,7 +45,7 @@ defineProps({ title: String })
                         </Link>
                     </li>
                     <li>
-                        <Link :href="route('estratificaciones.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('Estratificaciones') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <Link :href="route('estratificacions.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('Estratificaciones') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <span class="flex-1 ms-3 whitespace-nowrap">5. Estratificaciones</span>
                         </Link>
                     </li>

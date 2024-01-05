@@ -44,11 +44,11 @@ Route::middleware([
     Route::resource('destino_economicos', DestinoEconomicoController::class)->withTrashed();
     Route::resource('vigencia_unidad_monetarias', VigenciaUnidadMonetariaController::class)->withTrashed();
     Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
-    Route::resource('predio_estratos', PredioEstratoController::class)->withTrashed();
-    Route::resource('estratificaciones', EstratificacionController::class)->withTrashed();
+    Route::resource('estratificacions', EstratificacionController::class, [''])->withTrashed();
 
     Route::resource('unidad_monetarias', UnidadMonetariaController::class)->withTrashed();
     Route::resource('predio_tipos', PredioTipoController::class)->withTrashed();
+    Route::resource('predio_estratos', PredioEstratoController::class)->withTrashed();
 });
 /*
 Route::middleware([

@@ -9,11 +9,14 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 use App\Models\Predio;
 use App\Models\CodigoDestinoEconomico;
 use App\Models\Avaluo;
 use App\Models\HistorialPredio;
+use App\Models\PredioEstrato;
+use App\Models\PredioTipo;
+use Generator;
+use Illuminate\Support\LazyCollection;
 
 class ParseIgac implements ShouldQueue, ShouldBeUnique
 {
@@ -29,7 +32,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(public string $path_r1, public string|null $path_r2)
+    public function __construct(public string $r1_file, public string|null $r2_file)
     {}
 
     /**
@@ -37,130 +40,121 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        $this->process();
-    }
-
-    private function process() {
-        // Tokenize by new lines
-        $separator = "\r\n";
-
         // Do R1
-        $contents_r1 = Storage::get($this->path_r1);
-        $contents_r1 = str_replace("\xEF\xBF\xBD", '?', $contents_r1); // Replace '�' for '?'
-        $line_r1 = strtok($contents_r1, $separator);
 
-        while ($line_r1 !== false) {
-            $data_r1 = $this->parse_line_r1($line_r1);
+        LazyCollection::make(function () {
+            yield from $this->generate_lines($this->r1_file);
+        })->each(function ($r1_line) {
+            $r1_data = $this->parse_line_r1($r1_line);
 
             // Find or create Predio
             $predio = Predio::firstOrCreate([
-                'codigo_catastro' => $data_r1->codigo_catastro,
-                'total' => $data_r1->total,
-                'orden' => $data_r1->orden
+                'codigo_catastro' => $r1_data->codigo_catastro,
+                'total' => $r1_data->total,
+                'orden' => $r1_data->orden
             ]);
 
-            // Find or create DestinoEconomico
+            // Find or create CodigoDestinoEconomico
             $codigo_destino_economico = CodigoDestinoEconomico::firstOrCreate([
-                'codigo' => $data_r1->destino_economico
+                'codigo' => $r1_data->codigo_destino_economico
             ]);
+
+            $predio_tipo = PredioTipo::where('codigo', $r1_data->tipo_predio)->firstOrFail();
 
             // Update or create HistorialPredio
             HistorialPredio::updateOrCreate([
                 'predio_id' => $predio->id,
-                'fecha' => date_format($data_r1->vigencia, 'Y-m-d')
+                'fecha' => date_format($r1_data->vigencia, 'Y-m-d')
             ], [
-                'destino_economico_id' => null,
-                'tipo_documento' => $data_r1->tipo_documento,
-                'documento' => $data_r1->documento,
-                'nombre_propietario' => $data_r1->nombre_propietario,
-                'direccion' => $data_r1->direccion,
-                'hectareas' => $data_r1->hectareas,
-                'metros_cuadrados' => $data_r1->metros_cuadrados,
-                'area_construida' => $data_r1->area_construida,
-                'tasa_por_mil' => -1,
-                'estrato' => 0,
-                'tipo_predio' => $data_r1->tipo_predio
+                'codigo_destino_economico_id' => $codigo_destino_economico->id,
+                'tipo_documento' => $r1_data->tipo_documento,
+                'documento' => $r1_data->documento,
+                'nombre_propietario' => $r1_data->nombre_propietario,
+                'direccion' => $r1_data->direccion,
+                'hectareas' => $r1_data->hectareas,
+                'metros_cuadrados' => $r1_data->metros_cuadrados,
+                'area_construida' => $r1_data->area_construida,
+                'predio_tipo_id' => $predio_tipo->id
             ]);
 
             // Update or create Avaluo
             Avaluo::updateOrCreate([
                 'predio_id' => $predio->id,
-                'vigencia' => date_format($data_r1->vigencia, 'Y')
+                'vigencia' => date_format($r1_data->vigencia, 'Y')
             ], [
-                'destino_economico_id' => $destino_economico->id,
-                'pagado' => false,
-                'direccion' => $data_r1->direccion,
-                'valor_avaluo' => $data_r1->valor_avaluo,
-                'hectareas' => $data_r1->hectareas,
-                'metros_cuadrados' => $data_r1->metros_cuadrados,
-                'area_construida' => $data_r1->area_construida,
-                'tasa_por_mil' => -1,
-                'estrato' => 0,
-                'tipo_predio' => $data_r1->tipo_predio
+                'codigo_destino_economico_id' => $codigo_destino_economico->id,
+                'direccion' => $r1_data->direccion,
+                'valor_avaluo' => $r1_data->valor_avaluo,
+                'hectareas' => $r1_data->hectareas,
+                'metros_cuadrados' => $r1_data->metros_cuadrados,
+                'area_construida' => $r1_data->area_construida,
+                'predio_tipo_id' => $predio_tipo->id
             ]);
-
-            $line_r1 = strtok($separator);
-        }
+        });
 
         // Done parsing, delete the file
-        Storage::delete($this->path_r1);
-
-        // Clear memory from strtok
-        strtok('', '');
+        Storage::delete($this->r1_file);
 
         // Check R2
 
-        if ($this->path_r2 === null) {
+        if ($this->r2_file === null) {
             return;
         }
 
         // Do R2
 
-        $contents_r2 = Storage::get($this->path_r2);
-        $contents_r2 = str_replace("\xEF\xBF\xBD", '?', $contents_r2); // Replace '�' for '?'
-        $line_r2 = strtok($contents_r2, $separator);
-
-        while ($line_r2 !== true) {
-            $data_r2 = $this->parse_line_r2($line_r2);
+        LazyCollection::make(function () {
+            yield from $this->generate_lines($this->r2_file);
+        })->each(function ($r2_line) {
+            $r2_data = $this->parse_line_r2($r2_line);
 
             // Find Predio
-            $predio = Predio::where('codigo_catastro', $data_r2->codigo_catastro)
-                ->where('total', $data_r2->total)
-                ->where('orden', $data_r2->orden)
-                ->first();
+            $predio = Predio::where([
+                ['codigo_catastro', '=', $r2_data->codigo_catastro],
+                ['total', '=', $r2_data->total],
+                ['orden', '=', $r2_data->orden]
+            ])->first();
 
             if ($predio === null) {
-                continue;
+                return;
             }
+
+            $predio_estrato = PredioEstrato::where('estrato', $r2_data->estrato)->firstOrFail();
 
             // Find and update latest HistorialPredio
             $historial_predio = $predio->latest_historial_predio();
-            $historial_predio->estrato = $data_r2->estrato;
+            $historial_predio->predio_estrato_id = $predio_estrato->id;
             $historial_predio->save();
 
             // Find and update latest Avaluo
             $avaluo = $predio->latest_avaluo();
-            $avaluo->estrato = $data_r2->estrato;
+            $avaluo->predio_estrato_id = $predio_estrato->id;
             $avaluo->save();
+        });
+    }
 
-            $line_r2 = strtok($separator);
+    private function generate_lines(string $file)
+    {
+        $path = Storage::path($file);
+
+        $handle = fopen($path, 'r');
+
+        while (($line = fgets($handle)) !== false) {
+            $line = mb_convert_encoding($line, 'UTF-8', 'UTF-8'); // Ensure correct encoding
+
+            yield $line;
         }
-
-        // Done parsing, delete the file
-        Storage::delete($this->path_r2);
-
-        // Clear memory from strtok
-        strtok('', '');
     }
 
     /**
      * Parse a line of an 312-wide R1 IGAC file.
      */
-    private function parse_line_r1(string $line): object {
+    private function parse_line_r1(string $line): object
+    {
         // codigo catastro
         $codigo_catastro = mb_substr($line, 5, 25);
         // tipo predio
-        $tipo_predio = mb_substr($codigo_catastro, 0, 2) == '01' ? 'urbano' : 'rural';
+        $tipo_predio = mb_substr($codigo_catastro, 0, 2);
         // orden
         $orden = (int) mb_substr($line, 31, 3);
         // total
@@ -174,7 +168,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
         // direccion
         $direccion = rtrim(mb_substr($line, 151, 100));
         // destino economico
-        $destino_economico = mb_substr($line, 252, 1);
+        $codigo_destino_economico = mb_substr($line, 252, 1);
         // area terreno (11=hectareas, 4=metros cuadrados)
         $hectareas = (float) mb_substr($line, 253, 11);
         $metros_cuadrados = (float) mb_substr($line, 264, 4);
@@ -193,7 +187,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
             'tipo_documento' => $tipo_documento,
             'documento' => $documento,
             'direccion' => $direccion,
-            'destino_economico' => $destino_economico,
+            'codigo_destino_economico' => $codigo_destino_economico,
             'hectareas' => $hectareas,
             'metros_cuadrados' => $metros_cuadrados,
             'area_construida' => $area_construida,
@@ -206,7 +200,8 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
     /**
      * Parse a line of an 312-wide R2 IGAC file.
      */
-    private function parse_line_r2(string $line): object {
+    private function parse_line_r2(string $line): object
+    {
         // codigo catastro
         $codigo_catastro = mb_substr($line, 5, 25);
         // orden

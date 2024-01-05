@@ -17,14 +17,14 @@ const form = useForm({
     tarifa: '',
     tasa: 0
 })
-const predioTiposSelect = props.predioTipos.map(x => ({ value: x.id, name: x.tipo }))
+const predioTiposSelect = props.predioTipos.map(x => ({ value: x.id, name: x.nombre }))
 const destinoEconomicosSelect = props.destinoEconomicos.map(x => ({ value: x.id, name: x.nombre }))
 const rangoAvaluosSelect = props.rangoAvaluos.map(x => ({
-    value: { id: x.id, type: 'rangoAvaluo'},
+    value: { id: x.id, type: '\\App\\Models\\RangoAvaluo'},
     name: x.id + ' | ' + 'Desde ' + x.desde + ' hasta ' + x.hasta + ' - ' + x.unidadMonetaria.tipo
 }))
 const predioEstratosSelect = props.predioEstratos.map(x => ({
-    value: { id: x.id, type: 'predioEstrato' },
+    value: { id: x.id, type: '\\App\\Models\\PredioEstrato' },
     name: 'Estrato ' + x.estrato
 }))
 const tab = ref(1)
@@ -32,7 +32,7 @@ const tab = ref(1)
 
 <template>
     <Layout title="Crear Estratificaciones">
-        <form @submit.prevent="form.post(route('estratificaciones.store'))" class="max-w-sm mx-auto">
+        <form @submit.prevent="form.post(route('estratificacions.store'))" class="max-w-sm mx-auto">
             <div class="mb-5">
                 <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingrese Vigencia:</label>
                 <div class="relative flex items-center w-full">
@@ -106,7 +106,7 @@ const tab = ref(1)
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
                         </svg>
                     </button>
-                    <input v-model="form.vigencia" type="text" id="quantity-input2" data-input-counter class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tasa" required>
+                    <input v-model="form.tasa" type="text" id="quantity-input2" data-input-counter class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tasa" required>
                     <button type="button" id="increment-button" data-input-counter-increment="quantity-input" class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                         <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>

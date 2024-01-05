@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estratificaciones', function (Blueprint $table) {
+        Schema::create('estratificacions', function (Blueprint $table) {
             $table->id();
             $table->year('vigencia');
             $table->foreignIdFor(PredioTipo::class);
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estratificaciones');
+        Schema::dropIfExists('estratificacions');
     }
 };

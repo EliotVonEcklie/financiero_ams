@@ -11,7 +11,7 @@ class UpdateEstratificacionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateEstratificacionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'toggle' => ['nullable', 'boolean'],
+            'vigencia' => ['exclude_if:toggle,true', 'required', 'date_format:Y', 'after:1970', 'before:today'],
+            'predio_tipo_id' => ['exclude_if:toggle,true', 'required', 'exists:predio_tipos,id'],
+            'destino_economico_id' => ['exclude_if:toggle,true', 'required', 'exists:destino_economicos,id'],
+            'tarifa' => ['exclude_if:toggle,true', 'required'],
+            'tasa' => ['exclude_if:toggle,true', 'required', 'numeric']
         ];
     }
 }

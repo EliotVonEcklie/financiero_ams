@@ -10,7 +10,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Collection;
 
 class TransferPredios implements ShouldQueue, ShouldBeUnique
@@ -29,14 +28,12 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        //Cache::put('transfer_predios', (object) ['total' => 0, 'count' => 0, 'finished' => false]);
-
-        $predios = Predio::all();
-
-        foreach ($predios as $predio) {
-            $this->transfer_predio($predio);
-            $this->transfer_avaluos($predio->avaluos);
-        }
+        Predio::chunk(1000, function (Collection $predios) {
+            foreach ($predios as $predio) {
+                $this->transfer_predio($predio);
+                $this->transfer_avaluos($predio->avaluos);
+            }
+        });
     }
 
     /**
@@ -45,8 +42,8 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
      * @param Predio $predio The predio to transfer.
      */
     public function transfer_predio(Predio $predio) {
-
         // Format data for old database
+
         $tesopredios_data = [
             'cedulacatastral' => $predio->codigo_catastro,
             'ord' => sprintf("%03d", $predio->orden),
@@ -62,8 +59,8 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
             'avaluo' => $predio->latest_avaluo()->valor_avaluo,
             'vigencia' => $predio->latest_avaluo()->vigencia,
             'estado' => 'S',
-            'tipopredio' => $predio->latest_avaluo()->tipo_predio,
-            'clasifica' => $predio->latest_avaluo()->tipo_predio === 'rural' ? 1 : 2,
+            'tipopredio' => strtolower($predio->latest_avaluo()->predio_tipo->nombre),
+            'clasifica' => $predio->latest_avaluo()->predio_tipo->nombre === 'Rural' ? 1 : ($predio->latest_avaluo()->predio_tipo->nombre === 'Rural' ? 2 : 0),
             'estratos' => ''
         ];
 
@@ -92,8 +89,8 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
      */
     public function transfer_avaluos(Collection $avaluos) {
         foreach ($avaluos as $avaluo) {
-
             // Format data for old database
+
             $tesoprediosavaluos_data = [
                 'vigencia' => $avaluo->vigencia,
                 'codigocatastral' => $avaluo->predio->codigo_catastro,
@@ -106,9 +103,9 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
                 'met2' => $avaluo->metros_cuadrados,
                 'areacon' => $avaluo->area_construida,
                 'tasa' => $avaluo->tasa_por_mil,
-                'tipopredio' => $avaluo->tipo_predio,
+                'tipopredio' => strtolower($avaluo->predio_tipo->nombre),
                 'estratos' => '',
-                'destino_economico' => $avaluo->destino_economico->codigo,
+                'destino_economico' => $avaluo->codigo_destino_economico->codigo,
                 'tasa_bomberil' => 0
             ];
 

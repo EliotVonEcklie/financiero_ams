@@ -1,5 +1,7 @@
 <?php
 
+// TODO: Check para revisar si es desde o hasta el infinito
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;

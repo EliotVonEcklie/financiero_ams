@@ -14,7 +14,7 @@ class HistorialPredio extends Model
      */
     protected $fillable = [
         'predio_id',
-        'destino_economico_id',
+        'codigo_destino_economico_id',
         'fecha',
         'tipo_documento',
         'documento',
@@ -24,8 +24,8 @@ class HistorialPredio extends Model
         'metros_cuadrados',
         'area_construida',
         'tasa_por_mil',
-        'estrato',
-        'tipo_predio'
+        'predio_estrato_id',
+        'predio_tipo_id'
     ];
 
     /**
@@ -44,10 +44,20 @@ class HistorialPredio extends Model
     }
 
     /**
-     * Get the destino economico for the historial predio.
+     * Get the codigo destino economico for the historial predio.
      */
-    public function destino_economico(): BelongsTo
+    public function codigo_destino_economico(): BelongsTo
     {
-        return $this->belongsTo(DestinoEconomico::class);
+        return $this->belongsTo(CodigoDestinoEconomico::class);
+    }
+
+    public function predio_estrato(): BelongsTo
+    {
+        return $this->belongsTo(PredioEstrato::class);
+    }
+
+    public function predio_tipo(): BelongsTo
+    {
+        return $this->belongsTo(PredioTipo::class);
     }
 }

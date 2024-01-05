@@ -10,8 +10,7 @@ const props = defineProps({ estratificaciones: Array })
 function softDelete(allSelected) {
     props.estratificaciones.forEach(async x => {
         if (allSelected || x.selected) {
-            console.log(route('estratificaciones.update', x.id))
-            await axios.put(route('estratificaciones.update', x.id), { 'toggle': true })
+            await axios.put(route('estratificacions.update', x.id), { 'toggle': true })
         }
     })
 
@@ -26,8 +25,8 @@ function softDelete(allSelected) {
             :headers="['Id', 'Vigencia', 'Tipo Predio', 'Destino Económico', 'Tarifa', 'Tasa', 'Estado']"
             :elements="estratificaciones"
             :allow-create="true" :allow-edit="true" :allow-soft-delete="true" :allow-delete="false"
-            @create="router.get(route('estratificaciones.create'))"
-            @edit="x => router.get(route('estratificaciones.edit', x))"
+            @create="router.get(route('estratificacions.create'))"
+            @edit="x => router.get(route('estratificacions.edit', x))"
             @soft-delete="softDelete"
         >
             <template #id="{ element }">{{ element.id }}</template>
@@ -38,7 +37,7 @@ function softDelete(allSelected) {
                 </th>
 
                 <td class="px-6 py-4">
-                    {{ element.tipoPredio.tipo }}
+                    {{ element.predioTipo.nombre }}
                 </td>
 
                 <td class="px-6 py-4">

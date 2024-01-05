@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('unidad_monetarias', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo')->unique();
+            $table->string('nombre')->unique();
             $table->softDeletes();
             $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();

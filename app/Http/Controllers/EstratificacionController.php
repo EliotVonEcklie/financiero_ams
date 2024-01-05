@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Estratificacion;
-use App\Models\DestinoEconomico;
-use App\Models\PredioTipo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEstratificacionRequest;
 use App\Http\Requests\UpdateEstratificacionRequest;
+use App\Models\Estratificacion;
+use App\Models\DestinoEconomico;
+use App\Models\PredioTipo;
 use App\Models\PredioEstrato;
 use App\Models\RangoAvaluo;
 
@@ -25,15 +25,15 @@ class EstratificacionController extends Controller
                     'vigencia' => $estratificacion->vigencia,
                     'predioTipo' => [
                         'id' => $estratificacion->predio_tipo->id,
-                        'tipo' => $estratificacion->predio_tipo->tipo
+                        'nombre' => $estratificacion->predio_tipo->nombre
                     ],
                     'destinoEconomico' => [
                         'id' => $estratificacion->destino_economico->id,
                         'nombre' => $estratificacion->destino_economico->nombre
                     ],
-                    'tarifa' => '',
+                    'tarifa' => $estratificacion->format_tarifa(),
                     'tasa' => $estratificacion->tasa,
-                    'status' => !$estratificacion->trashed()
+                    'state' => !$estratificacion->trashed()
                 ];
             })
         ]);
@@ -48,7 +48,7 @@ class EstratificacionController extends Controller
             'predioTipos' => PredioTipo::all()->map(function ($predioTipo) {
                 return [
                     'id' => $predioTipo->id,
-                    'tipo' => $predioTipo->tipo
+                    'nombre' => $predioTipo->nombre
                 ];
             }),
             'destinoEconomicos' => DestinoEconomico::all()->map(function ($destinoEconomico) {
@@ -82,9 +82,18 @@ class EstratificacionController extends Controller
      */
     public function store(StoreEstratificacionRequest $request)
     {
-        Estratificacion::create($request->validated());
+        $validated = $request->validated();
 
-        return to_route('estratificaciones.index');
+        Estratificacion::create([
+            'vigencia' => $validated['vigencia'],
+            'predio_tipo_id' => $validated['predio_tipo_id'],
+            'destino_economico_id' => $validated['destino_economico_id'],
+            'tarifa_id' => $validated['tarifa']['id'],
+            'tarifa_type' => $validated['tarifa']['type'],
+            'tasa' => $validated['tasa']
+        ]);
+
+        return to_route('estratificacions.index');
     }
 
     /**
@@ -104,13 +113,11 @@ class EstratificacionController extends Controller
             'estratificacion' => [
                 'id' => $estratificacion->id,
                 'vigencia' => $estratificacion->vigencia,
-                'predioTipo' => [
-                    'id' => $estratificacion->predio_tipo->id,
-                    'tipo' => $estratificacion->predio_tipo->tipo
-                ],
-                'destinoEconomico' => [
-                    'id' => $estratificacion->destino_economico->id,
-                    'nombre' => $estratificacion->destino_economico->nombre
+                'predio_tipo_id' => $estratificacion->predio_tipo->id,
+                'destino_economico_id' => $estratificacion->destino_economico->id,
+                'tarifa' => [
+                    'id' => $estratificacion->tarifa_id,
+                    'type' => $estratificacion->tarifa_type
                 ],
                 'tasa' => $estratificacion->tasa,
                 'status' => !$estratificacion->trashed()
@@ -118,13 +125,30 @@ class EstratificacionController extends Controller
             'predioTipos' => PredioTipo::all()->map(function ($predioTipo) {
                 return [
                     'id' => $predioTipo->id,
-                    'tipo' => $predioTipo->tipo
+                    'nombre' => $predioTipo->nombre
                 ];
             }),
             'destinoEconomicos' => DestinoEconomico::all()->map(function ($destinoEconomico) {
                 return [
                     'id' => $destinoEconomico->id,
                     'nombre' => $destinoEconomico->nombre
+                ];
+            }),
+            'rangoAvaluos' => RangoAvaluo::all()->map(function ($rangoAvaluo) {
+                return [
+                    'id' => $rangoAvaluo->id,
+                    'desde' => $rangoAvaluo->desde,
+                    'hasta' => $rangoAvaluo->hasta,
+                    'unidadMonetaria' => [
+                        'id' => $rangoAvaluo->unidad_monetaria->id,
+                        'tipo' => $rangoAvaluo->unidad_monetaria->tipo
+                    ]
+                ];
+            }),
+            'predioEstratos' => PredioEstrato::all()->map(function ($predioEstrato) {
+                return [
+                    'id' => $predioEstrato->id,
+                    'estrato' => $predioEstrato->estrato
                 ];
             })
         ]);
@@ -135,9 +159,28 @@ class EstratificacionController extends Controller
      */
     public function update(UpdateEstratificacionRequest $request, Estratificacion $estratificacion)
     {
-        $estratificacion->update($request->validated());
+        if ($request->safe()->has('toggle')) {
+            if ($estratificacion->trashed()) {
+                $estratificacion->restore();
+            } else {
+                $estratificacion->delete();
+            }
 
-        return to_route('estratificaciones.index');
+            return;
+        }
+
+        $validated = $request->validated();
+
+        $estratificacion->update([
+            'vigencia' => $validated['vigencia'],
+            'predio_tipo_id' => $validated['predio_tipo_id'],
+            'destino_economico_id' => $validated['destino_economico_id'],
+            'tarifa_id' => $validated['tarifa']['id'],
+            'tarifa_type' => $validated['tarifa']['type'],
+            'tasa' => $validated['tasa']
+        ]);
+
+        return to_route('estratificacions.index');
     }
 
     /**
@@ -147,6 +190,6 @@ class EstratificacionController extends Controller
     {
         $estratificacion->forceDelete();
 
-        return to_route('estratificaciones.index');
+        return to_route('estratificacions.index');
     }
 }

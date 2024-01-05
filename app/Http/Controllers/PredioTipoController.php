@@ -18,7 +18,8 @@ class PredioTipoController extends Controller
             'predioTipos' => PredioTipo::withTrashed()->get()->map(function ($predioTipo) {
                 return [
                     'id' => $predioTipo->id,
-                    'tipo' => $predioTipo->tipo,
+                    'nombre' => $predioTipo->nombre,
+                    'codigo' => $predioTipo->codigo,
                     'state' => !$predioTipo->trashed()
                 ];
             })
@@ -57,10 +58,12 @@ class PredioTipoController extends Controller
      */
     public function edit(PredioTipo $predioTipo)
     {
+        dd($predioTipo);
         return inertia('PredioTipos/Edit', [
             'predioTipo' => [
                 'id' => $predioTipo->id,
-                'tipo' => $predioTipo->tipo
+                'nombre' => $predioTipo->nombre,
+                'codigo' => $predioTipo->codigo,
             ]
         ]);
     }

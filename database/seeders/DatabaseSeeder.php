@@ -27,8 +27,6 @@ class DatabaseSeeder extends Seeder
             'domain' => 'rosalia'
         ]);
 
-        /*
-
         \App\Models\UnidadMonetaria::create([
             'tipo' => 'UVT'
         ]);
@@ -41,6 +39,14 @@ class DatabaseSeeder extends Seeder
             'tipo' => 'Unidad'
         ]);
 
-        */
+        \App\Models\PredioTipo::create([
+            'nombre' => 'Rural',
+            'codigo' => '00'
+        ]);
+
+        \App\Models\PredioTipo::create([
+            'nombre' => 'Urbano',
+            'codigo' => '01'
+        ]);
     }
 }
