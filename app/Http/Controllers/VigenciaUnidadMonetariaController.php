@@ -15,7 +15,7 @@ class VigenciaUnidadMonetariaController extends Controller
      */
     public function index()
     {
-        return inertia('VigenciaUnidadMonetarias/Index', [
+        return inertia('Parametros/VigenciaUnidadMonetarias/Index', [
             'vigenciaUnidadMonetarias' => VigenciaUnidadMonetaria::withTrashed()->get()->map(function ($vigenciaUnidadMonetaria) {
                 return [
                     'id' => $vigenciaUnidadMonetaria->id,
@@ -36,7 +36,7 @@ class VigenciaUnidadMonetariaController extends Controller
      */
     public function create()
     {
-        return inertia('VigenciaUnidadMonetarias/Create', [
+        return inertia('Parametros/VigenciaUnidadMonetarias/Create', [
             'unidadMonetarias' => UnidadMonetaria::all()->map(function ($unidadMonetaria) {
                 return [
                     'id' => $unidadMonetaria->id,
@@ -70,7 +70,7 @@ class VigenciaUnidadMonetariaController extends Controller
      */
     public function edit(VigenciaUnidadMonetaria $vigenciaUnidadMonetaria)
     {
-        return inertia('VigenciaUnidadMonetarias/Edit', [
+        return inertia('Parametros/VigenciaUnidadMonetarias/Edit', [
             'vigenciaUnidadMonetaria' => [
                 'id' => $vigenciaUnidadMonetaria->id,
                 'vigencia' => $vigenciaUnidadMonetaria->vigencia,

@@ -13,7 +13,7 @@ class PredioEstratoController extends Controller
      */
     public function index()
     {
-        return inertia('PredioEstratos/Index', [
+        return inertia('Parametros/PredioEstratos/Index', [
             'predioEstratos' => PredioEstrato::withTrashed()->get()->map(function ($predioEstrato) {
                 return [
                     'id' => $predioEstrato->id,
@@ -33,7 +33,7 @@ class PredioEstratoController extends Controller
      */
     public function create()
     {
-        return inertia('PredioEstratos/Create');
+        return inertia('Parametros/PredioEstratos/Create');
     }
 
     /**
@@ -60,7 +60,7 @@ class PredioEstratoController extends Controller
      */
     public function edit(PredioEstrato $predioEstrato)
     {
-        return inertia('PredioEstratos/Edit', [
+        return inertia('Parametros/PredioEstratos/Edit', [
             'predioEstrato' => [
                 'id' => $predioEstrato->id,
                 'estrato' => $predioEstrato->estrato,

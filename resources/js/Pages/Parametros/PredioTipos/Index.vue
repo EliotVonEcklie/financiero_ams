@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '~Components/Layout.vue'
+import ParametrosLayout from '~Layouts/Parametros.vue'
 import Table from '~Components/Table.vue'
 import StateIndicator from '~Components/StateIndicator.vue'
 import { router } from '@inertiajs/vue3'
@@ -19,7 +19,7 @@ function softDelete(allSelected) {
 </script>
 
 <template>
-    <Layout title="Tipos Predios">
+    <ParametrosLayout title="Tipos Predios">
         <Table
             empty-message="No hay tipos registrados."
             :headers="['Id', 'Nombre', 'Código', 'Estado']"
@@ -45,5 +45,5 @@ function softDelete(allSelected) {
                 </td>
             </template>
         </Table>
-    </Layout>
+    </ParametrosLayout>
 </template>

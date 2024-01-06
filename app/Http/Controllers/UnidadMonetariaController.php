@@ -14,7 +14,7 @@ class UnidadMonetariaController extends Controller
      */
     public function index()
     {
-        return inertia('UnidadMonetarias/Index', [
+        return inertia('Parametros/UnidadMonetarias/Index', [
             'unidadMonetarias' => UnidadMonetaria::withTrashed()->get()->map(function ($unidadMonetaria) {
                 return [
                     'id' => $unidadMonetaria->id,
@@ -30,7 +30,7 @@ class UnidadMonetariaController extends Controller
      */
     public function create()
     {
-        return inertia('UnidadMonetarias/Create');
+        return inertia('Parametros/UnidadMonetarias/Create');
     }
 
     /**
@@ -57,7 +57,7 @@ class UnidadMonetariaController extends Controller
      */
     public function edit(UnidadMonetaria $unidadMonetaria)
     {
-        return inertia('UnidadMonetarias/Edit', [
+        return inertia('Parametros/UnidadMonetarias/Edit', [
             'unidadMonetaria' => [
                 'id' => $unidadMonetaria->id,
                 'tipo' => $unidadMonetaria->tipo

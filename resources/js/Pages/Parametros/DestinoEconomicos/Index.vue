@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '~Components/Layout.vue'
+import Layout from '~Layouts/Parametros.vue'
 import Table from '~Components/Table.vue'
 import StateIndicator from '~Components/StateIndicator.vue'
 import { router } from '@inertiajs/vue3'
@@ -27,7 +27,7 @@ function softDelete(allSelected) {
             :elements="destinoEconomicos"
             :allow-create="true" :allow-edit="true" :allow-soft-delete="true" :allow-delete="false"
             @create="router.get(route('destino_economicos.create'))"
-            @edit="(x) => router.get(route('destino_economicos.edit', x))"
+            @edit="x => router.get(route('destino_economicos.edit', x))"
             @soft-delete="softDelete"
         >
             <template #id="{ element }">{{ element.id }}</template>

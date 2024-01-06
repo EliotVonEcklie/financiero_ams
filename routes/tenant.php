@@ -36,20 +36,33 @@ Route::middleware([
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
     Route::get('/', function () {
-        return inertia('Welcome');
+        return inertia('Index');
     })->name('index');
 
+    Route::prefix('parametros')->group(function () {
+        Route::get('/', function () {
+            return inertia('Parametros/Index');
+        })->name('parametros.index');
+
+        Route::resource('destino_economicos', DestinoEconomicoController::class)->withTrashed();
+        Route::resource('unidad_monetarias', UnidadMonetariaController::class)->withTrashed();
+        Route::resource('vigencia_unidad_monetarias', VigenciaUnidadMonetariaController::class)->withTrashed();
+        Route::resource('predio_tipos', PredioTipoController::class)->withTrashed();
+        Route::resource('predio_estratos', PredioEstratoController::class)->withTrashed();
+    });
+
+    Route::prefix('tasificar')->group(function () {
+        Route::get('/', function () {
+            return inertia('Tasificar/Index');
+        })->name('tasificar.index');
+
+        Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
+        Route::resource('estratificacions', EstratificacionController::class)->withTrashed();
+    });
+
     Route::resource('upload_igac', UploadIgacController::class);
-
-    Route::resource('destino_economicos', DestinoEconomicoController::class)->withTrashed();
-    Route::resource('vigencia_unidad_monetarias', VigenciaUnidadMonetariaController::class)->withTrashed();
-    Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
-    Route::resource('estratificacions', EstratificacionController::class, [''])->withTrashed();
-
-    Route::resource('unidad_monetarias', UnidadMonetariaController::class)->withTrashed();
-    Route::resource('predio_tipos', PredioTipoController::class)->withTrashed();
-    Route::resource('predio_estratos', PredioEstratoController::class)->withTrashed();
 });
+
 /*
 Route::middleware([
     'api',
