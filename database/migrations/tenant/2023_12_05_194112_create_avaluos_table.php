@@ -1,9 +1,9 @@
 <?php
 
 use App\Models\Predio;
-use App\Models\CodigoDestinoEconomico;
-use App\Models\PredioEstrato;
 use App\Models\PredioTipo;
+use App\Models\PredioEstrato;
+use App\Models\CodigoDestinoEconomico;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
