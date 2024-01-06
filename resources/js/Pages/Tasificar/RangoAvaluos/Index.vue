@@ -1,6 +1,6 @@
 <script setup>
+import Layout from '~Layouts/Tasificar.vue'
 import Table from '~Components/Table.vue'
-import Layout from '~Components/Layout.vue'
 import StateIndicator from '~Components/StateIndicator.vue'
 import { Link, router } from '@inertiajs/vue3'
 import axios from 'axios'
