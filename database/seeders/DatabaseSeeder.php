@@ -12,13 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         \App\Models\Tenant::firstOrCreate([
             'id' => 'rosalia'
         ], [
@@ -35,9 +28,17 @@ class DatabaseSeeder extends Seeder
             'tipo' => 'SMMLV'
         ]);
 
-        \App\Models\UnidadMonetaria::create([
+        $unidad = \App\Models\UnidadMonetaria::create([
             'tipo' => 'Unidad'
         ]);
+
+        for ($i = 1970; $i <= (int) now()->year; $i++) {
+            \App\Models\VigenciaUnidadMonetaria::create([
+                'vigencia' => $i,
+                'unidad_monetaria_id' => $unidad->id,
+                'valor' => 1
+            ]);
+        }
 
         \App\Models\PredioTipo::create([
             'nombre' => 'Rural',
@@ -48,5 +49,11 @@ class DatabaseSeeder extends Seeder
             'nombre' => 'Urbano',
             'codigo' => '01'
         ]);
+
+        for ($i = 1; $i <= 6; $i++) {
+            \App\Models\PredioEstrato::create([
+                'estrato' => $i
+            ]);
+        }
     }
 }

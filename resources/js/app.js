@@ -1,6 +1,7 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp, router } from '@inertiajs/vue3'
 import { ZiggyVue } from '~ziggy-vue'
+import VueEcho from 'vue-echo-laravel'
 import { initFlowbite } from 'flowbite'
 
 router.on('finish', (e) => {
@@ -21,6 +22,17 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(VueEcho, {
+                broadcaster: 'pusher',
+                key: process.env.VITE_PUSHER_APP_KEY,
+                wsHost: process.env.VITE_PUSHER_HOST,
+                wsPort: process.env.VITE_PUSHER_PORT,
+                wssPort: process.env.VITE_PUSHER_PORT,
+                forceTLS: false,
+                encrypted: true,
+                disableStats: true,
+                enabledTransports: ['ws', 'wss']
+            })
             .mount(el)
     },
 })

@@ -13,16 +13,9 @@ use App\Models\Estratificacion;
 use App\Models\VigenciaUnidadMonetaria;
 use RuntimeException;
 
-class UpdateTasa implements ShouldQueue, ShouldBeUnique
+class Tasificar implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The number of seconds the job can run before timing out.
-     *
-     * @var int
-     */
-    public $timeout = 2000;
 
     /**
      * Execute the job.
@@ -42,6 +35,8 @@ class UpdateTasa implements ShouldQueue, ShouldBeUnique
                     if ($estratificaciones->count() === 0) {
                         continue;
                     }
+
+
 
                     foreach($estratificaciones as $estratificacion) {
                         if ($estratificacion->tarifa_type === '\App\Models\RangoAvaluo') {
