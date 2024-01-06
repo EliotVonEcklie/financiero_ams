@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '~Pages/Layout.vue'
+import Layout from '~Components/Layout.vue'
 import { useForm, router } from '@inertiajs/vue3'
 
 const props = defineProps({ unidadMonetaria: Object })

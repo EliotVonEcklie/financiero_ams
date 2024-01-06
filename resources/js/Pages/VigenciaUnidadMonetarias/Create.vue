@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '~Pages/Layout.vue'
+import Layout from '~Components/Layout.vue'
 import { useForm } from '@inertiajs/vue3'
 import { onMounted } from 'vue'
 import { initInputCounters, initDropdowns } from 'flowbite'

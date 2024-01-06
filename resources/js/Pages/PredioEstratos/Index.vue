@@ -1,7 +1,7 @@
 <script setup>
-import Table from '~Pages/Table.vue'
-import StateIndicator from '~Pages/StateIndicator.vue'
-import Layout from '~Pages/Layout.vue'
+import Table from '~Components/Table.vue'
+import StateIndicator from '~Components/StateIndicator.vue'
+import Layout from '~Components/Layout.vue'
 import { router } from '@inertiajs/vue3'
 import axios from 'axios'
 

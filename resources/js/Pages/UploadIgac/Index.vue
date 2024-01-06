@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '~Pages/Layout.vue'
+import Layout from '~Components/Layout.vue'
 import Form from '~Pages/UploadIgac/Form.vue'
 import Results from '~Pages/UploadIgac/Results.vue'
 import { ref } from 'vue'

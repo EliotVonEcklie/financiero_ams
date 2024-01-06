@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '~Pages/Layout.vue'
+import Layout from '~Components/Layout.vue'
 import { useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { FwbSelect } from 'flowbite-vue'
