@@ -12,24 +12,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Tenant::firstOrCreate([
-            'id' => 'rosalia'
-        ], [
-            'tenancy_db_name' => 'rosalia'
-        ])->domains()->firstOrCreate([
-            'domain' => 'rosalia'
+        if (tenant() === null) {
+            \App\Models\Tenant::firstOrCreate([
+                'id' => 'rosalia'
+            ], [
+                'tenancy_db_name' => 'rosalia'
+            ])->domains()->firstOrCreate([
+                'domain' => 'rosalia'
+            ]);
+
+            return;
+        }
+
+        \App\Models\UnidadMonetaria::create([
+            'nombre' => 'UVT'
         ]);
 
         \App\Models\UnidadMonetaria::create([
-            'tipo' => 'UVT'
-        ]);
-
-        \App\Models\UnidadMonetaria::create([
-            'tipo' => 'SMMLV'
+            'nombre' => 'SMMLV'
         ]);
 
         $unidad = \App\Models\UnidadMonetaria::create([
-            'tipo' => 'Unidad'
+            'nombre' => 'Unidad'
         ]);
 
         for ($i = 1970; $i <= (int) now()->year; $i++) {

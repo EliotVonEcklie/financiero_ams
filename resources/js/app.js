@@ -22,17 +22,17 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
-            .use(VueEcho, {
+            /*.use(VueEcho, {
                 broadcaster: 'pusher',
-                key: process.env.VITE_PUSHER_APP_KEY,
-                wsHost: process.env.VITE_PUSHER_HOST,
-                wsPort: process.env.VITE_PUSHER_PORT,
-                wssPort: process.env.VITE_PUSHER_PORT,
+                key: import.meta.env.VITE_PUSHER_APP_KEY,
+                wsHost: import.meta.env.VITE_PUSHER_HOST,
+                wsPort: import.meta.VITE_PUSHER_PORT,
+                wssPort: import.meta.VITE_PUSHER_PORT,
                 forceTLS: false,
                 encrypted: true,
                 disableStats: true,
                 enabledTransports: ['ws', 'wss']
-            })
+            })*/
             .mount(el)
     },
 })
