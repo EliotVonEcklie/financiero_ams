@@ -18,7 +18,7 @@ class EstratificacionController extends Controller
      */
     public function index()
     {
-        return inertia('Estratificaciones/Index', [
+        return inertia('Tasificar/Estratificaciones/Index', [
             'estratificaciones' => Estratificacion::withTrashed()->get()->map(function ($estratificacion) {
                 return [
                     'id' => $estratificacion->id,
@@ -44,7 +44,7 @@ class EstratificacionController extends Controller
      */
     public function create()
     {
-        return inertia('Estratificaciones/Create', [
+        return inertia('Tasificar/Estratificaciones/Create', [
             'predioTipos' => PredioTipo::all()->map(function ($predioTipo) {
                 return [
                     'id' => $predioTipo->id,
@@ -109,7 +109,7 @@ class EstratificacionController extends Controller
      */
     public function edit(Estratificacion $estratificacion)
     {
-        return inertia('Estratificaciones/Edit', [
+        return inertia('Tasificar/Estratificaciones/Edit', [
             'estratificacion' => [
                 'id' => $estratificacion->id,
                 'vigencia' => $estratificacion->vigencia,
