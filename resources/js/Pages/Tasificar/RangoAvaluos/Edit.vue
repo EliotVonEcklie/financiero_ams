@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '~Components/Layout.vue'
+import Layout from '~Layouts/Tasificar.vue'
 import { useForm } from '@inertiajs/vue3'
 import { FwbSelect } from 'flowbite-vue'
 import { initDropdowns } from 'flowbite'
