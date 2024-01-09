@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '~Components/Layout.vue'
+import Layout from '~Layouts/Parametros.vue'
 import { useForm } from '@inertiajs/vue3'
 
 const props = defineProps({ codigoDestinoEconomicos: Object })

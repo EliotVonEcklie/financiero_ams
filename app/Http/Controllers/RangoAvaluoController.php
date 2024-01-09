@@ -15,7 +15,7 @@ class RangoAvaluoController extends Controller
      */
     public function index()
     {
-        return inertia('RangoAvaluos/Index', [
+        return inertia('Tasificar/RangoAvaluos/Index', [
             'rangoAvaluos' => RangoAvaluo::withTrashed()->get()->map(function ($rangoAvaluo) {
                 return [
                     'id' => $rangoAvaluo->id,
@@ -36,7 +36,7 @@ class RangoAvaluoController extends Controller
      */
     public function create()
     {
-        return inertia('RangoAvaluos/Create', [
+        return inertia('Tasificar/RangoAvaluos/Create', [
             'unidadMonetarias' => UnidadMonetaria::all()->map(function ($unidadMonetaria) {
                 return [
                     'id' => $unidadMonetaria->id,
@@ -70,7 +70,7 @@ class RangoAvaluoController extends Controller
      */
     public function edit(RangoAvaluo $rangoAvaluo)
     {
-        return inertia('RangoAvaluos/Edit', [
+        return inertia('Tasificar/RangoAvaluos/Edit', [
             'rangoAvaluo' => [
                 'id' => $rangoAvaluo->id,
                 'desde' => $rangoAvaluo->desde,

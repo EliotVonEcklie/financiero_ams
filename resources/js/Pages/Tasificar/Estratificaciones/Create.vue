@@ -1,22 +1,21 @@
 <script setup>
-import Layout from '~Components/Layout.vue'
+import Layout from '~Layouts/Tasificar.vue'
 import { useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { FwbSelect } from 'flowbite-vue'
 
 const props = defineProps({
-    estratificacion: Object,
     predioTipos: Array,
     destinoEconomicos: Array,
     rangoAvaluos: Array,
     predioEstratos: Array
 })
 const form = useForm({
-    vigencia: props.estratificacion.vigencia,
-    predio_tipo_id: props.estratificacion.predio_tipo_id,
-    destino_economico_id: props.estratificacion.destino_economico_id,
-    tarifa: props.estratificacion.tarifa,
-    tasa: props.estratificacion.tasa
+    vigencia: null,
+    predio_tipo_id: '',
+    destino_economico_id: '',
+    tarifa: '',
+    tasa: 0
 })
 const predioTiposSelect = props.predioTipos.map(x => ({ value: x.id, name: x.nombre }))
 const destinoEconomicosSelect = props.destinoEconomicos.map(x => ({ value: x.id, name: x.nombre }))
@@ -32,8 +31,8 @@ const tab = ref(1)
 </script>
 
 <template>
-    <Layout title="Editar Estratificaciones">
-        <form @submit.prevent="form.put(route('estratificacions.update', estratificacion.id))" class="max-w-sm mx-auto">
+    <Layout title="Crear Estratificaciones">
+        <form @submit.prevent="form.post(route('estratificacions.store'))" class="max-w-sm mx-auto">
             <div class="mb-5">
                 <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingrese Vigencia:</label>
                 <div class="relative flex items-center w-full">
@@ -116,7 +115,7 @@ const tab = ref(1)
                 </div>
             </div>
 
-            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Guardar</button>
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Crear</button>
         </form>
     </Layout>
 </template>

@@ -17,7 +17,7 @@ class DestinoEconomicoController extends Controller
      */
     public function index()
     {
-        return inertia('DestinoEconomicos/Index', [
+        return inertia('Parametros/DestinoEconomicos/Index', [
             'destinoEconomicos' => DestinoEconomico::withTrashed()->get()->map(function ($destino_economico) {
                 return [
                     'id' => $destino_economico->id,
@@ -34,7 +34,7 @@ class DestinoEconomicoController extends Controller
      */
     public function create()
     {
-        return inertia('DestinoEconomicos/Create', [
+        return inertia('Parametros/DestinoEconomicos/Create', [
             'codigoDestinoEconomicos' => CodigoDestinoEconomico::where('destino_economico_id', null)->get()->map(function ($codigo_destino_economico) {
                 return [
                     'id' => $codigo_destino_economico->id,
@@ -73,7 +73,7 @@ class DestinoEconomicoController extends Controller
      */
     public function edit(DestinoEconomico $destinoEconomico)
     {
-        return inertia('DestinoEconomicos/Edit', [
+        return inertia('Parametros/DestinoEconomicos/Edit', [
             'destinoEconomico' => [
                 'id' => $destinoEconomico->id,
                 'nombre' => $destinoEconomico->nombre

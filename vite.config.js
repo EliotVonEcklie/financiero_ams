@@ -14,9 +14,11 @@ export default defineConfig({
     resolve: {
         alias: {
             '~ziggy-vue': path.resolve(__dirname, 'vendor/tightenco/ziggy/dist/vue.es.js'),
+
+            '~Layouts': path.resolve(__dirname, 'resources/js/Layouts'),
             '~Pages': path.resolve(__dirname, 'resources/js/Pages'),
             '~Components': path.resolve(__dirname, 'resources/js/Components'),
-            '~resources': path.resolve(__dirname, 'resources'),
+            '~': path.resolve(__dirname, 'resources'),
         },
     },
 });

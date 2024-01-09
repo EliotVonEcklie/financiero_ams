@@ -16,6 +16,6 @@ class UnidadMonetaria extends Model
      * @var array
      */
     protected $fillable = [
-        'tipo'
+        'nombre'
     ];
 }

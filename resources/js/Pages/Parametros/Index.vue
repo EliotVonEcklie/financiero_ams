@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '~Layouts/Tasificar.vue'
+import Layout from '~Layouts/Parametros.vue'
 </script>
 
 <template>

@@ -1,17 +1,16 @@
 <script setup>
+import Layout from '~Layouts/Parametros.vue'
 import Table from '~Components/Table.vue'
 import StateIndicator from '~Components/StateIndicator.vue'
-import Layout from '~Components/Layout.vue'
 import { router } from '@inertiajs/vue3'
 import axios from 'axios'
 
-const props = defineProps({ predioEstratos: Array })
+const props = defineProps({ unidadMonetarias: Array })
 
 function softDelete(allSelected) {
-    props.predioEstratos.forEach(async x => {
+    props.unidadMonetarias.forEach(async x => {
         if (allSelected || x.selected) {
-            console.log(route('predio_estratos.update', x.id))
-            await axios.put(route('predio_estratos.update', x.id), { 'toggle': true })
+            await axios.put(route('unidad_monetarias.update', x.id), { 'toggle': true })
         }
     })
 
@@ -20,22 +19,22 @@ function softDelete(allSelected) {
 </script>
 
 <template>
-    <Layout title="Estratos">
+    <Layout title="Unidades Monetarias">
         <Table
-            empty-message="No hay estratos registrados."
-            :headers="['Id', 'Estrato', 'Estado']"
-            :elements="predioEstratos"
+            empty-message="No hay unidades registradas."
+            :headers="['Id', 'Nombre', 'Estado']"
+            :elements="unidadMonetarias"
             :allow-create="true" :allow-edit="true" :allow-soft-delete="true" :allow-delete="false"
-            @create="router.get(route('predio_estratos.create'))"
-            @edit="x => router.get(route('predio_estratos.edit', x))"
+            @create="router.get(route('unidad_monetarias.create'))"
+            @edit="x => router.get(route('unidad_monetarias.edit', x))"
             @soft-delete="softDelete"
         >
             <template #id="{ element }">{{ element.id }}</template>
 
             <template #row="{ element }">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ element.estrato }}
-                </th>
+                <td class="px-6 py-4">
+                    {{ element.nombre }}
+                </td>
 
                 <td class="px-6 py-4">
                     <StateIndicator :state="element.state" />
