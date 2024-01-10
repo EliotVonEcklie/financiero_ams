@@ -18,7 +18,7 @@ class UnidadMonetariaController extends Controller
             'unidadMonetarias' => UnidadMonetaria::withTrashed()->get()->map(function ($unidadMonetaria) {
                 return [
                     'id' => $unidadMonetaria->id,
-                    'tipo' => $unidadMonetaria->tipo,
+                    'nombre' => $unidadMonetaria->nombre,
                     'state' => !$unidadMonetaria->trashed()
                 ];
             })
@@ -60,7 +60,7 @@ class UnidadMonetariaController extends Controller
         return inertia('Parametros/UnidadMonetarias/Edit', [
             'unidadMonetaria' => [
                 'id' => $unidadMonetaria->id,
-                'tipo' => $unidadMonetaria->tipo
+                'nombre' => $unidadMonetaria->nombre
             ]
         ]);
     }

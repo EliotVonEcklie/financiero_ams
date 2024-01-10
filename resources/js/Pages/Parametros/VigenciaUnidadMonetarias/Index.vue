@@ -41,7 +41,7 @@ function softDelete(allSelected) {
                 </td>
 
                 <td class="px-6 py-4">
-                    {{ '$ ' + element.valor }}
+                    $ {{ element.valor }}
                 </td>
 
                 <td class="px-6 py-4">

@@ -1,24 +1,16 @@
 <script setup>
 import Layout from '~Layouts/Parametros.vue'
-import { useForm, router } from '@inertiajs/vue3'
+import { useForm } from '@inertiajs/vue3'
 
 const props = defineProps({ unidadMonetaria: Object })
 const form = useForm({
     nombre: props.unidadMonetaria.nombre
 })
-
-function submit() {
-    form.put(route('unidad_monetarias.update', props.unidadMonetaria.id), {
-        onSuccess: () => {
-            router.get(route('unidad_monetarias.index'))
-        }
-    })
-}
 </script>
 
 <template>
     <Layout title="Editar Unidad Monetaria">
-        <form @submit.prevent="submit" class="max-w-sm mx-auto">
+        <form @submit.prevent="form.put(route('unidad_monetarias.update', props.unidadMonetaria.id))" class="max-w-sm mx-auto">
             <div class="mb-5">
                 <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
                 <input v-model="form.nombre" type="text" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>

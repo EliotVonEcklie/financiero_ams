@@ -10,7 +10,6 @@ const props = defineProps({ predioEstratos: Array })
 function softDelete(allSelected) {
     props.predioEstratos.forEach(async x => {
         if (allSelected || x.selected) {
-            console.log(route('predio_estratos.update', x.id))
             await axios.put(route('predio_estratos.update', x.id), { 'toggle': true })
         }
     })

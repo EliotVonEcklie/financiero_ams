@@ -9,7 +9,6 @@ const form = useForm({
 })
 
 function submit() {
-    console.log(props.codigoDestinoEconomicos)
     form.codigo_destino_economicos = props.codigoDestinoEconomicos
 
     form.put(route('destino_economicos.update', props.destinoEconomico.id), {
