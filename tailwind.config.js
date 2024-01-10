@@ -8,6 +8,11 @@ export default {
     ],
     theme: {
         extend: {},
+        colors: {
+            'greenp1': '#77dd77',
+            'bluep': '#84b6f4',
+            'greenp2': '#b0f2c2'
+        }
     },
     plugins: [
         require('flowbite/plugin')
