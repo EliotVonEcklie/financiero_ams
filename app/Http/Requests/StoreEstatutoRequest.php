@@ -35,8 +35,8 @@ class StoreEstatutoRequest extends FormRequest
             'ambiental_tarifa' => ['required_if:ambiental,true', 'boolean'],
             'ambiental_tasa' => ['required_if:ambiental,true', 'integer'],
             'alumbrado' => ['required', 'boolean'],
-            'alumbrado_urbano' => ['required_if:alumbrado,true', 'boolean'],
-            'alumbrado_rural' => ['required_if:alumbrado,true', 'boolean'],
+            'alumbrado_urbano' => ['exclude_if:alumbrado,false', 'required', 'boolean', 'accepted_if:alumbrado_rural,false'],
+            'alumbrado_rural' => ['exclude_if:alumbrado,false', 'required', 'boolean', 'accepted_if:alumbrado_urbano,false'],
             'alumbrado_tarifa' => ['required_if:alumbrado,true', 'boolean'],
             'alumbrado_tasa' => ['required_if:alumbrado,true', 'integer'],
             'recibo_caja' => ['required', 'integer']

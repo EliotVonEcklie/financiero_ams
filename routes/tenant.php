@@ -11,6 +11,8 @@ use App\Http\Controllers\RangoAvaluoController;
 use App\Http\Controllers\UnidadMonetariaController;
 use App\Http\Controllers\VigenciaUnidadMonetariaController;
 use App\Http\Controllers\PredioTipoController;
+use App\Models\Predio;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -32,31 +34,61 @@ Route::middleware([
     InitializeTenancyBySubdomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-    Route::get('/', function () {
-        return inertia('Index');
-    })->name('index');
-
-    Route::prefix('parametros')->group(function () {
+    Route::prefix('/financiero')->group(function () {
         Route::get('/', function () {
-            return inertia('Parametros/Index');
-        })->name('parametros.index');
+            return inertia('Index');
+        })->name('index');
 
-        Route::resource('destino_economicos', DestinoEconomicoController::class)->withTrashed();
-        Route::resource('unidad_monetarias', UnidadMonetariaController::class)->withTrashed();
-        Route::resource('vigencia_unidad_monetarias', VigenciaUnidadMonetariaController::class)->withTrashed();
-        Route::resource('predio_tipos', PredioTipoController::class)->withTrashed();
-        Route::resource('predio_estratos', PredioEstratoController::class)->withTrashed();
+        Route::prefix('parametros')->group(function () {
+            Route::get('/', function () {
+                return inertia('Parametros/Index');
+            })->name('parametros.index');
+
+            Route::resource('destino_economicos', DestinoEconomicoController::class)->withTrashed();
+            Route::resource('unidad_monetarias', UnidadMonetariaController::class)->withTrashed();
+            Route::resource('vigencia_unidad_monetarias', VigenciaUnidadMonetariaController::class)->withTrashed();
+            Route::resource('predio_tipos', PredioTipoController::class)->withTrashed();
+            Route::resource('predio_estratos', PredioEstratoController::class)->withTrashed();
+        });
+
+        Route::prefix('tasificar')->group(function () {
+            Route::get('/', function () {
+                return inertia('Tasificar/Index');
+            })->name('tasificar.index');
+
+            Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
+            Route::resource('estratificacions', EstratificacionController::class)->withTrashed();
+        });
+
+        Route::resource('upload_igac', UploadIgacController::class);
+        Route::resource('estatutos', EstatutoController::class)->withTrashed();
     });
 
-    Route::prefix('tasificar')->group(function () {
+    Route::name('public.')->group(function () {
         Route::get('/', function () {
-            return inertia('Tasificar/Index');
-        })->name('tasificar.index');
+            return inertia('Public/Index');
+        })->name('index');
 
-        Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
-        Route::resource('estratificacions', EstratificacionController::class)->withTrashed();
+        Route::get('/search_test', function (Request $request) {
+            $query = $request->query('search');
+
+            $predios = Predio::search($query);
+
+            return response()->json($predios);
+        });
+
+        Route::get('/impuesto_predial_unificado', function (Request $request) {
+            $query = $request->query('search');
+
+            $predios = [];
+
+            if (isset($query)) {
+                $predios = Predio::search($query);
+            }
+
+            return inertia('Public/ImpuestoPredialUnificado', [
+                'predios' => $predios
+            ]);
+        })->name('impuesto_predial_unificado');
     });
-
-    Route::resource('upload_igac', UploadIgacController::class);
-    Route::resource('estatutos', EstatutoController::class)->withTrashed();
 });

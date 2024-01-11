@@ -63,35 +63,22 @@ class Predio extends Model
      * Get a predio by searching a query.
      */
     public static function search(string $query) {
-        $predios = Predio::select('predios.id', 'codigo_catastro', 'total', 'orden')
-            ->join('historial_predios', 'predios.id', '=', 'historial_predios.predio_id')
+        $predios = Predio::select(
+                'predios.id',
+                'codigo_catastro',
+                'total',
+                'orden',
+                'documento',
+                'nombre_propietario',
+                'direccion'
+            )
+            ->join('historial_predios', 'predios.id', '=', 'predio_id')
             ->where('codigo_catastro', 'like', '%' . $query . '%')
             ->orWhere('documento', 'like', '%' . $query . '%')
             ->orWhere('nombre_propietario', 'like', '%' . $query . '%')
             ->orWhere('direccion', 'like', '%' . $query . '%')
             ->orderBy('codigo_catastro', 'desc')
-            ->groupBy('predios.id')
-            ->get();
-
-        return $predios;
-    }
-
-    /**
-     * Get a predio by searching a query, paginated.
-     */
-    public static function searchPaginated(string $query, int $page, int $amount = 100) {
-        $offset = ($page - 1) * $amount;
-
-        $predios = Predio::select('predios.id', 'codigo_catastro', 'total', 'orden')
-            ->join('historial_predios', 'predios.id', '=', 'historial_predios.predio_id')
-            ->where('codigo_catastro', 'like', '%' . $query . '%')
-            ->orWhere('documento', 'like', '%' . $query . '%')
-            ->orWhere('nombre_propietario', 'like', '%' . $query . '%')
-            ->orWhere('direccion', 'like', '%' . $query . '%')
-            ->orderBy('codigo_catastro', 'desc')
-            ->groupBy('predios.id')
-            ->skip($offset)
-            ->take($amount)
+            ->take(50)
             ->get();
 
         return $predios;

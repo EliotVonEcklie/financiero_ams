@@ -15,7 +15,7 @@ const form = useForm({
     hasta: props.rangoAvaluo.hasta,
     unidad_monetaria_id: props.rangoAvaluo.unidad_monetaria_id
 })
-const unidadMonetariasSelect = props.unidadMonetarias.map(x => ({ value: x.id, name: x.tipo }))
+const unidadMonetariasSelect = props.unidadMonetarias.map(x => ({ value: x.id, name: x.nombre }))
 </script>
 
 <template>

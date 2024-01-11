@@ -64,7 +64,7 @@ class EstratificacionController extends Controller
                     'hasta' => $rangoAvaluo->hasta,
                     'unidadMonetaria' => [
                         'id' => $rangoAvaluo->unidad_monetaria->id,
-                        'tipo' => $rangoAvaluo->unidad_monetaria->tipo
+                        'nombre' => $rangoAvaluo->unidad_monetaria->nombre
                     ]
                 ];
             }),
@@ -141,7 +141,7 @@ class EstratificacionController extends Controller
                     'hasta' => $rangoAvaluo->hasta,
                     'unidadMonetaria' => [
                         'id' => $rangoAvaluo->unidad_monetaria->id,
-                        'tipo' => $rangoAvaluo->unidad_monetaria->tipo
+                        'nombre' => $rangoAvaluo->unidad_monetaria->nombre
                     ]
                 ];
             }),

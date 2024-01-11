@@ -21,7 +21,7 @@ const predioTiposSelect = props.predioTipos.map(x => ({ value: x.id, name: x.nom
 const destinoEconomicosSelect = props.destinoEconomicos.map(x => ({ value: x.id, name: x.nombre }))
 const rangoAvaluosSelect = props.rangoAvaluos.map(x => ({
     value: { id: x.id, type: '\\App\\Models\\RangoAvaluo'},
-    name: x.id + ' | ' + 'Desde ' + x.desde + ' hasta ' + x.hasta + ' - ' + x.unidadMonetaria.tipo
+    name: x.id + ' | ' + 'Desde ' + x.desde + ' hasta ' + x.hasta + ' - ' + x.unidadMonetaria.nombre
 }))
 const predioEstratosSelect = props.predioEstratos.map(x => ({
     value: { id: x.id, type: '\\App\\Models\\PredioEstrato' },

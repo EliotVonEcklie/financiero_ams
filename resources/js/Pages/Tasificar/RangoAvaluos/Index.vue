@@ -42,7 +42,7 @@ function softDelete(allSelected) {
 
                 <td class="px-6 py-4">
                     <Link :href="route('unidad_monetarias.index')">
-                        {{ element.unidad_monetaria.tipo }}
+                        {{ element.unidad_monetaria.nombre }}
                     </Link>
                 </td>
 

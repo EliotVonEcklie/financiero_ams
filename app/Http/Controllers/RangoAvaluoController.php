@@ -23,7 +23,7 @@ class RangoAvaluoController extends Controller
                     'hasta' => $rangoAvaluo->hasta,
                     'unidad_monetaria' => [
                         'id' => $rangoAvaluo->unidad_monetaria->id,
-                        'tipo' => $rangoAvaluo->unidad_monetaria->tipo
+                        'nombre' => $rangoAvaluo->unidad_monetaria->nombre
                     ],
                     'state' => !$rangoAvaluo->trashed()
                 ];
@@ -40,7 +40,7 @@ class RangoAvaluoController extends Controller
             'unidadMonetarias' => UnidadMonetaria::all()->map(function ($unidadMonetaria) {
                 return [
                     'id' => $unidadMonetaria->id,
-                    'tipo' => $unidadMonetaria->tipo
+                    'nombre' => $unidadMonetaria->nombre
                 ];
             })
         ]);
@@ -81,7 +81,7 @@ class RangoAvaluoController extends Controller
             'unidadMonetarias' => UnidadMonetaria::all()->map(function ($unidadMonetaria) {
                 return [
                     'id' => $unidadMonetaria->id,
-                    'tipo' => $unidadMonetaria->tipo
+                    'nombre' => $unidadMonetaria->nombre
                 ];
             })
         ]);
