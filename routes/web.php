@@ -1,6 +1,6 @@
 <?php
 
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +18,10 @@ Route::name('public.')->group(function () {
     Route::get('/', function () {
         return inertia('Public/Index');
     })->name('index');
+
+    Route::get('/impuesto_predial_unificado', function (Request $request) {
+        return inertia('Public/ImpuestoPredialUnificado', [
+            'predios' => $request->query('search')
+        ]);
+    })->name('impuesto_predial_unificado');
 });
