@@ -70,9 +70,11 @@ class Predio extends Model
                 'orden',
                 'documento',
                 'nombre_propietario',
-                'direccion'
+                'direccion',
+                'predio_tipos.nombre as predio_tipo',
             )
             ->join('historial_predios', 'predios.id', '=', 'predio_id')
+            ->join('predio_tipos', 'predio_tipos.id', '=', 'predio_tipo_id')
             ->where('codigo_catastro', 'like', '%' . $query . '%')
             ->orWhere('documento', 'like', '%' . $query . '%')
             ->orWhere('nombre_propietario', 'like', '%' . $query . '%')
