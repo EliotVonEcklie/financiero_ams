@@ -3,11 +3,8 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\DestinoEconomicoController;
-use App\Http\Controllers\HistorialPredioController;
-use App\Http\Controllers\AvaluoController;
-use App\Http\Controllers\CodigoDestinoEconomicoController;
+use App\Http\Controllers\EstatutoController;
 use App\Http\Controllers\EstratificacionController;
-use App\Http\Controllers\PredioController;
 use App\Http\Controllers\PredioEstratoController;
 use App\Http\Controllers\UploadIgacController;
 use App\Http\Controllers\RangoAvaluoController;
@@ -61,21 +58,5 @@ Route::middleware([
     });
 
     Route::resource('upload_igac', UploadIgacController::class);
+    Route::resource('estatutos', EstatutoController::class)->withTrashed();
 });
-
-/*
-Route::middleware([
-    'api',
-    InitializeTenancyBySubdomain::class,
-    PreventAccessFromCentralDomains::class,
-])->prefix('api')->group(function () {
-    Route::get('/predios/search', [PredioController::class, 'search'])->name('api.predios.search');
-    Route::apiResource('predios', PredioController::class);
-
-    Route::get('/predios/{predio}/historial_predios/latest', [HistorialPredioController::class, 'latest'])->name('api.predios.historial_predios.latest');
-    Route::apiResource('predios.historial_predios', HistorialPredioController::class);
-
-    Route::get('/predios/{predio}/avaluos/latest', [AvaluoController::class, 'latest'])->name('api.predios.avaluos.latest');
-    Route::apiResource('predios.avaluos', AvaluoController::class);
-});
-*/

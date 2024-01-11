@@ -10,7 +10,6 @@ const props = defineProps({ destinoEconomicos: Array })
 function softDelete(allSelected) {
     props.destinoEconomicos.forEach(async x => {
         if (allSelected || x.selected) {
-            console.log(route('destino_economicos.update', x.id))
             await axios.put(route('destino_economicos.update', x.id), { 'toggle': true })
         }
     })

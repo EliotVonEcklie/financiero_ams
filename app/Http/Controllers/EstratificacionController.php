@@ -85,8 +85,8 @@ class EstratificacionController extends Controller
         $validated = $request->validated();
 
         Estratificacion::create([
-            'vigencia' => $validated['vigencia'],
-            'predio_tipo_id' => $validated['predio_tipo_id'],
+            'vigencia' => $request->vigencia,
+            'predio_tipo_id' => $request->predio_tipo_id,
             'destino_economico_id' => $validated['destino_economico_id'],
             'tarifa_id' => $validated['tarifa']['id'],
             'tarifa_type' => $validated['tarifa']['type'],

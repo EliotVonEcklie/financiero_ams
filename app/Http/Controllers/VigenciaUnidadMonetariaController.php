@@ -16,7 +16,7 @@ class VigenciaUnidadMonetariaController extends Controller
     public function index()
     {
         return inertia('Parametros/VigenciaUnidadMonetarias/Index', [
-            'vigenciaUnidadMonetarias' => VigenciaUnidadMonetaria::withTrashed()->get()->map(function ($vigenciaUnidadMonetaria) {
+            'vigenciaUnidadMonetarias' => VigenciaUnidadMonetaria::withTrashed()->where('valor', '<>', 1)->get()->map(function ($vigenciaUnidadMonetaria) {
                 return [
                     'id' => $vigenciaUnidadMonetaria->id,
                     'vigencia' => $vigenciaUnidadMonetaria->vigencia,
