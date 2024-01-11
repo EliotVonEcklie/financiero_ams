@@ -77,7 +77,7 @@ class Predio extends Model
             ->orWhere('documento', 'like', '%' . $query . '%')
             ->orWhere('nombre_propietario', 'like', '%' . $query . '%')
             ->orWhere('direccion', 'like', '%' . $query . '%')
-            ->orderBy('codigo_catastro', 'desc')
+            ->orderBy('codigo_catastro', 'asc')
             ->take(50)
             ->get();
 

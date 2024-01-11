@@ -3,7 +3,7 @@ import { router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { FwbModal } from 'flowbite-vue'
 
-defineProps({ predios: String })
+defineProps({ predios: Object })
 const isShowModal = ref(false)
 
 function closeModal () {
@@ -53,10 +53,10 @@ function search(evt) {
                                     Código catastral
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Orden
+                                    Total
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Total
+                                    Orden
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Propietario
@@ -73,30 +73,30 @@ function search(evt) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <tr v-for="predio in predios" :key="predio.id"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="px-6 py-4">
-                                    1
+                                    {{ predio.id }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    0001000000010011000000000
+                                    {{ predio.codigo_catastro }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    004
+                                    {{ predio.total }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    007
+                                    {{ predio.orden }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    Maria Celmira Romero Castro
+                                    {{ predio.nombre_propietario }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    51726503
+                                    {{ predio.documento }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    Brisas del ariari
+                                    {{ predio.direccion }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    Rural
+                                    {{ predio.predio_tipo }}
                                 </td>
                             </tr>
                         </tbody>
@@ -414,13 +414,13 @@ function search(evt) {
                                 <input type="input" name="intTotalPre" id="intTotalPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="0" readonly>
                             </td>
                             <td  class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                Total Sobret Bomberil:
+                                Total Sobre Bomberil:
                             </td>
                             <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
                                 <input type="input" name="intTotalSb" id="intTotalSb" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="0" readonly>
                             </td>
                             <td  class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                Total Sobret Ambiental:
+                                Total Sobre Ambiental:
                             </td>
                             <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
                                 <input type="input" name="intTotalSa" id="intTotalSa" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="0" readonly>
