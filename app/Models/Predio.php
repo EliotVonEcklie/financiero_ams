@@ -114,6 +114,7 @@ class Predio extends Model
             'codigo_catastro' => $predio->codigo_catastro,
             'total' => $predio->total,
             'orden' => $predio->orden,
+            'valor_avaluo' => $predio->latest_avaluo()->valor_avaluo,
             'documento' => $latest_historial->documento,
             'nombre_propietario' => $latest_historial->nombre_propietario,
             'direccion' => $latest_historial->direccion,

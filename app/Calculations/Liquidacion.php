@@ -75,7 +75,6 @@ class Liquidacion
     {
         return [
             'total' => $this->total,
-            'valor_avaluo' => $this->valor_avaluo,
             'valor_predial' => $this->valor_predial,
             'bomberil' => $this->bomberil,
             'ambiental' => $this->ambiental,
