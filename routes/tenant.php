@@ -70,14 +70,6 @@ Route::middleware([
             return inertia('Public/Index');
         })->name('index');
 
-        Route::get('/search_test', function (Request $request) {
-            $query = $request->query('search');
-
-            $predios = Predio::search($query);
-
-            return response()->json($predios);
-        });
-
         Route::get('/impuesto_predial_unificado', function (Request $request) {
             if ($request->has('search')) {
                 $predios = Predio::search($request->query('search'));
