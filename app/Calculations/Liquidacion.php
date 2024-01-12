@@ -17,8 +17,8 @@ class Liquidacion
 
     public function __construct(Avaluo $avaluo)
     {
-        $this->estatuto = Estatuto::where($avaluo->vigencia, '>=', 'vigencia_desde')
-            ->where($avaluo->vigencia, '<=', 'vigencia_hasta')
+        $this->estatuto = Estatuto::where('vigencia_desde', '<=', $avaluo->vigencia)
+            ->where('vigencia_hasta', '>=', $avaluo->vigencia)
             ->first();
 
         if (!isset($this->estatuto)) {
