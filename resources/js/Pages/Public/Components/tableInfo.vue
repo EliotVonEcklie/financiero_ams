@@ -1,110 +1,115 @@
-<script lang="ts" setup>
+<script setup>
 import { router } from '@inertiajs/vue3'
-import { ref } from 'vue'
-import { FwbModal } from 'flowbite-vue'
 
 defineProps({ predios: Object })
-const isShowModal = ref(false)
 
-function closeModal () {
-    isShowModal.value = false
-}
-
-function showModal () {
-    isShowModal.value = true
-}
 
 function search(evt) {
     router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
 }
+
+function show(predio_id) {
+    router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false })
+}
 </script>
 
 <template>
-    <fwb-modal v-if="isShowModal" @close="closeModal" size="7xl">
-        <template #header>
-            <div class="flex items-center text-lg">
-                Buscar Predio
-            </div>
-        </template>
-        <template #body>
-            <div class="p-2 space-y-4">
-                <form @submit.prevent>
-                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                            </svg>
+    <div id="modalBuscar" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-7xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="text-center bg-bluep text-white flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl  font-semibol  dark:text-white">
+                        Buscar predio
+                    </h3>
+                    <button type="button" class="text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modalBuscar">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5 space-y-4">
+                    <form @submit.prevent>
+                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                </svg>
+                            </div>
+                            <input type="search" @input="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar por nombre, código, documento..." required>
                         </div>
-                        <input @input="search" type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar por nombre, código, documento...">
+                    </form>
+                    <div class="mt-3 relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr class="text-center font-semibold py-3 text-black bg-gray-100">
+                                    <td colspan="8">Resultados de Búsqueda: {{ predios.length }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        ID
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Código catastral
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Orden
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Total
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Propietario
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Documento
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Dirección
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Tipo Predio
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr @click="show(predio.id)" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
+                                    <td class="px-6 py-4">
+                                        {{ predio.id }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ predio.codigo_catastro }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ predio.total }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ predio.orden }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ predio.nombre_propietario }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ predio.documento }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ predio.direccion }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ predio.predio_tipo }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </form>
-                <div class="mt-3 relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr class="text-center font-semibold py-3 text-black bg-gray-100">
-                                <td colspan="8">Resultados de Búsqueda: {{ predios.length }} </td>
-                            </tr>
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    ID
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Código catastral
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Total
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Orden
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Propietario
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Documento
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Dirección
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Tipo Predio
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="predio in predios" :key="predio.id"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4">
-                                    {{ predio.id }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ predio.codigo_catastro }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ predio.total }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ predio.orden }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ predio.nombre_propietario }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ predio.documento }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ predio.direccion }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ predio.predio_tipo }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
-        </template>
-    </fwb-modal>
+        </div>
+    </div>
     <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
             <li class="me-2" role="presentation">
@@ -212,7 +217,7 @@ function search(evt) {
                         <tr class="text-center border-b border-gray-200 dark:border-gray-700">
                             <td colspan="8" class="py-4 text-center">
                                 <div class="flex justify-center items-center space-x-6 rtl:space-x-reverse">
-                                    <button type="button" @click="showModal" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-bluep rounded-lg border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Buscar</button>
+                                    <button type="button" data-modal-target="modalBuscar" data-modal-toggle="modalBuscar" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-bluep rounded-lg border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Buscar</button>
                                     <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Calcular</button>
                                 </div>
                             </td>

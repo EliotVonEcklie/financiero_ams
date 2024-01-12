@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\DestinoEconomicoController;
 use App\Http\Controllers\EstatutoController;
 use App\Http\Controllers\EstratificacionController;
+use App\Http\Controllers\PredioController;
 use App\Http\Controllers\PredioEstratoController;
 use App\Http\Controllers\UploadIgacController;
 use App\Http\Controllers\RangoAvaluoController;
@@ -78,17 +79,20 @@ Route::middleware([
         });
 
         Route::get('/impuesto_predial_unificado', function (Request $request) {
-            $query = $request->query('search');
+            if ($request->has('search')) {
+                $predios = Predio::search($request->query('search'));
+            }
 
-            $predios = [];
-
-            if (isset($query)) {
-                $predios = Predio::search($query);
+            if ($request->has('predio_id')) {
+                $predio = Predio::find($request->query('predio_id'));
             }
 
             return inertia('Public/ImpuestoPredialUnificado', [
-                'predios' => $predios
+                'predios' => $predios ?? [],
+                'predio' => $predio ?? []
             ]);
         })->name('impuesto_predial_unificado');
+
+        Route::get('/predio', [PredioController::class, 'show'])->name('predio');
     });
 });

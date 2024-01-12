@@ -41,7 +41,7 @@ class PredioController extends Controller
 
         if ($request->has('page')) {
             $page = intval($request->input('page'));
-        
+
             $predios = Predio::searchPaginated($query, $page);
         } else {
             $predios = Predio::search($query);
@@ -62,10 +62,10 @@ class PredioController extends Controller
         }
 
         // The incoming request is valid...
-    
+
         // Retrieve the validated input data...
         $validated = $request->validated();
-    
+
         // Store the predio...
         $predio = Predio::create($validated);
         $predio->save();
@@ -80,7 +80,7 @@ class PredioController extends Controller
      */
     public function show(Predio $predio)
     {
-        return response()->json($predio);
+        return inertia('Public/Predio', ['predio' => $predio]);
     }
 
     /**
@@ -95,10 +95,10 @@ class PredioController extends Controller
         }
 
         // The incoming request is valid...
-    
+
         // Retrieve the validated input data...
         $validated = $request->validated();
-    
+
         // Store the predio...
         $predio->fill($validated);
         $predio->save();
