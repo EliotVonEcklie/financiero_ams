@@ -75,13 +75,16 @@ class Liquidacion
     {
         return [
             'total' => $this->total,
-            'valor_avaluo' => $this->valor_avaluo,
             'valor_predial' => $this->valor_predial,
             'bomberil' => $this->bomberil,
             'ambiental' => $this->ambiental,
             'alumbrado' => $this->alumbrado,
             'recibo_caja' => $this->estatuto->recibo_caja,
-            'estatuto' => $this->estatuto
+            'estatuto' => [
+                'bomberil' => $this->estatuto->bomberil,
+                'ambiental' => $this->estatuto->ambiental,
+                'alumbrado' => $this->estatuto->alumbrado
+            ]
         ];
     }
 }

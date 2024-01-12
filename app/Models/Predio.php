@@ -93,11 +93,6 @@ class Predio extends Model
         $vigencias = [];
 
         foreach ($predio->avaluos as $avaluo) {
-            $historial_predio = $avaluo->predio->historial_predios()
-                ->whereYear('fecha', $avaluo->vigencia)
-                ->orderBy('fecha', 'desc')
-                ->first();
-
             if ($avaluo->tasa_por_mil === -1) {
                 $liquidacion = null;
             } else {
@@ -106,21 +101,27 @@ class Predio extends Model
 
             $vigencia = [
                 'vigencia' => $avaluo->vigencia,
-                'documento' => $historial_predio->documento,
-                'nombre_propietario' => $historial_predio->nombre_propietario,
-                'direccion' => $historial_predio->direccion,
-                'tasa_por_mil' => $avaluo->tasa_por_mil,
-                'liquidacion' => $liquidacion
+                'tasa_por_mil' => $avaluo->tasa_por_mil
             ];
 
-            array_push($vigencias, $vigencia);
+            array_push($vigencias, array_merge($vigencia, $liquidacion));
         }
+
+        $latest_historial = $predio->latest_historial_predio();
 
         return [
             'id' => $predio->id,
             'codigo_catastro' => $predio->codigo_catastro,
             'total' => $predio->total,
             'orden' => $predio->orden,
+            'valor_avaluo' => $predio->latest_avaluo()->valor_avaluo,
+            'documento' => $latest_historial->documento,
+            'nombre_propietario' => $latest_historial->nombre_propietario,
+            'direccion' => $latest_historial->direccion,
+            'hectareas' => $latest_historial->hectareas,
+            'metros_cuadrados' => $latest_historial->metros_cuadrados,
+            'area_construida' => $latest_historial->area_construida,
+            'predio_tipo' => $latest_historial->predio_tipo->nombre,
             'vigencias' => $vigencias
         ];
     }
