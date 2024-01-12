@@ -1,11 +1,7 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3';
 
-defineProps(
-    {predios: Object},
-    {predio:Object}
-);
-
+defineProps({ predios: Array, predio: Object })
 
 function search(evt) {
     router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
@@ -81,7 +77,7 @@ function show(predio_id) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr @click="show(predio.id)" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
+                                <tr @click="show(predio.id)" data-modal-hide="modalBuscar" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
                                     <td class="px-6 py-4">
                                         {{ predio.id }}
                                     </td>
@@ -164,16 +160,16 @@ function show(predio_id) {
                                 Código catastral:
                             </td>
                             <td class="px-2 py-4">
-                                <input type="input" name="intCodCat" id="intCodCat" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="1234567890" readonly>
+                                <input type="input" name="intCodCat" id="intCodCat" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.codigo_catastro" readonly>
                             </td>
                             <td class="px-2 py-4">
-                                <input type="input" name="intOrd" id="intOrd" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="004" readonly>
+                                <input type="input" name="intOrd" id="intOrd" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.orden" readonly>
                             </td>
                             <td class="px-2 py-4">
-                                <input type="input" name="intTot" id="intTot" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="007" readonly>
+                                <input type="input" name="intTot" id="intTot" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.total" readonly>
                             </td>
                             <td class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                Tasa de interés de mora:
+                                Tasa de interés mes actual:
                             </td>
                             <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
                                 <div class="relative">

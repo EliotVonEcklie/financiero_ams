@@ -13,7 +13,7 @@ onMounted(() => {
     <header>
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img :src="img_logo" class="h-20" alt="Flowbite Logo" />
                 <div class="flex flex-col">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MUNICIPIO DE CABUYARO - META</span>
@@ -78,7 +78,7 @@ onMounted(() => {
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div class="md:flex md:justify-between">
             <div class="mb-6 md:mb-0">
-                <a href="#" class="flex items-center">
+                <a :href="route('public.index')" class="flex items-center">
                     <img :src="img_logo"  class="h-8 me-3" alt="FlowBite Logo" />
                     <div class="flex flex-col">
                         <span class="self-center text-base font-semibold whitespace-nowrap dark:text-white">MUNICIPIO DE CABUYARO - META</span>
