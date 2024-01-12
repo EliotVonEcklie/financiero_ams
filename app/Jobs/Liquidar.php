@@ -27,12 +27,17 @@ class Liquidar implements ShouldQueue, ShouldBeUnique
         ->where('tasa_por_mil', '<>', -1)
         ->chunk(1000, function ($avaluos) {
             foreach ($avaluos as $avaluo) {
-                $estatuto = Estatuto::where('vigencia_desde', '>=', $avaluo->vigencia)
-                    ->where('vigencia_hasta', '<=', $avaluo->vigencia)
+                $estatuto = Estatuto::where($avaluo->vigencia, '>=', 'vigencia_desde')
+                    ->where($avaluo->vigencia, '<=', 'vigencia_hasta')
                     ->first();
+
+                if (!isset($estatuto)) {
+                    continue;
+                }
 
                 $valor_avaluo = $avaluo->valor_avaluo;
                 $valor_predial = $this->calculate_tarifa($valor_avaluo, $avaluo->tasa_por_mil);
+                $predio_tipo = $avaluo->predio_tipo;
                 $liquidacion = 0;
                 $bomberil = 0;
                 $ambiental = 0;
@@ -54,11 +59,25 @@ class Liquidar implements ShouldQueue, ShouldBeUnique
                     );
                 }
 
-
+                if ($estatuto->alumbrado) {
+                    if ($estatuto->alumbrado_urbano && $predio_tipo->codigo === '01') {
+                        $alumbrado = $this->calculate_tarifa(
+                            $valor_predial,
+                            $estatuto->alumbrado_tasa,
+                            $estatuto->alumbrado_tarifa
+                        );
+                    } else if ($estatuto->alumbrado_rural && $predio_tipo->codigo === '00') {
+                        $alumbrado = $this->calculate_tarifa(
+                            $valor_avaluo,
+                            $estatuto->alumbrado_tasa,
+                            $estatuto->alumbrado_tarifa
+                        );
+                    }
+                }
 
                 $liquidacion += $bomberil + $ambiental + $alumbrado + $estatuto->recibo_caja;
 
-                Log::warn('Id predio: ' . $avaluo->predio->id . ', Bomberil: ' . $bomberil . ', Ambiental: ' . $ambiental . ', Alumbrado: ' . $alumbrado . ', Liquidacion: ' . $liquidacion);
+                Log::warning('Id predio: ' . $avaluo->predio->id . ', Avaluo: ' . $valor_avaluo . ', Predial: ' . $valor_predial . ', Bomberil: ' . $bomberil . ', Ambiental: ' . $ambiental . ', Alumbrado: ' . $alumbrado . ', Liquidacion: ' . $liquidacion);
             }
         });
     }

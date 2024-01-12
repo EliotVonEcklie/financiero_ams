@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Calculations\Liquidacion;
 
 class Predio extends Model
 {
@@ -84,5 +85,40 @@ class Predio extends Model
             ->get();
 
         return $predios;
+    }
+
+    public static function show($id) {
+        $predio = self::find($id);
+
+        $vigencias = [];
+
+        $predio->avaluos()->chunk(50, function ($avaluos) {
+            foreach ($avaluos as $avaluo) {
+                $historial_predio = $avaluo->predio->historial_predios()
+                    ->where('fecha', $avaluo->vigencia)
+                    ->orderBy('fecha', 'desc')
+                    ->first();
+
+                $liquidacion = new Liquidacion($avaluo);
+
+                $vigencia = [
+                    'vigencia' => $avaluo->vigencia,
+                    'documento' => $historial_predio->documento,
+                    'nombre_propietario' => $historial_predio->nombre_propietario,
+                    'direccion' => $historial_predio->direccion,
+                    'liquidacion' => $liquidacion->toArray()
+                ];
+
+                array_push($vigencias, $vigencia);
+            }
+        });
+
+        return [
+            'id' => $predio->id,
+            'codigo_catastro' => $predio->codigo_catastro,
+            'total' => $predio->total,
+            'orden' => $predio->orden,
+            'vigencias' => $vigencias
+        ];
     }
 }
