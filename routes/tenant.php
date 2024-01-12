@@ -76,7 +76,7 @@ Route::middleware([
             }
 
             if ($request->has('predio_id')) {
-                $predio = Predio::find($request->query('predio_id'));
+                $predio = Predio::show($request->query('predio_id'));
             }
 
             return inertia('Public/ImpuestoPredialUnificado', [
