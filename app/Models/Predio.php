@@ -117,6 +117,10 @@ class Predio extends Model
             'documento' => $latest_historial->documento,
             'nombre_propietario' => $latest_historial->nombre_propietario,
             'direccion' => $latest_historial->direccion,
+            'hectareas' => $latest_historial->hectareas,
+            'metros_cuadrados' => $latest_historial->metros_cuadrados,
+            'area_construida' => $latest_historial->area_construida,
+            'predio_tipo' => $latest_historial->predio_tipo->nombre,
             'vigencias' => $vigencias
         ];
     }

@@ -80,7 +80,12 @@ class Liquidacion
             'bomberil' => $this->bomberil,
             'ambiental' => $this->ambiental,
             'alumbrado' => $this->alumbrado,
-            'recibo_caja' => $this->estatuto->recibo_caja
+            'recibo_caja' => $this->estatuto->recibo_caja,
+            'estatuto' => [
+                'bomberil' => $this->estatuto->bomberil,
+                'ambiental' => $this->estatuto->ambiental,
+                'alumbrado' => $this->estatuto->alumbrado
+            ]
         ];
     }
 }
