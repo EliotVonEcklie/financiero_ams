@@ -36,8 +36,6 @@ class Tasificar implements ShouldQueue, ShouldBeUnique
                         continue;
                     }
 
-
-
                     foreach($estratificaciones as $estratificacion) {
                         if ($estratificacion->tarifa_type === '\App\Models\RangoAvaluo') {
                             $rangoAvaluo = $estratificacion->tarifa;

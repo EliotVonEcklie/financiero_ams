@@ -92,26 +92,29 @@ class Predio extends Model
 
         $vigencias = [];
 
-        $predio->avaluos()->chunk(50, function ($avaluos) {
-            foreach ($avaluos as $avaluo) {
-                $historial_predio = $avaluo->predio->historial_predios()
-                    ->where('fecha', $avaluo->vigencia)
-                    ->orderBy('fecha', 'desc')
-                    ->first();
+        foreach ($predio->avaluos as $avaluo) {
+            $historial_predio = $avaluo->predio->historial_predios()
+                ->whereYear('fecha', $avaluo->vigencia)
+                ->orderBy('fecha', 'desc')
+                ->first();
 
-                $liquidacion = new Liquidacion($avaluo);
-
-                $vigencia = [
-                    'vigencia' => $avaluo->vigencia,
-                    'documento' => $historial_predio->documento,
-                    'nombre_propietario' => $historial_predio->nombre_propietario,
-                    'direccion' => $historial_predio->direccion,
-                    'liquidacion' => $liquidacion->toArray()
-                ];
-
-                array_push($vigencias, $vigencia);
+            if ($avaluo->tasa_por_mil === -1) {
+                $liquidacion = null;
+            } else {
+                $liquidacion = (new Liquidacion($avaluo))->toArray();
             }
-        });
+
+            $vigencia = [
+                'vigencia' => $avaluo->vigencia,
+                'documento' => $historial_predio->documento,
+                'nombre_propietario' => $historial_predio->nombre_propietario,
+                'direccion' => $historial_predio->direccion,
+                'tasa_por_mil' => $avaluo->tasa_por_mil,
+                'liquidacion' => $liquidacion
+            ];
+
+            array_push($vigencias, $vigencia);
+        }
 
         return [
             'id' => $predio->id,

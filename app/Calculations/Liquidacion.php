@@ -22,7 +22,7 @@ class Liquidacion
             ->first();
 
         if (!isset($this->estatuto)) {
-            return -1;
+            return null;
         }
 
         $this->valor_avaluo = $avaluo->valor_avaluo;
