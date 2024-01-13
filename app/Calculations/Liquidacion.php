@@ -53,7 +53,7 @@ class Liquidacion
                 );
             } else if ($this->estatuto->alumbrado_rural && $avaluo->predio_tipo->codigo === '00') {
                 $this->alumbrado = $this->calculate_tarifa(
-                    $this->valor_avaluo,
+                    $this->valor_predial,
                     $this->estatuto->alumbrado_tasa,
                     $this->estatuto->alumbrado_tarifa
                 );
