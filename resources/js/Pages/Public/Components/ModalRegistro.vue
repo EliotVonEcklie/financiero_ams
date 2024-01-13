@@ -1,34 +1,29 @@
 <script setup>
     import {ref} from 'vue';
     import { FwbTab, FwbTabs } from 'flowbite-vue'
+
+    //tab
     const activeTab = ref('iniciar');
+
+    //input
+    const intVerContribuyente = ref('');
+    //loading
+    const loading = ref(false);
     function showTab(tabName){
         activeTab.value =tabName;
     }
-    /*const tabsElement = ref(null);
-    const tabElements = ref([]);
-    const tabs = ref(null);
-    onMounted(() => {
-        tabsElement.value = document.getElementById('session-tab');
-        tabElements.value = [
-            {
-                id: 'iniciar-tab',
-                triggerEl: document.querySelector('#iniciar'),
-                targetEl: document.querySelector('#iniciar'),
-            },
-            {
-                id: 'registrar-tab',
-                triggerEl: document.querySelector('#registrar'),
-                targetEl: document.querySelector('#registrar'),
-            },
-        ];
-        tabs.value = new Tabs(tabsElement.value,tabElements.value);
-        console.log('tabs.value:', tabs.value);
-    });
-    function showTabRegistrar(){
-        tabs.value.show('registrar-tab');
-        console.log('tabs.value function:', tabs.value);
-    }*/
+    function verifyUser(){
+        loading.value = true;
+        setTimeout(function(){
+            loading.value = false;
+        },2000)
+    }
+    function loginUser(){
+        loading.value = true;
+        setTimeout(function(){
+            loading.value = false;
+        },2000)
+    }
 
 </script>
 <template>
@@ -52,7 +47,7 @@
                 <div class="p-4 md:p-5 space-y-4">
                     <fwb-tabs v-model="activeTab" variant="underline" class="p-5">
                         <fwb-tab name="iniciar" title="Iniciar sesión">
-                            <div class="text-center flex flex-col items-center justify-center">
+                            <div class="text-center flex flex-col items-center mb-5 justify-center">
                                 <div class="mb-5 inline rounded-full p-8 bg-bluep">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="70" width="70" viewBox="0 0 448 512"><path fill="#fff" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
                                 </div>
@@ -67,14 +62,25 @@
                                 <label for="sesionContrasena" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contraseña</label>
                             </div>
                             <div class="flex justify-between items-center mb-5">
-                                <button data-modal-hide="modalRegistro" type="button" class="text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Iniciar sesión</button>
+                                <button :disabled="loading" @click="loginUser" type="button" :class="{'text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center': !loading,'text-black bg-white border border-gray-200 rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center':loading}">
+                                    <div v-if="loading">
+                                        <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
+                                        </svg>
+                                        Espere...
+                                    </div>
+                                    <div v-else>
+                                        Iniciar sesión
+                                    </div>
+                                </button>
                                 <a href="#" class="text-sm text- text-gray-500 dark:text-gray-400">¿Olvidaste la contraseña?</a>
                             </div>
                             <hr>
                             <p class="text-sm text-gray-500 dark:text-gray-400">¿No tienes una cuenta? <button @click="showTab('registrar')" type="button" class="text-black bg-white rounded-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrate aquí</button></p>
                         </fwb-tab>
                         <fwb-tab name="registrar" title="Registrarse">
-                            <div class="text-center flex flex-col items-center justify-center">
+                            <div class="text-center flex flex-col items-center justify-center mb-5">
                                 <div class="mb-5 inline rounded-full p-8 bg-bluep">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="70" width="70" viewBox="0 0 576 512"><path fill="#fff" d="M528 160V416c0 8.8-7.2 16-16 16H320c0-44.2-35.8-80-80-80H176c-44.2 0-80 35.8-80 80H64c-8.8 0-16-7.2-16-16V160H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM272 256a64 64 0 1 0 -128 0 64 64 0 1 0 128 0zm104-48c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376z"/></svg>
                                 </div>
@@ -82,11 +88,22 @@
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Ingrese por favor el Número de Identificación o NIT, sin digito de verificación</p>
                             </div>
                             <div class="relative z-0 w-full mb-5 group">
-                                <input type="number" name="registroUsuario" id="registroUsuario" class="[&::-webkit-inner-spin-button]:appearance-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  required />
+                                <input v-model="intVerContribuyente" type="number" name="registroUsuario" id="registroUsuario" class="[&::-webkit-inner-spin-button]:appearance-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  required />
                                 <label for="registroUsuario" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">NIT</label>
                             </div>
                             <div class="flex justify-between items-center">
-                                <button data-modal-hide="modalRegistro" type="button" class="text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirmar</button>
+                                <button :disabled="loading" @click="verifyUser" type="button" :class="{'text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center': !loading,'text-black bg-white border border-gray-200 rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center':loading}">
+                                    <div v-if="loading">
+                                        <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
+                                        </svg>
+                                        Espere...
+                                    </div>
+                                    <div v-else>
+                                        Confirmar
+                                    </div>
+                                </button>
                                 <p class="text-sm text-gray-500 dark:text-gray-400">¿Ya tienes una cuenta? <button @click="showTab('iniciar')" type="button" class="text-black bg-white rounded-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Inicia sesión aquí</button></p>
                             </div>
                         </fwb-tab>
