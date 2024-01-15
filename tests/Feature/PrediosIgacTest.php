@@ -14,9 +14,6 @@ class PrediosIgacTest extends TestTenantCase
 {
     protected $tenancy = true;
 
-    /**
-     * A basic feature test example.
-     */
     public function test(): void
     {
         $test_contents = <<<EOF

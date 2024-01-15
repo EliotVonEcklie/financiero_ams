@@ -37,7 +37,7 @@ function softDelete(allSelected) {
                 </td>
 
                 <td class="px-6 py-4">
-                    {{ element.hasta }}
+                    {{ element.hasta === -1 ? 'En adelante' : element.hasta }}
                 </td>
 
                 <td class="px-6 py-4">

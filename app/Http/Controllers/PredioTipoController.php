@@ -58,7 +58,6 @@ class PredioTipoController extends Controller
      */
     public function edit(PredioTipo $predioTipo)
     {
-        dd($predioTipo);
         return inertia('Parametros/PredioTipos/Edit', [
             'predioTipo' => [
                 'id' => $predioTipo->id,

@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRangoAvaluoRequest extends FormRequest
+class StoreInteresRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,9 +22,7 @@ class StoreRangoAvaluoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'desde' => ['required', 'numeric'],
-            'hasta' => ['nullable', 'numeric'],
-            'unidad_monetaria_id' => ['required', 'integer']
+            //
         ];
     }
 }
