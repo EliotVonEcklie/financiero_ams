@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\DescuentoController;
 use App\Http\Controllers\DestinoEconomicoController;
 use App\Http\Controllers\EstatutoController;
 use App\Http\Controllers\EstratificacionController;
+use App\Http\Controllers\InteresController;
 use App\Http\Controllers\PredioController;
 use App\Http\Controllers\PredioEstratoController;
 use App\Http\Controllers\UploadIgacController;
@@ -13,6 +15,9 @@ use App\Http\Controllers\UnidadMonetariaController;
 use App\Http\Controllers\VigenciaUnidadMonetariaController;
 use App\Http\Controllers\PredioTipoController;
 use App\Models\Predio;
+use App\Jobs\Tasificar;
+use App\Models\Descuento;
+use App\Models\Interes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
@@ -50,12 +55,20 @@ Route::middleware([
             Route::resource('vigencia_unidad_monetarias', VigenciaUnidadMonetariaController::class)->withTrashed();
             Route::resource('predio_tipos', PredioTipoController::class)->withTrashed();
             Route::resource('predio_estratos', PredioEstratoController::class)->withTrashed();
+            Route::resource('interes', InteresController::class)->withTrashed();
+            Route::resource('descuentos', DescuentoController::class)->withTrashed();
         });
 
         Route::prefix('tasificar')->group(function () {
             Route::get('/', function () {
                 return inertia('Tasificar/Index');
             })->name('tasificar.index');
+
+            Route::get('/dispatch', function () {
+                Tasificar::dispatch();
+
+                return to_route('tasificar.index');
+            })->name('tasificar.dispatch');
 
             Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
             Route::resource('estratificacions', EstratificacionController::class)->withTrashed();

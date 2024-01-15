@@ -21,6 +21,16 @@ defineProps({ title: String })
                         </Link>
                     </li>
                     <li>
+                        <Link :href="route('interes.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('Parametros/Interes') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="flex-1 ms-3 whitespace-nowrap">Tasas de Interés</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link :href="route('descuentos.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('Parametros/Descuentos') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="flex-1 ms-3 whitespace-nowrap">Descuentos Incentivos</span>
+                        </Link>
+                    </li>
+                    <li>
                         <Link :href="route('unidad_monetarias.index')" :class="{ 'bg-gray-100 dark:bg-gray-700': $page.component.startsWith('Parametros/UnidadMonetarias') }" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <span class="flex-1 ms-3 whitespace-nowrap">Unidades Monetarias</span>
                         </Link>
