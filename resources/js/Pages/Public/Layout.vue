@@ -1,18 +1,6 @@
-<script setup>
-import { initFlowbite } from 'flowbite'
-import { onMounted } from 'vue'
-import { Link } from '@inertiajs/vue3'
-import img_logo from '~/img/public/logo.png'
-import ModalRegistro from './Components/ModalRegistro.vue'
-
-onMounted(() => {
-    initFlowbite()
-});
-</script>
-
 <template>
     <header>
-        <ModalRegistro/>
+        <ModalRegistro :login="login" :showModal="showModal" :hideModal="hideModal" :changeTab="changeTab" :activeTab="activeTab"/>
         <nav class="bg-white border-gray-200 dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-3">
                 <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -23,7 +11,7 @@ onMounted(() => {
                     </div>
                 </a>
                 <div class="flex items-center">
-                    <button type="button" data-modal-target="modalRegistro" data-modal-toggle="modalRegistro" class="py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Iniciar sesión</button>
+                    <button type="button" @click="showModal('modalRegistro')" class="py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Iniciar sesión</button>
                 </div>
             </div>
         </nav>
@@ -72,7 +60,7 @@ onMounted(() => {
     </header>
 
     <main class="mb-8 container mx-auto">
-        <slot />
+        <slot :login ="login" :showModal="showModal" :hideModal="hideModal" :changeTab="changeTab" @update="changeTab" />
     </main>
 
     <footer class="bg-gray-100 dark:bg-gray-900">
@@ -151,3 +139,30 @@ onMounted(() => {
             </div>
     </footer>
 </template>
+
+<script lang="ts" setup>
+    import { initFlowbite } from 'flowbite'
+    import { onMounted,Ref,ref } from 'vue'
+    import { Link } from '@inertiajs/vue3'
+    import img_logo from '~/img/public/logo.png'
+    import ModalRegistro from './Components/ModalRegistro.vue'
+    import {Modal} from 'flowbite';
+    let activeTab:Ref<string | null>=ref('iniciar');
+    let login:Ref<boolean>=ref(false);
+    function showModal(id){
+        const modal = new Modal(document.getElementById(id)).show();
+        //activeTab.value = 'iniciar';
+    }
+    function hideModal(id){
+        const modal = new Modal(document.getElementById(id)).hide();
+    }
+
+    function changeTab(tab){
+        activeTab.value = tab;
+        //const tabs = new Tabs(document.getElementById(id)).show(tab);}
+    }
+
+    onMounted(() => {
+        initFlowbite();
+    });
+</script>

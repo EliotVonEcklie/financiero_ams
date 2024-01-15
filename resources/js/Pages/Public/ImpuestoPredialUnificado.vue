@@ -1,46 +1,4 @@
-<script setup>
-import Layout from './Layout.vue'
-import { router } from '@inertiajs/vue3';
-import ModalPse from './Components/ModalPse.vue';
 
-const props = defineProps({ predios: Object, predio: Object});
-//const objTotal = ref('');
-function search(evt) {
-    router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
-}
-
-function show(predio_id) {
-    router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false });
-}
-
-function getTotal(vigencias){
-    let bomberil = 0;
-    let alumbrado = 0;
-    let ambiental = 0;
-    let obj={}
-    if(vigencias!=null){
-        for (let i = 0; i < vigencias.length; i++) {
-            bomberil +=vigencias[i].bomberil;
-            alumbrado +=vigencias[i].alumbrado;
-            ambiental +=vigencias[i].ambiental;
-        }
-        obj={
-            "bomberil":bomberil,
-            "alumbrado":alumbrado,
-            "ambiental":ambiental
-        };
-    }else{
-        obj={
-            "bomberil":0,
-            "alumbrado":0,
-            "ambiental":0
-        };
-    }
-
-    return obj
-}
-
-</script>
 
 <template>
     <Layout>
@@ -607,3 +565,45 @@ function getTotal(vigencias){
         </div>
     </Layout>
 </template>
+<script setup>
+    import Layout from './Layout.vue'
+    import { router } from '@inertiajs/vue3';
+    import ModalPse from './Components/ModalPse.vue';
+
+    const props = defineProps({ predios: Object, predio: Object});
+    //const objTotal = ref('');
+    function search(evt) {
+        router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
+    }
+
+    function show(predio_id) {
+        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false });
+    }
+
+    function getTotal(vigencias){
+        let bomberil = 0;
+        let alumbrado = 0;
+        let ambiental = 0;
+        let obj={}
+        if(vigencias!=null){
+            for (let i = 0; i < vigencias.length; i++) {
+                bomberil +=vigencias[i].bomberil;
+                alumbrado +=vigencias[i].alumbrado;
+                ambiental +=vigencias[i].ambiental;
+            }
+            obj={
+                "bomberil":bomberil,
+                "alumbrado":alumbrado,
+                "ambiental":ambiental
+            };
+        }else{
+            obj={
+                "bomberil":0,
+                "alumbrado":0,
+                "ambiental":0
+            };
+        }
+
+        return obj
+    }
+</script>
