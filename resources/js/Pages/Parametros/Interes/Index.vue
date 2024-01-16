@@ -37,7 +37,7 @@ function softDelete(allSelected) {
                 </th>
 
                 <td class="px-6 py-4">
-                    {{ element.mes }} - {{ new Date(element.vigencia, element.mes - 1, 1).toLocaleString('es-es', { month: 'long' }) }}
+                    {{ element.mes }} - {{ $month(element.mes) }}
                 </td>
 
                 <td class="px-6 py-4">

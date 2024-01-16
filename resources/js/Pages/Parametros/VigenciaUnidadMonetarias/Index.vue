@@ -37,11 +37,11 @@ function softDelete(allSelected) {
                 </td>
 
                 <td class="px-6 py-4">
-                    {{ element.unidadMonetaria.tipo }}
+                    {{ element.unidadMonetaria.nombre }}
                 </td>
 
                 <td class="px-6 py-4">
-                    $ {{ element.valor }}
+                    {{ $numbers.currency(element.valor, element.unidadMonetaria.nombre) }}
                 </td>
 
                 <td class="px-6 py-4">

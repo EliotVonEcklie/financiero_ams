@@ -2,7 +2,7 @@
 
 <template>
     <Layout>
-            <!--Modal-->
+        <!--Modal-->
         <div id="modalBuscar" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-7xl max-h-full">
                 <!-- Modal content -->
@@ -10,7 +10,7 @@
                     <!-- Modal header -->
                     <div class="text-center bg-bluep text-white flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                         <h3 class="text-xl  font-semibol  dark:text-white">
-                            Buscar predio
+                            Buscar
                         </h3>
                         <button type="button" class="text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modalBuscar">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -32,11 +32,11 @@
                                 <input type="search" @input="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar por nombre, código, documento..." required>
                             </div>
                         </form>
-                        <div v-if ="predios.length > 0" class="mt-3 relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg">
+                        <div v-if ="s.length > 0" class="mt-3 relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg">
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr class="text-center font-semibold py-3 text-black bg-gray-100">
-                                        <td colspan="8">Resultados de Búsqueda: {{ predios.length }}</td>
+                                        <td colspan="8">Resultados de Búsqueda: {{ s.length }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
@@ -61,12 +61,12 @@
                                             Dirección
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Tipo Predio
+                                            Tipo
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr @click="show(predio.id);" data-modal-hide="modalBuscar" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
+                                    <tr @click="show(predio.id)" data-modal-hide="modalBuscar" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
                                         <td class="px-6 py-4">
                                             {{ predio.id }}
                                         </td>
@@ -99,7 +99,9 @@
                 </div>
             </div>
         </div>
-        <ModalPse/>
+
+        <ModalPse />
+
         <!--Información predio-->
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
@@ -111,6 +113,7 @@
                 </li>
             </ul>
         </div>
+
         <div id="default-tab-content">
             <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="predial" role="tabpanel" aria-labelledby="predial-tab">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -188,7 +191,7 @@
                                         <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M160 0c17.7 0 32 14.3 32 32V67.7c1.6 .2 3.1 .4 4.7 .7c.4 .1 .7 .1 1.1 .2l48 8.8c17.4 3.2 28.9 19.9 25.7 37.2s-19.9 28.9-37.2 25.7l-47.5-8.7c-31.3-4.6-58.9-1.5-78.3 6.2s-27.2 18.3-29 28.1c-2 10.7-.5 16.7 1.2 20.4c1.8 3.9 5.5 8.3 12.8 13.2c16.3 10.7 41.3 17.7 73.7 26.3l2.9 .8c28.6 7.6 63.6 16.8 89.6 33.8c14.2 9.3 27.6 21.9 35.9 39.5c8.5 17.9 10.3 37.9 6.4 59.2c-6.9 38-33.1 63.4-65.6 76.7c-13.7 5.6-28.6 9.2-44.4 11V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V445.1c-.4-.1-.9-.1-1.3-.2l-.2 0 0 0c-24.4-3.8-64.5-14.3-91.5-26.3c-16.1-7.2-23.4-26.1-16.2-42.2s26.1-23.4 42.2-16.2c20.9 9.3 55.3 18.5 75.2 21.6c31.9 4.7 58.2 2 76-5.3c16.9-6.9 24.6-16.9 26.8-28.9c1.9-10.6 .4-16.7-1.3-20.4c-1.9-4-5.6-8.4-13-13.3c-16.4-10.7-41.5-17.7-74-26.3l-2.8-.7 0 0C119.4 279.3 84.4 270 58.4 253c-14.2-9.3-27.5-22-35.8-39.6c-8.4-17.9-10.1-37.9-6.1-59.2C23.7 116 52.3 91.2 84.8 78.3c13.3-5.3 27.9-8.9 43.2-11V32c0-17.7 14.3-32 32-32z"/></svg>
                                         </div>
-                                        <input type="input" name="intAvaVig" id="intAvaVig" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="formatNumber(objPredio.valor_avaluo)" readonly>
+                                        <input type="input" name="intAvaVig" id="intAvaVig" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="$numbers.cop(predio.valor_avaluo)" readonly>
                                     </div>
                                 </td>
 
@@ -291,7 +294,8 @@
                 </div>
             </div>
         </div>
-        <div v-if="objPredio !=''">
+
+        <div v-if="predio !== null">
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="options-tab" data-tabs-toggle="#options-tab-content" role="tablist">
                     <li class="me-2" role="presentation">
@@ -302,6 +306,7 @@
                     </li>
                 </ul>
             </div>
+
             <div id="options-tab-content">
                 <div class="hidden rounded-lg bg-white dark:bg-gray-800" id="periodos" role="tabpanel" aria-labelledby="periodos-tab">
                     <div class="flex justify-start space-x-3">
@@ -322,7 +327,8 @@
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
                         </button>
                     </div>
-                    <div v-if="objPredio !='' && objPredio.vigencias.length > 0">
+
+                    <div v-if="predio.vigencias.length > 0">
                         <div  class="mt-3 relative overflow-x-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
                             <table  class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -345,19 +351,19 @@
                                         <th scope="col" class="px-6 py-3">
                                             Total. Int Predial
                                         </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
+                                        <th v-if="vigencia.estatuto.bomberil" scope="col" class="px-6 py-3">
                                             Sobretasa Bomberil
                                         </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
+                                        <th v-if="vigencia.estatuto.bomberil" scope="col" class="px-6 py-3">
                                             Intereses Bomberil
                                         </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
+                                        <th v-if="vigencia.estatuto.ambiental" scope="col" class="px-6 py-3">
                                             Sobretasa Ambiental
                                         </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
+                                        <th v-if="vigencia.estatuto.ambiental" scope="col" class="px-6 py-3">
                                             Intereses Ambiental
                                         </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3">
+                                        <th v-if="vigencia.estatuto.alumbrado" scope="col" class="px-6 py-3">
                                             Sobretasa Alumbrado
                                         </th>
                                         <th scope="col" class="px-6 py-3">
@@ -375,48 +381,48 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="vigencia in objPredio.vigencias" :key="objPredio.vigencias"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <tr v-for="vigencia in predio.vigencias" :key="vigencia.vigencia"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <td class="px-6 py-4">
                                             {{ vigencia.vigencia }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ objPredio.codigo_catastro }}
+                                            {{ predio.codigo_catastro }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.valor_predial) }}
+                                            {{ $numbers.cop(vigencia.valor_predial) }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.predial_intereses) }}
+                                            {{ $numbers.cop(vigencia.predial_intereses) }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.descuento_intereses) }}
+                                            {{ $numbers.cop(vigencia.descuento_intereses) }}
                                         </td>
                                         <td class="px-6 py-4">
-                                           {{formatNumber(vigencia.total_intereses)}}
+                                            {{ $numbers.cop(vigencia.total_intereses) }}
                                         </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.bomberil) }}
+                                        <td v-if="vigencia.estatuto.bomberil" class="px-6 py-4">
+                                            {{ $numbers.cop(vigencia.bomberil) }}
                                         </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.bomberil_intereses) }}
+                                        <td v-if="vigencia.estatuto.bomberil" class="px-6 py-4">
+                                            {{ $numbers.cop(vigencia.bomberil_intereses) }}
                                         </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.ambiental" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.ambiental) }}
+                                        <td v-if="vigencia.estatuto.ambiental" class="px-6 py-4">
+                                            {{ $numbers.cop(vigencia.ambiental) }}
                                         </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.ambiental" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.ambiental_intereses) }}
+                                        <td v-if="vigencia.estatuto.ambiental" class="px-6 py-4">
+                                            {{ $numbers.cop(vigencia.ambiental_intereses) }}
                                         </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.alumbrado" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.alumbrado) }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.descuento_intereses) }}
+                                        <td v-if="vigencia.estatuto.alumbrado" class="px-6 py-4">
+                                            {{ $numbers.cop(vigencia.alumbrado) }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.total) }}
+                                            {{ $numbers.cop(vigencia.descuento_intereses) }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.dias_mora) }}
+                                            {{ $numbers.cop(vigencia.total) }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $numbers.cop(vigencia.dias_mora) }}
                                         </td>
                                         <td class="w-4 p-4">
                                             <div class="flex items-center">
@@ -440,15 +446,15 @@
                                             Total Predial
                                         </th>
 
-                                        <th  v-if="objPredio.vigencias[0].estatuto.bomberil" class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        <th  v-if="predio.vigencias[0].estatuto.bomberil" class="px-2 py-4 text-bold text-black  bg-gray-100">
                                             Total Bomberil
                                         </th>
 
-                                        <th  v-if="objPredio.vigencias[0].estatuto.ambiental" class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        <th  v-if="predio.vigencias[0].estatuto.ambiental" class="px-2 py-4 text-bold text-black  bg-gray-100">
                                             Total Ambiental
                                         </th>
 
-                                        <th  v-if="objPredio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        <th  v-if="predio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 text-bold text-black  bg-gray-100">
                                             Total Alumbrado
                                         </th>
 
@@ -465,25 +471,25 @@
                                 <tbody>
                                     <tr class="border-b border-gray-200 dark:border-gray-700">
                                         <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalLiq" id="intTotalLiq" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  :value="getTotal(predio.vigencias).total" readonly>
+                                            <input type="input" name="intTotalLiq" id="intTotalLiq" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  :value="predio.vigencias.reduce((a, i) => a += i.total)" readonly>
                                         </td>
                                         <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalPre" id="intTotalPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="getTotal(predio.vigencias).predial" readonly>
+                                            <input type="input" name="intTotalPre" id="intTotalPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.vigencias.reduce((a, i) => a += i.predial)" readonly>
                                         </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.bomberil" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalSb" id="intTotalSb"  :value="getTotal(predio.vigencias).bomberil" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                                        <td v-if="vigencia.estatuto.bomberil" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <input type="input" name="intTotalSb" id="intTotalSb"  :value="predio.vigencias.reduce((a, i) => a += i.bomberil)" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
                                         </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.ambiental" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalSa" id="intTotalSa" :value="getTotal(predio.vigencias).ambiental" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
-                                        </td>
-                                        <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalInt" id="intTotalInt" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="getTotal(predio.vigencias).intereses" readonly>
-                                        </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalSa" id="intTotalSa" :value="getTotal(predio.vigencias).alumbrado" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
+                                        <td v-if="vigencia.estatuto.ambiental" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <input type="input" name="intTotalSa" id="intTotalSa" :value="predio.vigencias.reduce((a, i) => a += i.ambiental)" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
                                         </td>
                                         <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalDes" id="intTotalDes" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="getTotal(predio.vigencias).descuentos" readonly>
+                                            <input type="input" name="intTotalInt" id="intTotalInt" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.vigencias.reduce((a, i) => a += i.intereses)" readonly>
+                                        </td>
+                                        <td v-if="vigencia.estatuto.alumbrado" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <input type="input" name="intTotalSa" id="intTotalSa" :value="predio.vigencias.reduce((a, i) => a += i.alumbrado)" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
+                                        </td>
+                                        <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <input type="input" name="intTotalDes" id="intTotalDes" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.vigencias.reduce((a, i) => a += i.descuentos)" readonly>
                                         </td>
                                     </tr>
                                     <!--
@@ -588,73 +594,19 @@
         </div>
     </Layout>
 </template>
+
 <script setup>
     import Layout from './Layout.vue'
-    import { router } from '@inertiajs/vue3';
-    import ModalPse from './Components/ModalPse.vue';
-    import {ref} from 'vue';
+    import { router } from '@inertiajs/vue3'
+    import ModalPse from './Components/ModalPse.vue'
 
     const props = defineProps({ predios: Object, predio: Object});
-    let objPredio= ref(props.predio);
-    //const objTotal = ref('');
+
     function search(evt) {
         router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
     }
 
-    function formatNumber(value){
-        let number= isNaN(value) ? 0 : value;
-
-        if(number < 0 ){
-            number = Math.abs(number);
-            number = '-$'+ new Intl.NumberFormat('de-DE', { style: 'currency',currency: 'COP' }).format(number);
-        }else{
-            number ='$'+new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'COP' }).format(number);
-        }
-        console.log(number)
-        return number
-    }
     function show(predio_id) {
-        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false });
-    }
-
-    function getTotal(vigencias){
-        let bomberil = 0;
-        let alumbrado = 0;
-        let ambiental = 0;
-        let intereses = 0;
-        let descuentos = 0;
-        let predial = 0;
-        let total = 0;
-        let obj={
-                "bomberil":0,
-                "alumbrado":0,
-                "ambiental":0,
-                "intereses":0,
-                "descuentos":0,
-                "total":0,
-                "predial":0
-        };
-        if(vigencias!=null){
-            for (let i = 0; i < vigencias.length; i++) {
-                bomberil +=vigencias[i].bomberil;
-                alumbrado +=vigencias[i].alumbrado;
-                ambiental +=vigencias[i].ambiental;
-                intereses +=vigencias[i].total_intereses;
-                descuentos +=vigencias[i].total_descuentos;
-                total+=vigencias[i].total;
-                predial+=vigencias[i].valor_predial;
-            }
-            obj={
-                "bomberil":formatNumber(bomberil),
-                "alumbrado":formatNumber(alumbrado),
-                "ambiental":formatNumber(ambiental),
-                "intereses":formatNumber(intereses),
-                "descuentos":formatNumber(descuentos),
-                "predial":formatNumber(predial),
-                "total":formatNumber(total)
-            };
-        }
-
-        return obj
+        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false })
     }
 </script>

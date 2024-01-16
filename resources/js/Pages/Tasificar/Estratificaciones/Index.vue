@@ -16,6 +16,19 @@ function softDelete(allSelected) {
 
     router.reload()
 }
+
+function formatTarifa($numbers, tarifa) {
+    if (tarifa.type == "\\App\\Models\\RangoAvaluo") {
+        let desde = $numbers.currency(tarifa.desde, tarifa.unidad_monetaria)
+        let hasta = tarifa.hasta === -1 ? 'En adelante' : $numbers.currency(tarifa.hasta, tarifa.unidad_monetaria)
+
+        return `Rango ${tarifa.id} : ${desde} ~ ${hasta}`
+    } else if (tarifa.type == "\\App\\Models\\PredioEstrato") {
+        return 'Estrato ' . tarifa.estrato
+    } else {
+        return 'Desconocida'
+    }
+}
 </script>
 
 <template>
@@ -45,7 +58,7 @@ function softDelete(allSelected) {
                 </td>
 
                 <td class="px-6 py-4">
-                    {{ element.tarifa }}
+                    {{ formatTarifa($numbers, element.tarifa) }}
                 </td>
 
                 <td class="px-6 py-4">

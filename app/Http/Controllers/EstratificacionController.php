@@ -31,7 +31,15 @@ class EstratificacionController extends Controller
                         'id' => $estratificacion->destino_economico->id,
                         'nombre' => $estratificacion->destino_economico->nombre
                     ],
-                    'tarifa' => $estratificacion->format_tarifa(),
+                    'tarifa' => [
+                        'id' => $estratificacion->tarifa_id,
+                        'type' => $estratificacion->tarifa_type,
+                        'desde' => $estratificacion->tarifa->desde,
+                        'hasta' => $estratificacion->tarifa->hasta,
+                        'unidad_monetaria' => $estratificacion->tarifa->unidad_monetaria !== null ?
+                            $estratificacion->tarifa->unidad_monetaria->nombre : null,
+                        'estrato' => $estratificacion->tarifa->estrato
+                    ],
                     'tasa' => $estratificacion->tasa,
                     'state' => !$estratificacion->trashed()
                 ];
