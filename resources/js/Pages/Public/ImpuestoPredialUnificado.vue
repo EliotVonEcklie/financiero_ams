@@ -66,7 +66,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr @click="show(predio.id);" data-modal-hide="modalBuscar" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
+                                    <tr @click="show(predio.id);checkAll();" data-modal-hide="modalBuscar" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
                                         <td class="px-6 py-4">
                                             {{ predio.id }}
                                         </td>
@@ -175,7 +175,7 @@
                                         <div class="absolute inset-y-0 end-0 top-0 flex items-center ps-3.5 pointer-events-none">
                                             <span class="px-2 text-1xl font-bold text-black">x Mil</span>
                                         </div>
-                                        <input type="input" name="intTasaPre" id="intTasaPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objPredio.vigencias[0].tasa_por_mil" readonly>
+                                        <input type="input" name="intTasaPre" id="intTasaPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
                                     </div>
                                 </td>
                             </tr>
@@ -599,14 +599,15 @@
     const props = defineProps({ predios: Object, predio: Object});
     let objPredio= ref(props.predio);
     let objTotal = ref([getTotal(objPredio.vigencias)]);
-    console.log(objTotal.value);
     let isCheckAll = ref(true);
     let arrCheckVigencias = ref([]);
 
     function search(evt) {
         router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
     }
-
+    function show(predio_id) {
+        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false });
+    }
     function formatNumber(value){
         let number= isNaN(value) ? 0 : value;
 
@@ -618,9 +619,7 @@
         }
         return number
     }
-    function show(predio_id) {
-        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false });
-    }
+
     function checkAll(){
         for (let i = 0; i < objPredio.value.vigencias.length; i++) {
             objPredio.value.vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
@@ -677,8 +676,4 @@
 
         return obj
     }
-
-    onMounted(function(){
-        checkAll();
-    });
 </script>
