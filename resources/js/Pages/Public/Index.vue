@@ -1,5 +1,5 @@
 <template>
-    <Layout v-slot="{showModal,login,changeTab}">
+    <Layout v-slot="{showModal,login}">
         <div id="controls-carousel" class="relative w-full" data-carousel="static">
             <!-- Carousel wrapper -->
             <div class="relative h-56 overflow-hidden rounded-lg md:h-98">
@@ -58,7 +58,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="p-4" viewBox="0 0 180 140" width="200" height="200" xmlns:v="https://vecta.io/nano"><path d="M7.692 56.129h5.641v78.065H7.692V56.129z" fill="url(#A)"/><path d="M31.795 20h5.641v39.355h-5.641V20z" fill="url(#A)"/><path d="M26.154 65.161h5.641v23.226h-5.641V65.161z" fill="url(#A)"/><path d="M44.615 65.161h5.641v23.226h-5.641V65.161z" fill="url(#A)"/><path d="M50.256 12.903V20H31.795v-7.097h18.462z" fill="url(#A)"/><path d="M44.615 20h5.641v39.355h-5.641V20z" fill="url(#A)"/><path d="M71.795 20h5.641v39.355h-5.641V20z" fill="url(#A)"/><path d="M90.256 12.903V20H71.795v-7.097h18.462z" fill="url(#A)"/><path d="M84.615 20h5.641v39.355h-5.641V20z" fill="url(#A)"/><path d="M35.385 101.935h5.641v32.259h-5.641v-32.259z" fill="url(#A)"/><path d="M90.256 101.935h5.641v32.259h-5.641v-32.259z" fill="url(#A)"/><path d="M126.667 52.258v7.097H84.615v-7.097h42.052z" fill="url(#A)"/><path d="M77.436 52.258v7.097h-32.82v-7.097h32.821z" fill="url(#A)"/><path d="M50.256 65.161v7.097H26.154v-7.097h24.103z" fill="url(#A)"/><path d="M50.256 81.29v7.097H26.154V81.29h24.103z" fill="url(#A)"/><path d="M81.539 65.161h5.641v23.226h-5.641V65.161z" fill="url(#A)"/><path d="M100 65.161h5.641v23.226H100V65.161z" fill="url(#A)"/><path d="M105.641 65.161v7.097H81.539v-7.097h24.103z" fill="url(#A)"/><path d="M105.641 81.29v7.097H81.539V81.29h24.103z" fill="url(#A)"/><path d="M37.436 52.258v7.097H7.692v-7.097h29.744z" fill="url(#A)"/><path d="M95.897 94.839v7.096H35.385v-7.096h60.513z" fill="url(#A)"/><path d="M129.311 16.636l4.995.863-12.901 118.252-4.995-.862 12.901-118.253z" fill="url(#A)"/><path d="M167.773 135.244l4.995-.863-12.901-118.252-4.995.862 12.901 118.253z" fill="url(#A)"/><path d="M0 134.194h180V140H0v-5.806z" fill="url(#A)"/><path d="M121.538 5.806h46.154v5.806h-46.154V5.806z" fill="url(#A)"/><path d="M121.538 11.613h46.154v5.807h-46.154v-5.806z" fill="url(#A)"/><path d="M118.974 0h51.282v5.806h-51.282V0z" fill="url(#A)"/><path d="M149.231 60h14.359v5.161h-14.359V60z" fill="url(#A)"/><path d="M145.128 77.419h18.462v5.161h-18.462v-5.161z" fill="url(#A)"/><path d="M140 94.839h25.128V100H140v-5.161z" fill="url(#A)"/><path d="M12.308 121.29h23.077v6.452H12.308v-6.452z" fill="url(#A)"/><path d="M12.308 127.742h23.077v6.452H12.308v-6.452z" fill="url(#A)"/><path d="M95.897 121.29h23.077v6.452H95.897v-6.452z" fill="url(#A)"/><path d="M95.897 127.742h23.077v6.452H95.897v-6.452z" fill="url(#A)"/><defs><linearGradient id="A" x1="90" y1="0" x2="90" y2="140" gradientUnits="userSpaceOnUse"><stop stop-color="#84b6f4"/><stop offset=".305" stop-color="#b0f2c2"/><stop offset=".675" stop-color="#7d7"/><stop offset=".985" stop-color="#84b6f4"/></linearGradient></defs></svg>
                 </div>
                 <div class="p-5 flex justify-center">
-                    <button  type="button" @click="showModal('modalRegistro')" class="py-2.5 px-5 mb-2 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                    <button  type="button" @click="showModal('modalRegistro');changeTab('registrar');" class="py-2.5 px-5 mb-2 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                         Industria y comercio
                     </button>
                 </div>
@@ -157,4 +157,11 @@
 <script lang="ts" setup>
     import Layout from './Layout.vue';
     import img_banner from '~/img/public/banner.png';
+    import {defineEmits} from 'vue';
+
+    let emits = defineEmits(['changeTab','activeTab']);
+    function changeTab(tab){
+        emits('activeTab',tab);
+        emits('changeTab',tab);
+    }
 </script>

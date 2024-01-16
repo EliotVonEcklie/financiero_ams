@@ -44,7 +44,7 @@
                         </div>
                     </div>-->
 
-                    <fwb-tabs v-model="props.activeTab" variant="underline" class="p-5">
+                    <fwb-tabs v-model="activeTab" variant="underline" class="p-5">
                         <fwb-tab name="iniciar" title="Iniciar sesión">
                             <div class="text-center flex flex-col items-center mb-5 justify-center">
                                 <div class="mb-5 inline rounded-full p-8 bg-bluep">
@@ -116,13 +116,13 @@
     </div>
 </template>
 <script lang="ts" setup>
-    import {Ref,ref} from 'vue';
-    import { FwbTab, FwbTabs } from 'flowbite-vue';
+    import {Ref,ref,defineEmits} from 'vue';
+    import { FwbTab, FwbTabs } from 'flowbite-vue'
     import ModalConfirmarRegistro from './ModalConfirmarRegistro.vue';
-    import {Modal} from 'flowbite';
 
     const rModalConfirmarRegistro = ref<any>(null);
     let loading:Ref<boolean> = ref(false);
+    let activeTab:Ref<string> = ref('iniciar');
     let invalidContr:Ref<string> = ref("");
     let invalidUser:Ref<string> = ref("");
     let invalidPass:Ref<string> = ref("");
@@ -130,6 +130,7 @@
     const intUsuario:Ref<number | null> = ref(null);
     const strPass:Ref<string> = ref("");
     const props = defineProps(['login','hideModal','changeTab','activeTab','showModal']);
+    const emits = defineEmits(['changeTab','activeTab']);
 
     function verifyUser(){
         if(intVerContribuyente.value !=null && (intVerContribuyente.value > 100000 && intVerContribuyente.value < 9999999999)){
@@ -165,5 +166,10 @@
         }else if(strPass.value =="" ){
             invalidPass.value ='<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Este campo es obligatorio!</p>';
         }
+    }
+    function changeTab(tab){
+        activeTab.value = tab
+        emits('activeTab',activeTab);
+        emits('changeTab',activeTab);
     }
 </script>
