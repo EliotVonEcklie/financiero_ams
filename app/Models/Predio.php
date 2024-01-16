@@ -109,6 +109,8 @@ class Predio extends Model
 
         $latest_historial = $predio->latest_historial_predio();
 
+        $interes_vigente = Interes::getInteresVigente();
+
         return [
             'id' => $predio->id,
             'codigo_catastro' => $predio->codigo_catastro,
@@ -122,7 +124,7 @@ class Predio extends Model
             'metros_cuadrados' => $latest_historial->metros_cuadrados,
             'area_construida' => $latest_historial->area_construida,
             'predio_tipo' => $latest_historial->predio_tipo->nombre,
-            'interes_vigente' => Interes::getInteresVigente()->moratorio,
+            'interes_vigente' => $interes_vigente !== null ? $interes_vigente->moratorio : 0,
             'descuento_vigente' => Descuento::getDescuentoIncentivo(),
             'vigencias' => $vigencias
         ];
