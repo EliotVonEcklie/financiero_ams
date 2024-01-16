@@ -600,7 +600,7 @@
     import { router } from '@inertiajs/vue3'
     import ModalPse from './Components/ModalPse.vue'
 
-    const props = defineProps({ predios: Object, predio: Object});
+    const props = defineProps({ predios: Object, predio: Object})
 
     function search(evt) {
         router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
