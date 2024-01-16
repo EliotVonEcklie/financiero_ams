@@ -66,7 +66,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr @click="show(predio.id)" data-modal-hide="modalBuscar" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
+                                    <tr @click="show(predio.id);checkAll();" data-modal-hide="modalBuscar" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
                                         <td class="px-6 py-4">
                                             {{ predio.id }}
                                         </td>
@@ -178,7 +178,7 @@
                                         <div class="absolute inset-y-0 end-0 top-0 flex items-center ps-3.5 pointer-events-none">
                                             <span class="px-2 text-1xl font-bold text-black">x Mil</span>
                                         </div>
-                                        <input type="input" name="intTasaPre" id="intTasaPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objPredio.vigencias[0].tasa_por_mil" readonly>
+                                        <input type="input" name="intTasaPre" id="intTasaPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
                                     </div>
                                 </td>
                             </tr>
@@ -601,17 +601,84 @@
     import { router } from '@inertiajs/vue3'
     import ModalPse from './Components/ModalPse.vue'
 
-    const props = defineProps({ predios: Object, predio: Object})
+    const props = defineProps({ predios: Object, predio: Object});
+    let objPredio= ref(props.predio);
+    let objTotal = ref([getTotal(objPredio.vigencias)]);
+    let isCheckAll = ref(true);
+    let arrCheckVigencias = ref([]);
 
     function search(evt) {
         router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
     }
-
     function show(predio_id) {
-        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false })
+        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false });
+    }
+    function formatNumber(value){
+        let number= isNaN(value) ? 0 : value;
+
+        if(number < 0 ){
+            number = Math.abs(number);
+            number = '-$'+ new Intl.NumberFormat('de-DE', { style: 'currency',currency: 'COP' }).format(number);
+        }else{
+            number ='$'+new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'COP' }).format(number);
+        }
+        return number
     }
 
-    onMounted(function(){
-        checkAll();
-    });
+    function checkAll(){
+        for (let i = 0; i < objPredio.value.vigencias.length; i++) {
+            objPredio.value.vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
+
+        }
+        objTotal.value = getTotal(objPredio.value.vigencias);
+    }
+    function updateCheckAll(){
+        for (let i = 0; i < objPredio.value.vigencias.length; i++) {
+            if(objPredio.value.vigencias[i].isSelected == false){
+                isCheckAll.value = false;
+                break;
+            }
+        }
+        objTotal.value = getTotal(objPredio.value.vigencias);
+    }
+    function getTotal(vigencias){
+        let bomberil = 0;
+        let alumbrado = 0;
+        let ambiental = 0;
+        let intereses = 0;
+        let descuentos = 0;
+        let predial = 0;
+        let total = 0;
+        let obj={
+                "bomberil":0,
+                "alumbrado":0,
+                "ambiental":0,
+                "intereses":0,
+                "descuentos":0,
+                "total":0,
+                "predial":0
+        };
+        if(vigencias!=null){
+            for (let i = 0; i < vigencias.length; i++) {
+                bomberil +=vigencias[i].isSelected ? vigencias[i].bomberil : 0;
+                alumbrado +=vigencias[i].isSelected ? vigencias[i].alumbrado : 0;
+                ambiental +=vigencias[i].isSelected ? vigencias[i].ambiental : 0;
+                intereses +=vigencias[i].isSelected ? vigencias[i].total_intereses : 0;
+                descuentos +=vigencias[i].isSelected ? vigencias[i].total_descuentos : 0;
+                total+=vigencias[i].isSelected ? vigencias[i].total : 0;
+                predial+=vigencias[i].isSelected ? vigencias[i].valor_predial : 0;
+            }
+            obj={
+                "bomberil":formatNumber(bomberil),
+                "alumbrado":formatNumber(alumbrado),
+                "ambiental":formatNumber(ambiental),
+                "intereses":formatNumber(intereses),
+                "descuentos":formatNumber(descuentos),
+                "predial":formatNumber(predial),
+                "total":formatNumber(total)
+            };
+        }
+
+        return obj
+    }
 </script>
