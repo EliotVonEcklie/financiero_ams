@@ -30,7 +30,7 @@ class Tasificar implements ShouldQueue, ShouldBeUnique
     public function handle(): void
     {
         $estratificaciones = Estratificacion::all();
-        $avaluos = Avaluo::where('tasa_por_mil', -1)->lazyById(1000);
+        $avaluos = Avaluo::where('tasa_por_mil', -1)->lazyById();
 
         foreach ($avaluos as $avaluo) {
             $estratificacionesAvaluo = $estratificaciones->where('vigencia', $avaluo->vigencia)
