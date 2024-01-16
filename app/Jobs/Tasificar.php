@@ -11,7 +11,6 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Avaluo;
 use App\Models\Estratificacion;
 use App\Models\VigenciaUnidadMonetaria;
-use Illuminate\Support\Facades\Log;
 use RuntimeException;
 
 class Tasificar implements ShouldQueue, ShouldBeUnique
@@ -23,22 +22,23 @@ class Tasificar implements ShouldQueue, ShouldBeUnique
      *
      * @var int
      */
-    public $timeout = 1000;
+    public $timeout = 500;
 
     /**
      * Execute the job.
      */
     public function handle(): void
     {
-        $avaluos = Avaluo::where('tasa_por_mil', -1)->lazy();
+        $estratificaciones = Estratificacion::all();
+        $avaluos = Avaluo::where('tasa_por_mil', -1)->lazyById(1000);
 
         foreach ($avaluos as $avaluo) {
-            $estratificaciones = Estratificacion::where('vigencia', $avaluo->vigencia)
+            $estratificacionesAvaluo = $estratificaciones->where('vigencia', $avaluo->vigencia)
                 ->where('predio_tipo_id', $avaluo->predio_tipo->id)
                 ->where('destino_economico_id', $avaluo->codigo_destino_economico->destino_economico->id)
-                ->get();
+                ->all();
 
-            foreach($estratificaciones as $estratificacion) {
+            foreach($estratificacionesAvaluo as $estratificacion) {
                 if ($estratificacion->tarifa_type === '\App\Models\RangoAvaluo') {
                     $rangoAvaluo = $estratificacion->tarifa;
 

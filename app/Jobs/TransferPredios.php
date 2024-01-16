@@ -21,19 +21,17 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
      *
      * @var int
      */
-    public $timeout = 2000;
+    public $timeout = 180;
 
     /**
      * Execute the job.
      */
     public function handle(): void
     {
-        Predio::chunk(1000, function (Collection $predios) {
-            foreach ($predios as $predio) {
-                $this->transfer_predio($predio);
-                $this->transfer_avaluos($predio->avaluos);
-            }
-        });
+        foreach (Predio::lazy() as $predio) {
+            $this->transfer_predio($predio);
+            $this->transfer_avaluos($predio->avaluos);
+        }
     }
 
     /**

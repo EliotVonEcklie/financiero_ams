@@ -18,9 +18,25 @@ class Interes extends Model
         'corriente'
     ];
 
+    public function dailyMoratorioInteres()
+    {
+        $is_leap = !($this->vigencia % 4) && ($this->vigencia % 100 || !($this->vigencia % 400));
+
+        $days = $is_leap ? 366 : 365;
+
+        return $this->moratorio / $days;
+    }
+
     public static function diasMora($from, $to = null)
     {
         return $from->diffInDays($to ?? now());
+    }
+
+    public static function getInteresVigente($date = null)
+    {
+        $date ??= now();
+
+        return self::where('vigencia', $date->year)->where('mes', $date->month)->first();
     }
 
     public static function calculateMoratorio($deuda, $from, $to = null)
@@ -30,7 +46,7 @@ class Interes extends Model
         $total = 0;
 
         for ($d = $from->copy(); $d < $to; $d->addDay()) {
-            $interes = self::where('vigencia', $d->year)->where('mes', $d->month)->first();
+            $interes = self::getInteresVigente($d);
 
             if ($interes !== null) {
                 $total += ($interes->dailyMoratorioInteres() * $deuda) / 100;
@@ -38,14 +54,5 @@ class Interes extends Model
         }
 
         return RoundPesos::round($total);
-    }
-
-    public function dailyMoratorioInteres()
-    {
-        $is_leap = !($this->vigencia % 4) && ($this->vigencia % 100 || !($this->vigencia % 400));
-
-        $days = $is_leap ? 366 : 365;
-
-        return $this->moratorio / $days;
     }
 }
