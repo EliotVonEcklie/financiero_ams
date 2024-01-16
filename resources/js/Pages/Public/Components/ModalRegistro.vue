@@ -1,32 +1,5 @@
-<script setup>
-    import {ref} from 'vue';
-    import { FwbTab, FwbTabs } from 'flowbite-vue'
-
-    //tab
-    const activeTab = ref('iniciar');
-
-    //input
-    const intVerContribuyente = ref('');
-    //loading
-    const loading = ref(false);
-    function showTab(tabName){
-        activeTab.value =tabName;
-    }
-    function verifyUser(){
-        loading.value = true;
-        setTimeout(function(){
-            loading.value = false;
-        },2000)
-    }
-    function loginUser(){
-        loading.value = true;
-        setTimeout(function(){
-            loading.value = false;
-        },2000)
-    }
-
-</script>
 <template>
+    <ModalConfirmarRegistro ref="rModalConfirmarRegistro" :documento="intVerContribuyente" :hideModal="hideModal" />
     <div id="modalRegistro" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
@@ -36,7 +9,7 @@
                     <h3 class="text-xl font-semibold text-white dark:text-white">
                         Bienvenido
                     </h3>
-                    <button type="button" class="text-white bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modalRegistro">
+                    <button type="button" class="text-white bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" @click="hideModal('modalRegistro')">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
@@ -45,7 +18,33 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 space-y-4">
-                    <fwb-tabs v-model="activeTab" variant="underline" class="p-5">
+                    <!--
+                    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                            <li class="me-2" role="presentation">
+                                <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                            </li>
+                            <li class="me-2" role="presentation">
+                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Dashboard</button>
+                            </li>
+                            <li class="me-2" role="presentation">
+                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+                            </li>
+                            <li role="presentation">
+                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Contacts</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="tab-login">
+                        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="iniciar" role="tabpanel" aria-labelledby="iniciar-tab">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Profile tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+                        </div>
+                        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="registrar" role="tabpanel" aria-labelledby="registrar-tab">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+                        </div>
+                    </div>-->
+
+                    <fwb-tabs v-model="props.activeTab" variant="underline" class="p-5">
                         <fwb-tab name="iniciar" title="Iniciar sesión">
                             <div class="text-center flex flex-col items-center mb-5 justify-center">
                                 <div class="mb-5 inline rounded-full p-8 bg-bluep">
@@ -54,12 +53,14 @@
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Ingrese por favor el Número de Identificación o NIT, sin digito de verificación y su contraseña.</p>
                             </div>
                             <div class="relative z-0 w-full mb-5 group">
-                                <input type="number" name="sesionUsuario" id="sesionUsuario"  class="[&::-webkit-inner-spin-button]:appearance-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input v-model="intUsuario" type="number" name="sesionUsuario" id="sesionUsuario"  class="[&::-webkit-inner-spin-button]:appearance-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label for="sesionUsuario" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">NIT</label>
+                                <div v-html="invalidUser"></div>
                             </div>
                             <div class="relative z-0 w-full mb-5 group">
-                                <input type="password" name="sesionContrasena" id="sesionContrasena" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input v-model="strPass" type="password" name="sesionContrasena" id="sesionContrasena" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label for="sesionContrasena" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contraseña</label>
+                                <div v-html="invalidPass"></div>
                             </div>
                             <div class="flex justify-between items-center mb-5">
                                 <button :disabled="loading" @click="loginUser" type="button" :class="{'text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center': !loading,'text-black bg-white border border-gray-200 rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center':loading}">
@@ -77,9 +78,9 @@
                                 <a href="#" class="text-sm text- text-gray-500 dark:text-gray-400">¿Olvidaste la contraseña?</a>
                             </div>
                             <hr>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">¿No tienes una cuenta? <button @click="showTab('registrar')" type="button" class="text-black bg-white rounded-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrate aquí</button></p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">¿No tienes una cuenta? <button @click="changeTab('registrar')" type="button" class="text-black bg-white rounded-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrate aquí</button></p>
                         </fwb-tab>
-                        <fwb-tab name="registrar" title="Registrarse">
+                        <fwb-tab name="registrar" title="Registrarse" @click="changeTab('registrar')">
                             <div class="text-center flex flex-col items-center justify-center mb-5">
                                 <div class="mb-5 inline rounded-full p-8 bg-bluep">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="70" width="70" viewBox="0 0 576 512"><path fill="#fff" d="M528 160V416c0 8.8-7.2 16-16 16H320c0-44.2-35.8-80-80-80H176c-44.2 0-80 35.8-80 80H64c-8.8 0-16-7.2-16-16V160H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM272 256a64 64 0 1 0 -128 0 64 64 0 1 0 128 0zm104-48c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376z"/></svg>
@@ -88,8 +89,9 @@
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Ingrese por favor el Número de Identificación o NIT, sin digito de verificación</p>
                             </div>
                             <div class="relative z-0 w-full mb-5 group">
-                                <input v-model="intVerContribuyente" type="number" name="registroUsuario" id="registroUsuario" class="[&::-webkit-inner-spin-button]:appearance-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  required />
+                                <input v-model="intVerContribuyente" type="number" name="registroUsuario" id="registroUsuario" class="[&::-webkit-inner-spin-button]:appearance-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " pattern="[0-9]+" required />
                                 <label for="registroUsuario" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">NIT</label>
+                                <div v-html="invalidContr"></div>
                             </div>
                             <div class="flex justify-between items-center">
                                 <button :disabled="loading" @click="verifyUser" type="button" :class="{'text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center': !loading,'text-black bg-white border border-gray-200 rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center':loading}">
@@ -104,50 +106,64 @@
                                         Confirmar
                                     </div>
                                 </button>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">¿Ya tienes una cuenta? <button @click="showTab('iniciar')" type="button" class="text-black bg-white rounded-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Inicia sesión aquí</button></p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">¿Ya tienes una cuenta? <button @click="changeTab('iniciar')" type="button" class="text-black bg-white rounded-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Inicia sesión aquí</button></p>
                             </div>
                         </fwb-tab>
                     </fwb-tabs>
-                    <!--
-                    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="session-tab" data-tabs-toggle="#session-tab-content" role="tablist">
-                            <li class="me-2" role="presentation">
-                                <button class="inline-block p-4 border-b-2 rounded-t-lg" id="iniciar-tab" data-tabs-target="#iniciar" type="button" role="tab" aria-controls="iniciar" aria-selected="false">Iniciar sesión</button>
-                            </li>
-                            <li class="me-2" role="presentation">
-                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="registrar-tab" data-tabs-target="#registrar" type="button" role="tab" aria-controls="registrar" aria-selected="false">Registrarse</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="session-tab-content">
-                        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="iniciar" role="tabpanel" aria-labelledby="iniciar-tab">
-                            <div class="relative z-0 w-full mb-5 group">
-                                <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
-                            </div>
-                            <div class="relative z-0 w-full mb-5 group">
-                                <input type="password" name="floating_password" id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
-                            </div>
-                            <div class="relative z-0 w-full mb-5 group">
-                                <input type="password" name="repeat_password" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label for="floating_repeat_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
-                            </div>
-                            <div class="flex justify-end">
-                                <a href="#" class="text-sm text- text-gray-500 dark:text-gray-400">¿Olvidaste la contraseña</a>
-                            </div>
-                            <div class="flex justify-center mb-5">
-                                <button data-modal-hide="modalRegistro" type="button" class="text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Iniciar sesión</button>
-                            </div>
-                            <hr>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">¿No tienes una cuenta? <button @click="showTabRegistrar" type="button" class="text-black bg-gray-50 rounded-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrate aquí</button></p>
-                        </div>
-                        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="registrar" role="tabpanel" aria-labelledby="registrar-tab">
-                            <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
-                        </div>
-                    </div>-->
                 </div>
             </div>
         </div>
     </div>
 </template>
+<script lang="ts" setup>
+    import {Ref,ref} from 'vue';
+    import { FwbTab, FwbTabs } from 'flowbite-vue';
+    import ModalConfirmarRegistro from './ModalConfirmarRegistro.vue';
+    import {Modal} from 'flowbite';
+
+    const rModalConfirmarRegistro = ref<any>(null);
+    let loading:Ref<boolean> = ref(false);
+    let invalidContr:Ref<string> = ref("");
+    let invalidUser:Ref<string> = ref("");
+    let invalidPass:Ref<string> = ref("");
+    const intVerContribuyente:Ref<number | null> = ref(null);
+    const intUsuario:Ref<number | null> = ref(null);
+    const strPass:Ref<string> = ref("");
+    const props = defineProps(['login','hideModal','changeTab','activeTab','showModal']);
+
+    function verifyUser(){
+        if(intVerContribuyente.value !=null && (intVerContribuyente.value > 100000 && intVerContribuyente.value < 9999999999)){
+            loading.value = true;
+            setTimeout(function(){
+                loading.value = false;
+                invalidContr.value = '';
+                if(!props.login){
+                    props.showModal('modalConfirmarRegistro');
+                    props.hideModal('modalRegistro');
+                }
+            },2000)
+        }else{
+            invalidContr.value = '<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> El número de documento es invalido!</p>';
+        }
+    }
+    function loginUser(){
+        if(intUsuario.value !=null && strPass.value !="" &&(intUsuario.value > 100000 && intUsuario.value < 9999999999)){
+            loading.value = true;
+            setTimeout(function(){
+                loading.value = false;
+                invalidUser.value = '';
+                invalidPass.value = '';
+                if(!flag){
+
+                }
+            },2000)
+        }else if(intUsuario.value < 100000 || intUsuario.value > 9999999999 || intUsuario.value ==null){
+            invalidUser.value = '<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> El número de documento es invalido!</p>';
+        }else if(intUsuario.value ==null && strPass.value ==""){
+            invalidUser.value = '<p class="mt-2 text-sm text-red-600 dark:text-red-500"><Este class="font-medium">Este campo es obligatorio!</p>';
+            invalidPass.value ='<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Este campo es obligatorio!</p>';
+        }else if(strPass.value =="" ){
+            invalidPass.value ='<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Este campo es obligatorio!</p>';
+        }
+    }
+</script>
