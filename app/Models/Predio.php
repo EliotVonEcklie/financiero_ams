@@ -122,6 +122,8 @@ class Predio extends Model
             'metros_cuadrados' => $latest_historial->metros_cuadrados,
             'area_construida' => $latest_historial->area_construida,
             'predio_tipo' => $latest_historial->predio_tipo->nombre,
+            'interes_vigente' => Interes::getInteresVigente()->moratorio,
+            'descuento_vigente' => Descuento::getDescuentoIncentivo(),
             'vigencias' => $vigencias
         ];
     }

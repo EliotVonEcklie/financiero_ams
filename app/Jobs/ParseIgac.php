@@ -8,15 +8,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\LazyCollection;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use App\Models\Predio;
 use App\Models\CodigoDestinoEconomico;
 use App\Models\Avaluo;
 use App\Models\HistorialPredio;
 use App\Models\PredioEstrato;
 use App\Models\PredioTipo;
-use Generator;
-use Illuminate\Support\LazyCollection;
 
 class ParseIgac implements ShouldQueue, ShouldBeUnique
 {
@@ -64,7 +65,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
             // Update or create HistorialPredio
             HistorialPredio::updateOrCreate([
                 'predio_id' => $predio->id,
-                'fecha' => date_format($r1_data->vigencia, 'Y-m-d')
+                'fecha' => $r1_data->vigencia
             ], [
                 'codigo_destino_economico_id' => $codigo_destino_economico->id,
                 'tipo_documento' => $r1_data->tipo_documento,
@@ -80,7 +81,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
             // Update or create Avaluo
             Avaluo::updateOrCreate([
                 'predio_id' => $predio->id,
-                'vigencia' => date_format($r1_data->vigencia, 'Y')
+                'vigencia' => $r1_data->vigencia->year
             ], [
                 'codigo_destino_economico_id' => $codigo_destino_economico->id,
                 'direccion' => $r1_data->direccion,
@@ -109,11 +110,10 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
             $r2_data = $this->parse_line_r2($r2_line);
 
             // Find Predio
-            $predio = Predio::where([
-                ['codigo_catastro', '=', $r2_data->codigo_catastro],
-                ['total', '=', $r2_data->total],
-                ['orden', '=', $r2_data->orden]
-            ])->first();
+            $predio = Predio::where('codigo_catastro', $r2_data->codigo_catastro)
+                ->where('total', $r2_data->total)
+                ->where('orden', $r2_data->orden)
+                ->first();
 
             if ($predio === null) {
                 return;
@@ -140,7 +140,13 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
         $handle = fopen($path, 'r');
 
         while (($line = fgets($handle)) !== false) {
-            $line = mb_convert_encoding($line, 'UTF-8', 'UTF-8'); // Ensure correct encoding
+            $line = mb_convert_encoding($line, 'UTF-8', 'Windows-1252'); // IGAC files arrive encoded in CP1252
+            $line = rtrim($line, "\r\n");
+
+            if (mb_strlen($line) !== 312) {
+                Log::warning('IGAC line is not 312 characters long!: (' . mb_strlen($line) . ') ' . $line);
+                continue;
+            }
 
             yield $line;
         }
@@ -177,7 +183,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
         // valor avaluo
         $valor_avaluo = (float) mb_substr($line, 274, 15);
         // vigencia
-        $vigencia = date_create_from_format('dmY', mb_substr($line, 289, 8));
+        $vigencia = Carbon::createFromFormat('dmY', mb_substr($line, 289, 8))->startOfDay();
 
         return (object) [
             'codigo_catastro' => $codigo_catastro,
