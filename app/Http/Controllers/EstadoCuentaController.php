@@ -32,7 +32,7 @@ class EstadoCuentaController extends Controller
         $estadoCuenta = EstadoCuenta::create([
             'fecha' => now(),
             'ip' => $request->ip(),
-            'data' => $request->data
+            'data' => $request->input('data')
         ]);
 
         return $this->show($estadoCuenta);
