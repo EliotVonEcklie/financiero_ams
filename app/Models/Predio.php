@@ -101,18 +101,12 @@ class Predio extends Model
         $vigencias = [];
 
         foreach ($predio->avaluos as $avaluo) {
-            if ($avaluo->tasa_por_mil === -1) {
-                $liquidacion = null;
-            } else {
+            if ($avaluo->tasa_por_mil !== -1) {
                 $liquidacion = (new Liquidacion($avaluo))->toArray();
+                array_push($vigencias, $liquidacion);
+            } else {
+                array_push($vigencias, ['vigencia' => $avaluo->vigencia, 'tasa_por_mil' => -1]);
             }
-
-            $vigencia = [
-                'vigencia' => $avaluo->vigencia,
-                'tasa_por_mil' => $avaluo->tasa_por_mil
-            ];
-
-            array_push($vigencias, array_merge($vigencia, $liquidacion));
         }
 
         $latest_historial = $predio->latest_historial_predio();

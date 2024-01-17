@@ -40,7 +40,7 @@ const unidadMonetariasSelect = props.unidadMonetarias.map(x => ({ value: x.id, n
             </div>
 
             <div class="relative w-full mb-5">
-                <fwb-select
+                <FwbSelect
                     v-model="form.unidad_monetaria_id"
                     :options="unidadMonetariasSelect"
                     label="Unidad Monetaria"

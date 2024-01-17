@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\DescuentoController;
 use App\Http\Controllers\DestinoEconomicoController;
+use App\Http\Controllers\EstadoCuentaController;
 use App\Http\Controllers\EstatutoController;
 use App\Http\Controllers\EstratificacionController;
 use App\Http\Controllers\InteresController;
@@ -98,9 +99,7 @@ Route::middleware([
             ]);
         })->name('impuesto_predial_unificado');
 
-        Route::get('estado_de_cuenta/{predio}', function (Predio $predio) {
-            return $predio->estado_de_cuenta();
-        })->name('estado_de_cuenta');
+        Route::resource('estado_cuenta', EstadoCuentaController::class)->only(['store', 'show']);
 
         Route::get('/predio', [PredioController::class, 'show'])->name('predio');
     });

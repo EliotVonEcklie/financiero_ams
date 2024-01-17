@@ -14,6 +14,7 @@ class Liquidacion
     private Avaluo $avaluo;
 
     public float $valor_avaluo = 0;
+    public float $tasa_por_mil = 0;
     public float $valor_predial = 0;
     public float $predial_intereses = 0;
     public float $bomberil = 0;
@@ -40,7 +41,8 @@ class Liquidacion
         }
 
         $this->valor_avaluo = $avaluo->valor_avaluo;
-        $this->valor_predial = $this->calculate_tarifa($this->valor_avaluo, $avaluo->tasa_por_mil);
+        $this->tasa_por_mil = $avaluo->tasa_por_mil;
+        $this->valor_predial = $this->calculate_tarifa($this->valor_avaluo, $this->tasa_por_mil);
 
         if ($this->estatuto->bomberil) {
             $this->bomberil = $this->calculate_tarifa(
@@ -114,6 +116,7 @@ class Liquidacion
     {
         return [
             'vigencia' => $this->avaluo->vigencia,
+            'tasa_por_mil' => $this->tasa_por_mil,
             'total' => $this->total,
             'total_descuentos' => $this->total_descuentos,
             'total_intereses' => $this->total_intereses,
