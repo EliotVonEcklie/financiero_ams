@@ -42,9 +42,11 @@ class EstadoCuentaController extends Controller
      */
     public function show(EstadoCuenta $estadoCuenta)
     {
-        return Pdf::loadView('pdf.estado_cuenta', [
+        $pdf = Pdf::loadView('pdf.estado_cuenta', [
             'estadoCuenta' => $estadoCuenta
-        ])->stream($estadoCuenta->id . '_' . now()->format('Y-m-d_H:i:s') . '_estado-cuenta.pdf');
+        ]);
+
+        return $pdf->stream($estadoCuenta->id . '_' . now()->format('Y-m-d_H:i:s') . '_estado-cuenta.pdf');
     }
 
     /**

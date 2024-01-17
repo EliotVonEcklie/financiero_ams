@@ -337,11 +337,14 @@
                         <table  class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        Vigencia
+                                    <th scope="col" class="p-4">
+                                        <div class="flex items-center">
+                                            <input id="checkbox-table-search-3" type="checkbox" @click="checkAll" v-model="isCheckAll" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="checkbox-table-search-3" class="sr-only">Seleccionar</label>
+                                        </div>
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Código catastral
+                                        Vigencia
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Predial
@@ -379,21 +382,18 @@
                                     <th scope="col" class="px-6 py-3">
                                         Dias mora
                                     </th>
-                                    <th scope="col" class="p-4">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-3" type="checkbox" @click="checkAll" v-model="isCheckAll" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="checkbox-table-search-3" class="sr-only">Seleccionar</label>
-                                        </div>
-                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(vigencia,index) in predio.vigencias" :key="index"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-6 py-4">
-                                        {{ vigencia.vigencia }}
+                                    <td class="w-4 p-4">
+                                        <div class="flex items-center">
+                                            <input id="checkbox-table-search-3" type="checkbox" v-model="vigencia.isSelected" @click="updateCheckAll" checked  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ predio.codigo_catastro }}
+                                        {{ vigencia.vigencia }}
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ formatNumber(vigencia.valor_predial) }}
@@ -430,12 +430,6 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ vigencia.dias_mora }}
-                                    </td>
-                                    <td class="w-4 p-4">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-3" type="checkbox" v-model="vigencia.isSelected" @click="updateCheckAll" checked  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
-                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -605,7 +599,7 @@
     function createEstadoCuenta() {
         axios.post(route('public.estado_cuentas.store'), { data: predio })
             .then((res) => {
-                window.open(route('public.estado_cuentas.show', { estado_cuenta: res.data.id }), '_blank')
+                window.open(route('public.estado_cuentas.show', { estado_cuentas: res.data.id }), '_blank')
             })
     }
 

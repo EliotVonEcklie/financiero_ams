@@ -18,6 +18,7 @@ use App\Http\Controllers\PredioTipoController;
 use App\Models\Predio;
 use App\Jobs\Tasificar;
 use App\Models\Descuento;
+use App\Models\EstadoCuenta;
 use App\Models\Interes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -100,6 +101,9 @@ Route::middleware([
         })->name('impuesto_predial_unificado');
 
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
+        Route::get('estado_cuentas_view/{estado_cuenta}', function (EstadoCuenta $estadoCuenta) {
+            return view('pdf.estado_cuenta', ['estadoCuenta' => $estadoCuenta]);
+        });
 
         Route::get('/predio', [PredioController::class, 'show'])->name('predio');
     });

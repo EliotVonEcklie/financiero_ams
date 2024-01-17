@@ -11,7 +11,7 @@ class EstadoCuenta extends Model
 
     protected $guarded = [];
 
-    protected $castas = [
+    protected $casts = [
         'data' => 'array'
     ];
 }
