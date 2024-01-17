@@ -99,7 +99,7 @@ Route::middleware([
             ]);
         })->name('impuesto_predial_unificado');
 
-        Route::resource('estado_cuenta', EstadoCuentaController::class)->only(['store', 'show']);
+        Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
 
         Route::get('/predio', [PredioController::class, 'show'])->name('predio');
     });

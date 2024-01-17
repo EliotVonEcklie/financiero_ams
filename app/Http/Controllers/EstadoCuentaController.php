@@ -32,10 +32,10 @@ class EstadoCuentaController extends Controller
         $estadoCuenta = EstadoCuenta::create([
             'fecha' => now(),
             'ip' => $request->ip(),
-            'data' => $request->input('data')
+            'data' => json_encode($request->input('data'))
         ]);
 
-        return $this->show($estadoCuenta);
+        return response()->json(['id' => $estadoCuenta->id]);
     }
 
     /**
@@ -47,7 +47,7 @@ class EstadoCuentaController extends Controller
             'fecha' => $estadoCuenta->fecha,
             'ip' => $estadoCuenta->ip,
             'data' => $estadoCuenta->data
-        ])->stream($estadoCuenta->id . '_' . now()->format('Y-m-d-H:M:S') . '_estado-cuenta.pdf');
+        ])->stream($estadoCuenta->id . '_' . now()->format('Y-m-d_H:i:s') . '_estado-cuenta.pdf');
     }
 
     /**
