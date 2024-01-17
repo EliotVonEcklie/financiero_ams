@@ -2,7 +2,7 @@
 
 <template>
     <Layout>
-            <!--Modal-->
+        <!--Modal-->
         <div id="modalBuscar" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-7xl max-h-full">
                 <!-- Modal content -->
@@ -10,7 +10,7 @@
                     <!-- Modal header -->
                     <div class="text-center bg-bluep text-white flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                         <h3 class="text-xl  font-semibol  dark:text-white">
-                            Buscar predio
+                            Buscar
                         </h3>
                         <button type="button" class="text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modalBuscar">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -32,11 +32,11 @@
                                 <input type="search" @input="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar por nombre, código, documento..." required>
                             </div>
                         </form>
-                        <div v-if ="predios.length > 0" class="mt-3 relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg">
+                        <div v-if ="s.length > 0" class="mt-3 relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg">
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr class="text-center font-semibold py-3 text-black bg-gray-100">
-                                        <td colspan="8">Resultados de Búsqueda: {{ predios.length }}</td>
+                                        <td colspan="8">Resultados de Búsqueda: {{ s.length }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
@@ -61,7 +61,7 @@
                                             Dirección
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Tipo Predio
+                                            Tipo
                                         </th>
                                     </tr>
                                 </thead>
@@ -99,7 +99,9 @@
                 </div>
             </div>
         </div>
-        <ModalPse/>
+
+        <ModalPse />
+
         <!--Información predio-->
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
@@ -111,6 +113,7 @@
                 </li>
             </ul>
         </div>
+
         <div id="default-tab-content">
             <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="predial" role="tabpanel" aria-labelledby="predial-tab">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -309,6 +312,7 @@
                     </li>
                 </ul>
             </div>
+
             <div id="options-tab-content">
                 <div class="hidden rounded-lg bg-white dark:bg-gray-800" id="periodos" role="tabpanel" aria-labelledby="periodos-tab">
                     <div class="flex justify-start space-x-3">
@@ -586,6 +590,7 @@
         </div>
     </Layout>
 </template>
+
 <script setup>
     import Layout from './Layout.vue'
     import { router } from '@inertiajs/vue3';

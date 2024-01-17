@@ -39,7 +39,7 @@ function softDelete(allSelected) {
                 <td class="px-6 py-4">
                     {{ element.hasta }}
                     <span v-if="!element.es_nacional">
-                        {{ ' - ' + new Date(2024, element.hasta - 1, 1).toLocaleString('es-es', { month: 'long' }) }}
+                        {{ ' - ' + $month(element.hasta) }}
                     </span>
                 </td>
 

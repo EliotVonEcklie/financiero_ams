@@ -16,7 +16,7 @@ const form = useForm({
     unidad_monetaria_id: props.vigenciaUnidadMonetaria.unidad_monetaria_id,
     valor: props.vigenciaUnidadMonetaria.valor
 })
-const unidadMonetariasSelect = props.unidadMonetarias.map(x => ({ value: x.id, name: x.tipo }))
+const unidadMonetariasSelect = props.unidadMonetarias.map(x => ({ value: x.id, name: x.nombre }))
 </script>
 <template>
     <Layout title="Editar Vigencia Unidad Monetaria">

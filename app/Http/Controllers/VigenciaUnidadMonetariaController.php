@@ -22,7 +22,7 @@ class VigenciaUnidadMonetariaController extends Controller
                     'vigencia' => $vigenciaUnidadMonetaria->vigencia,
                     'unidadMonetaria' => [
                         'id' => $vigenciaUnidadMonetaria->unidadMonetaria->id,
-                        'tipo' => $vigenciaUnidadMonetaria->unidadMonetaria->tipo
+                        'nombre' => $vigenciaUnidadMonetaria->unidadMonetaria->nombre
                     ],
                     'valor' => $vigenciaUnidadMonetaria->valor,
                     'state' => !$vigenciaUnidadMonetaria->trashed()
@@ -40,7 +40,7 @@ class VigenciaUnidadMonetariaController extends Controller
             'unidadMonetarias' => UnidadMonetaria::all()->map(function ($unidadMonetaria) {
                 return [
                     'id' => $unidadMonetaria->id,
-                    'tipo' => $unidadMonetaria->tipo
+                    'nombre' => $unidadMonetaria->nombre
                 ];
             })
         ]);
@@ -80,7 +80,7 @@ class VigenciaUnidadMonetariaController extends Controller
             'unidadMonetarias' => UnidadMonetaria::all()->map(function ($unidadMonetaria) {
                 return [
                     'id' => $unidadMonetaria->id,
-                    'tipo' => $unidadMonetaria->tipo
+                    'nombre' => $unidadMonetaria->nombre
                 ];
             })
         ]);

@@ -81,7 +81,7 @@ function softDelete(allSelected) {
                                 No aplica recibo de caja
                             </span>
                             <span v-else>
-                                $ {{ element.recibo_caja }}
+                                {{ $numbers.cop(element.recibo_caja) }}
                             </span>
                         </th>
 

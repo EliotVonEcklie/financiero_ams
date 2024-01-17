@@ -3,6 +3,7 @@ import { createInertiaApp, router } from '@inertiajs/vue3'
 import { ZiggyVue } from '~ziggy-vue'
 import VueEcho from 'vue-echo-laravel'
 import { initFlowbite } from 'flowbite'
+import numbers from './numbers'
 
 router.on('finish', (e) => {
     if (e.detail.visit.completed) {
@@ -19,8 +20,12 @@ createInertiaApp({
         return pages[`./Pages/${name}.vue`]
     },
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
+        let app = createApp({ render: () => h(App, props) })
+
+        app.config.globalProperties.$numbers = numbers
+        app.config.globalProperties.$month = (month) => new Date(new Date().getFullYear(), month - 1, 1).toLocaleString('es-CO', { month: 'long' })
+
+        app.use(plugin)
             .use(ZiggyVue)
             /*.use(VueEcho, {
                 broadcaster: 'pusher',
