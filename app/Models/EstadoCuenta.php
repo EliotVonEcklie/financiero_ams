@@ -9,9 +9,9 @@ class EstadoCuenta extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'fecha',
-        'ip',
-        'data'
+    protected $guarded = [];
+
+    protected $castas = [
+        'data' => 'array'
     ];
 }
