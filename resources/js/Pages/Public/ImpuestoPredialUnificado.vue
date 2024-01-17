@@ -66,7 +66,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr @click="show(predio.id);checkAll();" data-modal-hide="modalBuscar" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
+                                    <tr @click="show(predio.id);" data-modal-hide="modalBuscar" v-for="predio in predios" :key="predio.id"  class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-bluep hover:text-white dark:hover:bg-gray-600">
                                         <td class="px-6 py-4">
                                             {{ predio.id }}
                                         </td>
@@ -140,7 +140,7 @@
                                         <div class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M374.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-320 320c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l320-320zM128 128A64 64 0 1 0 0 128a64 64 0 1 0 128 0zM384 384a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z"/></svg>
                                         </div>
-                                        <input type="input" name="intTasaMo" id="intTasaMo" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objPredio.interes_vigente" readonly>
+                                        <input type="input" name="intTasaMo" id="intTasaMo" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.interes_vigente" readonly>
                                     </div>
                                 </td>
                             </tr>
@@ -149,14 +149,14 @@
                                     Código catastral:
                                 </td>
                                 <td class="px-2 py-4">
-                                    <input type="input" name="intCodCat" id="intCodCat" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objPredio.codigo_catastro" readonly>
+                                    <input type="input" name="intCodCat" id="intCodCat" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.codigo_catastro" readonly>
                                 </td>
                                 <td class="px-2 py-4">
                                     <div class="relative">
                                         <div class="absolute inset-y-0 end-0 top-0 flex items-center ps-3.5 pointer-events-none">
                                             <span class="px-2 text-1xl font-bold text-black">Total</span>
                                         </div>
-                                        <input type="input" name="intTot" id="intTot" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objPredio.total" readonly>
+                                        <input type="input" name="intTot" id="intTot" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.total" readonly>
                                     </div>
                                 </td>
                                 <td class="px-2 py-4">
@@ -164,7 +164,7 @@
                                         <div class="absolute inset-y-0 end-0 top-0 flex items-center ps-3.5 pointer-events-none">
                                             <span class="px-2 text-1xl font-bold text-black">Orden</span>
                                         </div>
-                                        <input type="input" name="intOrd" id="intOrd" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objPredio.orden" readonly>
+                                        <input type="input" name="intOrd" id="intOrd" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.orden" readonly>
                                     </div>
                                 </td>
                                 <td class="px-2 py-4 text-bold text-black  bg-gray-100">
@@ -175,7 +175,12 @@
                                         <div class="absolute inset-y-0 end-0 top-0 flex items-center ps-3.5 pointer-events-none">
                                             <span class="px-2 text-1xl font-bold text-black">x Mil</span>
                                         </div>
-                                        <input type="input" name="intTasaPre" id="intTasaPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
+                                        <div v-if="predio != ''">
+                                            <input  type="input"  :value="predio.vigencias[0].tasa_por_mil" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
+                                        </div>
+                                        <div v-else>
+                                            <input  type="input"  :value="''" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -188,7 +193,7 @@
                                         <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M160 0c17.7 0 32 14.3 32 32V67.7c1.6 .2 3.1 .4 4.7 .7c.4 .1 .7 .1 1.1 .2l48 8.8c17.4 3.2 28.9 19.9 25.7 37.2s-19.9 28.9-37.2 25.7l-47.5-8.7c-31.3-4.6-58.9-1.5-78.3 6.2s-27.2 18.3-29 28.1c-2 10.7-.5 16.7 1.2 20.4c1.8 3.9 5.5 8.3 12.8 13.2c16.3 10.7 41.3 17.7 73.7 26.3l2.9 .8c28.6 7.6 63.6 16.8 89.6 33.8c14.2 9.3 27.6 21.9 35.9 39.5c8.5 17.9 10.3 37.9 6.4 59.2c-6.9 38-33.1 63.4-65.6 76.7c-13.7 5.6-28.6 9.2-44.4 11V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V445.1c-.4-.1-.9-.1-1.3-.2l-.2 0 0 0c-24.4-3.8-64.5-14.3-91.5-26.3c-16.1-7.2-23.4-26.1-16.2-42.2s26.1-23.4 42.2-16.2c20.9 9.3 55.3 18.5 75.2 21.6c31.9 4.7 58.2 2 76-5.3c16.9-6.9 24.6-16.9 26.8-28.9c1.9-10.6 .4-16.7-1.3-20.4c-1.9-4-5.6-8.4-13-13.3c-16.4-10.7-41.5-17.7-74-26.3l-2.8-.7 0 0C119.4 279.3 84.4 270 58.4 253c-14.2-9.3-27.5-22-35.8-39.6c-8.4-17.9-10.1-37.9-6.1-59.2C23.7 116 52.3 91.2 84.8 78.3c13.3-5.3 27.9-8.9 43.2-11V32c0-17.7 14.3-32 32-32z"/></svg>
                                         </div>
-                                        <input type="input" name="intAvaVig" id="intAvaVig" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="formatNumber(objPredio.valor_avaluo)" readonly>
+                                        <input type="input" name="intAvaVig" id="intAvaVig" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="formatNumber(predio.valor_avaluo)" readonly>
                                     </div>
                                 </td>
 
@@ -200,7 +205,7 @@
                                         <div class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M374.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-320 320c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l320-320zM128 128A64 64 0 1 0 0 128a64 64 0 1 0 128 0zM384 384a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z"/></svg>
                                         </div>
-                                        <input type="input" name="intDescuento" id="intDescuento" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objPredio.descuento_vigente" readonly>
+                                        <input type="input" name="intDescuento" id="intDescuento" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="predio.descuento_vigente" readonly>
                                     </div>
                                 </td>
                             </tr>
@@ -291,7 +296,9 @@
                 </div>
             </div>
         </div>
-        <div v-if="objPredio !=''">
+        <!---->
+        <div v-if="predio!=''">
+            {{ checkAll }}
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="options-tab" data-tabs-toggle="#options-tab-content" role="tablist">
                     <li class="me-2" role="presentation">
@@ -322,184 +329,173 @@
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
                         </button>
                     </div>
-                    <div v-if="objPredio !='' && objPredio.vigencias.length > 0">
-                        <div  class="mt-3 relative overflow-x-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
-                            <table  class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            Vigencia
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Código catastral
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Predial
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Intereses Predial
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Desc. Intereses
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Total. Int Predial
-                                        </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
-                                            Sobretasa Bomberil
-                                        </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
-                                            Intereses Bomberil
-                                        </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
-                                            Sobretasa Ambiental
-                                        </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
-                                            Intereses Ambiental
-                                        </th>
-                                        <th v-if="objPredio.vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3">
-                                            Sobretasa Alumbrado
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Descuentos
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Valor Total
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Dias mora
-                                        </th>
-                                        <th scope="col" class="p-4">
-                                            <div class="flex items-center">
-                                                <input id="checkbox-table-search-3" type="checkbox" @change="checkAll" v-model="isCheckAll" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-3" class="sr-only">Seleccionar</label>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(vigencia,index) in objPredio.vigencias" :key="index"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td class="px-6 py-4">
-                                            {{ vigencia.vigencia }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ objPredio.codigo_catastro }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.valor_predial) }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.predial_intereses) }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.descuento_intereses) }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                           {{formatNumber(vigencia.total_intereses)}}
-                                        </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.bomberil) }}
-                                        </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.bomberil_intereses) }}
-                                        </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.ambiental" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.ambiental) }}
-                                        </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.ambiental" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.ambiental_intereses) }}
-                                        </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.alumbrado" class="px-6 py-4">
-                                            {{ formatNumber(vigencia.alumbrado) }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.descuento_intereses) }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ formatNumber(vigencia.total) }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ vigencia.dias_mora }}
-                                        </td>
-                                        <td class="w-4 p-4">
-                                            <div class="flex items-center">
-                                                <input id="checkbox-table-search-3" type="checkbox" @change="updateCheckAll" v-model="vigencia.isSelected"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                                        <th  class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                            Total Predial
-                                        </th>
+                    <div  class="mt-3 relative overflow-x-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
+                        <table  class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Vigencia
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Código catastral
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Predial
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Intereses Predial
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Desc. Intereses
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Total. Int Predial
+                                    </th>
+                                    <th v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
+                                        Sobretasa Bomberil
+                                    </th>
+                                    <th v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
+                                        Intereses Bomberil
+                                    </th>
+                                    <th v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
+                                        Sobretasa Ambiental
+                                    </th>
+                                    <th v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
+                                        Intereses Ambiental
+                                    </th>
+                                    <th v-if="predio !='' && predio.vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3">
+                                        Sobretasa Alumbrado
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Descuentos
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Valor Total
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Dias mora
+                                    </th>
+                                    <th scope="col" class="p-4">
+                                        <div class="flex items-center">
+                                            <input id="checkbox-table-search-3" type="checkbox" @click="checkAll" v-model="isCheckAll" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="checkbox-table-search-3" class="sr-only">Seleccionar</label>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(vigencia,index) in predio.vigencias" :key="index"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="px-6 py-4">
+                                        {{ vigencia.vigencia }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ predio.codigo_catastro }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ formatNumber(vigencia.valor_predial) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ formatNumber(vigencia.predial_intereses) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ formatNumber(vigencia.descuento_intereses) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{formatNumber(vigencia.total_intereses)}}
+                                    </td>
+                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
+                                        {{ formatNumber(vigencia.bomberil) }}
+                                    </td>
+                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
+                                        {{ formatNumber(vigencia.bomberil_intereses) }}
+                                    </td>
+                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" class="px-6 py-4">
+                                        {{ formatNumber(vigencia.ambiental) }}
+                                    </td>
+                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" class="px-6 py-4">
+                                        {{ formatNumber(vigencia.ambiental_intereses) }}
+                                    </td>
+                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.alumbrado" class="px-6 py-4">
+                                        {{ formatNumber(vigencia.alumbrado) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ formatNumber(vigencia.descuento_intereses) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ formatNumber(vigencia.total) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ vigencia.dias_mora }}
+                                    </td>
+                                    <td class="w-4 p-4">
+                                        <div class="flex items-center">
+                                            <input id="checkbox-table-search-3" type="checkbox" v-model="vigencia.isSelected" @click="updateCheckAll" checked  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr class="border-b border-gray-200 dark:border-gray-700">
+                                    <th  class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        Total Predial
+                                    </th>
 
-                                        <th  v-if="objPredio.vigencias[0].estatuto.bomberil" class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                            Total Bomberil
-                                        </th>
+                                    <th  v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        Total Bomberil
+                                    </th>
 
-                                        <th  v-if="objPredio.vigencias[0].estatuto.ambiental" class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                            Total Ambiental
-                                        </th>
+                                    <th  v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        Total Ambiental
+                                    </th>
 
-                                        <th  v-if="objPredio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                            Total Alumbrado
-                                        </th>
+                                    <th  v-if="predio !='' && predio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        Total Alumbrado
+                                    </th>
 
-                                        <th  class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                            Total Intereses
-                                        </th>
+                                    <th  class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        Total Intereses
+                                    </th>
 
-                                        <th  class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                            Total Descuento
-                                        </th>
-                                        <th class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                            Total Liquidación
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                    <th  class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        Total Descuento
+                                    </th>
+                                    <th class="px-2 py-4 text-bold text-black  bg-gray-100">
+                                        Total Liquidación
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-200 dark:border-gray-700">
 
-                                        <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalPre" id="intTotalPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objTotal.predial" readonly>
-                                        </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.bomberil" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalSb" id="intTotalSb"  :value="objTotal.bomberil" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
-                                        </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.ambiental" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalSa" id="intTotalSa" :value="objTotal.ambiental" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
-                                        </td>
-                                        <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalInt" id="intTotalInt" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objTotal.intereses" readonly>
-                                        </td>
-                                        <td v-if="objPredio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalSa" id="intTotalSa" :value="objTotal.alumbrado" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
-                                        </td>
-                                        <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalDes" id="intTotalDes" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="objTotal.descuentos" readonly>
-                                        </td>
-                                        <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="input" name="intTotalLiq" id="intTotalLiq" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  :value="objTotal.total" readonly>
-                                        </td>
-                                    </tr>
-                                    <!--
-                                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                                        <td class="px-2 py-4 text-bold text-black  bg-gray-100">
-                                            Son:
-                                        </td>
-                                        <td colspan="20" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
-                                            <input type="text" name="strDireccion" id="strDireccion" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="PESOS M/CTE">
-                                        </td>
-                                    </tr>-->
-                                </tbody>
-                            </table>
-                        </div>
+                                    <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                        <input type="input" name="intTotalPre" id="intTotalPre" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="getTotal().predial" readonly>
+                                    </td>
+                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                        <input type="input" name="intTotalSb" id="intTotalSb"  :value="getTotal().bomberil" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                                    </td>
+                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                        <input type="input" name="intTotalSa" id="intTotalSa" :value="getTotal().ambiental" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
+                                    </td>
+                                    <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                        <input type="input" name="intTotalInt" id="intTotalInt" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="getTotal().intereses" readonly>
+                                    </td>
+                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                        <input type="input" name="intTotalSa" id="intTotalSa" :value="getTotal().alumbrado" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  readonly>
+                                    </td>
+                                    <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                        <input type="input" name="intTotalDes" id="intTotalDes" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="getTotal().descuentos" readonly>
+                                    </td>
+                                    <td class="px-2 py-4 bg-gray-50 dark:bg-gray-800">
+                                        <input type="input" name="intTotalLiq" id="intTotalLiq" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  :value="getTotal().total" readonly>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="recibos" role="tabpanel" aria-labelledby="recibos-tab">
@@ -594,19 +590,17 @@
     import Layout from './Layout.vue'
     import { router } from '@inertiajs/vue3';
     import ModalPse from './Components/ModalPse.vue';
-    import {ref,onMounted} from 'vue';
+    import {ref,reactive,computed} from 'vue';
 
     const props = defineProps({ predios: Object, predio: Object});
-    let objPredio= ref(props.predio);
-    let objTotal = ref([getTotal(objPredio.vigencias)]);
+    let predio= props.predio;
     let isCheckAll = ref(true);
-    let arrCheckVigencias = ref([]);
 
     function search(evt) {
         router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
     }
     function show(predio_id) {
-        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false });
+        router.get(route('public.impuesto_predial_unificado'),{predio_id: predio_id,},{preserveState: false});
     }
     function formatNumber(value){
         let number= isNaN(value) ? 0 : value;
@@ -619,24 +613,20 @@
         }
         return number
     }
-
-    function checkAll(){
-        for (let i = 0; i < objPredio.value.vigencias.length; i++) {
-            objPredio.value.vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
-
+    const checkAll = computed(function(){
+        for (let i = 0; i < predio.vigencias.length; i++) {
+            predio.vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
         }
-        objTotal.value = getTotal(objPredio.value.vigencias);
-    }
+    });
     function updateCheckAll(){
-        for (let i = 0; i < objPredio.value.vigencias.length; i++) {
-            if(objPredio.value.vigencias[i].isSelected == false){
+        for (let i = 0; i < predio.vigencias.length; i++) {
+            if(predio.vigencias[i].isSelected == false){
                 isCheckAll.value = false;
-                break;
             }
         }
-        objTotal.value = getTotal(objPredio.value.vigencias);
+        getTotal();
     }
-    function getTotal(vigencias){
+    function getTotal(){
         let bomberil = 0;
         let alumbrado = 0;
         let ambiental = 0;
@@ -653,15 +643,15 @@
                 "total":0,
                 "predial":0
         };
-        if(vigencias!=null){
-            for (let i = 0; i < vigencias.length; i++) {
-                bomberil +=vigencias[i].isSelected ? vigencias[i].bomberil : 0;
-                alumbrado +=vigencias[i].isSelected ? vigencias[i].alumbrado : 0;
-                ambiental +=vigencias[i].isSelected ? vigencias[i].ambiental : 0;
-                intereses +=vigencias[i].isSelected ? vigencias[i].total_intereses : 0;
-                descuentos +=vigencias[i].isSelected ? vigencias[i].total_descuentos : 0;
-                total+=vigencias[i].isSelected ? vigencias[i].total : 0;
-                predial+=vigencias[i].isSelected ? vigencias[i].valor_predial : 0;
+        if(predio.vigencias != "" && predio.vigencias.length>0){
+            for (let i = 0; i < predio.vigencias.length; i++) {
+                bomberil +=predio.vigencias[i].isSelected ? predio.vigencias[i].bomberil : 0;
+                alumbrado +=predio.vigencias[i].isSelected ? predio.vigencias[i].alumbrado : 0;
+                ambiental +=predio.vigencias[i].isSelected ? predio.vigencias[i].ambiental : 0;
+                intereses +=predio.vigencias[i].isSelected ? predio.vigencias[i].total_intereses : 0;
+                descuentos +=predio.vigencias[i].isSelected ? predio.vigencias[i].total_descuentos : 0;
+                total+=predio.vigencias[i].isSelected ? predio.vigencias[i].total : 0;
+                predial+=predio.vigencias[i].isSelected ? predio.vigencias[i].valor_predial : 0;
             }
             obj={
                 "bomberil":formatNumber(bomberil),
@@ -673,7 +663,7 @@
                 "total":formatNumber(total)
             };
         }
-
-        return obj
+        //objTotal = obj;
+        return obj;
     }
 </script>

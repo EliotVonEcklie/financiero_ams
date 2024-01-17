@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Calculations\Liquidacion;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
 
 class Predio extends Model
 {
@@ -58,6 +60,12 @@ class Predio extends Model
         return $this->avaluos()
             ->orderBy('vigencia', 'desc')
             ->first();
+    }
+
+    public function estado_de_cuenta()
+    {
+        $pdf = Pdf::loadView('pdf.estado_de_cuenta', []);
+        return $pdf->stream();
     }
 
     /**

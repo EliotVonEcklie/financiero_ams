@@ -98,6 +98,10 @@ Route::middleware([
             ]);
         })->name('impuesto_predial_unificado');
 
+        Route::get('estado_de_cuenta/{predio}', function (Predio $predio) {
+            return $predio->estado_de_cuenta();
+        })->name('estado_de_cuenta');
+
         Route::get('/predio', [PredioController::class, 'show'])->name('predio');
     });
 });
