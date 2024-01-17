@@ -14,7 +14,6 @@ return new class extends Migration
     {
         Schema::create('estado_cuentas', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha');
             $table->string('ip');
             $table->json('data');
             $table->timestamps();

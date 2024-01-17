@@ -30,7 +30,6 @@ class EstadoCuentaController extends Controller
     public function store(Request $request)
     {
         $estadoCuenta = EstadoCuenta::create([
-            'fecha' => now(),
             'ip' => $request->ip(),
             'data' => json_encode($request->input('data'))
         ]);
@@ -44,9 +43,7 @@ class EstadoCuentaController extends Controller
     public function show(EstadoCuenta $estadoCuenta)
     {
         return Pdf::loadView('pdf.estado_cuenta', [
-            'fecha' => $estadoCuenta->fecha,
-            'ip' => $estadoCuenta->ip,
-            'data' => $estadoCuenta->data
+            'estadoCuenta' => $estadoCuenta
         ])->stream($estadoCuenta->id . '_' . now()->format('Y-m-d_H:i:s') . '_estado-cuenta.pdf');
     }
 
