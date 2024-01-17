@@ -11,7 +11,7 @@ class UpdateInteresRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateInteresRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'toggle' => ['nullable', 'boolean'],
+            'vigencia' => ['exclude_if:toggle,true', 'required', 'date_format:Y', 'after:1970', 'before:today'],
+            'mes' => ['exclude_if:toggle,true', 'required', 'integer', 'between:1,12'],
+            'moratorio' => ['exclude_if:toggle,true', 'required', 'numeric'],
+            'corriente' => ['exclude_if:toggle,true', 'required', 'numeric']
         ];
     }
 }

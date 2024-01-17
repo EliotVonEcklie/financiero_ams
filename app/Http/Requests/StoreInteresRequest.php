@@ -11,7 +11,7 @@ class StoreInteresRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreInteresRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'vigencia' => ['required', 'date_format:Y', 'after:1970', 'before:today'],
+            'mes' => ['required', 'integer', 'between:1,12'],
+            'moratorio' => ['required', 'numeric'],
+            'corriente' => ['required', 'numeric'],
         ];
     }
 }
