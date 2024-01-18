@@ -599,7 +599,7 @@
     function createEstadoCuenta() {
         axios.post(route('public.estado_cuentas.store'), { data: predio })
             .then((res) => {
-                window.open(route('public.estado_cuentas.show', { estado_cuentas: res.data.id }), '_blank')
+                window.open(route('public.estado_cuentas.show', { estado_cuenta: res.data.id }), '_blank')
             })
     }
 
