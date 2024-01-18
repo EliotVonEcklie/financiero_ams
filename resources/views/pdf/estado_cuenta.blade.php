@@ -3,24 +3,28 @@
     <head>
         <meta charset="utf-8">
         <style type="text/css">
-            body{
+            body {
                 font-family:Arial, Helvetica, sans-serif;
             }
-            p{
+
+            p {
                 font-size: 9pt;
                 margin:0;
                 margin-bottom:5px;
                 padding: 0;
             }
-            .t-1{
+            .t-1 {
                 color:#E05A10;
             }
-            .t-2{
+
+            .t-2 {
                 color:#03071E;
             }
-            .t-3{
+
+            .t-3 {
                 color:#6D6A75;
             }
+
             .text-white{
                 color:#fff;
             }
