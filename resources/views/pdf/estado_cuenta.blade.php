@@ -136,7 +136,7 @@
                     <td class="bg-primary w-33 fs-3 fw-bold text-center">No. Estado de cuenta</td>
                 </tr>
                 <tr>
-                    <td class="text-center">24150310000012</td>
+                    <td class="text-center">{{ $estadoCuenta->id }}</td>
                 </tr>
             </table>
         </header>
@@ -218,18 +218,18 @@
             <table>
 
                 <tr class="bg-primary  p-1">
-                    <th class="fs-0 fw-bold w10">Vigencia</th>
-                    <th class="fs-0 fw-bold">Predial</th>
-                    <th class="fs-0 fw-bold">Intereses Predial</th>
-                    <th class="fs-0 fw-bold">Descuento intereses</th>
-                    <th class="fs-0 fw-bold">Total intereses predial</th>
-                    <th class="fs-0 fw-bold">Sobretasa bomberil</th>
-                    <th class="fs-0 fw-bold">Intereses bomberil</th>
-                    <th class="fs-0 fw-bold">Sobretasa ambiental</th>
-                    <th class="fs-0 fw-bold">Intereses ambiental</th>
-                    <th class="fs-0 fw-bold">Sobretasa alumbrado</th>
-                    <th class="fs-0 fw-bold">Descuentos</th>
-                    <th class="fs-0 fw-bold">Dias mora</th>
+                    <th class="fs-0">Vigencia</th>
+                    <th class="fs-0">Predial</th>
+                    <th class="fs-0">Intereses Predial</th>
+                    <th class="fs-0">Descuento intereses</th>
+                    <th class="fs-0">Total intereses predial</th>
+                    <th class="fs-0">Sobretasa bomberil</th>
+                    <th class="fs-0">Intereses bomberil</th>
+                    <th class="fs-0">Sobretasa ambiental</th>
+                    <th class="fs-0">Intereses ambiental</th>
+                    <th class="fs-0">Sobretasa alumbrado</th>
+                    <th class="fs-0">Descuentos</th>
+                    <th class="fs-0">Dias mora</th>
                 </tr>
                 <tbody>
                     @for ( $i = 0; $i < count($estadoCuenta->data['vigencias']); $i++)
@@ -262,13 +262,13 @@
                 </tr>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="fs-0">{{ $estadoCuenta->data['totales']['predial'] }}</td>
+                        <td class="fs-0">{{ $estadoCuenta->data['totales']['bomberil'] }}</td>
+                        <td class="fs-0">{{ $estadoCuenta->data['totales']['ambiental'] }}</td>
+                        <td class="fs-0">{{ $estadoCuenta->data['totales']['alumbrado'] }}</td>
+                        <td class="fs-0">{{ $estadoCuenta->data['totales']['intereses'] }}</td>
+                        <td class="fs-0">{{ $estadoCuenta->data['totales']['descuentos'] }}</td>
+                        <td class="fs-0">{{ $estadoCuenta->data['totales']['total'] }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -290,13 +290,13 @@
                 <tr ><td colspan="10" class="border-none"></td></tr>
                 <tr>
                     <td class="border-none text-start">
-                        <p>Fecha: {{ $estadoCuenta->created_at->format('Y-m-d H:i:s') }}</p>
+                        <p class="fs-0">Fecha y hora elaboración: {{ $estadoCuenta->created_at->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none text-center">
-                        <p>Hora: {{ $estadoCuenta->created_at->format('H:i:s') }}</p>
+                        <p class="fs-0">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none text-right">
-                        <p>Dirección IP: {{ $estadoCuenta->ip }}</p>
+                        <p class="fs-0">Dirección IP: {{ $estadoCuenta->ip }}</p>
                     </td>
                 </tr>
             </table>

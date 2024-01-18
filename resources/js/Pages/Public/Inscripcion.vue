@@ -1,5 +1,6 @@
 <template>
-    <Layout>
+    <Layout v-slot="scope">
+        <ModalDireccion/>
         <div class="mt-10">
             <h1 class="text-center text-2xl mb-5">Inscripción del contribuyente</h1>
             <ol class="flex items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
@@ -186,7 +187,7 @@
                                 <div class="flex">
                                     <input type="text" disabled class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Dirección</label>
-                                    <button type="button" @click="showModal('ModalDireccion')" class="p-2.5 ms-2 text-sm font-medium text-white bg-gray-400 rounded-lg border dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <button type="button" @click="scope.showModal('ModalDireccion')" class="p-2.5 ms-2 text-sm font-medium text-white bg-gray-400 rounded-lg border dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                         </svg>
@@ -206,16 +207,6 @@
 <script lang="ts" setup>
     import Layout from './Layout.vue';
     import ModalDireccionVue from './Components/ModalDireccion.vue';
-    import {Ref,ref,defineEmits} from 'vue';
-
-    const emits = defineEmits(['showModal','hideModal']);
-
-    function showModal(modal){
-        emits('showModal',modal);
-    }
-    function hideModal(modal){
-        emits('hideModal',modal);
-    }
 </script>
 
 <style scoped>

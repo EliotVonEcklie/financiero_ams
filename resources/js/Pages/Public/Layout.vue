@@ -151,6 +151,7 @@
     let login:Ref<boolean>=ref(false);
 
     function showModal(id){
+        console.log(id);
         new Modal(document.getElementById(id)).show();
     }
     function hideModal(id){
