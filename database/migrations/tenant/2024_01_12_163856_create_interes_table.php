@@ -21,6 +21,8 @@ return new class extends Migration
             $table->softDeletes();
             $table->foreignIdFor(User::class)->nullable();
             $table->timestamps();
+
+            $table->unique(['vigencia', 'mes']);
         });
     }
 

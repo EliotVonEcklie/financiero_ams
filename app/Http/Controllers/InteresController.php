@@ -34,7 +34,7 @@ class InteresController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Parametros/Interes/Create');
     }
 
     /**
@@ -42,7 +42,9 @@ class InteresController extends Controller
      */
     public function store(StoreInteresRequest $request)
     {
-        //
+        Interes::create($request->validated());
+
+        return to_route('interes.index');
     }
 
     /**
@@ -50,23 +52,44 @@ class InteresController extends Controller
      */
     public function show(Interes $interes)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Interes $interes)
+    public function edit(Interes $intere)
     {
-        //
+        return inertia('Parametros/Interes/Edit', [
+            'interes' => [
+                'id' => $intere->id,
+                'vigencia' => $intere->vigencia,
+                'mes' => $intere->mes,
+                'moratorio' => $intere->moratorio,
+                'corriente' => $intere->corriente,
+                'state' => !$intere->trashed()
+            ]
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInteresRequest $request, Interes $interes)
+    public function update(UpdateInteresRequest $request, Interes $intere)
     {
-        //
+        if ($request->has('toggle')) {
+            if ($intere->trashed()) {
+                $intere->restore();
+            } else {
+                $intere->delete();
+            }
+
+            return;
+        }
+
+        $intere->update($request->validated());
+
+        return to_route('interes.index');
     }
 
     /**
@@ -74,6 +97,8 @@ class InteresController extends Controller
      */
     public function destroy(Interes $interes)
     {
-        //
+        $interes->delete();
+
+        return to_route('interes.index');
     }
 }
