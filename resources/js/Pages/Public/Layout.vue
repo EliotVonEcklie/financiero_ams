@@ -1,6 +1,6 @@
 <template>
     <header>
-        <ModalRegistro :login="login" :showModal="showModal" :hideModal="hideModal" @changeTab="changeTab" :activeTab="activeTab"/>
+        <ModalRegistro :login="login" @showModal="showModal" @hideModal="hideModal"/>
         <nav class="bg-white border-gray-200 dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-3">
                 <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -11,7 +11,7 @@
                     </div>
                 </a>
                 <div class="flex items-center">
-                    <button type="button" @click="showModal('modalRegistro');changeTab('iniciar')" class="py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Iniciar sesión</button>
+                    <button type="button" @click="showModal('modalRegistro');" class="py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Iniciar sesión</button>
                 </div>
             </div>
         </nav>
@@ -60,7 +60,7 @@
     </header>
 
     <main class="mb-8 container mx-auto">
-        <slot :login ="login" :showModal="showModal" :hideModal="hideModal" @changeTab="changeTab" />
+        <slot :login ="login" :showModal="showModal" :hideModal="hideModal"  />
     </main>
 
     <footer class="bg-gray-100 dark:bg-gray-900">
@@ -147,21 +147,15 @@
     import img_logo from '~/img/public/logo.png'
     import ModalRegistro from './Components/ModalRegistro.vue'
     import {Modal} from 'flowbite';
-    let activeTab:Ref<string | null>=ref('iniciar');
+    let activeTab:Ref<string | null>=ref('');
     let login:Ref<boolean>=ref(false);
+
     function showModal(id){
-        const modal = new Modal(document.getElementById(id)).show();
-        //activeTab.value = 'iniciar';
+        new Modal(document.getElementById(id)).show();
     }
     function hideModal(id){
-        const modal = new Modal(document.getElementById(id)).hide();
+        new Modal(document.getElementById(id)).hide();
     }
-
-    function changeTab(tab){
-        activeTab.value = tab;
-        //const tabs = new Tabs(document.getElementById(id)).show(tab);}
-    }
-
     onMounted(() => {
         initFlowbite();
     });

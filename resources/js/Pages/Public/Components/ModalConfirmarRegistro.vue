@@ -28,13 +28,13 @@
                     <hr>
                     <div class="text-center mt-5">
                         <p class="text-base text-gray-500 font-bold">Si está seguro de que ya está inscrito, puede comunicarse a nuestras líneas de atención.</p>
-                        <p class="text-base text-gray-500">Teléfonos: 3138173313</p>
-                        <p class="text-base text-gray-500 ">Email: hacienda@puertorico-meta.gov.co - alcaldia@puertorico-meta.gov.co</p>
-                        <p class="text-base text-gray-500">Dirección: CARRERA 3 No. 13-37 BARRIO EL CENTRO PUERTO RICO - META</p>
+                        <p class="text-base text-gray-500">Teléfonos: 3124567890</p>
+                        <p class="text-base text-gray-500 ">Email: hacienda@cabuyaro-meta.gov.co - alcaldia@cabuyaro-meta.gov.co</p>
+                        <p class="text-base text-gray-500">Dirección: CARRERA 3 No. 13-37 BARRIO CABUYARO - META</p>
                     </div>
                 </div>
                 <div class="flex justify-end items-center space-x-2 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button @click="hideModal('modalConfirmarRegistro')" type="button" class="text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Inscribirse</button>
+                    <a :href="route('public.inscripcion')" type="button" class="text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Inscribirse</a>
                     <button @click="hideModal('modalConfirmarRegistro')" type="button" class="text-white bg-red-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
                 </div>
             </div>

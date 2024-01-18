@@ -100,6 +100,10 @@ Route::middleware([
             ]);
         })->name('impuesto_predial_unificado');
 
+        Route::get('/inscripcion',function(){
+            return inertia('Public/Inscripcion');
+        })->name('inscripcion');
+
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
         Route::get('estado_cuentas_view/{estado_cuenta}', function (EstadoCuenta $estadoCuenta) {
             return view('pdf.estado_cuenta', ['estadoCuenta' => $estadoCuenta]);

@@ -44,7 +44,7 @@
                         </div>
                     </div>-->
 
-                    <fwb-tabs v-model="activeTab" variant="underline" class="p-5">
+                    <fwb-tabs  v-model="activetab" variant="underline" class="p-5">
                         <fwb-tab name="iniciar" title="Iniciar sesión">
                             <div class="text-center flex flex-col items-center mb-5 justify-center">
                                 <div class="mb-5 inline rounded-full p-8 bg-bluep">
@@ -91,7 +91,9 @@
                             <div class="relative z-0 w-full mb-5 group">
                                 <input v-model="intVerContribuyente" type="number" name="registroUsuario" id="registroUsuario" class="[&::-webkit-inner-spin-button]:appearance-none block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " pattern="[0-9]+" required />
                                 <label for="registroUsuario" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">NIT</label>
-                                <div v-html="invalidContr"></div>
+                                <div v-if="intVerContribuyente ==null ||intVerContribuyente < 100000 || intVerContribuyente > 9999999999">
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> El número de documento es invalido!</p>
+                                </div>
                             </div>
                             <div class="flex justify-between items-center">
                                 <button :disabled="loading" @click="verifyUser" type="button" :class="{'text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center': !loading,'text-black bg-white border border-gray-200 rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center':loading}">
@@ -122,29 +124,28 @@
 
     const rModalConfirmarRegistro = ref<any>(null);
     let loading:Ref<boolean> = ref(false);
-    let activeTab:Ref<string> = ref('iniciar');
     let invalidContr:Ref<string> = ref("");
     let invalidUser:Ref<string> = ref("");
     let invalidPass:Ref<string> = ref("");
+
     const intVerContribuyente:Ref<number | null> = ref(null);
     const intUsuario:Ref<number | null> = ref(null);
     const strPass:Ref<string> = ref("");
-    const props = defineProps(['login','hideModal','changeTab','activeTab','showModal']);
-    const emits = defineEmits(['changeTab','activeTab']);
+    const props = defineProps(['login']);
+    const emits = defineEmits(['hideModal',"showModal"]);
+    let activetab:Ref<string> = ref('iniciar');
 
     function verifyUser(){
-        if(intVerContribuyente.value !=null && (intVerContribuyente.value > 100000 && intVerContribuyente.value < 9999999999)){
+        if(intVerContribuyente.value !=null && intVerContribuyente.value > 100000 && intVerContribuyente.value < 9999999999){
+
             loading.value = true;
             setTimeout(function(){
                 loading.value = false;
-                invalidContr.value = '';
                 if(!props.login){
-                    props.showModal('modalConfirmarRegistro');
-                    props.hideModal('modalRegistro');
+                    showModal('modalConfirmarRegistro');
+                    hideModal('modalRegistro');
                 }
             },2000)
-        }else{
-            invalidContr.value = '<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> El número de documento es invalido!</p>';
         }
     }
     function loginUser(){
@@ -168,8 +169,12 @@
         }
     }
     function changeTab(tab){
-        activeTab.value = tab
-        emits('activeTab',activeTab);
-        emits('changeTab',activeTab);
+        activetab.value = tab;
+    }
+    function showModal(modal){
+        emits('showModal',modal);
+    }
+    function hideModal(modal){
+        emits('hideModal',modal);
     }
 </script>
