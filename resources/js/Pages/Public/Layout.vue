@@ -151,8 +151,11 @@
     let login:Ref<boolean>=ref(false);
 
     function showModal(id){
-        console.log(id);
-        new Modal(document.getElementById(id)).show();
+        const options = {
+            backdrop: 'static',
+            closable: true,
+        };
+        new Modal(document.getElementById(id),options).show();
     }
     function hideModal(id){
         new Modal(document.getElementById(id)).hide();

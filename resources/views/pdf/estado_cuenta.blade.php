@@ -46,6 +46,9 @@
             .w100{
                 width:100%;
             }
+            .fs-s-1{
+                font-size:6pt
+            }
             .fs-0{
                 font-size:7.2pt
             }
