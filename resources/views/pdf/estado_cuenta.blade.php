@@ -143,12 +143,12 @@
             <table>
                 <tr>
                     <td rowspan="2" class="w33">
-                        <img src="../../img/public/logo.png" alt="">
+                        <img src="data:image/png;base64,{{ tenant()->imagen }}" alt="">
                     </td>
                     <td rowspan="2" class="w33 text-center">
-                        <p class="fs-3">Municipio de Cabuyaro</p>
-                        <p>NIT: 800.098.195-0</p>
-                        <p>Secretaria de hacienda municipal</p>
+                        <p class="fs-3">{{ tenant()->nombre }}</p>
+                        <p>NIT: {{ tenant()->nit }}</p>
+                        <p>{{ tenant()->entidad }}</p>
                     </td>
                     <td class="bg-primary w-33 fs-3 fw-bold text-center">No. Estado de cuenta</td>
                 </tr>
@@ -295,7 +295,7 @@
                 <tr>
                     <td class="border-none">
                         <p class="text-center">
-                            Señor contribuyente: La Alcaldía Municipal de Cabuyaro META apoyado en la modernización y depuración de la
+                            Señor contribuyente: La Alcaldía Municipal del {{ tenant()->nombre }} META apoyado en la modernización y depuración de la
                             información existente, en caso de no ver algún pago que usted realizó, le solicitamos anexar los documentos correspondientes a
                             pagos de vigencias anteriores para actualización de su estado de cuenta.
                         </p>
