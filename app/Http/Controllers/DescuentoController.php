@@ -33,7 +33,7 @@ class DescuentoController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Parametros/Descuentos/Create');
     }
 
     /**
@@ -57,7 +57,14 @@ class DescuentoController extends Controller
      */
     public function edit(Descuento $descuento)
     {
-        //
+        return inertia('Parametros/Descuentos/Edit', [
+            'descuento' => [
+                'id' => $descuento->id,
+                'es_nacional' => $descuento->es_nacional,
+                'hasta' => $descuento->hasta,
+                'porcentaje' => $descuento->porcentaje
+            ]
+        ]);
     }
 
     /**

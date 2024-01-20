@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Calculations\Liquidacion;
+use App\Calculations\StringCensor;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf;
 
@@ -85,8 +86,6 @@ class Predio extends Model
             ->join('historial_predios', 'predios.id', '=', 'predio_id')
             ->join('predio_tipos', 'predio_tipos.id', '=', 'predio_tipo_id')
             ->where('codigo_catastro', 'like', '%' . $query . '%')
-            ->orWhere('documento', 'like', '%' . $query . '%')
-            ->orWhere('nombre_propietario', 'like', '%' . $query . '%')
             ->orWhere('direccion', 'like', '%' . $query . '%')
             ->orderBy('codigo_catastro', 'asc')
             ->take(50)
@@ -113,14 +112,16 @@ class Predio extends Model
 
         $interes_vigente = Interes::getInteresVigente();
 
+        $strCensor = new StringCensor(2);
+
         return [
             'id' => $predio->id,
             'codigo_catastro' => $predio->codigo_catastro,
             'total' => sprintf("%03d", $predio->total),
             'orden' => sprintf("%03d", $predio->orden),
             'valor_avaluo' => $predio->latest_avaluo()->valor_avaluo,
-            'documento' => $latest_historial->documento,
-            'nombre_propietario' => $latest_historial->nombre_propietario,
+            'documento' => $strCensor->censorString($latest_historial->documento),
+            'nombre_propietario' => $strCensor->censorString($latest_historial->nombre_propietario),
             'direccion' => $latest_historial->direccion,
             'hectareas' => $latest_historial->hectareas,
             'metros_cuadrados' => $latest_historial->metros_cuadrados,

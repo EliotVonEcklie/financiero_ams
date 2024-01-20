@@ -50,11 +50,13 @@ class DestinoEconomicoController extends Controller
     public function store(StoreDestinoEconomicoRequest $request)
     {
         // Store the destino economico...
-        $destino_economico = DestinoEconomico::create($request->safe()->except('codigo_destino_economicos'));
+        $destinoEconomico = DestinoEconomico::create($request->safe()->except('codigo_destino_economicos'));
+        $destinoEconomico->user = auth()->user();
+        $destinoEconomico->save();
 
         foreach ($request->safe()['codigo_destino_economicos'] as $codigo_destino_economico) {
             CodigoDestinoEconomico::find($codigo_destino_economico)
-                ->update(['destino_economico_id' => $destino_economico->id]);
+                ->update(['destino_economico_id' => $destinoEconomico->id]);
         }
 
         return to_route('destino_economicos.index');
@@ -109,6 +111,8 @@ class DestinoEconomicoController extends Controller
 
         // Update the destino economico...
         $destinoEconomico->update($request->safe()->except('codigo_destino_economicos'));
+        $destinoEconomico->user = auth()->user();
+        $destinoEconomico->save();
 
         foreach ($request->safe()['codigo_destino_economicos'] as $codigo_destino_economico) {
             CodigoDestinoEconomico::find($codigo_destino_economico['id'])

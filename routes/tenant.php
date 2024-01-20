@@ -15,6 +15,7 @@ use App\Http\Controllers\RangoAvaluoController;
 use App\Http\Controllers\UnidadMonetariaController;
 use App\Http\Controllers\VigenciaUnidadMonetariaController;
 use App\Http\Controllers\PredioTipoController;
+use App\Http\Middleware\FinancieroAuth;
 use App\Models\Predio;
 use App\Jobs\Tasificar;
 use App\Models\Descuento;
@@ -42,7 +43,11 @@ Route::middleware([
     InitializeTenancyBySubdomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-    Route::prefix('/financiero')->group(function () {
+    Route::prefix('/financiero')->middleware(FinancieroAuth::class)->group(function () {
+        Route::get('/login', function () {
+            return inertia('Login');
+        })->withoutMiddleware(FinancieroAuth::class)->name('login');
+
         Route::get('/', function () {
             return inertia('Index');
         })->name('index');
@@ -86,12 +91,12 @@ Route::middleware([
         })->name('index');
 
         Route::get('/impuesto_predial_unificado', function (Request $request) {
-            if ($request->has('search')) {
-                $predios = Predio::search($request->query('search') ?? '');
+            if ($request->has('search') && $request->query('search') !== null && $request->query('search') !== '') {
+                $predios = Predio::search($request->query('search'));
             }
 
-            if ($request->has('predio_id')) {
-                $predio = Predio::show($request->query('predio_id') ?? '');
+            if ($request->has('predio_id') && $request->query('predio_id') !== null && $request->query('predio_id') !== '') {
+                $predio = Predio::show($request->query('predio_id'));
             }
 
             return inertia('Public/ImpuestoPredialUnificado', [

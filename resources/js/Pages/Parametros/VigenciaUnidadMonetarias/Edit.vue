@@ -1,6 +1,6 @@
 <script setup>
 import Layout from '~Layouts/Parametros.vue'
-import { useForm, router } from '@inertiajs/vue3'
+import { useForm } from '@inertiajs/vue3'
 import { onMounted } from 'vue'
 import { initInputCounters, initDropdowns } from 'flowbite'
 import { FwbSelect } from 'flowbite-vue'
