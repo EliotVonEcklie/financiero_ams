@@ -5,10 +5,10 @@
         <nav class="bg-white border-gray-200 dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-3">
                 <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img :src="img_logo" class="h-20 md:h-40" alt="Flowbite Logo" />
+                    <img :src="img_logo" class="lg:h-20 md:h-40" alt="Flowbite Logo" />
                     <div class="flex flex-col">
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">MUNICIPIO DE CABUYARO - META</span>
-                        <span class="text-sm text-gray-900 md:text-2xl dark:text-white">SECRETARIA DE HACIENDA MUNICIPAL</span>
+                        <span class="self-center lg:text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">MUNICIPIO DE CABUYARO - META</span>
+                        <span class="lg:text-sm text-gray-900 md:text-2xl dark:text-white">SECRETARIA DE HACIENDA MUNICIPAL</span>
                     </div>
                 </a>
                 <div class="flex items-center md:hidden lg:block">
