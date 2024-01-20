@@ -183,7 +183,7 @@
                     </td>
                     <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">Dirección del predio</p>
-                        <p>{{ showCharacters($estadoCuenta->data['direccion']) }}</p>
+                        <p>{{ $estadoCuenta->data['direccion'] }}</p>
                     </td>
                     <td colspan="">
                         <p class="fs-1 vertical-top fw-bold">Avaluo vigente</p>
@@ -244,8 +244,9 @@
                     <th class="fs-0">Sobretasa bomberil</th>
                     <th class="fs-0">Sobretasa ambiental</th>
                     <th class="fs-0">Sobretasa intereses</th>
-                    <th class="fs-0">Sobretasa alumbrado</th>
+                    <th class="fs-0">Alumbrado</th>
                     <th class="fs-0">Descuentos</th>
+                    <th class="fs-0">Total</th>
                 </tr>
                 <tbody>
 
@@ -253,15 +254,16 @@
                         <tr>
                             <td class="fs-1">{{ $vigencia['vigencia'] }}</td>
                             <td class="fs-1">${{ number_format($vigencia['valor_predial'],2)}} </td>
+                            <td class="fs-1">{{ $vigencia['tasa_por_mil'] }}</td>
                             <td class="fs-1">${{ number_format($vigencia['predial_intereses'],2) }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['tasa_por_mil'],2) }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['descuento_intereses'],2) }}</td>
                             <td class="fs-1">${{ number_format($vigencia['total_intereses'],2) }}  </td>
+                            <td class="fs-1">${{ number_format($vigencia['descuento_intereses'],2) }}</td>
                             <td class="fs-1">${{ number_format($vigencia['bomberil'],2) }}</td>
                             <td class="fs-1">${{ number_format($vigencia['ambiental'],2) }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['alumbrado'],2) }}</td>
                             <td class="fs-1">${{ number_format($vigencia['bomberil_intereses']+$vigencia['ambiental_intereses'],2) }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['alumbrado'],2) }}</td>
                             <td class="fs-1">${{ number_format($vigencia['total_descuentos'],2) }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['total'],2) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
