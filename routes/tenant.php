@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use App\Http\Controllers\DescuentoController;
 use App\Http\Controllers\DestinoEconomicoController;
 use App\Http\Controllers\EstadoCuentaController;
@@ -16,11 +14,10 @@ use App\Http\Controllers\UnidadMonetariaController;
 use App\Http\Controllers\VigenciaUnidadMonetariaController;
 use App\Http\Controllers\PredioTipoController;
 use App\Http\Middleware\FinancieroAuth;
-use App\Models\Predio;
 use App\Jobs\Tasificar;
-use App\Models\Descuento;
+use App\Models\Predio;
 use App\Models\EstadoCuenta;
-use App\Models\Interes;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
@@ -47,6 +44,10 @@ Route::middleware([
         Route::get('/login', function () {
             return inertia('Login');
         })->withoutMiddleware(FinancieroAuth::class)->name('login');
+
+        Route::get('/test', function () {
+            return Pdf::loadView('pdf.private.test')->stream();
+        })->name('test');
 
         Route::get('/', function () {
             return inertia('Index');
