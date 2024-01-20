@@ -1,3 +1,17 @@
+@php
+    function showCharacters($string, $end = 2){
+        $getchars = Str::substr($string, 0, $end);
+        $newString = implode("",explode(" ",$string));
+        $arrString = mb_str_split($newString);
+        $result = "";
+        for ($i=0; $i < count($arrString) ; $i++) {
+            $arrString[$i] = $i >= $end ? "*" : $arrString[$i];
+        }
+
+        $result = implode($arrString);
+        return $result;
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -169,7 +183,7 @@
                     </td>
                     <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">Dirección del predio</p>
-                        <p>{{ $estadoCuenta->data['direccion'] }}</p>
+                        <p>{{ showCharacters($estadoCuenta->data['direccion']) }}</p>
                     </td>
                     <td colspan="">
                         <p class="fs-1 vertical-top fw-bold">Avaluo vigente</p>
@@ -182,11 +196,11 @@
                 <tr>
                     <td colspan="3">
                         <p class="fs-1 vertical-top fw-bold">Nombres y apellidos</p>
-                        <p>{{ $estadoCuenta->data['nombre_propietario'] }}</p>
+                        <p>{{ showCharacters($estadoCuenta->data['nombre_propietario']) }}</p>
                     </td>
                     <td colspan="3">
                         <p class="fs-1 vertical-top fw-bold">Identificación</p>
-                        <p>{{ $estadoCuenta->data['documento'] }}</p>
+                        <p>{{ showCharacters($estadoCuenta->data['documento'],0) }}</p>
                     </td>
                 </tr>
                 <tr class="bg-primary">
@@ -223,34 +237,33 @@
                 <tr class="bg-primary  p-1">
                     <th class="fs-0">Vigencia</th>
                     <th class="fs-0">Predial</th>
+                    <th class="fs-0">Tasa x Mil</th>
                     <th class="fs-0">Intereses Predial</th>
                     <th class="fs-0">Descuento intereses</th>
                     <th class="fs-0">Total intereses predial</th>
                     <th class="fs-0">Sobretasa bomberil</th>
-                    <th class="fs-0">Intereses bomberil</th>
                     <th class="fs-0">Sobretasa ambiental</th>
-                    <th class="fs-0">Intereses ambiental</th>
+                    <th class="fs-0">Sobretasa intereses</th>
                     <th class="fs-0">Sobretasa alumbrado</th>
                     <th class="fs-0">Descuentos</th>
-                    <th class="fs-0">Dias mora</th>
                 </tr>
                 <tbody>
-                    @for ( $i = 0; $i < count($estadoCuenta->data['vigencias']); $i++)
-                    <tr>
-                        <td class="fs-1">{{ $estadoCuenta->data['vigencias'][$i]['vigencia'] }}</td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['valor_predial'],2)}} </td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['predial_intereses'],2) }}</td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['descuento_intereses'],2) }}</td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['total_intereses'],2) }}  </td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['bomberil'],2) }}</td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['bomberil_intereses'],2) }}</td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['ambiental'],2) }}</td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['ambiental_intereses'],2) }}</td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['alumbrado'],2) }}</td>
-                        <td class="fs-1">${{ number_format($estadoCuenta->data['vigencias'][$i]['total_descuentos'],2) }}</td>
-                        <td class="fs-1">{{ $estadoCuenta->data['vigencias'][$i]['dias_mora'] }}</td>
-                    </tr>
-                    @endfor
+
+                    @foreach ( $estadoCuenta->data['vigencias'] as $vigencia )
+                        <tr>
+                            <td class="fs-1">{{ $vigencia['vigencia'] }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['valor_predial'],2)}} </td>
+                            <td class="fs-1">${{ number_format($vigencia['predial_intereses'],2) }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['tasa_por_mil'],2) }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['descuento_intereses'],2) }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['total_intereses'],2) }}  </td>
+                            <td class="fs-1">${{ number_format($vigencia['bomberil'],2) }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['ambiental'],2) }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['alumbrado'],2) }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['bomberil_intereses']+$vigencia['ambiental_intereses'],2) }}</td>
+                            <td class="fs-1">${{ number_format($vigencia['total_descuentos'],2) }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
             <table>
@@ -265,13 +278,13 @@
                 </tr>
                 <tbody>
                     <tr>
-                        <td class="fs-0">{{ $estadoCuenta->data['totales']['predial'] }}</td>
-                        <td class="fs-0">{{ $estadoCuenta->data['totales']['bomberil'] }}</td>
-                        <td class="fs-0">{{ $estadoCuenta->data['totales']['ambiental'] }}</td>
-                        <td class="fs-0">{{ $estadoCuenta->data['totales']['alumbrado'] }}</td>
-                        <td class="fs-0">{{ $estadoCuenta->data['totales']['intereses'] }}</td>
-                        <td class="fs-0">{{ $estadoCuenta->data['totales']['descuentos'] }}</td>
-                        <td class="fs-0">{{ $estadoCuenta->data['totales']['total'] }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['predial'],2) }}</td>
+                        <td class="fs-0">${{ number_format( $estadoCuenta->data['totales']['bomberil'],2) }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['ambiental'],2) }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['alumbrado'],2) }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['intereses'],2) }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['descuentos'],2) }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['total'],2) }}</td>
                     </tr>
                 </tbody>
             </table>
