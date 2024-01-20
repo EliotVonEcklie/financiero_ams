@@ -134,7 +134,8 @@
                 bottom: 0;
                 left: 0px;
                 right: 0px;
-                height: 100px;
+                height: 120px;
+                width:100vw;
             }
         </style>
     </head>
@@ -143,7 +144,9 @@
             <table>
                 <tr>
                     <td rowspan="2" class="w33">
-                        <img src="data:image/png;base64,{{ tenant()->imagen }}" alt="">
+                        <div style="display: block; margin-left: auto; margin-right: auto; font-size: 16px; text-align: center;">
+                            <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="100" width="100"alt="">
+                        </div>
                     </td>
                     <td rowspan="2" class="w33 text-center">
                         <p class="fs-3">{{ tenant()->nombre }}</p>
@@ -307,14 +310,20 @@
             <table class="border-none">
                 <tr ><td colspan="10" class="border-none"></td></tr>
                 <tr>
-                    <td class="border-none text-start">
-                        <p class="fs-0">Fecha y hora elaboración: {{ $estadoCuenta->created_at->format('Y-m-d H:i:s') }}</p>
+                    <td colspan="10">
+                        <p class="text-center fs-0">Dirección: {{ tenant()->direccion }} - teléfono: {{ tenant()->telefono }}</p>
+                        <p class="text-center fs-0">Correo: {{ tenant()->correo }} - Sitio web: {{ tenant()->pagina }}</p>
                     </td>
-                    <td class="border-none text-center">
-                        <p class="fs-0">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
+                </tr>
+                <tr >
+                    <td class= "border-none">
+                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $estadoCuenta->created_at->format('Y-m-d H:i:s') }}</p>
                     </td>
-                    <td class="border-none text-right">
-                        <p class="fs-0">Dirección IP: {{ $estadoCuenta->ip }}</p>
+                    <td class="border-none">
+                        <p class="fs-0 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
+                    </td>
+                    <td class="border-none" colspan="8">
+                        <p class="fs-0 text-right">Dirección IP: {{ $estadoCuenta->ip }}</p>
                     </td>
                 </tr>
             </table>

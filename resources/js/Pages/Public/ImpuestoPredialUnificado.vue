@@ -1,7 +1,7 @@
 
 
 <template>
-    <Layout>
+    <Layout :tenant="tenant">
         <!--Modal-->
         <div id="modalBuscar" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-7xl max-h-full">
@@ -133,8 +133,8 @@
                             <p class="px-5 py-2 text-base text-black dark:text-gray-400">{{ formatNumber(predio.valor_avaluo) }}</p>
                         </td>
                     </tr>
-                    <tr class="bg-bluep border-gray-200 dark: dark:border-gray-700 dark:bg-gray-700 dark:text-white">
-                        <td colspan="8" class="text-white text-xl py-2"><p class="px-5 py-2 font-bold">Información del propietario</p></td>
+                    <tr class="bg-gray-300 border-gray-200 dark: dark:border-gray-700 dark:bg-gray-700 dark:text-white">
+                        <td colspan="8" class="text-black text-base py-2"><p class="px-5 py-2 font-bold">Información del propietario</p></td>
                     </tr>
                     <tr>
                         <td colspan="4" class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
@@ -502,7 +502,7 @@
     import {ref,reactive,computed} from 'vue';
     import axios from 'axios'
 
-    const props = defineProps({ predios: Object, predio: Object});
+    const props = defineProps({ tenant: Object, predios: Object, predio: Object });
     let predio= props.predio;
     let isCheckAll = ref(true);
 

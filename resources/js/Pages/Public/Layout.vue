@@ -7,8 +7,8 @@
                 <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img :src="img_logo" class="lg:h-20 md:h-40" alt="Flowbite Logo" />
                     <div class="flex flex-col">
-                        <span class="self-center lg:text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">MUNICIPIO DE CABUYARO - META</span>
-                        <span class="lg:text-sm text-gray-900 md:text-2xl dark:text-white">SECRETARIA DE HACIENDA MUNICIPAL</span>
+                        <span class="self-center lg:text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
+                        <span class="lg:text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                     </div>
                 </a>
                 <div class="flex items-center md:hidden lg:block">
@@ -30,8 +30,8 @@
                     <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
                         <img :src="img_logo" class="h-20 md:h-40" alt="Flowbite Logo" />
                         <div class="flex flex-col">
-                            <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">MUNICIPIO DE CABUYARO - META</span>
-                            <span class="text-sm text-gray-900 md:text-2xl dark:text-white">SECRETARIA DE HACIENDA MUNICIPAL</span>
+                            <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
+                            <span class="text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                         </div>
                     </a>
                     <button type="button" @click="openMobileNav();" class="mx-5 my-5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -126,8 +126,8 @@
                 <a :href="route('public.index')" class="flex items-center md:justify-center">
                     <img :src="img_logo"  class="lg:h-8 me-3 md:h-24" alt="FlowBite Logo" />
                     <div class="flex flex-col">
-                        <span class="self-center lg:text-base font-semibold md:text-2xl whitespace-nowrap dark:text-white">MUNICIPIO DE CABUYARO - META</span>
-                        <span class="lg:text-sm text-gray-900 md:text-xl dark:text-white">SECRETARIA DE HACIENDA MUNICIPAL</span>
+                        <span class="self-center lg:text-base font-semibold md:text-2xl whitespace-nowrap dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
+                        <span class="lg:text-sm text-gray-900 md:text-xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                     </div>
                 </a>
             </div>
@@ -149,13 +149,13 @@
                         <li class="mb-4">
                             <div class="flex space-x-2 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
-                                <span>3124567890</span>
+                                <span>{{ tenant.telefono }}</span>
                             </div>
                         </li>
                         <li>
                             <div class="flex space-x-2 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
-                                <span>info@ideal10sas.com</span>
+                                <span>{{ tenant.correo }}</span>
                             </div>
                         </li>
                     </ul>
@@ -166,7 +166,7 @@
                         <li class="mb-4">
                             <div class="flex space-x-2 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
-                                <span>Cra 12 34-56 Barrio</span>
+                                <span>{{ tenant.direccion }}</span>
                             </div>
                         </li>
                     </ul>
@@ -205,6 +205,8 @@
     let activeTab:Ref<string | null>=ref('');
     let login:Ref<boolean>=ref(false);
     let mobileNav:Ref<boolean>=ref(false);
+
+    defineProps({ tenant: Object })
 
     function showModal(id){
         const options = {
