@@ -5,7 +5,7 @@
         <nav class="bg-white border-gray-200 dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-3">
                 <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img :src="img_logo" class="lg:h-20 md:h-40" alt="Flowbite Logo" />
+                    <img :src="{{ 'data:image/png;base64,' + tenant.imagen }}" class="lg:h-20 md:h-40" alt="Flowbite Logo" />
                     <div class="flex flex-col">
                         <span class="self-center lg:text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                         <span class="lg:text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
@@ -205,7 +205,6 @@
     import { initFlowbite } from 'flowbite'
     import { onMounted,Ref,ref } from 'vue'
     import { Link } from '@inertiajs/vue3'
-    import img_logo from '~/img/public/logo.png'
     import ModalRegistro from './Components/ModalRegistro.vue'
     import {Modal} from 'flowbite';
     let activeTab:Ref<string | null>=ref('');
