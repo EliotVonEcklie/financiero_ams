@@ -114,6 +114,7 @@ Route::middleware([
         Route::get('estado_cuentas_view/{estado_cuenta}', function (EstadoCuenta $estadoCuenta) {
             return view('pdf.estado_cuenta', ['estadoCuenta' => $estadoCuenta]);
         });
+        Route::resource('liquidacion_predial',LiquidacionPredialController::class)->only(['show']);
 
         Route::get('/predio', [PredioController::class, 'show'])->name('predio');
     });
