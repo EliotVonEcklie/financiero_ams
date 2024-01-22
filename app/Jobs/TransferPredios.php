@@ -44,8 +44,8 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
         // Format data for old database
         $tesopredios_data = [
             'cedulacatastral' => $predio->codigo_catastro,
-            'ord' => sprintf("%03d", $predio->orden),
-            'tot' => sprintf("%03d", $predio->total),
+            'ord' => sprintf('%03d', $predio->orden),
+            'tot' => sprintf('%03d', $predio->total),
             'e' => '',
             'd' => $predio->latest_historial_predio()->tipo_documento,
             'documento' => $predio->latest_historial_predio()->documento,
