@@ -7,12 +7,12 @@
                 <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img :src="img_logo" class="lg:h-20 md:h-40" alt="Flowbite Logo" />
                     <div class="flex flex-col">
-                        <span class="self-center lg:text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">MUNICIPIO DE CABUYARO - META</span>
-                        <span class="lg:text-sm text-gray-900 md:text-2xl dark:text-white">SECRETARIA DE HACIENDA MUNICIPAL</span>
+                        <span class="self-center lg:text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
+                        <span class="lg:text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                     </div>
                 </a>
                 <div class="flex items-center md:hidden lg:block">
-                    <button type="button" @click="showModal('modalRegistro');" class="py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Iniciar sesión</button>
+                    <button type="button" @click="showModal('modalRegistro');" class="py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg">Iniciar sesión</button>
                 </div>
                 <div class="flex items-center md:block lg:hidden ">
                     <button type="button" @click="openMobileNav();" class="py-2.5 px-2.5 font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -25,13 +25,13 @@
             </div>
         </nav>
         <nav :class="{'translate-x-0 ':mobileNav, 'translate-x-full ':mobileNav==false}" class="fixed z-50 top-0 transition-all h-full w-screen ">
-            <div class=" h-full bg-white overflow-y-auto" >
+            <div class=" h-full bg-white overflow-y-auto dark:bg-gray-700" >
                 <div class="flex justify-between items-center mt-4 p-4">
                     <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
                         <img :src="img_logo" class="h-20 md:h-40" alt="Flowbite Logo" />
                         <div class="flex flex-col">
-                            <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">MUNICIPIO DE CABUYARO - META</span>
-                            <span class="text-sm text-gray-900 md:text-2xl dark:text-white">SECRETARIA DE HACIENDA MUNICIPAL</span>
+                            <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
+                            <span class="text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                         </div>
                     </a>
                     <button type="button" @click="openMobileNav();" class="mx-5 my-5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -66,10 +66,10 @@
                     <li class="p-5  w-full hover:bg-bluep ">
                         <a href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Contacto</a>
                     </li>
+                    <li class="p-5  w-full hover:bg-bluep ">
+                        <button type="button" @click="showModal('modalRegistro');" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Iniciar sesión</button>
+                    </li>
                 </ul>
-                <div class="w-full absolute bottom-0 left-0 mb-5">
-
-                </div>
             </div>
         </nav>
         <nav class="lg:block md:hidden bg-blue-100  dark:bg-gray-700">
@@ -90,11 +90,17 @@
                                     <li>
                                         <Link :href="route('public.impuesto_predial_unificado')" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Impuesto Predial Unificado</Link>
                                     </li>
-                                    <li>
+                                    <li v-if="login">
                                         <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Impuesto de industria y comercio</a>
                                     </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">retención de industria y comercio</a>
+                                    <li v-else>
+                                        <button type="button" @click="showModal('modalRegistro');" class="text-start block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Impuesto de industria y comercio</button>
+                                    </li>
+                                    <li v-if="login">
+                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Retención de industria y comercio</a>
+                                    </li>
+                                    <li v-else>
+                                        <button type="button" @click="showModal('modalRegistro');" class="text-start block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Retención de industria y comercio</button>
                                     </li>
                                 </ul>
                             </div>
@@ -120,18 +126,18 @@
     <main class="mb-8 container mx-auto">
         <slot :login ="login" :showModal="showModal" :hideModal="hideModal"  />
     </main>
-    <footer class="bg-gray-100 dark:bg-gray-900">
+    <footer class="bg-gray-100 dark:bg-gray-900 h-50">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8 lg:flex lg:items-center justify-between lg:flex-row md:flex-col">
             <div class="mb-6">
                 <a :href="route('public.index')" class="flex items-center md:justify-center">
                     <img :src="img_logo"  class="lg:h-8 me-3 md:h-24" alt="FlowBite Logo" />
                     <div class="flex flex-col">
-                        <span class="self-center lg:text-base font-semibold md:text-2xl whitespace-nowrap dark:text-white">MUNICIPIO DE CABUYARO - META</span>
-                        <span class="lg:text-sm text-gray-900 md:text-xl dark:text-white">SECRETARIA DE HACIENDA MUNICIPAL</span>
+                        <span class="self-center lg:text-base font-semibold md:text-2xl whitespace-nowrap dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
+                        <span class="lg:text-sm text-gray-900 md:text-xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                     </div>
                 </a>
             </div>
-            <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+            <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3 md:text-center">
                 <div>
                     <h2 class="mb-6 lg:text-sm md:text-2xl font-semibold text-gray-900 uppercase dark:text-white">Centro de ayuda</h2>
                     <ul class="lg:text-base md:text-2xl text-gray-500 dark:text-gray-400 font-medium">
@@ -149,13 +155,13 @@
                         <li class="mb-4">
                             <div class="flex space-x-2 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
-                                <span>3124567890</span>
+                                <span>{{ tenant.telefono }}</span>
                             </div>
                         </li>
                         <li>
                             <div class="flex space-x-2 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
-                                <span>info@ideal10sas.com</span>
+                                <span>{{ tenant.correo }}</span>
                             </div>
                         </li>
                     </ul>
@@ -166,7 +172,7 @@
                         <li class="mb-4">
                             <div class="flex space-x-2 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
-                                <span>Cra 12 34-56 Barrio</span>
+                                <span>{{ tenant.direccion }}</span>
                             </div>
                         </li>
                     </ul>
@@ -174,10 +180,10 @@
             </div>
         </div>
         <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#" class="hover:underline lg:text-sm md:text-base">Ideal 10 sas</a>. Todos los derechos reservados.
+        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between md:flex-col">
+            <span class="lg:text-sm md:text-2xl text-gray-500 sm:text-center dark:text-gray-400 ">© 2023 <a href="#" class="hover:underline lg:text-sm md:text-2xl">Ideal 10 sas</a>. Todos los derechos reservados.
             </span>
-            <ul class="flex flex-wrap items-center mt-3 lg:text-sm md:text-base font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+            <ul class="flex flex-wrap items-center mt-3 lg:text-sm md:text-xl font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
                 <li>
                     <a href="#" class="hover:underline me-4 md:me-6">Normatividad</a>
                 </li>
@@ -206,12 +212,17 @@
     let login:Ref<boolean>=ref(false);
     let mobileNav:Ref<boolean>=ref(false);
 
+    defineProps({ tenant: Object })
+
     function showModal(id){
         const options = {
             backdrop: 'static',
             closable: true,
         };
         new Modal(document.getElementById(id),options).show();
+        if(mobileNav.value){
+            mobileNav.value = false;
+        }
     }
     function hideModal(id){
         new Modal(document.getElementById(id)).hide();
