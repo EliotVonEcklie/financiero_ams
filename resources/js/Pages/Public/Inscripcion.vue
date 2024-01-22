@@ -1,10 +1,10 @@
 <template>
 
-    <Layout v-slot="{showModal,hideModal}">
+    <Layout :tenant="tenant" v-slot="{showModal,hideModal}">
         <ModalDireccion @getAddress="getAddress" :showModal="showModal" :hideModal="hideModal"/>
         <div class="mt-10">
-            <h1 class="text-center text-2xl mb-5">Inscripción del contribuyente</h1>
-            <ol class="flex items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
+            <h1 class="text-center lg:text-2xl md:text-4xl mb-5 dark:text-white">Inscripción del contribuyente</h1>
+            <ol class="flex items-center w-full p-3 space-x-2 lg:text-sm md:text-2xl gap-3  md:flex-wrap md:items-center font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
                 <li class="flex items-center text-blue-600 dark:text-blue-500">
                     <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border border-blue-600 rounded-full shrink-0 dark:border-blue-500">
                         1
@@ -14,8 +14,8 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
                     </svg>
                 </li>
-                <li :class="{'flex items-center text-blue-600 dark:text-blue-500':pageForm == 2, 'flex items-center':pageForm != 2}">
-                    <span :class="{'flex items-center justify-center w-5 h-5 me-2 text-xs border border-blue-600 rounded-full shrink-0 dark:border-blue-500':pageForm==2,'flex items-center justify-center w-5 h-5 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400':pageForm!=2}">
+                <li :class="{'text-blue-600 dark:text-blue-500':pageForm>1}" class="flex items-center">
+                    <span :class="{'border-blue-600  dark:border-blue-500':pageForm > 1, 'border-gray-500 dark:border-gray-400': pageForm<2}"  class=" flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 ">
                         2
                     </span>
                     Representante <span class="hidden sm:inline-flex sm:ms-2">Actividades</span>
@@ -24,7 +24,7 @@
                     </svg>
                 </li>
                 <li :class="{'flex items-center text-blue-600 dark:text-blue-500':pageForm == 3, 'flex items-center':pageForm != 3}">
-                    <span :class="{'flex items-center justify-center w-5 h-5 me-2 text-xs border border-blue-600 rounded-full shrink-0 dark:border-blue-500':pageForm==3,'flex items-center justify-center w-5 h-5 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400':pageForm!=3}">
+                    <span :class="{'border-blue-600  dark:border-blue-500':pageForm > 2, 'border-gray-500 dark:border-gray-400': pageForm<3}"  class=" flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 ">
                         3
                     </span>
                     Formularios y anexos
@@ -32,11 +32,11 @@
             </ol>
             <form v-if="pageForm == 1" class="w-full mt-10">
                 <div>
-                    <h3 class="bg-bluep text-white p-4 text-xl mb-5">Información del contribuyente</h3>
-                    <div class="grid md:grid-cols-6 md:gap-4">
+                    <h3 class="bg-bluep text-white p-4 lg:text-base md:text-3xl mb-5">Información del contribuyente</h3>
+                    <div class="grid lg:grid-cols-6 lg:gap-4 md:grid-cols-1">
                         <div class="relative z-0 w-full mb-5 group">
                             <label for="underline_select" class="sr-only">Tipo de documento</label>
-                            <select id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                            <select id="underline_select" class="block py-2.5 px-0 w-full lg:text-sm md:text-2xl text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                                 <option selected>Seleccione tipo de documento</option>
                                 <option value="1">Cédula de ciudadania</option>
                                 <option value="2">Cédula extranjera</option>
@@ -47,8 +47,8 @@
                             </select>
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
-                            <input type="text" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                            <label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. de Documento</label>
+                            <input type="text" class="block py-2.5 px-0 w-full lg:text-sm md:text-2xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <label for="floating_first_name" class="peer-focus:font-medium absolute lg:text-sm md:text-2xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. de Documento</label>
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
                             <input type="text" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -126,7 +126,7 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="bg-bluep text-white p-4 text-xl mb-5">Información del contador o revisor fiscal</h3>
+                    <h3 class="bg-bluep text-white p-4 lg:text-base sm:text-3xl mb-5">Información del contador o revisor fiscal</h3>
                     <div class="grid md:grid-cols-1 md:gap-4">
                         <div class="relative z-0 w-full mb-5 group">
                             <input type="text" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -157,7 +157,7 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="bg-bluep text-white p-4 text-xl mb-5">Información de notificación judicial</h3>
+                    <h3 class="bg-bluep text-white p-4 lg:text-base sm:text-3xl mb-5">Información de notificación judicial</h3>
                     <div class="grid md:grid-cols-3 md:gap-4">
                         <div class="relative z-0 w-full mb-5 group">
                             <label for="underline_select" class="sr-only">Departamento</label>
@@ -426,7 +426,7 @@
             </form>
             <div class="flex justify-end space-x-2">
                 <button v-if="pageForm>1" @click="previousPage" type="button" class=" text-black bg-gray-100 hover:bg-gray-200 font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Atrás</button>
-                <button type="button" @click="nextPage" class="text-white bg-bluep hover:bg-blue-400 font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Siguiente</button>
+                <button v-if="pageForm < 3" type="button" @click="nextPage" class="text-white bg-bluep hover:bg-blue-400 font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Siguiente</button>
             </div>
         </div>
     </Layout>
@@ -439,7 +439,7 @@
 
     let txtDireccion:Ref<string>=ref('');
     let pageForm:Ref<number>=ref(1);
-
+    defineProps({tenant:Object})
     function getAddress(data){
         txtDireccion.value =data;
     }
