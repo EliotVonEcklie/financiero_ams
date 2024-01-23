@@ -468,7 +468,7 @@ import axios from 'axios'
 const props = defineProps({ tenant: Object, predios: Object, predio: Object })
 const isCheckAll = ref(true)
 let predio = props.predio
-let vigencias = predio.liquidacion.vigencias
+let vigencias = predio.liquidacion.vigencias ?? []
 
 function createEstadoCuenta() {
     predio.totales = getTotal();
