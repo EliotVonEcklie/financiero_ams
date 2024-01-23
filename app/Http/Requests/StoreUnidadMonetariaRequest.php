@@ -22,7 +22,7 @@ class StoreUnidadMonetariaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipo' => ['required', 'string', 'max:255'],
+            'nombre' => ['required', 'string', 'max:255'],
         ];
     }
 }
