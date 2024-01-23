@@ -15,8 +15,8 @@ class Liquidacion
     private int $descuento_incentivo = 0;
     private int $descuento_intereses = 0;
 
+    public Collection $avaluos;
     public array $vigencias = [];
-    public array $avaluos = [];
     public float $total_liquidacion = 0;
     public float $total_valor_avaluo = 0;
     public float $total_predial = 0;
@@ -32,12 +32,12 @@ class Liquidacion
     public float $total_alumbrado = 0;
     public float $total_intereses = 0;
 
-    public function __construct(array $avaluos)
+    public function __construct(Collection|array $avaluos)
     {
         $this->estatutos = Estatuto::all();
         $this->descuento_incentivo = Descuento::getDescuentoIncentivo();
         $this->descuento_intereses = Descuento::getDescuentoIntereses();
-        $this->avaluos = $avaluos;
+        $this->avaluos = Collection::make($avaluos);
 
         foreach ($this->avaluos as $avaluo) {
             array_push($this->vigencias, $this->liquidar($avaluo));
