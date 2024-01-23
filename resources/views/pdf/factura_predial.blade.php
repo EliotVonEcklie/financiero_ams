@@ -1,3 +1,11 @@
+@php
+    $pageBreak = count($facturaPredial->data['liquidacion']['vigencias']) >=6 ? 'page-break-after' :  "";
+    $marginBreak = count($facturaPredial->data['liquidacion']['vigencias']) >=6 ? 'margin-break' : "";
+    /*$longitud = 10;
+    $pageBreak = $longitud >=6 ? 'page-break-after' :  "";
+    $marginBreak = $longitud >=6 ? 'margin-break' : "";*/
+@endphp
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -122,6 +130,16 @@
             .vertical-top{
                 vertical-align: top;
             }
+            .page-break-after{
+                page-break-after: always;
+            }
+            header{
+                position: fixed;
+                top: -3px;
+                left: 0px;
+                right: 0px;
+                height: 30px;
+            }
             footer {
                 position: fixed;
                 bottom: 0;
@@ -129,6 +147,12 @@
                 right: 0px;
                 height: 30px;
                 width:100vw;
+            }
+            .margin-break{
+                margin-top:7rem;
+            }
+            .page-num::before{
+                content: 'Página ' counter(page)
             }
         </style>
     </head>
@@ -138,22 +162,47 @@
                 <tr>
                     <td rowspan="2" class="w33">
                         <div style="display: block; margin-left: auto; margin-right: auto; font-size: 16px; text-align: center;">
-                            <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="100" width="100"alt="">
+                            <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="60" width="60"alt="">
                         </div>
                     </td>
                     <td rowspan="2" class="w33 text-center">
-                        <p class="fs-3">{{ tenant()->nombre }}</p>
+                        <p class="fs-2">{{ tenant()->nombre }}</p>
                         <p>NIT: {{ tenant()->nit }}</p>
                         <p>{{ tenant()->entidad }}</p>
                     </td>
-                    <td class="bg-primary w-33 fs-3 fw-bold text-center">No. de liquidación</td>
+                    <td class="bg-primary w-33 fs-2 fw-bold text-center">No. de liquidación</td>
                 </tr>
                 <tr>
                     <td class="text-center">{{ $facturaPredial->id }}</td>
                 </tr>
             </table>
         </header>
-        <main>
+        <footer>
+            <table class="border-none">
+                <tr ><td colspan="10" class="border-none"></td></tr>
+                <tr>
+                    <td colspan="10" class="border-none">
+                        <p class="text-center fs-0 m-0">Dirección: {{ tenant()->direccion }} - teléfono: {{ tenant()->telefono }}</p>
+                        <p class="text-center fs-0 m-0">Correo: {{ tenant()->correo }} - Sitio web: {{ tenant()->pagina }}</p>
+                    </td>
+                </tr>
+                <tr >
+                    <td class= "border-none">
+                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $facturaPredial->created_at->format('Y-m-d H:i:s') }}</p>
+                    </td>
+                    <td class="border-none">
+                        <p class="fs-0 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
+                    </td>
+                    <td class="border-none" colspan="8">
+                        <p class="fs-0 text-center">Dirección IP: {{ $facturaPredial->ip }}</p>
+                    </td>
+                    <td class="border-none">
+                        <p class="fs-0 text-right page-num"></p>
+                    </td>
+                </tr>
+            </table>
+        </footer>
+        <main style="margin-top:8rem;">
             <table class="border-none">
                 <tr>
                     <td colspan="10" class="border-none bg-primary fw-bold text-center fs-3">Recibo de cobro impuesto predial unificado</td>
@@ -163,34 +212,34 @@
                 <tr>
                     <td colspan="3" >
                         <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
-                        <p>{{ $facturaPredial->data['codigo_catastro']}}</p>
+                        <p class="fs-1">{{ $facturaPredial->data['codigo_catastro']}}</p>
                     </td>
                     <td colspan="3" >
                         <p class="fs-1 vertical-top fw-bold">Dirección</p>
-                        <p>{{ $facturaPredial->data['direccion']}}</p>
+                        <p class="fs-1">{{ $facturaPredial->data['direccion']}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <p class="fs-1 vertical-top fw-bold">Nombres y apellidos</p>
-                        <p>{{ $facturaPredial->data['nombre_propietario']}}</p>
+                        <p class="fs-1">{{ $facturaPredial->data['nombre_propietario']}}</p>
                     </td>
                     <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">Identificación</p>
-                        <p>{{ $facturaPredial->data['documento']}}</p>
+                        <p class="fs-1">{{ $facturaPredial->data['documento']}}</p>
                     </td>
                     <td>
                         <p class="fs-1 vertical-top fw-bold fw-bold">Área del terreno </p>
-                        <p>{{ $facturaPredial->data['hectareas']}} Ha - {{ $facturaPredial->data['metros_cuadrados']}} m2</p>
+                        <p class="fs-1">{{ $facturaPredial->data['hectareas']}} Ha - {{ $facturaPredial->data['metros_cuadrados']}} m2</p>
                     </td>
                     <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">Área construida</p>
-                        <p>{{ $facturaPredial->data['area_construida']}} m2</p>
+                        <p class="fs-1">{{ $facturaPredial->data['area_construida']}} m2</p>
                     </td>
                 </tr>
             </table>
-            <table class="border-none">
 
+            <table class="border-none {{ $pageBreak }}">
                 <tr class="bg-primary  p-1">
                     <th class="fs-0">Vigencia</th>
                     <th class="fs-0">Avaluo</th>
@@ -209,6 +258,7 @@
                     @php
                         $total=0;
                     @endphp
+
                     @foreach ($facturaPredial->data['liquidacion']['vigencias'] as $vigencia)
                         @if ($vigencia['isSelected'])
                         @php
@@ -230,31 +280,30 @@
                         </tr>
                         @endif
                     @endforeach
-                    <tr ><td colspan="10" class="border-none"></td></tr>
                     <tr>
                         <td colspan="6" class="border-none"></td>
                         <td colspan="2" class="fs-2 bg-primary fw-bold">
                             Pague hasta
                         </td>
                         <td colspan="2" class="text-center">
-                            <p class="fs-1 vertical-top fw-bold">Fecha</p>
-                            <p>31/10/2023</p>
+                            <p class="fs-0 vertical-top fw-bold">Fecha</p>
+                            <p class="fs-0">31/10/2023</p>
                         </td>
                         <td colspan="2" class="text-right">
-                            <p class="fs-1 vertical-top fw-bold">Valor</p>
-                            <p>{{ number_format($total,0,',','.') }}</p>
+                            <p class="fs-0 vertical-top fw-bold">Valor</p>
+                            <p class="fs-0">{{ number_format($total,0,',','.') }}</p>
                         </td>
                     </tr>
+                    <tr><td class="border-none" colspan="12"></td></tr>
                 </tbody>
             </table>
-            <table class="border-none">
-                <tr><td class="border-none" colspan="10"></td></tr>
+            <table class="border-none {{ $marginBreak }}" >
                 <tr>
-                    <td class="border-none text-center" colspan="10">
+                    <td class="border-none text-center fs-0"  colspan="10">
                         Contra la presente liquidacion procede el recurso de reconsideracion dentro de los dos (2) meses siguientes a su notificacion
                     </td>
                 </tr>
-                <tr><td class="border-none text-center fw-bold fs-1" colspan="10">Copia contribuyente</td></tr>
+                <tr><td class="border-none text-center fw-bold fs-0" colspan="10">Copia contribuyente</td></tr>
                 <tr><td class="border-dotted" colspan="10"></td></tr>
                 <tr>
                     <td colspan="10" class="border-none text-center">
@@ -262,41 +311,32 @@
                         <p class="fs-0">{{ tenant()->entidad }}</p>
                     </td>
                 </tr>
-            </table>
-            <table class="border-none">
                 <tr>
-                    <td >
-                        <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
-                        <p>{{ $facturaPredial->data['codigo_catastro'] }}</p>
+                    <td colspan="4" >
+                        <p class="fs-0 vertical-top fw-bold">Referencia Catastral</p>
+                        <p class="fs-0">{{ $facturaPredial->data['codigo_catastro'] }}</p>
                     </td>
                     <td colspan="3">
-                        <p class="fs-1 vertical-top fw-bold">Periodo facturado</p>
-                        <p>2013-2023</p>
+                        <p class="fs-0 vertical-top fw-bold">Periodo facturado</p>
+                        <p class="fs-0">2013-2023</p>
                     </td>
-                    <td colspan="2">
-                        <p class="fs-1 vertical-top fw-bold">No liquidación</p>
-                        <p>{{ $facturaPredial->id }}</p>
+                    <td colspan="3">
+                        <p class="fs-0 vertical-top fw-bold">No liquidación</p>
+                        <p class="fs-0">{{ $facturaPredial->id }}</p>
                     </td>
-                </tr>
-                <tr >
-                    <td  class="border-none"></td>
                 </tr>
                 <tr>
-                    <td colspan="6" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode'] }}" height="40" alt="barcode" /></td>
+                    <td colspan="10" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode'] }}" height="30" alt="barcode" /></td>
                 </tr>
                 <tr>
-                    <td colspan="6" class="border-none text-center">
-                        <p class="fs-0">(415)7709998105867(8020)010001178011100501(3900)0000469514(96)20231031</p>
-                        <p class="fs-0">
+                    <td colspan="10" class="border-none text-center">
+                        <p class="fs-s-1">(415)7709998105867(8020)010001178011100501(3900)0000469514(96)20231031</p>
+                        <p class="fs-s-1">
                             Señor Cajero: Por favor no colocar el sello en el código de barras
                         </p>
                     </td>
                 </tr>
-
-            </table>
-            <table class="border-none">
-                <tr><td class="border-none" colspan="10"></td></tr>
-                <tr><td class="border-none text-center fw-bold fs-1" colspan="10">Copia banco</td></tr>
+                <tr><td class="border-none text-center fw-bold fs-0" colspan="10">Copia banco</td></tr>
                 <tr><td class="border-dotted" colspan="10"></td></tr>
                 <tr>
                     <td colspan="10" class="border-none text-center">
@@ -304,60 +344,33 @@
                         <p class="fs-0">{{ tenant()->entidad }}</p>
                     </td>
                 </tr>
-            </table>
-            <table class="border-none">
                 <tr>
-                    <td >
-                        <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
-                        <p>{{ $facturaPredial->data['codigo_catastro'] }}</p>
+                    <td colspan="4" >
+                        <p class="fs-0 vertical-top fw-bold">Referencia Catastral</p>
+                        <p class="fs-0">{{ $facturaPredial->data['codigo_catastro'] }}</p>
                     </td>
                     <td colspan="3">
-                        <p class="fs-1 vertical-top fw-bold">Periodo facturado</p>
-                        <p>2013-2023</p>
+                        <p class="fs-0 vertical-top fw-bold">Periodo facturado</p>
+                        <p class="fs-0">2013-2023</p>
                     </td>
-                    <td colspan="2">
-                        <p class="fs-1 vertical-top fw-bold">No liquidación</p>
-                        <p>{{ $facturaPredial->id }}</p>
+                    <td colspan="3">
+                        <p class="fs-0 vertical-top fw-bold">No liquidación</p>
+                        <p class="fs-0">{{ $facturaPredial->id }}</p>
                     </td>
-                </tr>
-                <tr >
-                    <td  class="border-none"></td>
                 </tr>
                 <tr>
-                    <td colspan="6" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode'] }}" height="40" alt="barcode" /></td>
+                    <td colspan="10" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode'] }}" height="30" alt="barcode" /></td>
                 </tr>
                 <tr>
-                    <td colspan="6" class="border-none text-center">
-                        <p class="fs-0">(415)7709998105867(8020)010001178011100501(3900)0000469514(96)20231031</p>
-                        <p class="fs-0">
+                    <td colspan="10" class="border-none text-center">
+                        <p class="fs-s-1">(415)7709998105867(8020)010001178011100501(3900)0000469514(96)20231031</p>
+                        <p class="fs-s-1">
                             Señor Cajero: Por favor no colocar el sello en el código de barras
                         </p>
                     </td>
                 </tr>
-
             </table>
         </main>
-        <footer>
-            <table class="border-none">
-                <tr ><td colspan="10" class="border-none"></td></tr>
-                <tr>
-                    <td colspan="10" class="border-none">
-                        <p class="text-center fs-0 m-0">Dirección: {{ tenant()->direccion }} - teléfono: {{ tenant()->telefono }}</p>
-                        <p class="text-center fs-0 m-0">Correo: {{ tenant()->correo }} - Sitio web: {{ tenant()->pagina }}</p>
-                    </td>
-                </tr>
-                <tr >
-                    <td class= "border-none">
-                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $facturaPredial->created_at->format('Y-m-d H:i:s') }}</p>
-                    </td>
-                    <td class="border-none">
-                        <p class="fs-0 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
-                    </td>
-                    <td class="border-none" colspan="8">
-                        <p class="fs-0 text-right">Dirección IP: {{ $facturaPredial->ip }}</p>
-                    </td>
-                </tr>
-            </table>
-        </footer>
+
     </body>
 </html>

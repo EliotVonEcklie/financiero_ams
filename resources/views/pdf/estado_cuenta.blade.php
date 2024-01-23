@@ -150,7 +150,7 @@
                 <tr>
                     <td rowspan="2" class="w33">
                         <div style="display: block; margin-left: auto; margin-right: auto; font-size: 16px; text-align: center;">
-                            <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="100" width="100"alt="">
+                            <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="60" width="60"alt="">
                         </div>
                     </td>
                     <td rowspan="2" class="w33 text-center">
