@@ -4,18 +4,18 @@
 
         <nav class="bg-white border-gray-200 dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-3">
-                <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img :src="{{ 'data:image/png;base64,' + tenant.imagen }}" class="lg:h-20 md:h-40" alt="Flowbite Logo" />
+                <Link :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <img :src="img" class="lg:h-20 md:h-40" alt="Logo Entidad" />
                     <div class="flex flex-col">
                         <span class="self-center lg:text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                         <span class="lg:text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                     </div>
-                </a>
+                </Link>
                 <div class="flex items-center md:hidden lg:block">
-                    <button type="button" @click="showModal('modalRegistro');" class="py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg">Iniciar sesión</button>
+                    <button type="button" @click="showModal('modalRegistro')" class="py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-greenp1 rounded-lg">Iniciar sesión</button>
                 </div>
                 <div class="flex items-center md:block lg:hidden ">
-                    <button type="button" @click="openMobileNav();" class="py-2.5 px-2.5 font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                    <button type="button" @click="openMobileNav()" class="py-2.5 px-2.5 font-medium text-white focus:outline-none bg-greenp1 rounded-lg border border-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                         <span class="sr-only">Open main menu</span>
                         <svg class="w-14 h-14" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
@@ -27,14 +27,14 @@
         <nav :class="{'translate-x-0 ':mobileNav, 'translate-x-full ':mobileNav==false}" class="fixed z-50 top-0 transition-all h-full w-screen ">
             <div class=" h-full bg-white overflow-y-auto dark:bg-gray-700" >
                 <div class="flex justify-between items-center mt-4 p-4">
-                    <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img :src="img_logo" class="h-20 md:h-40" alt="Flowbite Logo" />
+                    <Link :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
+                        <img :src="img" class="h-20 md:h-40" alt="Logo Entidad" />
                         <div class="flex flex-col">
                             <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                             <span class="text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                         </div>
-                    </a>
-                    <button type="button" @click="openMobileNav();" class="mx-5 my-5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    </Link>
+                    <button type="button" @click="openMobileNav()" class="mx-5 my-5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
                         <svg class="w-20 h-20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
@@ -43,28 +43,28 @@
                 </div>
                 <ul class="mt-20 mb-20 ps-4 flex flex-col text-3xl space-y-20 font-medium">
                     <li class="p-5  w-full hover:bg-bluep ">
-                        <a :href="route('public.index')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white" aria-current="page">Inicio</a>
+                        <Link :href="route('public.index')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white" aria-current="page">Inicio</Link>
                     </li>
                     <li class="p-5 hover:bg-bluep">
-                        <a :href="route('public.impuesto_predial_unificado')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto predial unificado</a>
+                        <Link :href="route('public.impuesto_predial_unificado')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto predial unificado</Link>
                     </li>
                     <li class="p-5 hover:bg-bluep">
-                        <a href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto de industria y comercio</a>
+                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto de industria y comercio</Link>
                     </li>
                     <li class="p-5 hover:bg-bluep">
-                        <a href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</a>
+                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</Link>
                     </li>
                     <li class="p-5 hover:bg-bluep">
-                        <a href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Normatividad</a>
+                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Normatividad</Link>
                     </li>
                     <li class="p-5  w-full hover:bg-bluep ">
-                        <a href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Notificaciones jurídicas</a>
+                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Notificaciones jurídicas</Link>
                     </li>
                     <li class="p-5  w-full hover:bg-bluep ">
-                        <a href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Presentación electrónica</a>
+                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Presentación electrónica</Link>
                     </li>
                     <li class="p-5  w-full hover:bg-bluep ">
-                        <a href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Contacto</a>
+                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Contacto</Link>
                     </li>
                     <li class="p-5  w-full hover:bg-bluep ">
                         <button type="button" @click="showModal('modalRegistro');" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Iniciar sesión</button>
@@ -77,7 +77,7 @@
                 <div class="flex items-center justify-center">
                     <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                         <li>
-                            <a :href="route('public.index')" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Inicio</a>
+                            <Link :href="route('public.index')" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Inicio</Link>
                         </li>
                         <li>
                             <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Selección de impuesto <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -90,32 +90,28 @@
                                     <li>
                                         <Link :href="route('public.impuesto_predial_unificado')" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Impuesto Predial Unificado</Link>
                                     </li>
-                                    <li v-if="login">
-                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Impuesto de industria y comercio</a>
+                                    <li>
+                                        <Link v-if="login" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Impuesto de industria y comercio</Link>
+                                        <button v-else type="button" @click="showModal('modalRegistro')" class="text-start block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Impuesto de industria y comercio</button>
                                     </li>
-                                    <li v-else>
-                                        <button type="button" @click="showModal('modalRegistro');" class="text-start block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Impuesto de industria y comercio</button>
-                                    </li>
-                                    <li v-if="login">
-                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Retención de industria y comercio</a>
-                                    </li>
-                                    <li v-else>
-                                        <button type="button" @click="showModal('modalRegistro');" class="text-start block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Retención de industria y comercio</button>
+                                    <li>
+                                        <Link v-if="login" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Retención de industria y comercio</Link>
+                                        <button v-else type="button" @click="showModal('modalRegistro')" class="text-start block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Retención de industria y comercio</button>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-900 dark:text-white hover:underline">Normatividad</a>
+                            <Link href="#" class="text-gray-900 dark:text-white hover:underline">Normatividad</Link>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-900 dark:text-white hover:underline">Notificaciones jurídicas</a>
+                            <Link href="#" class="text-gray-900 dark:text-white hover:underline">Notificaciones jurídicas</Link>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-900 dark:text-white hover:underline">Presentación electrónica</a>
+                            <Link href="#" class="text-gray-900 dark:text-white hover:underline">Presentación electrónica</Link>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-900 dark:text-white hover:underline">Contacto</a>
+                            <Link href="#" class="text-gray-900 dark:text-white hover:underline">Contacto</Link>
                         </li>
                     </ul>
                 </div>
@@ -124,28 +120,29 @@
     </header>
 
     <main class="mb-8 container mx-auto">
-        <slot :login ="login" :showModal="showModal" :hideModal="hideModal"  />
+        <slot :login ="login" :showModal="showModal" :hideModal="hideModal" />
     </main>
+
     <footer class="bg-gray-100 dark:bg-gray-900 h-50">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8 lg:flex lg:items-center justify-between lg:flex-row md:flex-col">
             <div class="mb-6">
-                <a :href="route('public.index')" class="flex items-center md:justify-center">
-                    <img :src="img_logo"  class="lg:h-8 me-3 md:h-24" alt="FlowBite Logo" />
+                <Link :href="route('public.index')" class="flex items-center md:justify-center">
+                    <img :src="img" class="lg:h-8 me-3 md:h-24" alt="Logo Entidad" />
                     <div class="flex flex-col">
                         <span class="self-center lg:text-base font-semibold md:text-2xl whitespace-nowrap dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                         <span class="lg:text-sm text-gray-900 md:text-xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                     </div>
-                </a>
+                </Link>
             </div>
             <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3 md:text-center">
                 <div>
                     <h2 class="mb-6 lg:text-sm md:text-2xl font-semibold text-gray-900 uppercase dark:text-white">Centro de ayuda</h2>
                     <ul class="lg:text-base md:text-2xl text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
-                            <a href="#" class="hover:underline">Preguntas frecuentes</a>
+                            <Link href="#" class="hover:underline">Preguntas frecuentes</Link>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline">Manuales de sistema</a>
+                            <Link href="#" class="hover:underline">Manuales de sistema</Link>
                         </li>
                     </ul>
                 </div>
@@ -179,61 +176,61 @@
                 </div>
             </div>
         </div>
+
         <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+
         <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between md:flex-col">
-            <span class="lg:text-sm md:text-2xl text-gray-500 sm:text-center dark:text-gray-400 ">© 2023 <a href="#" class="hover:underline lg:text-sm md:text-2xl">Ideal 10 sas</a>. Todos los derechos reservados.
-            </span>
+            <span class="lg:text-sm md:text-2xl text-gray-500 sm:text-center dark:text-gray-400 ">© 2023 <a href="#" class="hover:underline lg:text-sm md:text-2xl">Ideal 10 sas</a>. Todos los derechos reservados.</span>
             <ul class="flex flex-wrap items-center mt-3 lg:text-sm md:text-xl font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
                 <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">Normatividad</a>
+                    <Link href="#" class="hover:underline me-4 md:me-6">Normatividad</Link>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">Notificaciones jurídicas</a>
+                    <Link href="#" class="hover:underline me-4 md:me-6">Notificaciones jurídicas</Link>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">Presentación electrónica</a>
+                    <Link href="#" class="hover:underline me-4 md:me-6">Presentación electrónica</Link>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline">Contacto</a>
+                    <Link href="#" class="hover:underline">Contacto</Link>
                 </li>
             </ul>
         </div>
     </footer>
 </template>
 
-<script lang="ts" setup>
-    import { initFlowbite } from 'flowbite'
-    import { onMounted,Ref,ref } from 'vue'
-    import { Link } from '@inertiajs/vue3'
-    import ModalRegistro from './Components/ModalRegistro.vue'
-    import {Modal} from 'flowbite';
-    let activeTab:Ref<string | null>=ref('');
-    let login:Ref<boolean>=ref(false);
-    let mobileNav:Ref<boolean>=ref(false);
+<script setup>
+import { onMounted, ref } from 'vue'
+import { Link } from '@inertiajs/vue3'
+import { initFlowbite, Modal } from 'flowbite'
+import ModalRegistro from './Components/ModalRegistro.vue'
 
-    defineProps({ tenant: Object })
+onMounted(() => {
+    initFlowbite()
+})
 
-    function showModal(id){
-        const options = {
-            backdrop: 'static',
-            closable: true,
-        };
-        new Modal(document.getElementById(id),options).show();
-        if(mobileNav.value){
-            mobileNav.value = false;
-        }
-    }
-    function hideModal(id){
-        new Modal(document.getElementById(id)).hide();
-    }
-    function openMobileNav(){
-        if(mobileNav.value == false){
-            mobileNav.value = true;
-        }else{
-            mobileNav.value = false;
-        }
-    }
-    onMounted(() => {
-        initFlowbite();
-    });
+const props = defineProps({ tenant: Object })
+
+const activeTab = ref('')
+const login = ref(false)
+const mobileNav = ref(false)
+
+const img = 'data:image/png;base64,' + tenant.imagen
+
+function showModal(id) {
+    new Modal(document.getElementById(id), {
+        backdrop: 'static',
+        closable: true,
+    }).show()
+
+    mobileNav.value = false
+}
+
+function hideModal(id) {
+    new Modal(document.getElementById(id)).hide()
+}
+
+function openMobileNav() {
+    mobileNav.value = !mobileNav.value
+}
 </script>

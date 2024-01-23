@@ -1,7 +1,6 @@
 <template>
-
-    <Layout :tenant="tenant" v-slot="{showModal,hideModal}">
-        <ModalDireccion @getAddress="getAddress" :showModal="showModal" :hideModal="hideModal"/>
+    <Layout :tenant="tenant" v-slot="{ showModal, hideModal }">
+        <ModalDireccion @getAddress="getAddress" :hideModal="hideModal" />
         <div class="mt-10">
             <h1 class="text-center lg:text-2xl md:text-4xl mb-5 dark:text-white">Inscripción del contribuyente</h1>
             <ol class="flex items-center w-full p-3 space-x-2 lg:text-sm md:text-2xl gap-3  md:flex-wrap md:items-center font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
@@ -430,26 +429,25 @@
     </Layout>
 </template>
 
-<script lang="ts" setup>
-    import Layout from './Layout.vue';
-    import ModalDireccion from './Components/ModalDireccion.vue';
-    import {ref,Ref} from 'vue';
+<script setup>
+import Layout from './Layout.vue'
+import ModalDireccion from './Components/ModalDireccion.vue'
+import { ref } from 'vue'
 
-    let txtDireccion:Ref<string>=ref('');
-    let pageForm:Ref<number>=ref(1);
-    defineProps({tenant:Object})
-    function getAddress(data){
-        txtDireccion.value =data;
-    }
-    function nextPage(){
-        pageForm.value++;
-    }
-    function previousPage(){
-        pageForm.value--;
-    }
+defineProps({ tenant: Object })
 
+const txtDireccion = ref('')
+const pageForm = ref(1)
+
+function getAddress(data) {
+    txtDireccion.value = data;
+}
+
+function nextPage() {
+    pageForm.value++;
+}
+
+function previousPage() {
+    pageForm.value--;
+}
 </script>
-
-<style scoped>
-
-</style>
