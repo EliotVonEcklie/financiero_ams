@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Calculations\Liquidacion;
-use App\Calculations\StringCensor;
+use App\Helpers\Liquidacion;
+use App\Helpers\Censor;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf;
 
@@ -81,7 +81,7 @@ class Predio extends Model
                 'documento',
                 'nombre_propietario',
                 'direccion',
-                'predio_tipos.nombre as predio_tipo',
+                'predio_tipos.nombre as predio_tipo'
             )
             ->join('historial_predios', 'predios.id', '=', 'predio_id')
             ->join('predio_tipos', 'predio_tipos.id', '=', 'predio_tipo_id')
@@ -90,6 +90,11 @@ class Predio extends Model
             ->orderBy('codigo_catastro', 'asc')
             ->take(50)
             ->get();
+
+        foreach ($predios as $predio) {
+            $predio->documento = Censor::str($predio->documento, -2);
+            $predio->nombre_propietario = Censor::str($predio->nombre_propietario);
+        }
 
         return $predios;
     }
@@ -101,32 +106,34 @@ class Predio extends Model
 
         foreach ($predio->avaluos as $avaluo) {
             if ($avaluo->tasa_por_mil !== -1) {
-                $liquidacion = (new Liquidacion($avaluo))->toArray();
-                array_push($vigencias, $liquidacion);
+                //$liquidacion = (new Liquidacion($avaluo))->toArray();
+                //array_push($vigencias, $liquidacion);
             } else {
                 array_push($vigencias, ['vigencia' => $avaluo->vigencia, 'tasa_por_mil' => -1]);
             }
         }
 
         $latest_historial = $predio->latest_historial_predio();
+        $destino_economico = $predio->latest_avaluo()->codigo_destino_economico->destino_economico === null ?
+            'Código: ' + $predio->latest_avaluo()->codigo_destino_economico->codigo :
+            $predio->latest_avaluo()->codigo_destino_economico->destino_economico->nombre;
 
         $interes_vigente = Interes::getInteresVigente();
-
-        $strCensor = new StringCensor(2);
 
         return [
             'id' => $predio->id,
             'codigo_catastro' => $predio->codigo_catastro,
-            'total' => sprintf("%03d", $predio->total),
-            'orden' => sprintf("%03d", $predio->orden),
+            'total' => sprintf('%03d', $predio->total),
+            'orden' => sprintf('%03d', $predio->orden),
             'valor_avaluo' => $predio->latest_avaluo()->valor_avaluo,
-            'documento' => $strCensor->censorString($latest_historial->documento),
-            'nombre_propietario' => $strCensor->censorString($latest_historial->nombre_propietario),
+            'documento' => Censor::str($latest_historial->documento, -2),
+            'nombre_propietario' => Censor::str($latest_historial->nombre_propietario),
             'direccion' => $latest_historial->direccion,
             'hectareas' => $latest_historial->hectareas,
             'metros_cuadrados' => $latest_historial->metros_cuadrados,
             'area_construida' => $latest_historial->area_construida,
             'predio_tipo' => $latest_historial->predio_tipo->nombre,
+            'destino_economico' => $destino_economico,
             'interes_vigente' => $interes_vigente !== null ? $interes_vigente->moratorio : 0,
             'descuento_vigente' => Descuento::getDescuentoIncentivo(),
             'vigencias' => $vigencias

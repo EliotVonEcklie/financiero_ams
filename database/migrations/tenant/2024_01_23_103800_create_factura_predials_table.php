@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estado_cuentas', function (Blueprint $table) {
+        Schema::create('factura_predials', function (Blueprint $table) {
             $table->id();
             $table->string('ip');
             $table->json('data');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estado_cuentas');
+        Schema::dropIfExists('factura_predials');
     }
 };

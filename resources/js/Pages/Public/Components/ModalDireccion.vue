@@ -28,7 +28,7 @@
                             <div class="grid md:grid-cols-2 md:gap-4">
                                 <div class="relative z-0 w-full mb-5 group">
                                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de via</label>
-                                    <select  @change="updateAddress" v-model="txtSelectVia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <select @change="updateAddress" v-model="txtSelectVia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option selected>Seleccione</option>
                                         <option value="Carrera">Carrera</option>
                                         <option value="Calle">Calle</option>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
                                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Via</label>
-                                    <input @input="updateAddress" type="text"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  v-model="txtVia" required>
+                                    <input @input="updateAddress" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="txtVia" required>
                                 </div>
                             </div>
                         </div>
@@ -47,11 +47,11 @@
                             <div class="grid md:grid-cols-2 md:gap-4">
                                 <div class="relative z-0 w-full mb-5 group">
                                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">#</label>
-                                    <input @input="updateAddress" v-model="txtNumero" type="number"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
+                                    <input @input="updateAddress" v-model="txtNumero" type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
                                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> #</label>
-                                    <input @input="updateAddress" type="number" v-model="txtNumero2"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"   required>
+                                    <input @input="updateAddress" v-model="txtNumero2" type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                             <div class="grid md:grid-cols-3 md:gap-2">
                                 <div class="relative z-0 w-full mb-5 group">
                                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo</label>
-                                    <select  @change="updateAddress" v-model="txtSelectComplemento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <select @change="updateAddress" v-model="txtSelectComplemento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option selected>Seleccione</option>
                                         <option value="Apartamento">Apartamento</option>
                                         <option value="Casa">Casa</option>
@@ -71,14 +71,14 @@
                                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Complemento</label>
                                     <div class="relative z-0 w-full mb-5 group">
                                         <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-                                        <input @input="updateAddress" type="text" v-model="txtComplemento"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
+                                        <input @input="updateAddress" type="text" v-model="txtComplemento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                     </div>
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
                                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barrio</label>
                                     <div class="relative z-0 w-full mb-5 group">
                                         <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-                                        <input @input="updateAddress" type="text" v-model="txtBarrio"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
+                                        <input @input="updateAddress" type="text" v-model="txtBarrio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center justify-end p-4 space-x-2 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button @click="getAddress();hideModal('modalDireccion');" type="button" class="text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirmar</button>
+                    <button @click="$emits('getAddress', txtDireccion) && hideModal('modalDireccion')" type="button" class="text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirmar</button>
                     <button @click="hideModal('modalDireccion')" type="button" class="text-white bg-red-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
                 </div>
             </div>
@@ -95,29 +95,29 @@
     </div>
 </template>
 
-<script lang="ts" setup>
-    import { ref,Ref } from "vue";
-    let txtDireccion:Ref<string>=ref('');
-    let txtSelectVia:Ref<string>=ref('');
-    let txtVia:Ref<string>=ref('');
-    let txtNumero:Ref<string> = ref('');
-    let txtNumero2:Ref<string> = ref('');
-    let txtSelectComplemento:Ref<string> = ref('');
-    let txtComplemento:Ref<string> = ref('');
-    let txtBarrio:Ref<string>=ref('');
-    const props = defineProps(['showModal','hideModal']);
-    const emits = defineEmits(['getAddress']);
-    function updateAddress(){
-        txtDireccion.value = txtSelectVia.value+" "+txtVia.value+" N "+txtNumero.value+" - "+txtNumero2.value+" "+txtSelectComplemento.value+" "+txtComplemento.value+" "+txtBarrio.value;
-    }
-    function hideModal(id){
-        props.hideModal(id);
-    }
-    function getAddress(){
-        emits('getAddress',txtDireccion.value);
-    }
+<script setup>
+import { ref } from 'vue'
+
+const txtDireccion = ref('')
+const txtSelectVia = ref('')
+const txtVia = ref('')
+const txtNumero = ref('')
+const txtNumero2 = ref('')
+const txtSelectComplemento = ref('')
+const txtComplemento = ref('')
+const txtBarrio = ref('')
+
+defineProps({ hideModal: Function })
+defineEmits(['getAddress'])
+
+function updateAddress() {
+    txtDireccion.value =
+        txtSelectVia.value + ' ' +
+        txtVia.value + ' N ' +
+        txtNumero.value + ' - ' +
+        txtNumero2.value + ' ' +
+        txtSelectComplemento.value + ' ' +
+        txtComplemento.value + ' ' +
+        txtBarrio.value
+}
 </script>
-
-<style scoped>
-
-</style>

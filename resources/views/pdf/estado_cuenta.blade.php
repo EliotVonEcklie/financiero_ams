@@ -18,115 +18,120 @@
         <meta charset="utf-8">
         <style type="text/css">
             body {
-                font-family:Arial, Helvetica, sans-serif;
+                font-family: Arial, Helvetica, sans-serif;
             }
 
             p {
                 font-size: 9pt;
-                margin:0;
-                margin-bottom:5px;
+                margin: 0;
+                margin-bottom: 5px;
                 padding: 0;
             }
             .t-1 {
-                color:#E05A10;
+                color: #E05A10;
             }
 
             .t-2 {
-                color:#03071E;
+                color: #03071E;
             }
 
             .t-3 {
-                color:#6D6A75;
+                color: #6D6A75;
             }
 
-            .text-white{
-                color:#fff;
+            .text-white {
+                color: #fff;
             }
-            .w10{
-                width:10%;
+            .w10 {
+                width: 10%;
             }
-            .w33{
-                width:33.33%;
+            .w33 {
+                width: 33.33%;
             }
-            .w55{
-                width:55%;
+            .w55 {
+                width: 55%;
             }
-            .w50{
-                width:50%;
+            .w50 {
+                width: 50%;
             }
-            .w15{
-                width:15%;
+            .w15 {
+                width: 15%;
             }
-            .w100{
-                width:100%;
+            .w100 {
+                width: 100%;
             }
-            .fs-s-1{
-                font-size:6pt
+            .fs-s-1 {
+                font-size: 6pt
             }
-            .fs-0{
-                font-size:7.2pt
+            .fs-0 {
+                font-size: 7.2pt
             }
-            .fs-1{
-                font-size: 8pt;
+            .fs-1 {
+                font-size:  8pt;
             }
-            .fs-2{
+            .fs-2 {
                 font-size: 12pt;
             }
-            .fs-3{
+            .fs-3 {
                 font-size: 14pt;
             }
-            .fs-4{
+            .fs-4 {
                 font-size: 16pt;
             }
-            .fs-5{
+            .fs-5 {
                 font-size: 20pt;
             }
-            .fw-bold{
+            .fw-bold {
                 font-weight: bold;
             }
-            .fw-semibold{
-                font-weight:500;
+            .fw-semibold {
+                font-weight: 500;
             }
-            .p-1{
+            .p-1 {
                 padding: 5px 10px;
             }
-            hr{border:0; border-top: 1px solid #CCC;}
-            h4{margin: 0;}
-            table{
+            hr {
+                border: 0;
+                border-top: 1px solid #CCC;
+            }
+            h4 {
+                margin: 0;
+            }
+            table {
                 margin: 10px 0;
-                width:100%;
-                max-width:600px;
+                width: 100%;
+                max-width: 600px;
                 border: 1px solid #CCC;
                 border-spacing: 0;
             }
-            table tr td, table tr th{
+            table tr td, table tr th {
                 padding: 5px 6px;
                 font-size: 12px;
                 font-weight: normal;
                 border: 1px solid #CCC;
             }
-            .border-none{
+            .border-none {
                 border: none
             }
-            .bg-primary{
+            .bg-primary {
                 background: #b5d8fc;
             }
-            .bg-dark{
+            .bg-dark {
                 background: #000;
             }
-            .bg-gray{
+            .bg-gray {
                 background: #ccc;
             }
-            .table-active{
+            .table-active {
                 background-color: #CCC;
             }
-            .text-center{
+            .text-center {
                 text-align: center;
             }
-            .text-right{
+            .text-right {
                 text-align: right;
             }
-            .vertical-top{
+            .vertical-top {
                 vertical-align: top;
             }
             footer {
@@ -135,7 +140,7 @@
                 left: 0px;
                 right: 0px;
                 height: 120px;
-                width:100vw;
+                width: 100vw;
             }
         </style>
     </head>
@@ -236,7 +241,6 @@
                 <tr><td class="border-none" colspan="10"></td></tr>
             </table>
             <table>
-
                 <tr class="bg-primary  p-1">
                     <th class="fs-0">Vigencia</th>
                     <th class="fs-0">Predial</th>
@@ -252,8 +256,7 @@
                     <th class="fs-0">Total</th>
                 </tr>
                 <tbody>
-
-                    @foreach ( $estadoCuenta->data['vigencias'] as $vigencia )
+                    @foreach ($estadoCuenta->data['vigencias'] as $vigencia)
                         <tr>
                             <td class="fs-1">{{ $vigencia['vigencia'] }}</td>
                             <td class="fs-1">${{ number_format($vigencia['valor_predial'],0,',','.')}} </td>
@@ -283,13 +286,13 @@
                 </tr>
                 <tbody>
                     <tr>
-                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['predial'],0,',','.') }}</td>
-                        <td class="fs-0">${{ number_format( $estadoCuenta->data['totales']['bomberil'],0,',','.') }}</td>
-                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['ambiental'],0,',','.') }}</td>
-                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['alumbrado'],0,',','.') }}</td>
-                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['intereses'],0,',','.') }}</td>
-                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['descuentos'],0,',','.') }}</td>
-                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['total'],0,',','.') }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['predial'], 0, ',', '.') }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['bomberil'], 0, ',', '.') }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['ambiental'], 0, ',', '.') }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['alumbrado'], 0, ',', '.') }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['intereses'], 0, ',', '.') }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['descuentos'], 0, ',', '.') }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['total'], 0, ',', '.') }}</td>
                     </tr>
                 </tbody>
             </table>

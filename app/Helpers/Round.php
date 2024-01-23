@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Calculations;
+namespace App\Helpers;
 
-class RoundPesos {
-    public static function round(int|float $value) {
+class Round
+{
+    public static function pesos(int|float $value) {
         $value = ceil($value);
         $last_digits = (int) substr((int) $value, -2);
 
