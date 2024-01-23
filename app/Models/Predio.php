@@ -102,7 +102,7 @@ class Predio extends Model
     public static function show($id) {
         $predio = self::find($id);
 
-        $liquidacion = new Liquidacion($predio->avaluos);
+        $liquidacion = new Liquidacion($predio->avaluos()->orderBy('vigencia', 'desc')->get());
 
         $latest_historial = $predio->latest_historial_predio();
         $destino_economico = $predio->latest_avaluo()->codigo_destino_economico->destino_economico === null ?
