@@ -12,11 +12,11 @@ use Illuminate\Support\Collection;
 class Liquidacion
 {
     private Collection $estatutos;
-    private int $descuento_incentivo = 0;
-    private int $descuento_intereses = 0;
+    private Collection $avaluos;
 
-    public Collection $avaluos;
     public array $vigencias = [];
+    public int $descuento_incentivo = 0;
+    public int $descuento_intereses = 0;
     public float $total_liquidacion = 0;
     public float $total_valor_avaluo = 0;
     public float $total_predial = 0;
@@ -48,7 +48,6 @@ class Liquidacion
     {
         return [
             'vigencias' => $this->vigencias,
-            'avaluos' => $this->avaluos,
             'total_liquidacion' => $this->total_liquidacion,
             'total_valor_avaluo' => $this->total_valor_avaluo,
             'total_predial' => $this->total_predial,

@@ -440,14 +440,14 @@ const txtDireccion = ref('')
 const pageForm = ref(1)
 
 function getAddress(data) {
-    txtDireccion.value = data;
+    txtDireccion.value = data
 }
 
 function nextPage() {
-    pageForm.value++;
+    pageForm.value++
 }
 
 function previousPage() {
-    pageForm.value--;
+    pageForm.value--
 }
 </script>

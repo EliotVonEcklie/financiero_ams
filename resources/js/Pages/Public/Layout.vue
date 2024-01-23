@@ -219,7 +219,7 @@ const img = 'data:image/png;base64,' + props.tenant.imagen
 function showModal(id) {
     new Modal(document.getElementById(id), {
         backdrop: 'static',
-        closable: true,
+        closable: true
     }).show()
 
     mobileNav.value = false

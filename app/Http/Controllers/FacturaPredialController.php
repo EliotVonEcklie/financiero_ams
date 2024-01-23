@@ -14,15 +14,14 @@ class FacturaPredialController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->input('data');
+
         $facturaPredial = FacturaPredial::create([
             'ip' => $request->ip(),
-            'data' => $request->input('data')
+            'data' => array_merge($data, [
+                'barcode' => DNS1DFacade::getBarcodePNG('4445645656' /* $data['barcode_id'] */, 'C39')
+            ])
         ]);
-
-        $data = $facturaPredial->data;
-        $data['barcode'] = DNS1DFacade::getBarcodePNG('4445645656', 'C39');
-        $facturaPredial->data = $data;
-        $facturaPredial->save();
 
         return response()->json(['id' => $facturaPredial->id]);
     }

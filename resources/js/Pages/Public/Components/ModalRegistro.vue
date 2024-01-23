@@ -1,5 +1,6 @@
 <template>
     <ModalConfirmarRegistro ref="rModalConfirmarRegistro" :documento="intVerContribuyente" :hideModal="hideModal" />
+
     <div id="modalRegistro" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full lg:max-w-2xl md:max-w-4xl max-h-full">
             <!-- Modal content -->
@@ -117,64 +118,63 @@
         </div>
     </div>
 </template>
-<script lang="ts" setup>
-    import {Ref,ref,defineEmits} from 'vue';
-    import { FwbTab, FwbTabs } from 'flowbite-vue'
-    import ModalConfirmarRegistro from './ModalConfirmarRegistro.vue';
+<script setup>
+import { ref } from 'vue'
+import { FwbTab, FwbTabs } from 'flowbite-vue'
+import ModalConfirmarRegistro from './ModalConfirmarRegistro.vue'
 
-    const rModalConfirmarRegistro = ref<any>(null);
-    let loading:Ref<boolean> = ref(false);
-    let invalidContr:Ref<string> = ref("");
-    let invalidUser:Ref<string> = ref("");
-    let invalidPass:Ref<string> = ref("");
+const rModalConfirmarRegistro = ref(null)
 
-    const intVerContribuyente:Ref<number | null> = ref(null);
-    const intUsuario:Ref<number | null> = ref(null);
-    const strPass:Ref<string> = ref("");
-    const props = defineProps(['login']);
-    const emits = defineEmits(['hideModal',"showModal"]);
-    let activetab:Ref<string> = ref('iniciar');
+const loading = ref(false)
+const invalidContr = ref()
+const invalidUser = ref()
+const invalidPass = ref()
 
-    function verifyUser(){
-        if(intVerContribuyente.value !=null && intVerContribuyente.value > 100000 && intVerContribuyente.value < 9999999999){
+const intVerContribuyente = ref(null)
+const intUsuario = ref(null)
+const strPass = ref("")
+const props = defineProps(['login'])
+const emits = defineEmits(['hideModal',"showModal"])
+let activetab = ref('iniciar')
 
-            loading.value = true;
-            setTimeout(function(){
-                loading.value = false;
-                if(!props.login){
-                    showModal('modalConfirmarRegistro');
-                    hideModal('modalRegistro');
-                }
-            },2000)
-        }
-    }
-    function loginUser(){
-        if(intUsuario.value !=null && strPass.value !="" &&(intUsuario.value > 100000 && intUsuario.value < 9999999999)){
-            loading.value = true;
-            setTimeout(function(){
-                loading.value = false;
-                invalidUser.value = '';
-                invalidPass.value = '';
-                if(!flag){
+function verifyUser(){
+    if(intVerContribuyente.value !== null && intVerContribuyente.value > 100000 && intVerContribuyente.value < 9999999999){
+        loading.value = true;
+        setTimeout(() => {
+            loading.value = false
 
-                }
-            },2000)
-        }else if(intUsuario.value < 100000 || intUsuario.value > 9999999999 || intUsuario.value ==null){
-            invalidUser.value = '<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> El número de documento es invalido!</p>';
-        }else if(intUsuario.value ==null && strPass.value ==""){
-            invalidUser.value = '<p class="mt-2 text-sm text-red-600 dark:text-red-500"><Este class="font-medium">Este campo es obligatorio!</p>';
-            invalidPass.value ='<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Este campo es obligatorio!</p>';
-        }else if(strPass.value =="" ){
-            invalidPass.value ='<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Este campo es obligatorio!</p>';
-        }
+            if (!props.login) {
+                emits('showModal', 'modalConfirmarRegistro')
+                emits('hideModal', 'modalRegistro')
+            }
+        }, 2000)
     }
-    function changeTab(tab){
-        activetab.value = tab;
+}
+
+function loginUser() {
+    if (intUsuario.value !== null && strPass.value !== '' && intUsuario.value > 100000 && intUsuario.value < 9999999999) {
+        loading.value = true
+
+        setTimeout(() => {
+            loading.value = false
+            invalidUser.value = ''
+            invalidPass.value = ''
+
+            if(!flag){
+
+            }
+        }, 2000)
+    } else if (intUsuario.value < 100000 || intUsuario.value > 9999999999 || intUsuario.value == null) {
+        invalidUser.value = '<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> El número de documento es invalido!</p>';
+    } else if (intUsuario.value ==null && strPass.value ==""){
+        invalidUser.value = '<p class="mt-2 text-sm text-red-600 dark:text-red-500"><Este class="font-medium">Este campo es obligatorio!</p>';
+        invalidPass.value ='<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Este campo es obligatorio!</p>';
+    } else if (strPass.value === ''){
+        invalidPass.value ='<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Este campo es obligatorio!</p>';
     }
-    function showModal(modal){
-        emits('showModal',modal);
-    }
-    function hideModal(modal){
-        emits('hideModal',modal);
-    }
+}
+
+function changeTab(tab){
+    activetab.value = tab;
+}
 </script>
