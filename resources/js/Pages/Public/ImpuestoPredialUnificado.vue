@@ -213,7 +213,7 @@
                                 <tr>
                                     <th scope="col" class="p-4">
                                         <div class="flex items-center">
-                                            <input id="checkbox-table-search-all" type="checkbox" v-model="checkAll" @change="updateCheckAll" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <input id="checkbox-table-search-all" type="checkbox" :checked="isCheckAll" @change="evt => updateCheckAll(evt, [])" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                             <label for="checkbox-table-search-all" class="sr-only">Seleccionar</label>
                                         </div>
                                     </th>
@@ -262,7 +262,7 @@
                                 <tr v-for="vigencia in vigencias" :key="vigencia.vigencia"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="w-4 p-4">
                                         <div class="flex items-center">
-                                            <input id="checkbox-table-search-3" type="checkbox" v-model="vigencia.isSelected" @change="updateCheckAll" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <input id="checkbox-table-search-3" type="checkbox" :checked="vigencia.isSelected" @change="evt => updateCheckAll(evt, vigencia)" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                             <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
                                         </div>
                                     </td>
@@ -510,14 +510,17 @@ function formatNumber(value){
     return number
 }
 
-async function updateCheckAll(evt) {
-    await nextTick()
-
+async function updateCheckAll(evt, vigencia) {
     if (evt.target.id === 'checkbox-table-search-all') {
+        isCheckAll.value = evt.target.checked
         vigencias.forEach(vigencia => vigencia.isSelected = evt.target.checked)
     } else {
-        if(!evt.target.checked) {
+        vigencia.isSelected = evt.target.checked
+
+        if (!evt.target.checked) {
             isCheckAll.value = false
+        } else if (vigencias.every(vigencia => vigencia.isSelected)) {
+            isCheckAll.value = true
         }
     }
 }
