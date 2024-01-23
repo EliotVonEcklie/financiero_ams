@@ -208,14 +208,13 @@
                         </button>
                     </div>
                     <div  class="mt-3 relative overflow-x-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
-                        {{ checkAll }}
                         <table  class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="p-4">
                                         <div class="flex items-center">
-                                            <input id="checkbox-table-search-3" type="checkbox" @click="checkAll" v-model="isCheckAll" checked class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="checkbox-table-search-3" class="sr-only">Seleccionar</label>
+                                            <input id="checkbox-table-search-all" type="checkbox" v-model="checkAll" @change="updateCheckAll" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="checkbox-table-search-all" class="sr-only">Seleccionar</label>
                                         </div>
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -263,7 +262,7 @@
                                 <tr v-for="vigencia in vigencias" :key="vigencia.vigencia"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="w-4 p-4">
                                         <div class="flex items-center">
-                                            <input id="checkbox-table-search-3" type="checkbox" v-model="vigencia.isSelected" @click="updateCheckAll" checked  class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <input id="checkbox-table-search-3" type="checkbox" v-model="vigencia.isSelected" @change="updateCheckAll" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                             <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
                                         </div>
                                     </td>
@@ -460,7 +459,7 @@
 
 <script setup>
 import Layout from './Layout.vue'
-import { ref, computed } from 'vue'
+import { ref, nextTick, onMounted } from 'vue'
 import { router } from '@inertiajs/vue3'
 import ModalPse from './Components/ModalPse.vue'
 import axios from 'axios'
@@ -469,6 +468,11 @@ const props = defineProps({ tenant: Object, predios: Object, predio: Object })
 const isCheckAll = ref(true)
 let predio = props.predio
 let vigencias = predio.liquidacion === undefined ? [] : predio.liquidacion.vigencias
+
+onMounted(() => {
+    isCheckAll.value = true
+    vigencias.forEach(vigencia => vigencia.isSelected = true)
+})
 
 function createEstadoCuenta() {
     predio.totales = getTotal();
@@ -506,13 +510,16 @@ function formatNumber(value){
     return number
 }
 
-const checkAll = computed(() => {
-    vigencias.forEach(vigencia => vigencia.isSelected = isCheckAll.value)
-})
+async function updateCheckAll(evt) {
+    await nextTick()
 
-function updateCheckAll() {
-    isCheckAll.value = vigencias.every(vigencia => !vigencia.isSelected)
-    getTotal()
+    if (evt.target.id === 'checkbox-table-search-all') {
+        vigencias.forEach(vigencia => vigencia.isSelected = evt.target.checked)
+    } else {
+        if(!evt.target.checked) {
+            isCheckAll.value = false
+        }
+    }
 }
 
 function getTotal() {
