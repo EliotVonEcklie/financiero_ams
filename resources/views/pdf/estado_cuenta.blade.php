@@ -243,8 +243,9 @@
             <table>
                 <tr class="bg-primary  p-1">
                     <th class="fs-0">Vigencia</th>
-                    <th class="fs-0">Predial</th>
+                    <th class="fs-0">Avaluo</th>
                     <th class="fs-0">Tasa x Mil</th>
+                    <th class="fs-0">Predial</th>
                     <th class="fs-0">Intereses Predial</th>
                     <th class="fs-0">Descuento intereses</th>
                     <th class="fs-0">Total intereses predial</th>
@@ -252,30 +253,30 @@
                     <th class="fs-0">Sobretasa ambiental</th>
                     <th class="fs-0">Sobretasa intereses</th>
                     <th class="fs-0">Alumbrado</th>
-                    <th class="fs-0">Descuentos</th>
                     <th class="fs-0">Total</th>
                 </tr>
                 <tbody>
-                    @foreach ($estadoCuenta->data['vigencias'] as $vigencia)
+                    @foreach ($estadoCuenta->data['liquidacion']['vigencias'] as $vigencia)
                         <tr>
-                            <td class="fs-1">{{ $vigencia['vigencia'] }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['valor_predial'],0,',','.')}} </td>
-                            <td class="fs-1">{{ $vigencia['tasa_por_mil'] }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['predial_intereses'],0,',','.') }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['total_intereses'],0,',','.') }}  </td>
-                            <td class="fs-1">${{ number_format($vigencia['descuento_intereses'],0,',','.') }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['bomberil'],0,',','.') }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['ambiental'],0,',','.') }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['bomberil_intereses']+$vigencia['ambiental_intereses'],0,',','.') }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['alumbrado'],0,',','.') }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['total_descuentos'],0,',','.') }}</td>
-                            <td class="fs-1">${{ number_format($vigencia['total'],0,',','.') }}</td>
+                            <td class="fs-0">{{ $vigencia['vigencia'] }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['valor_avaluo'],0,',','.')}} </td>
+                            <td class="fs-0">{{ $vigencia['tasa_por_mil'] }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['predial'],0,',','.')}} </td>
+                            <td class="fs-0">${{ number_format($vigencia['predial_intereses'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['total_intereses'],0,',','.') }}  </td>
+                            <td class="fs-0">${{ number_format($vigencia['descuento_intereses'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['bomberil'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['ambiental'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['bomberil_intereses']+$vigencia['ambiental_intereses'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['alumbrado'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['total_liquidacion'],0,',','.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             <table>
                 <tr class="bg-primary  p-1">
+                    <th class="fs-0 fw-bold">Total avaluo</th>
                     <th class="fs-0 fw-bold">Total predial</th>
                     <th class="fs-0 fw-bold">Total bomberil</th>
                     <th class="fs-0 fw-bold">Total ambiental</th>
@@ -286,13 +287,14 @@
                 </tr>
                 <tbody>
                     <tr>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['total_avaluo'], 0, ',', '.') }}</td>
                         <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['predial'], 0, ',', '.') }}</td>
                         <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['bomberil'], 0, ',', '.') }}</td>
                         <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['ambiental'], 0, ',', '.') }}</td>
                         <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['alumbrado'], 0, ',', '.') }}</td>
                         <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['intereses'], 0, ',', '.') }}</td>
                         <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['descuentos'], 0, ',', '.') }}</td>
-                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['total'], 0, ',', '.') }}</td>
+                        <td class="fs-0">${{ number_format($estadoCuenta->data['totales']['liquidacion'], 0, ',', '.') }}</td>
                     </tr>
                 </tbody>
             </table>
