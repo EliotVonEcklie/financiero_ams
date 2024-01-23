@@ -125,10 +125,9 @@
                         <td class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold">Dirección:</p>
                             <p class="px-5 py-2 text-black dark:text-gray-400">{{ predio.direccion }}</p>
-                            <p class="px-5 py-2 text-black dark:text-gray-400">{{ predio.direccion }}</p>
                         </td>
                         <td class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
-                            <p class="px-5 py-2 font-bold">Avaluo vigente:</p>
+                            <p class="px-5 py-2 font-bold">Avalúo vigente:</p>
                             <p class="px-5 py-2 text-black dark:text-gray-400">{{ formatNumber(predio.valor_avaluo) }}</p>
                         </td>
                     </tr>
