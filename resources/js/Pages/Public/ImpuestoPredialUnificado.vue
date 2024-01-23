@@ -82,10 +82,8 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ predio.nombre_propietario }}
-                                            {{ predio.nombre_propietario }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ predio.documento }}
                                             {{ predio.documento }}
                                         </td>
                                         <td class="px-6 py-4">
@@ -128,7 +126,6 @@
                         </td>
                         <td class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold">Dirección:</p>
-                            <p class="px-5 py-2 text-black dark:text-gray-400">{{ predio.direccion }}</p>
                             <p class="px-5 py-2 text-black dark:text-gray-400">{{ predio.direccion }}</p>
                         </td>
                         <td class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
@@ -180,15 +177,7 @@
                 </tbody>
             </table>
         </div>
-        <button type="button" @click="createRecibo"   class="flex justify-between space-x-3 items-center text-white bg-bluep hover:bg-blue-400  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 me-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700">
-                            <span>Imprimir liquidación predial</span>
-                            <svg class="fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 384 512"><path d="M14 2.2C22.5-1.7 32.5-.3 39.6 5.8L80 40.4 120.4 5.8c9-7.7 22.3-7.7 31.2 0L192 40.4 232.4 5.8c9-7.7 22.3-7.7 31.2 0L304 40.4 344.4 5.8c7.1-6.1 17.1-7.5 25.6-3.6s14 12.4 14 21.8V488c0 9.4-5.5 17.9-14 21.8s-18.5 2.5-25.6-3.6L304 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L192 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L80 471.6 39.6 506.2c-7.1 6.1-17.1 7.5-25.6 3.6S0 497.4 0 488V24C0 14.6 5.5 6.1 14 2.2zM96 144c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96zM80 352c0 8.8 7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96c-8.8 0-16 7.2-16 16zM96 240c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96z"/></svg>
-                        </button>
-                        <button type="button" @click="createEstadoCuenta" class="flex justify-between space-x-3 items-center text-white bg-bluep hover:bg-blue-400  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 me-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700">
-                            <span>Imprimir estado de cuenta</span>
-                            <svg class="fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM80 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm16 96H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm0 32v64H288V256H96zM240 416h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
-                        </button>
-        <div v-if="predio.length > 0">
+        <div v-if="predio != '' && vigencias.length > 0">
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px lg:text-sm md:text-2xl font-medium text-center" id="options-tab" data-tabs-toggle="#options-tab-content" role="tablist">
                     <li class="me-2" role="presentation">
@@ -221,6 +210,7 @@
                         </button>
                     </div>
                     <div  class="mt-3 relative overflow-x-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
+                        {{ checkAll }}
                         <table  class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -234,27 +224,33 @@
                                         Vigencia
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Avaluo predial
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Tasa x mil
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         Predial
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Intereses Predial
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Desc. Intereses
+                                        Descuentos predial
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Total Intereses Predial
                                     </th>
-                                    <th v-if="predio.vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
+                                    <th v-if="vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
                                         Sobretasa Bomberil
                                     </th>
-                                    <th v-if="predio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
+                                    <th v-if="vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
                                         Sobretasa Ambiental
                                     </th>
-                                    <th v-if="predio.vigencias[0].estatuto.bomberil || predio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
+                                    <th v-if="vigencias[0].estatuto.bomberil || vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
                                         Sobretasa intereses
                                     </th>
-                                    <th v-if="predio.vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3">
+                                    <th v-if="vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3">
                                         Alumbrado
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -266,7 +262,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="vigencia in predio.vigencias" :key="vigencia.vigencia"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr v-for="vigencia in vigencias" :key="vigencia.vigencia"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="w-4 p-4">
                                         <div class="flex items-center">
                                             <input id="checkbox-table-search-3" type="checkbox" v-model="vigencia.isSelected" @click="updateCheckAll" checked  class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -277,98 +273,102 @@
                                         {{ vigencia.vigencia }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ formatNumber(vigencia.valor_predial) }}
+                                        {{ formatNumber(vigencia.valor_avaluo) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ vigencia.tasa_por_mil }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ formatNumber(vigencia.predial) }}
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ formatNumber(vigencia.predial_intereses) }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ formatNumber(vigencia.descuento_intereses) }}
+                                        {{ formatNumber(vigencia.predial_descuento_intereses) }}
                                     </td>
                                     <td class="px-6 py-4">
                                         {{formatNumber(vigencia.total_intereses)}}
                                     </td>
-                                    <td v-if="predio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
+                                    <td v-if="vigencias[0].estatuto.bomberil" class="px-6 py-4">
                                         {{ formatNumber(vigencia.bomberil) }}
                                     </td>
-                                    <td v-if="predio.vigencias[0].estatuto.ambiental" class="px-6 py-4">
+                                    <td v-if="vigencias[0].estatuto.ambiental" class="px-6 py-4">
                                         {{ formatNumber(vigencia.ambiental) }}
                                     </td>
-                                    <td v-if="predio.vigencias[0].estatuto.ambiental || predio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
+                                    <td v-if="vigencias[0].estatuto.ambiental || vigencias[0].estatuto.bomberil" class="px-6 py-4">
                                         {{ formatNumber(vigencia.ambiental_intereses + vigencia.bomberil_intereses) }}
                                     </td>
-                                    <td v-if="predio.vigencias[0].estatuto.alumbrado" class="px-6 py-4">
+                                    <td v-if="vigencias[0].estatuto.alumbrado" class="px-6 py-4">
                                         {{ formatNumber(vigencia.alumbrado) }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ formatNumber(vigencia.total_descuentos) }}
+                                        {{ formatNumber(vigencia.descuento_intereses) }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ formatNumber(vigencia.total) }}
+                                        {{ formatNumber(vigencia.total_liquidacion) }}
+                                    </td>
+                                </tr>
+                                <tr class="font-bold text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <td></td>
+                                    <td colspan="2" class="px-2 py-4 text-bold">
+                                        Total avaluo
+                                    </td>
+                                    <td class="px-2 py-4 text-bold">
+                                        Total Predial
+                                    </td>
+                                    <td colspan="2" v-if="vigencias[0].estatuto.bomberil" class="px-2 py-4 text-bold ">
+                                        Total Bomberil
+                                    </td>
+
+                                    <td  colspan="2" v-if="vigencias[0].estatuto.ambiental" class="px-2 py-4 text-bold ">
+                                        Total Ambiental
+                                    </td>
+
+                                    <td  colspan="2" v-if="vigencias[0].estatuto.alumbrado" class="px-2 py-4 text-bold ">
+                                        Total Alumbrado
+                                    </td>
+
+                                    <td colspan="2"  class="px-2 py-4 text-bold ">
+                                        Total Intereses
+                                    </td>
+
+                                    <td   class="px-2 py-4 text-bold ">
+                                        Total Descuento
+                                    </td>
+                                    <td colspan="2" class="px-2 py-4 text-bold dark:text-white">
+                                        Total Liquidación
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-200 dark:border-gray-700">
+                                    <td></td>
+                                    <td colspan="2" class="px-2 py-4 dark:bg-gray-800">
+                                        <p class="px-5 py-2">{{ formatNumber(getTotal().total_avaluo) }}</p>
+                                    </td>
+                                    <td class="px-2 py-4 dark:bg-gray-800">
+                                        <p class="px-5 py-2">{{ formatNumber(getTotal().predial) }}</p>
+                                    </td>
+                                    <td colspan="2" v-if="predio !='' && vigencias[0].estatuto.bomberil" class="px-2 py-4 dark:bg-gray-800">
+                                        <p class="px-5 py-2">{{ formatNumber(getTotal().bomberil) }}</p>
+                                    </td>
+                                    <td colspan="2" v-if="predio !='' && vigencias[0].estatuto.ambiental" class="px-2 py-4 dark:bg-gray-800">
+                                        <p class="px-5 py-2">{{ formatNumber(getTotal().ambiental) }}</p>
+                                    </td>
+                                    <td colspan="2" v-if="predio !='' && vigencias[0].estatuto.alumbrado" class="px-2 py-4 dark:bg-gray-800">
+                                        <p class="px-5 py-2">{{ formatNumber(getTotal().alumbrado) }}</p>
+                                    </td>
+                                    <td colspan="2" class="px-2 py-4 dark:bg-gray-800">
+                                        <p class="px-5 py-2 ">{{ formatNumber(getTotal().intereses) }}</p>
+                                    </td>
+                                    <td class="px-2 py-4  dark:bg-gray-800">
+                                        <p class="px-5 py-2">{{ formatNumber(getTotal().descuentos) }}</p>
+                                    </td>
+                                    <td colspan="2" class="px-2 py-4 font-bold dark:bg-gray-800">
+                                        <p class="px-5 py-2 dark:text-white">{{ formatNumber(getTotal().liquidacion) }}</p>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr class="border-b border-gray-200 dark:border-gray-700">
-                                <th  class="px-2 py-4 text-bold">
-                                    Total Predial
-                                </th>
-
-                                <th  v-if="predio.vigencias[0].estatuto.bomberil" class="px-2 py-4 text-bold ">
-                                    Total Bomberil
-                                </th>
-
-                                <th  v-if="predio.vigencias[0].estatuto.ambiental" class="px-2 py-4 text-bold ">
-                                    Total Ambiental
-                                </th>
-
-                                <th  v-if="predio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 text-bold ">
-                                    Total Alumbrado
-                                </th>
-
-                                <th  class="px-2 py-4 text-bold ">
-                                    Total Intereses
-                                </th>
-
-                                <th  class="px-2 py-4 text-bold ">
-                                    Total Descuento
-                                </th>
-                                <th class="px-2 py-4 text-bold dark:text-white">
-                                    Total Liquidación
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-gray-200 dark:border-gray-700">
-
-                                <td class="px-2 py-4 dark:bg-gray-800">
-                                    <p class="px-5 py-2">{{ formatNumber(getTotal().predial) }}</p>
-                                </td>
-                                <td v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" class="px-2 py-4 dark:bg-gray-800">
-                                    <p class="px-5 py-2">{{ formatNumber(getTotal().bomberil) }}</p>
-                                </td>
-                                <td v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" class="px-2 py-4 dark:bg-gray-800">
-                                    <p class="px-5 py-2">{{ formatNumber(getTotal().ambiental) }}</p>
-                                </td>
-                                <td v-if="predio !='' && predio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 dark:bg-gray-800">
-                                    <p class="px-5 py-2">{{ formatNumber(getTotal().alumbrado) }}</p>
-                                </td>
-                                <td class="px-2 py-4 dark:bg-gray-800">
-                                    <p class="px-5 py-2 ">{{ formatNumber(getTotal().intereses) }}</p>
-                                </td>
-                                <td class="px-2 py-4  dark:bg-gray-800">
-                                    <p class="px-5 py-2">{{ formatNumber(getTotal().descuentos) }}</p>
-                                </td>
-                                <td class="px-2 py-4 font-bold dark:bg-gray-800">
-                                    <p class="px-5 py-2 dark:text-white">{{ formatNumber(getTotal().total) }}</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                     </div>
                 </div>
                 <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="recibos" role="tabpanel" aria-labelledby="recibos-tab">
@@ -468,8 +468,10 @@
     import axios from 'axios'
 
     const props = defineProps({ tenant: Object, predios: Object, predio: Object })
-    const isCheckAll = ref(true)
+    const isCheckAll = ref(true);
     let predio = props.predio
+    let vigencias = predio.liquidacion.vigencias;
+    console.log(predio.liquidacion.vigencias.length);
     function createEstadoCuenta() {
         predio.totales = getTotal();
         axios.post(route('public.estado_cuentas.store'), { data: predio })
@@ -505,14 +507,14 @@
     }
 
     const checkAll = computed(function(){
-        for (let i = 0; i < predio.vigencias.length; i++) {
-            predio.vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
+        for (let i = 0; i < vigencias.length; i++) {
+            vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
         }
     })
 
     function updateCheckAll(){
-        for (let i = 0; i < predio.vigencias.length; i++) {
-            if(predio.vigencias[i].isSelected == false){
+        for (let i = 0; i < vigencias.length; i++) {
+            if(vigencias[i].isSelected == false){
                 isCheckAll.value = false;
             }
         }
@@ -526,25 +528,29 @@
         let intereses = 0;
         let descuentos = 0;
         let predial = 0;
-        let total = 0;
+        let liquidacion = 0;
+        let avaluo = 0;
         let obj={
-                "bomberil":0,
-                "alumbrado":0,
-                "ambiental":0,
-                "intereses":0,
-                "descuentos":0,
-                "total":0,
-                "predial":0
+                "bomberil":bomberil,
+                "alumbrado":alumbrado,
+                "ambiental":ambiental,
+                "intereses":intereses,
+                "descuentos":descuentos,
+                "liquidacion":liquidacion,
+                "predial":predial,
+                "total_avaluo":avaluo
         };
-        if(predio.vigencias != "" && predio.vigencias.length>0){
-            for (let i = 0; i < predio.vigencias.length; i++) {
-                bomberil +=predio.vigencias[i].isSelected ? predio.vigencias[i].bomberil : 0;
-                alumbrado +=predio.vigencias[i].isSelected ? predio.vigencias[i].alumbrado : 0;
-                ambiental +=predio.vigencias[i].isSelected ? predio.vigencias[i].ambiental : 0;
-                intereses +=predio.vigencias[i].isSelected ? predio.vigencias[i].total_intereses : 0;
-                descuentos +=predio.vigencias[i].isSelected ? predio.vigencias[i].total_descuentos : 0;
-                total+=predio.vigencias[i].isSelected ? predio.vigencias[i].total : 0;
-                predial+=predio.vigencias[i].isSelected ? predio.vigencias[i].valor_predial : 0;
+        if(vigencias != "" && vigencias.length>0){
+            for (let i = 0; i < vigencias.length; i++) {
+                bomberil +=vigencias[i].isSelected ? vigencias[i].bomberil : 0;
+                alumbrado +=vigencias[i].isSelected ? vigencias[i].alumbrado : 0;
+                ambiental +=vigencias[i].isSelected ? vigencias[i].ambiental : 0;
+                intereses +=vigencias[i].isSelected ? vigencias[i].total_intereses : 0;
+                descuentos +=vigencias[i].isSelected ? vigencias[i].descuento_intereses : 0;
+                liquidacion+=vigencias[i].isSelected ? vigencias[i].total_liquidacion : 0;
+                predial+=vigencias[i].isSelected ? vigencias[i].valor_predial : 0;
+                avaluo+=vigencias[i].isSelected ? vigencias[i].valor_avaluo : 0;
+
             }
             obj={
                 "bomberil":bomberil,
@@ -553,7 +559,8 @@
                 "intereses":intereses,
                 "descuentos":descuentos,
                 "predial":predial,
-                "total":total
+                "liquidacion":liquidacion,
+                "total_avaluo":avaluo
             };
         }
         //objTotal = obj;
