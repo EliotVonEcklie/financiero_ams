@@ -507,11 +507,11 @@ function formatNumber(value){
 }
 
 const checkAll = computed(() => {
-    predio.vigencias.forEach(vigencia => vigencia.isSelected = isCheckAll.value)
+    vigencias.forEach(vigencia => vigencia.isSelected = isCheckAll.value)
 })
 
 function updateCheckAll() {
-    isCheckAll.value = predio.vigencias.every(vigencia => vigencia.isSelected)
+    isCheckAll.value = vigencias.every(vigencia => vigencia.isSelected)
     getTotal()
 }
 
