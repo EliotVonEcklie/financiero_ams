@@ -230,7 +230,7 @@
                     </td>
                     <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">Destino socioeconómico</p>
-                        <p>Habitacional</p>
+                        <p>{{ $estadoCuenta->data['destino_economico'] }}</p>
                     </td>
                 </tr>
             </table>

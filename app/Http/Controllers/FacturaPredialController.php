@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FacturaPredial;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Milon\Barcode\Facades\DNS1DFacade;
 
 class FacturaPredialController extends Controller
 {
@@ -17,6 +18,11 @@ class FacturaPredialController extends Controller
             'ip' => $request->ip(),
             'data' => $request->input('data')
         ]);
+
+        $data = $facturaPredial->data;
+        $data['barcode'] = DNS1DFacade::getBarcodePNG('4445645656', 'C39');
+        $facturaPredial->data = $data;
+        $facturaPredial->save();
 
         return response()->json(['id' => $facturaPredial->id]);
     }
