@@ -102,16 +102,7 @@ class Predio extends Model
     public static function show($id) {
         $predio = self::find($id);
 
-        $vigencias = [];
-
-        foreach ($predio->avaluos as $avaluo) {
-            if ($avaluo->tasa_por_mil !== -1) {
-                //$liquidacion = (new Liquidacion($avaluo))->toArray();
-                //array_push($vigencias, $liquidacion);
-            } else {
-                array_push($vigencias, ['vigencia' => $avaluo->vigencia, 'tasa_por_mil' => -1]);
-            }
-        }
+        $liquidacion = new Liquidacion($predio->avaluos);
 
         $latest_historial = $predio->latest_historial_predio();
         $destino_economico = $predio->latest_avaluo()->codigo_destino_economico->destino_economico === null ?
@@ -136,7 +127,7 @@ class Predio extends Model
             'destino_economico' => $destino_economico,
             'interes_vigente' => $interes_vigente !== null ? $interes_vigente->moratorio : 0,
             'descuento_vigente' => Descuento::getDescuentoIncentivo(),
-            'vigencias' => $vigencias
+            'liquidacion' => $liquidacion->toArray()
         ];
     }
 }

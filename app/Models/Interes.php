@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Calculations\RoundPesos;
+use App\Helpers\Round;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Interes extends Model
@@ -53,6 +53,6 @@ class Interes extends Model
             }
         }
 
-        return RoundPesos::round($total);
+        return Round::pesos($total);
     }
 }
