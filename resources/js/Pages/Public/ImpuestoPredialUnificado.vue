@@ -468,7 +468,7 @@ import axios from 'axios'
 const props = defineProps({ tenant: Object, predios: Object, predio: Object })
 const isCheckAll = ref(true)
 let predio = props.predio
-let vigencias = predio.liquidacion.vigencias ?? []
+let vigencias = predio.liquidacion === undefined ? [] : predio.liquidacion.vigencias
 
 function createEstadoCuenta() {
     predio.totales = getTotal();
@@ -486,11 +486,11 @@ function createRecibo() {
 }
 
 function search(evt) {
-    router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value })
+    router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
 }
 
 function show(predio_id) {
-    router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false })
+    router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id })
 }
 
 function formatNumber(value){
