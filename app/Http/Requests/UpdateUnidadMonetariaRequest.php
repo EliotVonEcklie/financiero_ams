@@ -23,7 +23,7 @@ class UpdateUnidadMonetariaRequest extends FormRequest
     {
         return [
             'toggle' => ['nullable', 'boolean'],
-            'tipo' => ['exclude_if:toggle,true', 'required', 'string', 'max:255'],
+            'nombre' => ['exclude_if:toggle,true', 'required', 'string', 'max:255'],
         ];
     }
 }
