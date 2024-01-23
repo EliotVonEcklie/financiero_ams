@@ -500,9 +500,9 @@ function formatNumber(value){
 
     if (number < 0 ) {
         number = Math.abs(number)
-        number = '-$' + new Intl.NumberFormat('de-DE').format(number)
+        number = '- $' + new Intl.NumberFormat('es-co').format(number)
     } else {
-        number = '$' + new Intl.NumberFormat('es-CO').format(number)
+        number = '$' + new Intl.NumberFormat('es-co').format(number)
     }
 
     return number
