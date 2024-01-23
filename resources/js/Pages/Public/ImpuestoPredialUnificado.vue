@@ -465,18 +465,18 @@ import { router } from '@inertiajs/vue3'
 import ModalPse from './Components/ModalPse.vue'
 import axios from 'axios'
 
-    const props = defineProps({ tenant: Object, predios: Object, predio: Object })
-    const isCheckAll = ref(true)
-    let predio = props.predio
-    let vigencias = predio != '' ? predio.liquidacion.vigencias : "";
+const props = defineProps({ tenant: Object, predios: Object, predio: Object })
+const isCheckAll = ref(true)
+let predio = props.predio
+let vigencias = predio.liquidacion.vigencias ?? []
 
-    function createEstadoCuenta() {
-        predio.totales = getTotal();
-        axios.post(route('public.estado_cuentas.store'), { data: predio })
-            .then((res) => {
-                window.open(route('public.estado_cuentas.show', { estado_cuenta: res.data.id }), '_blank')
-            })
-    }
+function createEstadoCuenta() {
+    predio.totales = getTotal();
+    axios.post(route('public.estado_cuentas.store'), { data: predio })
+    .then(res => {
+        window.open(route('public.estado_cuentas.show', { estado_cuenta: res.data.id }), '_blank')
+    })
+}
 
 function createRecibo() {
     axios.post(route('public.factura_predials.store'), { data: predio })
@@ -506,64 +506,40 @@ function formatNumber(value){
     return number
 }
 
-    const checkAll = computed(function(){
-        for (let i = 0; i < vigencias.length; i++) {
-            vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
-        }
-    })
+const checkAll = computed(() => {
+    vigencias.forEach(vigencia => vigencia.isSelected = isCheckAll.value)
+})
 
-    function updateCheckAll(){
-        for (let i = 0; i < vigencias.length; i++) {
-            if(vigencias[i].isSelected == false){
-                isCheckAll.value = false;
-            }
-        }
-        getTotal();
+function updateCheckAll() {
+    isCheckAll.value = vigencias.every(vigencia => vigencia.isSelected)
+    getTotal()
+}
+
+function getTotal() {
+    let result = {
+        'bomberil': 0,
+        'alumbrado': 0,
+        'ambiental': 0,
+        'intereses': 0,
+        'descuentos': 0,
+        'liquidacion': 0,
+        'predial': 0,
+        'total_avaluo': 0
     }
 
-    function getTotal(){
-        let bomberil = 0;
-        let alumbrado = 0;
-        let ambiental = 0;
-        let intereses = 0;
-        let descuentos = 0;
-        let predial = 0;
-        let liquidacion = 0;
-        let avaluo = 0;
-        let obj={
-                "bomberil":bomberil,
-                "alumbrado":alumbrado,
-                "ambiental":ambiental,
-                "intereses":intereses,
-                "descuentos":descuentos,
-                "liquidacion":liquidacion,
-                "predial":predial,
-                "total_avaluo":avaluo
-        };
-        if(vigencias != "" && vigencias.length>0){
-            for (let i = 0; i < vigencias.length; i++) {
-                bomberil +=vigencias[i].isSelected ? vigencias[i].bomberil : 0;
-                alumbrado +=vigencias[i].isSelected ? vigencias[i].alumbrado : 0;
-                ambiental +=vigencias[i].isSelected ? vigencias[i].ambiental : 0;
-                intereses +=vigencias[i].isSelected ? vigencias[i].total_intereses : 0;
-                descuentos +=vigencias[i].isSelected ? vigencias[i].descuento_intereses : 0;
-                liquidacion+=vigencias[i].isSelected ? vigencias[i].total_liquidacion : 0;
-                predial+=vigencias[i].isSelected ? vigencias[i].valor_predial : 0;
-                avaluo+=vigencias[i].isSelected ? vigencias[i].valor_avaluo : 0;
-
-            }
-            obj={
-                "bomberil":bomberil,
-                "alumbrado":alumbrado,
-                "ambiental":ambiental,
-                "intereses":intereses,
-                "descuentos":descuentos,
-                "predial":predial,
-                "liquidacion":liquidacion,
-                "total_avaluo":avaluo
-            };
-        }
-        //objTotal = obj;
-        return obj;
+    if(vigencias.length > 0) {
+        vigencias.filter(vigencia => vigencia.isSelected).forEach(vigencia => {
+            result.bomberil += vigencia.bomberil
+            result.alumbrado += vigencia.alumbrado
+            result.ambiental += vigencia.ambiental
+            result.intereses += vigencia.total_intereses
+            result.descuentos += vigencia.descuento_intereses
+            result.liquidacion += vigencia.total_liquidacion
+            result.predial += vigencia.valor_predial
+            result.total_avaluo += vigencia.valor_avaluo
+        })
     }
+
+    return result
+}
 </script>
