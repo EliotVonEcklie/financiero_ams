@@ -193,32 +193,44 @@
             <table class="border-none">
 
                 <tr class="bg-primary  p-1">
-                    <th class="fs-0">Año</th>
-                    <th class="fs-0">Concepto</th>
+                    <th class="fs-0">Vigencia</th>
                     <th class="fs-0">Avaluo</th>
-                    <th class="fs-0">Tasa</th>
-                    <th class="fs-0">Impuesto</th>
-                    <th class="fs-0">Intereses</th>
-                    <th class="fs-0">Sobretasa</th>
-                    <th class="fs-0">Intereses/Sobretasa</th>
-                    <th class="fs-0">Bomberos</th>
-                    <th class="fs-0">Descuento</th>
-                    <th class="fs-0">Valor total</th>
+                    <th class="fs-0">Tasa x Mil</th>
+                    <th class="fs-0">Predial</th>
+                    <th class="fs-0">Intereses Predial</th>
+                    <th class="fs-0">Descuento intereses</th>
+                    <th class="fs-0">Total intereses predial</th>
+                    <th class="fs-0">Sobretasa bomberil</th>
+                    <th class="fs-0">Sobretasa ambiental</th>
+                    <th class="fs-0">Sobretasa intereses</th>
+                    <th class="fs-0">Alumbrado</th>
+                    <th class="fs-0">Total</th>
                 </tr>
                 <tbody>
-                    <tr>
-                        <td  class="fs-1">2013</td>
-                        <td  class="fs-1">Predial</td>
-                        <td class="fs-1">2.287.000,00</td>
-                        <td  class="fs-1">8 x mil</td>
-                        <td  class="fs-1">18.296,00</td>
-                        <td class="fs-1">55.510,00</td>
-                        <td  class="fs-1">2.744,00</td>
-                        <td  class="fs-1">8.783,00</td>
-                        <td class="fs-1">0,00</td>
-                        <td  class="fs-1">0,00</td>
-                        <td class="fs-1">85.333,00</td>
-                    </tr>
+                    @php
+                        $total=0;
+                    @endphp
+                    @foreach ($facturaPredial->data['liquidacion']['vigencias'] as $vigencia)
+                        @if ($vigencia['isSelected'])
+                        @php
+                            $total +=$vigencia['total_liquidacion'];
+                        @endphp
+                        <tr>
+                            <td class="fs-0">{{ $vigencia['vigencia'] }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['valor_avaluo'],0,',','.')}} </td>
+                            <td class="fs-0">{{ $vigencia['tasa_por_mil'] }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['predial'],0,',','.')}} </td>
+                            <td class="fs-0">${{ number_format($vigencia['predial_intereses'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['total_intereses'],0,',','.') }}  </td>
+                            <td class="fs-0">${{ number_format($vigencia['descuento_intereses'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['bomberil'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['ambiental'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['bomberil_intereses']+$vigencia['ambiental_intereses'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['alumbrado'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($vigencia['total_liquidacion'],0,',','.') }}</td>
+                        </tr>
+                        @endif
+                    @endforeach
                     <tr ><td colspan="10" class="border-none"></td></tr>
                     <tr>
                         <td colspan="5" class="border-none"></td>
@@ -231,7 +243,7 @@
                         </td>
                         <td colspan="2" class="text-right">
                             <p class="fs-1 vertical-top fw-bold">Valor</p>
-                            <p>469.514,00</p>
+                            <p>{{ number_format($total,0,',','.') }}</p>
                         </td>
                     </tr>
                 </tbody>
