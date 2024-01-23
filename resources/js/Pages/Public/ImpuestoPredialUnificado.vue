@@ -33,7 +33,7 @@
                             </div>
                         </form>
 
-                        <div v-if ="predios.length > 0" class="mt-3 relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg">
+                        <div v-if="predios.length > 0" class="mt-3 relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg">
                             <table class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr class="text-center font-semibold py-3 text-black bg-gray-100 dark:bg-gray-700 dark:text-white">
@@ -81,10 +81,10 @@
                                             {{ predio.orden }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ showCharacters(predio.nombre_propietario) }}
+                                            {{ predio.nombre_propietario }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ showCharacters(predio.documento,0) }}
+                                            {{ predio.documento }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ predio.direccion }}
@@ -126,7 +126,7 @@
                         </td>
                         <td class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold">Dirección:</p>
-                            <p class="px-5 py-2 text-black dark:text-gray-400">{{ showCharacters(predio.direccion) }}</p>
+                            <p class="px-5 py-2 text-black dark:text-gray-400">{{ predio.direccion }}</p>
                         </td>
                         <td class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold">Avaluo vigente:</p>
@@ -139,11 +139,11 @@
                     <tr>
                         <td colspan="4" class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold">Nombre del propietario:</p>
-                            <p class="px-5 py-2 text-black dark:text-gray-400">{{ showCharacters(predio.nombre_propietario) }}</p>
+                            <p class="px-5 py-2 text-black dark:text-gray-400">{{ predio.nombre_propietario }}</p>
                         </td>
                         <td colspan="4" class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold">Documento:</p>
-                            <p class="px-5 py-2 text-black dark:text-gray-400">{{ showCharacters(predio.documento) }}</p>
+                            <p class="px-5 py-2 text-black dark:text-gray-400">{{ predio.documento }}</p>
                         </td>
                     </tr>
                     <tr class="bg-gray-200 border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
@@ -152,15 +152,15 @@
                     <tr class="border-b border-gray-200 dark:border-gray-700">
                         <td colspan="2" class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold">Área del terreno:</p>
-                            <p v-if="predio != ''" class="px-5 py-2 text-black dark:text-gray-400">{{ predio.hectareas+"Ha - "+predio.metros_cuadrados+" m²" }}</p>
+                            <p v-if="predio.hectareas && predio.metros_cuadrados" class="px-5 py-2 text-black dark:text-gray-400">{{ predio.hectareas + 'Ha - ' + predio.metros_cuadrados + ' m²' }}</p>
                         </td>
                         <td class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold">Área construida:</p>
-                            <p v-if="predio != ''" class="px-5 py-2 text-black dark:text-gray-400">{{ predio.area_construida+" m²" }}</p>
+                            <p v-if="predio.area_construida" class="px-5 py-2 text-black dark:text-gray-400">{{ predio.area_construida + ' m²' }}</p>
                         </td>
                         <td class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold">Tipo predio:</p>
-                            <p  class="px-5 py-2 text-black dark:text-gray-400">{{predio.predio_tipo }}</p>
+                            <p v-if="predio.predio_tipo" class="px-5 py-2 text-black dark:text-gray-400">{{ predio.predio_tipo }}</p>
                         </td>
                         <td  class="border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <p class="px-5 py-2 font-bold ">Destino socioeconómico:</p>
@@ -177,8 +177,7 @@
                 </tbody>
             </table>
         </div>
-        <div v-if="predio!=''">
-            {{ checkAll }}
+        <div v-if="predio.length > 0">
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px lg:text-sm md:text-2xl font-medium text-center" id="options-tab" data-tabs-toggle="#options-tab-content" role="tablist">
                     <li class="me-2" role="presentation">
@@ -235,16 +234,16 @@
                                     <th scope="col" class="px-6 py-3">
                                         Total Intereses Predial
                                     </th>
-                                    <th v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
+                                    <th v-if="predio.vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
                                         Sobretasa Bomberil
                                     </th>
-                                    <th v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
+                                    <th v-if="predio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
                                         Sobretasa Ambiental
                                     </th>
-                                    <th v-if="predio !='' && predio.vigencias[0].estatuto.bomberil || predio.vigencias[0].estatuto.ambiental " scope="col" class="px-6 py-3">
+                                    <th v-if="predio.vigencias[0].estatuto.bomberil || predio.vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
                                         Sobretasa intereses
                                     </th>
-                                    <th v-if="predio !='' && predio.vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3">
+                                    <th v-if="predio.vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3">
                                         Alumbrado
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -256,7 +255,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(vigencia,index) in predio.vigencias" :key="index"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr v-for="vigencia in predio.vigencias" :key="vigencia.vigencia"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="w-4 p-4">
                                         <div class="flex items-center">
                                             <input id="checkbox-table-search-3" type="checkbox" v-model="vigencia.isSelected" @click="updateCheckAll" checked  class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -278,16 +277,16 @@
                                     <td class="px-6 py-4">
                                         {{formatNumber(vigencia.total_intereses)}}
                                     </td>
-                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
+                                    <td v-if="predio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
                                         {{ formatNumber(vigencia.bomberil) }}
                                     </td>
-                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" class="px-6 py-4">
+                                    <td v-if="predio.vigencias[0].estatuto.ambiental" class="px-6 py-4">
                                         {{ formatNumber(vigencia.ambiental) }}
                                     </td>
-                                    <td v-if="predio !='' && (predio.vigencias[0].estatuto.ambiental || predio.vigencias[0].estatuto.bomberil)" class="px-6 py-4">
-                                        {{ formatNumber(vigencia.ambiental_intereses+vigencia.bomberil_intereses) }}
+                                    <td v-if="predio.vigencias[0].estatuto.ambiental || predio.vigencias[0].estatuto.bomberil" class="px-6 py-4">
+                                        {{ formatNumber(vigencia.ambiental_intereses + vigencia.bomberil_intereses) }}
                                     </td>
-                                    <td v-if="predio !='' && predio.vigencias[0].estatuto.alumbrado" class="px-6 py-4">
+                                    <td v-if="predio.vigencias[0].estatuto.alumbrado" class="px-6 py-4">
                                         {{ formatNumber(vigencia.alumbrado) }}
                                     </td>
                                     <td class="px-6 py-4">
@@ -308,15 +307,15 @@
                                     Total Predial
                                 </th>
 
-                                <th  v-if="predio !='' && predio.vigencias[0].estatuto.bomberil" class="px-2 py-4 text-bold ">
+                                <th  v-if="predio.vigencias[0].estatuto.bomberil" class="px-2 py-4 text-bold ">
                                     Total Bomberil
                                 </th>
 
-                                <th  v-if="predio !='' && predio.vigencias[0].estatuto.ambiental" class="px-2 py-4 text-bold ">
+                                <th  v-if="predio.vigencias[0].estatuto.ambiental" class="px-2 py-4 text-bold ">
                                     Total Ambiental
                                 </th>
 
-                                <th  v-if="predio !='' && predio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 text-bold ">
+                                <th  v-if="predio.vigencias[0].estatuto.alumbrado" class="px-2 py-4 text-bold ">
                                     Total Alumbrado
                                 </th>
 
@@ -452,16 +451,14 @@
 
 <script setup>
     import Layout from './Layout.vue'
-    import { router } from '@inertiajs/vue3';
-    import ModalPse from './Components/ModalPse.vue';
-    import {ref,reactive,computed} from 'vue';
+    import { ref, computed } from 'vue'
+    import { router } from '@inertiajs/vue3'
+    import ModalPse from './Components/ModalPse.vue'
     import axios from 'axios'
 
-    const props = defineProps({ tenant: Object, predios: Object, predio: Object });
-    const emits = defineEmits(['getTenantOb']);
-
-    let predio= props.predio;
-    let isCheckAll = ref(true);
+    const props = defineProps({ tenant: Object, predios: Object, predio: Object })
+    const isCheckAll = ref(true)
+    let predio = props.predio
 
     function createEstadoCuenta() {
         predio.totales = getTotal();
@@ -471,13 +468,14 @@
             })
     }
 
-
     function search(evt) {
         router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
     }
+
     function show(predio_id) {
-        router.get(route('public.impuesto_predial_unificado'),{predio_id: predio_id,},{preserveState: false});
+        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false })
     }
+
     function formatNumber(value){
         let number= isNaN(value) ? 0 : value;
 
@@ -489,11 +487,13 @@
         }
         return number
     }
+
     const checkAll = computed(function(){
         for (let i = 0; i < predio.vigencias.length; i++) {
             predio.vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
         }
-    });
+    })
+
     function updateCheckAll(){
         for (let i = 0; i < predio.vigencias.length; i++) {
             if(predio.vigencias[i].isSelected == false){
@@ -502,6 +502,7 @@
         }
         getTotal();
     }
+
     function getTotal(){
         let bomberil = 0;
         let alumbrado = 0;
@@ -541,15 +542,5 @@
         }
         //objTotal = obj;
         return obj;
-    }
-    function showCharacters(string,end = 2){
-        let result ="";
-        if(string != undefined){
-            result = string.substring(0,end)+'*'.repeat(string.length - end);
-        }
-        return result;
-    }
-    function getTenant(){
-        emits('getTenantOb',props);
     }
 </script>

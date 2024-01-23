@@ -5,11 +5,24 @@ namespace App\Helpers;
 class Censor
 {
     public static function str($string, $uncensoredChars = 2) {
-        $uncensoredPart = mb_substr($string, 0, $uncensoredChars);
-        $censoredPart = mb_substr($string, $uncensoredChars);
+        if ($uncensoredChars > strlen($string)) {
+            return $string;
+        }
 
-        $censoredPart = preg_replace('/[a-zA-Z0-9]/', '*', $censoredPart);
+        if ($uncensoredChars > 0) {
+            $uncensoredPart = mb_substr($string, 0, $uncensoredChars);
+            $censoredPart = mb_substr($string, $uncensoredChars);
 
-        return $uncensoredPart . $censoredPart;
+            $censoredPart = preg_replace('/[a-zA-Z0-9]/', '*', $censoredPart);
+
+            return $uncensoredPart . $censoredPart;
+        } else {
+            $uncensoredPart = mb_substr($string, $uncensoredChars);
+            $censoredPart = mb_substr($string, 0, strlen($string) - $uncensoredChars);
+
+            $censoredPart = preg_replace('/[a-zA-Z0-9]/', '*', $censoredPart);
+
+            return $censoredPart . $uncensoredPart;
+        }
     }
 }

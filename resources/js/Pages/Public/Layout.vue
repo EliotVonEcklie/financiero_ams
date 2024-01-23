@@ -214,7 +214,7 @@ const activeTab = ref('')
 const login = ref(false)
 const mobileNav = ref(false)
 
-const img = 'data:image/png;base64,' + tenant.imagen
+const img = 'data:image/png;base64,' + props.tenant.imagen
 
 function showModal(id) {
     new Modal(document.getElementById(id), {
