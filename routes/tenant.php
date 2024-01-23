@@ -6,6 +6,7 @@ use App\Http\Controllers\EstadoCuentaController;
 use App\Http\Controllers\EstatutoController;
 use App\Http\Controllers\EstratificacionController;
 use App\Http\Controllers\InteresController;
+use App\Http\Controllers\LiquidacionPredialController;
 use App\Http\Controllers\PredioController;
 use App\Http\Controllers\PredioEstratoController;
 use App\Http\Controllers\UploadIgacController;
@@ -114,8 +115,8 @@ Route::middleware([
         Route::get('estado_cuentas_view/{estado_cuenta}', function (EstadoCuenta $estadoCuenta) {
             return view('pdf.estado_cuenta', ['estadoCuenta' => $estadoCuenta]);
         });
-        Route::resource('liquidacion_predial',LiquidacionPredialController::class)->only(['show']);
 
+        Route::get('liquidacion_predial',[LiquidacionPredialController::class, 'showPdf']);
         Route::get('/predio', [PredioController::class, 'show'])->name('predio');
     });
 });

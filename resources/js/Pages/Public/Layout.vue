@@ -122,8 +122,7 @@
     <main class="mb-8 container mx-auto">
         <slot :login ="login" :showModal="showModal" :hideModal="hideModal" />
     </main>
-
-    <footer class="bg-gray-100 dark:bg-gray-900 h-50">
+    <footer class="bg-gray-100 dark:bg-gray-900 min-h-1/2">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8 lg:flex lg:items-center justify-between lg:flex-row md:flex-col">
             <div class="mb-6">
                 <Link :href="route('public.index')" class="flex items-center md:justify-center">

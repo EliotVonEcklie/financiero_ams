@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -95,6 +94,10 @@
             .border-none{
                 border: none
             }
+            .border-dotted{
+                border:none;
+                border-top: 2px dashed black;
+            }
             .bg-primary{
                 background: #b5d8fc;
             }
@@ -121,7 +124,7 @@
                 bottom: 0;
                 left: 0px;
                 right: 0px;
-                height: 120px;
+                height: 60px;
                 width:100vw;
             }
         </style>
@@ -140,156 +143,155 @@
                         <p>NIT: {{ tenant()->nit }}</p>
                         <p>{{ tenant()->entidad }}</p>
                     </td>
-                    <td class="bg-primary w-33 fs-3 fw-bold text-center">No. Estado de cuenta</td>
+                    <td class="bg-primary w-33 fs-3 fw-bold text-center">No. de liquidación</td>
                 </tr>
                 <tr>
-                    <td class="text-center">{{ $estadoCuenta->id }}</td>
+                    <td class="text-center">123</td>
                 </tr>
             </table>
         </header>
         <main>
             <table class="border-none">
                 <tr>
-                    <td colspan="10" class="border-none bg-primary fw-bold text-center fs-3">Estado de cuenta predial unificado</td>
+                    <td colspan="10" class="border-none bg-primary fw-bold text-center fs-3">Recibo de cobro impuesto predial unificado</td>
                 </tr>
                 <tr><td class="border-none" colspan="10"></td></tr>
             </table>
             <table>
-                <tr class="bg-primary ">
-                    <td colspan="6" class="fw-bold">A. INFORMACIÓN DEL PREDIO</td>
-                </tr>
                 <tr>
-                    <td colspan="">
+                    <td >
                         <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
-                        <p>{{ $estadoCuenta->data['codigo_catastro'] }}</p>
+                        <p>0001000000010001000000000</p>
                     </td>
-                    <td colspan="">
-                        <p class="fs-1 vertical-top fw-bold">Total</p>
-                        <p>{{ $estadoCuenta->data['total'] }}</p>
-                    </td>
-                    <td colspan="">
-                        <p class="fs-1 vertical-top fw-bold">Orden</p>
-                        <p>{{ $estadoCuenta->data['orden'] }}</p>
+                    <td colspan="3">
+                        <p class="fs-1 vertical-top fw-bold">Dirección</p>
+                        <p>EL JARDIN</p>
                     </td>
                     <td colspan="2">
-                        <p class="fs-1 vertical-top fw-bold">Dirección del predio</p>
-                        <p>{{ $estadoCuenta->data['direccion'] }}</p>
+                        <p class="fs-1 vertical-top fw-bold">Vereda</p>
+                        <p>vereda</p>
                     </td>
-                    <td colspan="">
-                        <p class="fs-1 vertical-top fw-bold">Avaluo vigente</p>
-                        <p>${{ number_format($estadoCuenta->data['valor_avaluo'], 2) }}</p>
-                    </td>
-                </tr>
-                <tr class="bg-primary">
-                    <td colspan="6" class="fw-bold">B. IDENTIFICACIÓN DEL SUJETO PASIVO DEL IMPUESTO PREDIAL UNIFICADO</td>
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td>
                         <p class="fs-1 vertical-top fw-bold">Nombres y apellidos</p>
-                        <p>{{ showCharacters($estadoCuenta->data['nombre_propietario']) }}</p>
+                        <p>AN**************************</p>
                     </td>
-                    <td colspan="3">
+                    <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">Identificación</p>
-                        <p>{{ showCharacters($estadoCuenta->data['documento'],0) }}</p>
+                        <p>********</p>
                     </td>
-                </tr>
-                <tr class="bg-primary">
-                    <td colspan="3" class="fw-bold">C. INFORMACIÓN SOBRE ÁREA DEL PREDIO</td>
-                    <td colspan="3" class="fw-bold">D. CLASIFICACIÓN DEL PREDIO</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
+                    <td>
                         <p class="fs-1 vertical-top fw-bold fw-bold">Área del terreno </p>
-                        <p>{{ $estadoCuenta->data['hectareas'] }} Ha - {{ $estadoCuenta->data['metros_cuadrados'] }} m2</p>
-                    </td>
-                    <td>
-                        <p class="fs-1 vertical-top fw-bold">Área construida</p>
-                        <p>{{ $estadoCuenta->data['area_construida'] }} m2</p>
-                    </td>
-                    <td>
-                        <p class="fs-1 vertical-top fw-bold">Tipo de predio</p>
-                        <p> {{ $estadoCuenta->data['predio_tipo'] }}</p>
+                        <p>15 Ha - 2100 m2</p>
                     </td>
                     <td colspan="2">
-                        <p class="fs-1 vertical-top fw-bold">Destino socioeconómico</p>
-                        <p>Habitacional</p>
+                        <p class="fs-1 vertical-top fw-bold">Área construida</p>
+                        <p>198 m2</p>
                     </td>
                 </tr>
             </table>
             <table class="border-none">
-                <tr>
-                    <td colspan="10" class="border-none bg-primary fw-bold text-center fs-3">Estado financiero</td>
-                </tr>
                 <tr><td class="border-none" colspan="10"></td></tr>
             </table>
-            <table>
+            <table class="border-none">
 
                 <tr class="bg-primary  p-1">
-                    <th class="fs-0">Vigencia</th>
-                    <th class="fs-0">Predial</th>
-                    <th class="fs-0">Tasa x Mil</th>
-                    <th class="fs-0">Intereses Predial</th>
-                    <th class="fs-0">Descuento intereses</th>
-                    <th class="fs-0">Total intereses predial</th>
-                    <th class="fs-0">Sobretasa bomberil</th>
-                    <th class="fs-0">Sobretasa ambiental</th>
-                    <th class="fs-0">Sobretasa intereses</th>
-                    <th class="fs-0">Alumbrado</th>
-                    <th class="fs-0">Descuentos</th>
-                    <th class="fs-0">Total</th>
-                </tr>
-                <tbody>
-
-
-                </tbody>
-            </table>
-            <table>
-                <tr class="bg-primary  p-1">
-                    <th class="fs-0 fw-bold">Total predial</th>
-                    <th class="fs-0 fw-bold">Total bomberil</th>
-                    <th class="fs-0 fw-bold">Total ambiental</th>
-                    <th class="fs-0 fw-bold">Total alumbrado</th>
-                    <th class="fs-0 fw-bold">Total intereses</th>
-                    <th class="fs-0 fw-bold">Total descuento</th>
-                    <th class="fs-0 fw-bold">Total liquidacion</th>
+                    <th class="fs-0">Año</th>
+                    <th class="fs-0">Concepto</th>
+                    <th class="fs-0">Avaluo</th>
+                    <th class="fs-0">Tasa</th>
+                    <th class="fs-0">Impuesto</th>
+                    <th class="fs-0">Intereses</th>
+                    <th class="fs-0">Sobretasa</th>
+                    <th class="fs-0">Intereses/Sobretasa</th>
+                    <th class="fs-0">Bomberos</th>
+                    <th class="fs-0">Descuento</th>
+                    <th class="fs-0">Valor total</th>
                 </tr>
                 <tbody>
                     <tr>
-
+                        <td  class="fs-1">2013</td>
+                        <td  class="fs-1">Predial</td>
+                        <td class="fs-1">2.287.000,00</td>
+                        <td  class="fs-1">8 x mil</td>
+                        <td  class="fs-1">18.296,00</td>
+                        <td class="fs-1">55.510,00</td>
+                        <td  class="fs-1">2.744,00</td>
+                        <td  class="fs-1">8.783,00</td>
+                        <td class="fs-1">0,00</td>
+                        <td  class="fs-1">0,00</td>
+                        <td class="fs-1">85.333,00</td>
+                    </tr>
+                    <tr ><td colspan="10" class="border-none"></td></tr>
+                    <tr>
+                        <td colspan="5" class="border-none"></td>
+                        <td colspan="2" class="fs-2 bg-primary fw-bold">
+                            Pague hasta
+                        </td>
+                        <td colspan="2" class="text-center">
+                            <p class="fs-1 vertical-top fw-bold">Fecha</p>
+                            <p>31/10/2023</p>
+                        </td>
+                        <td colspan="2" class="text-right">
+                            <p class="fs-1 vertical-top fw-bold">Valor</p>
+                            <p>469.514,00</p>
+                        </td>
                     </tr>
                 </tbody>
+            </table>
+            <table class="border-none">
+                <tr><td class="border-none" colspan="10"></td></tr>
+                <tr><td class="border-none" colspan="10"></td></tr>
+                <tr>
+                    <td class="border-none text-center " colspan="10">
+                        Contra la presente liquidacion procede el recurso de reconsideracion dentro de los dos (2) meses siguientes a su notificacion
+                    </td>
+                </tr>
+                <tr><td class="border-none text-center fw-bold" colspan="10">Copia contribuyente</td></tr>
+                <tr><td class="border-dotted" colspan="10"></td></tr>
+                <tr>
+                    <td colspan="10" class="border-none text-center">
+                        <p class="fs-1">{{ tenant()->nombre }}</p>
+                        <p>{{ tenant()->entidad }}</p>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td >
+                        <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
+                        <p>0001000000010001000000000</p>
+                    </td>
+                    <td colspan="3">
+                        <p class="fs-1 vertical-top fw-bold">Periodo facturado</p>
+                        <p>2013-2023</p>
+                    </td>
+                    <td colspan="2">
+                        <p class="fs-1 vertical-top fw-bold">No liquidación</p>
+                        <p>123</p>
+                    </td>
+                </tr>
             </table>
         </main>
         <footer>
             <table class="border-none">
                 <tr ><td colspan="10" class="border-none"></td></tr>
                 <tr>
-                    <td class="border-none">
-                        <p class="text-center">
-                            Señor contribuyente: La Alcaldía Municipal del {{ tenant()->nombre }} META apoyado en la modernización y depuración de la
-                            información existente, en caso de no ver algún pago que usted realizó, le solicitamos anexar los documentos correspondientes a
-                            pagos de vigencias anteriores para actualización de su estado de cuenta.
-                        </p>
-                    </td>
-                </tr>
-            </table>
-            <table class="border-none">
-                <tr ><td colspan="10" class="border-none"></td></tr>
-                <tr>
-                    <td colspan="10">
+                    <td colspan="10" class="border-none">
                         <p class="text-center fs-0">Dirección: {{ tenant()->direccion }} - teléfono: {{ tenant()->telefono }}</p>
                         <p class="text-center fs-0">Correo: {{ tenant()->correo }} - Sitio web: {{ tenant()->pagina }}</p>
                     </td>
                 </tr>
                 <tr >
                     <td class= "border-none">
-                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $estadoCuenta->created_at->format('Y-m-d H:i:s') }}</p>
+                        <p class="fs-0 text-start">Fecha y hora elaboración: </p>
                     </td>
                     <td class="border-none">
                         <p class="fs-0 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none" colspan="8">
-                        <p class="fs-0 text-right">Dirección IP: {{ $estadoCuenta->ip }}</p>
+                        <p class="fs-0 text-right">Dirección IP: </p>
                     </td>
                 </tr>
             </table>
