@@ -126,7 +126,7 @@ class Predio extends Model
             'predio_tipo' => $latest_historial->predio_tipo->nombre,
             'destino_economico' => $destino_economico,
             'interes_vigente' => $interes_vigente !== null ? $interes_vigente->moratorio : 0,
-            'descuento_vigente' => Descuento::getDescuentoIncentivo(),
+            'descuento_vigente' => $liquidacion->descuento_incentivo,
             'liquidacion' => $liquidacion->toArray()
         ];
     }
