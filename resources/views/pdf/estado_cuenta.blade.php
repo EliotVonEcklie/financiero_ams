@@ -199,11 +199,11 @@
                 <tr>
                     <td colspan="3">
                         <p class="fs-1 vertical-top fw-bold">Nombres y apellidos</p>
-                        <p>{{ showCharacters($estadoCuenta->data['nombre_propietario']) }}</p>
+                        <p>{{ $estadoCuenta->data['nombre_propietario'] }}</p>
                     </td>
                     <td colspan="3">
                         <p class="fs-1 vertical-top fw-bold">Identificación</p>
-                        <p>{{ showCharacters($estadoCuenta->data['documento'],0) }}</p>
+                        <p>{{ $estadoCuenta->data['documento'] }}</p>
                     </td>
                 </tr>
                 <tr class="bg-primary">
