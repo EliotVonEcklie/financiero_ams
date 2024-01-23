@@ -461,102 +461,84 @@
 </template>
 
 <script setup>
-    import Layout from './Layout.vue'
-    import { ref, computed } from 'vue'
-    import { router } from '@inertiajs/vue3'
-    import ModalPse from './Components/ModalPse.vue'
-    import axios from 'axios'
+import Layout from './Layout.vue'
+import { ref, computed } from 'vue'
+import { router } from '@inertiajs/vue3'
+import ModalPse from './Components/ModalPse.vue'
+import axios from 'axios'
 
-    const props = defineProps({ tenant: Object, predios: Object, predio: Object })
-    const isCheckAll = ref(true)
-    let predio = props.predio
-    function createEstadoCuenta() {
-        predio.totales = getTotal();
-        axios.post(route('public.estado_cuentas.store'), { data: predio })
-            .then((res) => {
-                window.open(route('public.estado_cuentas.show', { estado_cuenta: res.data.id }), '_blank')
-            })
-    }
+const props = defineProps({ tenant: Object, predios: Object, predio: Object })
+const isCheckAll = ref(true)
 
-    function createRecibo(){
-        axios.post(route('public.factura_predials.store'),{data:predio}).then(function(res){
-            window.open(route('public.factura_predials.show',{factura_predial:res.data.id}),'_blank');
-        });
-    }
+let predio = props.predio
 
-    function search(evt) {
-        router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value }, { preserveState: true })
-    }
-
-    function show(predio_id) {
-        router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false })
-    }
-
-    function formatNumber(value){
-        let number= isNaN(value) ? 0 : value;
-
-        if(number < 0 ){
-            number = Math.abs(number);
-            number = '-$'+ new Intl.NumberFormat('de-DE').format(number);
-        }else{
-            number ='$'+new Intl.NumberFormat('de-DE').format(number);
-        }
-        return number
-    }
-
-    const checkAll = computed(function(){
-        for (let i = 0; i < predio.vigencias.length; i++) {
-            predio.vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
-        }
+function createEstadoCuenta() {
+    predio.totales = getTotal()
+    axios.post(route('public.estado_cuentas.store'), { data: predio })
+    .then(res => {
+        window.open(route('public.estado_cuentas.show', { estado_cuenta: res.data.id }), '_blank')
     })
+}
 
-    function updateCheckAll(){
-        for (let i = 0; i < predio.vigencias.length; i++) {
-            if(predio.vigencias[i].isSelected == false){
-                isCheckAll.value = false;
-            }
-        }
-        getTotal();
+function createRecibo() {
+    axios.post(route('public.factura_predials.store'), { data: predio })
+    .then(res => {
+        window.open(route('public.factura_predials.show', { factura_predial: res.data.id }), '_blank')
+    })
+}
+
+function search(evt) {
+    router.get(route('public.impuesto_predial_unificado'), { search: evt.target.value })
+}
+
+function show(predio_id) {
+    router.get(route('public.impuesto_predial_unificado'), { predio_id: predio_id }, { preserveState: false })
+}
+
+function formatNumber(value){
+    let number = isNaN(value) ? 0 : value
+
+    if (number < 0 ) {
+        number = Math.abs(number)
+        number = '-$' + new Intl.NumberFormat('de-DE').format(number)
+    } else {
+        number = '$' + new Intl.NumberFormat('es-CO').format(number)
     }
 
-    function getTotal(){
-        let bomberil = 0;
-        let alumbrado = 0;
-        let ambiental = 0;
-        let intereses = 0;
-        let descuentos = 0;
-        let predial = 0;
-        let total = 0;
-        let obj={
-                "bomberil":0,
-                "alumbrado":0,
-                "ambiental":0,
-                "intereses":0,
-                "descuentos":0,
-                "total":0,
-                "predial":0
-        };
-        if(predio.vigencias != "" && predio.vigencias.length>0){
-            for (let i = 0; i < predio.vigencias.length; i++) {
-                bomberil +=predio.vigencias[i].isSelected ? predio.vigencias[i].bomberil : 0;
-                alumbrado +=predio.vigencias[i].isSelected ? predio.vigencias[i].alumbrado : 0;
-                ambiental +=predio.vigencias[i].isSelected ? predio.vigencias[i].ambiental : 0;
-                intereses +=predio.vigencias[i].isSelected ? predio.vigencias[i].total_intereses : 0;
-                descuentos +=predio.vigencias[i].isSelected ? predio.vigencias[i].total_descuentos : 0;
-                total+=predio.vigencias[i].isSelected ? predio.vigencias[i].total : 0;
-                predial+=predio.vigencias[i].isSelected ? predio.vigencias[i].valor_predial : 0;
-            }
-            obj={
-                "bomberil":bomberil,
-                "alumbrado":alumbrado,
-                "ambiental":ambiental,
-                "intereses":intereses,
-                "descuentos":descuentos,
-                "predial":predial,
-                "total":total
-            };
-        }
-        //objTotal = obj;
-        return obj;
+    return number
+}
+
+const checkAll = computed(function(){
+    predio.vigencias.forEach(vigencia => vigencia.isSelected = isCheckAll.value)
+})
+
+function updateCheckAll() {
+    isCheckAll.value = predio.vigencias.every(vigencia => vigencia.isSelected)
+}
+
+function getTotal() {
+    let result = {
+        'bomberil': 0,
+        'alumbrado': 0,
+        'ambiental': 0,
+        'intereses': 0,
+        'descuentos': 0,
+        'total': 0,
+        'predial': 0
     }
+
+    if (predio.vigencias) {
+        predio.vigencias.filter(vigencia => vigencia.isSelected).forEach(vigencia => {
+            result.bomberil += vigencia.bomberil
+            result.alumbrado += vigencia.alumbrado
+            result.ambiental += vigencia.ambiental
+            result.intereses += vigencia.total_intereses
+            result.descuentos += vigencia.total_descuentos
+            result.total += vigencia.total
+            result.predial += vigencia.valor_predial
+        })
+    }
+
+    return result
+}
 </script>

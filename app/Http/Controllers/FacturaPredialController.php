@@ -18,7 +18,7 @@ class FacturaPredialController extends Controller
 
         $facturaPredial = FacturaPredial::create([
             'ip' => $request->ip(),
-            'data' => array_merge($data,[
+            'data' => array_merge($data, [
                 'barcode' => DNS1DFacade::getBarcodePNG('4445645656' /* $data['barcode_id'] */, 'C39')
             ])
         ]);

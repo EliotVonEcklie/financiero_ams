@@ -10,4 +10,15 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'tenancy_db_name',
+        'tenancy_db_username',
+        'tenancy_db_password'
+    ];
 }
