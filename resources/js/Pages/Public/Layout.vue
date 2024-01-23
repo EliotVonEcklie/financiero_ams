@@ -1,6 +1,6 @@
 <template>
     <header>
-        <ModalRegistro :login="login" @showModal="showModal" @hideModal="hideModal"/>
+        <ModalRegistro :login="login" @showModal="showModal" @hideModal="hideModal" :tenant="tenant"/>
 
         <nav class="bg-white border-gray-200 dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-3">

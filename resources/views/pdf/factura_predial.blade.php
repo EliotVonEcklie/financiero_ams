@@ -13,6 +13,9 @@
                 margin-bottom:5px;
                 padding: 0;
             }
+            .m-0{
+                margin: 0;
+            }
             .t-1 {
                 color:#E05A10;
             }
@@ -124,7 +127,7 @@
                 bottom: 0;
                 left: 0px;
                 right: 0px;
-                height: 60px;
+                height: 30px;
                 width:100vw;
             }
         </style>
@@ -187,9 +190,6 @@
                 </tr>
             </table>
             <table class="border-none">
-                <tr><td class="border-none" colspan="10"></td></tr>
-            </table>
-            <table class="border-none">
 
                 <tr class="bg-primary  p-1">
                     <th class="fs-0">Vigencia</th>
@@ -250,7 +250,7 @@
             <table class="border-none">
                 <tr><td class="border-none" colspan="10"></td></tr>
                 <tr>
-                    <td class="border-none text-center " colspan="10">
+                    <td class="border-none text-center" colspan="10">
                         Contra la presente liquidacion procede el recurso de reconsideracion dentro de los dos (2) meses siguientes a su notificacion
                     </td>
                 </tr>
@@ -258,7 +258,7 @@
                 <tr><td class="border-dotted" colspan="10"></td></tr>
                 <tr>
                     <td colspan="10" class="border-none text-center">
-                        <p class="fs-1">{{ tenant()->nombre }}</p>
+                        <p class="fs-0">{{ tenant()->nombre }}</p>
                         <p class="fs-0">{{ tenant()->entidad }}</p>
                     </td>
                 </tr>
@@ -300,7 +300,7 @@
                 <tr><td class="border-dotted" colspan="10"></td></tr>
                 <tr>
                     <td colspan="10" class="border-none text-center">
-                        <p class="fs-1">{{ tenant()->nombre }}</p>
+                        <p class="fs-0">{{ tenant()->nombre }}</p>
                         <p class="fs-0">{{ tenant()->entidad }}</p>
                     </td>
                 </tr>
@@ -342,8 +342,8 @@
                 <tr ><td colspan="10" class="border-none"></td></tr>
                 <tr>
                     <td colspan="10" class="border-none">
-                        <p class="text-center fs-0">Dirección: {{ tenant()->direccion }} - teléfono: {{ tenant()->telefono }}</p>
-                        <p class="text-center fs-0">Correo: {{ tenant()->correo }} - Sitio web: {{ tenant()->pagina }}</p>
+                        <p class="text-center fs-0 m-0">Dirección: {{ tenant()->direccion }} - teléfono: {{ tenant()->telefono }}</p>
+                        <p class="text-center fs-0 m-0">Correo: {{ tenant()->correo }} - Sitio web: {{ tenant()->pagina }}</p>
                     </td>
                 </tr>
                 <tr >

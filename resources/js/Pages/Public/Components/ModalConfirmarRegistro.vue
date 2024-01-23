@@ -5,7 +5,7 @@
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <!-- Modal header -->
                 <div class="bg-bluep flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="lg:text-xl md:text-3xl font-semibold text-gray-900 dark:text-white">
+                    <h3 class="lg:text-xl md:text-3xl font-semibold text-white dark:text-white">
                         Estimado usuario
                     </h3>
                     <button type="button" class="bg-bluep text-white  bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" @click="hideModal('modalConfirmarRegistro')">
@@ -23,14 +23,14 @@
                     <hr>
                     <div class="flex justify-start items-center space-x-2">
                         <svg class="lg:w-10 lg:h-10 md:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#00f" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
-                        <p class=" text-gray-300 md:text-center">Recuerde tener a mano los datos necesarios para su inscripción como lo son cámara de comercio, RUT, cédula de ciudadanía, entre otros.</p>
+                        <p class=" text-gray-500 md:text-center">Recuerde tener a mano los datos necesarios para su inscripción como lo son cámara de comercio, RUT, cédula de ciudadanía, entre otros.</p>
                     </div>
                     <hr>
                     <div class="text-center mt-5 text-gray-500 dark:text-gray-400">
                         <p class="font-bold">Si está seguro de que ya está inscrito, puede comunicarse a nuestras líneas de atención.</p>
-                        <p >Teléfonos: 3124567890</p>
-                        <p>Email: hacienda@cabuyaro-meta.gov.co - alcaldia@cabuyaro-meta.gov.co</p>
-                        <p>Dirección: CARRERA 3 No. 13-37 BARRIO CABUYARO - META</p>
+                        <p >Teléfonos: {{ tenant.telefono }}</p>
+                        <p>Email: {{ tenant.correo }}</p>
+                        <p>Dirección: {{ tenant.direccion }} - META</p>
                     </div>
                 </div>
                 <div class="flex justify-end items-center space-x-2 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -45,5 +45,5 @@
 <script lang="ts" setup>
     import { Ref,ref} from 'vue';
 
-    const props = defineProps(['documento','hideModal']);
+    const props = defineProps(['documento','hideModal', 'tenant']);
 </script>

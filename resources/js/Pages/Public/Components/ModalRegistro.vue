@@ -1,5 +1,5 @@
 <template>
-    <ModalConfirmarRegistro ref="rModalConfirmarRegistro" :documento="intVerContribuyente" :hideModal="hideModal" />
+    <ModalConfirmarRegistro ref="rModalConfirmarRegistro" :documento="intVerContribuyente" :hideModal="hideModal" :tenant="tenant" />
 
     <div id="modalRegistro" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full lg:max-w-2xl md:max-w-4xl max-h-full">
@@ -122,7 +122,6 @@
 import { ref } from 'vue'
 import { FwbTab, FwbTabs } from 'flowbite-vue'
 import ModalConfirmarRegistro from './ModalConfirmarRegistro.vue'
-
 const rModalConfirmarRegistro = ref(null)
 
 const loading = ref(false)
@@ -133,7 +132,7 @@ const invalidPass = ref()
 const intVerContribuyente = ref(null)
 const intUsuario = ref(null)
 const strPass = ref("")
-const props = defineProps(['login'])
+const props = defineProps(['login', 'tenant']);
 const emits = defineEmits(['hideModal',"showModal"])
 let activetab = ref('iniciar')
 
@@ -174,6 +173,12 @@ function loginUser() {
     }
 }
 
+function showModal(tab){
+    emits('showModal',tab);
+}
+function hideModal(tab){
+    emits('hideModal',tab);
+}
 function changeTab(tab){
     activetab.value = tab;
 }
