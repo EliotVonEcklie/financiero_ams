@@ -146,7 +146,7 @@
                     <td class="bg-primary w-33 fs-3 fw-bold text-center">No. de liquidación</td>
                 </tr>
                 <tr>
-                    <td class="text-center">123</td>
+                    <td class="text-center">{{ $facturaPredial->id }}</td>
                 </tr>
             </table>
         </header>
@@ -159,35 +159,31 @@
             </table>
             <table>
                 <tr>
-                    <td >
+                    <td colspan="3" >
                         <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
-                        <p>0001000000010001000000000</p>
+                        <p>{{ $facturaPredial->data['codigo_catastro']}}</p>
                     </td>
-                    <td colspan="3">
+                    <td colspan="3" >
                         <p class="fs-1 vertical-top fw-bold">Dirección</p>
-                        <p>EL JARDIN</p>
-                    </td>
-                    <td colspan="2">
-                        <p class="fs-1 vertical-top fw-bold">Vereda</p>
-                        <p>vereda</p>
+                        <p>{{ $facturaPredial->data['direccion']}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <p class="fs-1 vertical-top fw-bold">Nombres y apellidos</p>
-                        <p>AN**************************</p>
+                        <p>{{ $facturaPredial->data['nombre_propietario']}}</p>
                     </td>
                     <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">Identificación</p>
-                        <p>********</p>
+                        <p>{{ $facturaPredial->data['documento']}}</p>
                     </td>
                     <td>
                         <p class="fs-1 vertical-top fw-bold fw-bold">Área del terreno </p>
-                        <p>15 Ha - 2100 m2</p>
+                        <p>{{ $facturaPredial->data['hectareas']}} Ha - {{ $facturaPredial->data['metros_cuadrados']}} m2</p>
                     </td>
                     <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">Área construida</p>
-                        <p>198 m2</p>
+                        <p>{{ $facturaPredial->data['area_construida']}} m2</p>
                     </td>
                 </tr>
             </table>
@@ -260,7 +256,7 @@
                 <tr>
                     <td >
                         <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
-                        <p>0001000000010001000000000</p>
+                        <p>{{ $facturaPredial->data['codigo_catastro'] }}</p>
                     </td>
                     <td colspan="3">
                         <p class="fs-1 vertical-top fw-bold">Periodo facturado</p>
@@ -268,14 +264,14 @@
                     </td>
                     <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">No liquidación</p>
-                        <p>123</p>
+                        <p>{{ $facturaPredial->id }}</p>
                     </td>
                 </tr>
                 <tr >
                     <td  class="border-none"></td>
                 </tr>
                 <tr>
-                    <td colspan="6" class="border-none text-center"><img src="data:image/png;base64,{{DNS1D::getBarcodePNG('4445645656', 'C39')}}" height="40" alt="barcode" /></td>
+                    <td colspan="6" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode'] }}" height="40" alt="barcode" /></td>
                 </tr>
                 <tr>
                     <td colspan="6" class="border-none text-center">
@@ -302,7 +298,7 @@
                 <tr>
                     <td >
                         <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
-                        <p>0001000000010001000000000</p>
+                        <p>{{ $facturaPredial->data['codigo_catastro'] }}</p>
                     </td>
                     <td colspan="3">
                         <p class="fs-1 vertical-top fw-bold">Periodo facturado</p>
@@ -310,14 +306,14 @@
                     </td>
                     <td colspan="2">
                         <p class="fs-1 vertical-top fw-bold">No liquidación</p>
-                        <p>123</p>
+                        <p>{{ $facturaPredial->id }}</p>
                     </td>
                 </tr>
                 <tr >
                     <td  class="border-none"></td>
                 </tr>
                 <tr>
-                    <td colspan="6" class="border-none text-center"><img src="data:image/png;base64,{{DNS1D::getBarcodePNG('4445645656', 'C39')}}" height="40" alt="barcode" /></td>
+                    <td colspan="6" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode'] }}" height="40" alt="barcode" /></td>
                 </tr>
                 <tr>
                     <td colspan="6" class="border-none text-center">
@@ -341,13 +337,13 @@
                 </tr>
                 <tr >
                     <td class= "border-none">
-                        <p class="fs-0 text-start">Fecha y hora elaboración: </p>
+                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $facturaPredial->created_at->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none">
                         <p class="fs-0 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none" colspan="8">
-                        <p class="fs-0 text-right">Dirección IP: </p>
+                        <p class="fs-0 text-right">Dirección IP: {{ $facturaPredial->ip }}</p>
                     </td>
                 </tr>
             </table>

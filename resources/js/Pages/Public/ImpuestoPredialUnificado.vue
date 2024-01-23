@@ -180,6 +180,14 @@
                 </tbody>
             </table>
         </div>
+        <button type="button" @click="createRecibo"   class="flex justify-between space-x-3 items-center text-white bg-bluep hover:bg-blue-400  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 me-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700">
+                            <span>Imprimir liquidación predial</span>
+                            <svg class="fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 384 512"><path d="M14 2.2C22.5-1.7 32.5-.3 39.6 5.8L80 40.4 120.4 5.8c9-7.7 22.3-7.7 31.2 0L192 40.4 232.4 5.8c9-7.7 22.3-7.7 31.2 0L304 40.4 344.4 5.8c7.1-6.1 17.1-7.5 25.6-3.6s14 12.4 14 21.8V488c0 9.4-5.5 17.9-14 21.8s-18.5 2.5-25.6-3.6L304 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L192 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L80 471.6 39.6 506.2c-7.1 6.1-17.1 7.5-25.6 3.6S0 497.4 0 488V24C0 14.6 5.5 6.1 14 2.2zM96 144c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96zM80 352c0 8.8 7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96c-8.8 0-16 7.2-16 16zM96 240c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96z"/></svg>
+                        </button>
+                        <button type="button" @click="createEstadoCuenta" class="flex justify-between space-x-3 items-center text-white bg-bluep hover:bg-blue-400  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 me-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700">
+                            <span>Imprimir estado de cuenta</span>
+                            <svg class="fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM80 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm16 96H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm0 32v64H288V256H96zM240 416h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
+                        </button>
         <div v-if="predio.length > 0">
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px lg:text-sm md:text-2xl font-medium text-center" id="options-tab" data-tabs-toggle="#options-tab-content" role="tablist">
@@ -462,7 +470,6 @@
     const props = defineProps({ tenant: Object, predios: Object, predio: Object })
     const isCheckAll = ref(true)
     let predio = props.predio
-
     function createEstadoCuenta() {
         predio.totales = getTotal();
         axios.post(route('public.estado_cuentas.store'), { data: predio })
@@ -472,8 +479,8 @@
     }
 
     function createRecibo(){
-        axios.post(route('public.estado_cuentas.store'),{data:predio}).then(function(res){
-            window.open(route('public.estado_cuentas.facturaLiquidacion',{estado_cuenta:res.data.id}),'_blank');
+        axios.post(route('public.factura_predials.store'),{data:predio}).then(function(res){
+            window.open(route('public.factura_predials.show',{factura_predial:res.data.id}),'_blank');
         });
     }
 
