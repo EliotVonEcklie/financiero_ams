@@ -468,7 +468,7 @@ import axios from 'axios'
     const props = defineProps({ tenant: Object, predios: Object, predio: Object })
     const isCheckAll = ref(true)
     let predio = props.predio
-    let vigencias = predio.liquidacion.vigencias
+    let vigencias = predio != '' ? predio.liquidacion.vigencias : "";
 
     function createEstadoCuenta() {
         predio.totales = getTotal();
@@ -507,14 +507,14 @@ function formatNumber(value){
 }
 
     const checkAll = computed(function(){
-        for (let i = 0; i < predio.vigencias.length; i++) {
-            predio.vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
+        for (let i = 0; i < vigencias.length; i++) {
+            vigencias[i]['isSelected'] = isCheckAll.value ? true : false;
         }
     })
 
     function updateCheckAll(){
-        for (let i = 0; i < predio.vigencias.length; i++) {
-            if(predio.vigencias[i].isSelected == false){
+        for (let i = 0; i < vigencias.length; i++) {
+            if(vigencias[i].isSelected == false){
                 isCheckAll.value = false;
             }
         }
