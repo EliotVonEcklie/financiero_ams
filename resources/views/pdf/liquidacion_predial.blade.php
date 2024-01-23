@@ -242,22 +242,21 @@
             </table>
             <table class="border-none">
                 <tr><td class="border-none" colspan="10"></td></tr>
-                <tr><td class="border-none" colspan="10"></td></tr>
                 <tr>
                     <td class="border-none text-center " colspan="10">
                         Contra la presente liquidacion procede el recurso de reconsideracion dentro de los dos (2) meses siguientes a su notificacion
                     </td>
                 </tr>
-                <tr><td class="border-none text-center fw-bold" colspan="10">Copia contribuyente</td></tr>
+                <tr><td class="border-none text-center fw-bold fs-1" colspan="10">Copia contribuyente</td></tr>
                 <tr><td class="border-dotted" colspan="10"></td></tr>
                 <tr>
                     <td colspan="10" class="border-none text-center">
                         <p class="fs-1">{{ tenant()->nombre }}</p>
-                        <p>{{ tenant()->entidad }}</p>
+                        <p class="fs-0">{{ tenant()->entidad }}</p>
                     </td>
                 </tr>
             </table>
-            <table>
+            <table class="border-none">
                 <tr>
                     <td >
                         <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
@@ -272,6 +271,63 @@
                         <p>123</p>
                     </td>
                 </tr>
+                <tr >
+                    <td  class="border-none"></td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="border-none text-center"><img src="data:image/png;base64,{{DNS1D::getBarcodePNG('4445645656', 'C39')}}" height="40" alt="barcode" /></td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="border-none text-center">
+                        <p class="fs-0">(415)7709998105867(8020)010001178011100501(3900)0000469514(96)20231031</p>
+                        <p class="fs-0">
+                            Señor Cajero: Por favor no colocar el sello en el código de barras
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+            <table class="border-none">
+                <tr><td class="border-none" colspan="10"></td></tr>
+                <tr><td class="border-none text-center fw-bold fs-1" colspan="10">Copia banco</td></tr>
+                <tr><td class="border-dotted" colspan="10"></td></tr>
+                <tr>
+                    <td colspan="10" class="border-none text-center">
+                        <p class="fs-1">{{ tenant()->nombre }}</p>
+                        <p class="fs-0">{{ tenant()->entidad }}</p>
+                    </td>
+                </tr>
+            </table>
+            <table class="border-none">
+                <tr>
+                    <td >
+                        <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
+                        <p>0001000000010001000000000</p>
+                    </td>
+                    <td colspan="3">
+                        <p class="fs-1 vertical-top fw-bold">Periodo facturado</p>
+                        <p>2013-2023</p>
+                    </td>
+                    <td colspan="2">
+                        <p class="fs-1 vertical-top fw-bold">No liquidación</p>
+                        <p>123</p>
+                    </td>
+                </tr>
+                <tr >
+                    <td  class="border-none"></td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="border-none text-center"><img src="data:image/png;base64,{{DNS1D::getBarcodePNG('4445645656', 'C39')}}" height="40" alt="barcode" /></td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="border-none text-center">
+                        <p class="fs-0">(415)7709998105867(8020)010001178011100501(3900)0000469514(96)20231031</p>
+                        <p class="fs-0">
+                            Señor Cajero: Por favor no colocar el sello en el código de barras
+                        </p>
+                    </td>
+                </tr>
+
             </table>
         </main>
         <footer>

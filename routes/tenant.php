@@ -18,6 +18,7 @@ use App\Http\Middleware\FinancieroAuth;
 use App\Jobs\Tasificar;
 use App\Models\Predio;
 use App\Models\EstadoCuenta;
+use App\Models\LiquidacionPredial;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -116,7 +117,10 @@ Route::middleware([
             return view('pdf.estado_cuenta', ['estadoCuenta' => $estadoCuenta]);
         });
 
-        Route::get('liquidacion_predial',[LiquidacionPredialController::class, 'showPdf']);
+        /*Route::get('liquidacion_predial/1',function (LiquidacionPredial $liquidacionPredial){
+            return view('pdf.liquidacion_predial');
+        });*/
+        Route::get('/liquidacion_predial',[LiquidacionPredialController::class, 'showPdf']);
         Route::get('/predio', [PredioController::class, 'show'])->name('predio');
     });
 });
