@@ -155,7 +155,6 @@
                 <tr>
                     <td colspan="10" class="border-none bg-primary fw-bold text-center fs-3">Recibo de cobro impuesto predial unificado</td>
                 </tr>
-                <tr><td class="border-none" colspan="10"></td></tr>
             </table>
             <table>
                 <tr>
@@ -233,7 +232,7 @@
                     @endforeach
                     <tr ><td colspan="10" class="border-none"></td></tr>
                     <tr>
-                        <td colspan="5" class="border-none"></td>
+                        <td colspan="6" class="border-none"></td>
                         <td colspan="2" class="fs-2 bg-primary fw-bold">
                             Pague hasta
                         </td>
