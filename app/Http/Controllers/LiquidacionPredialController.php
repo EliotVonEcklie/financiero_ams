@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EstadoCuenta;
+use App\Models\LiquidacionPredial;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -24,33 +24,21 @@ class LiquidacionPredialController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $estadoCuenta = EstadoCuenta::create([
-            'ip' => $request->ip(),
-            'data' => $request->input('data')
-        ]);
-
-        return response()->json(['id' => $estadoCuenta->id]);
-    }
 
     /**
      * Display the specified resource.
      */
-    public function show(EstadoCuenta $estadoCuenta)
+    public function showPdf()
     {
-        return Pdf::loadView('pdf.estado_cuenta', [
-            'estadoCuenta' => $estadoCuenta
-        ])->stream($estadoCuenta->id . '_' . now()->format('YmdHis') . '_estado-cuenta.pdf');
+        $data = ['title' => 'domPDF in Laravel 10'];
+        $pdf = PDF::loadView('pdf.liquidacion_predial', $data);
+        return $pdf->stream('liquidacion_predial.pdf');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EstadoCuenta $estadoCuenta)
+    public function edit(LiquidacionPredial $estadoCuenta)
     {
         //
     }
@@ -58,7 +46,7 @@ class LiquidacionPredialController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EstadoCuenta $estadoCuenta)
+    public function update(Request $request, LiquidacionPredial $estadoCuenta)
     {
         //
     }
@@ -66,7 +54,7 @@ class LiquidacionPredialController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EstadoCuenta $estadoCuenta)
+    public function destroy(LiquidacionPredial $estadoCuenta)
     {
         //
     }

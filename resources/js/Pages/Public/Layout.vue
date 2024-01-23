@@ -5,7 +5,7 @@
         <nav class="bg-white border-gray-200 dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-3">
                 <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img :src="{{ 'data:image/png;base64,' + tenant.imagen }}" class="lg:h-20 md:h-40" alt="Flowbite Logo" />
+                    <img :src="'data:image/png;base64,'+tenant.imagen" class="lg:h-20 md:h-40" alt="Flowbite Logo" />
                     <div class="flex flex-col">
                         <span class="self-center lg:text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                         <span class="lg:text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
@@ -28,7 +28,7 @@
             <div class=" h-full bg-white overflow-y-auto dark:bg-gray-700" >
                 <div class="flex justify-between items-center mt-4 p-4">
                     <a :href="route('public.index')" class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img :src="img_logo" class="h-20 md:h-40" alt="Flowbite Logo" />
+                        <img :src="'data:image/png;base64,'+tenant.imagen" class="h-20 md:h-40" alt="Flowbite Logo" />
                         <div class="flex flex-col">
                             <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                             <span class="text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
@@ -126,11 +126,11 @@
     <main class="mb-8 container mx-auto">
         <slot :login ="login" :showModal="showModal" :hideModal="hideModal"  />
     </main>
-    <footer class="bg-gray-100 dark:bg-gray-900 h-50">
+    <footer class="bg-gray-100 dark:bg-gray-900 min-h-1/2">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8 lg:flex lg:items-center justify-between lg:flex-row md:flex-col">
             <div class="mb-6">
                 <a :href="route('public.index')" class="flex items-center md:justify-center">
-                    <img :src="img_logo"  class="lg:h-8 me-3 md:h-24" alt="FlowBite Logo" />
+                    <img :src="'data:image/png;base64,'+tenant.imagen"  class="lg:h-8 me-3 md:h-24" alt="FlowBite Logo" />
                     <div class="flex flex-col">
                         <span class="self-center lg:text-base font-semibold md:text-2xl whitespace-nowrap dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                         <span class="lg:text-sm text-gray-900 md:text-xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
