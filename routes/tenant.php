@@ -117,6 +117,7 @@ Route::middleware([
             return view('pdf.estado_cuenta', ['estadoCuenta' => $estadoCuenta]);
         });
 
+        Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store','facturaLiquidacion']);
         /*Route::get('liquidacion_predial/1',function (LiquidacionPredial $liquidacionPredial){
             return view('pdf.liquidacion_predial');
         });*/

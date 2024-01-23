@@ -472,8 +472,8 @@
     }
 
     function createRecibo(){
-        axios.post(route('public.liquidacion_predial.store'),{data:predio}).then(function(res){
-            windows.open(route('public.liquidacion_predial.show',{liquidacion_predial:res.predio}),'_blank');
+        axios.post(route('public.estado_cuentas.store'),{data:predio}).then(function(res){
+            window.open(route('public.estado_cuentas.facturaLiquidacion',{estado_cuenta:res.data.id}),'_blank');
         });
     }
 

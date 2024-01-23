@@ -28,14 +28,11 @@ class LiquidacionPredialController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showPdf(LiquidacionPredial $liquidacionPredial)
+    public function show()
     {
         $data = ['title' => 'domPDF in Laravel 10'];
         $pdf = PDF::loadView('pdf.liquidacion_predial', $data);
         return $pdf->stream('liquidacion_predial.pdf');
-    }
-    public function show(){
-
     }
 
     /**
