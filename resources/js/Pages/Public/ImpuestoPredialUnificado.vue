@@ -511,7 +511,7 @@ const checkAll = computed(() => {
 })
 
 function updateCheckAll() {
-    isCheckAll.value = vigencias.every(vigencia => vigencia.isSelected)
+    isCheckAll.value = vigencias.every(vigencia => !vigencia.isSelected)
     getTotal()
 }
 
