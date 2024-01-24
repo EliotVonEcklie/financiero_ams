@@ -1,6 +1,12 @@
 @php
     $pageBreak = count($facturaPredial->data['liquidacion']['vigencias']) >=6 ? 'page-break-after' :  "";
     $marginBreak = count($facturaPredial->data['liquidacion']['vigencias']) >=6 ? 'margin-break' : "";
+    $periodosFacturados = array_values(array_filter($facturaPredial->data['liquidacion']['vigencias'],function($filter){
+        return $filter['isSelected'] == true;
+    }));
+
+    $periodoFacturado =count($periodosFacturados)> 1 ? $periodosFacturados[count($periodosFacturados)-1]['vigencia'].' - '.$periodosFacturados[0]['vigencia'] : $periodosFacturados[0]['vigencia'];
+
     /*$longitud = 10;
     $pageBreak = $longitud >=6 ? 'page-break-after' :  "";
     $marginBreak = $longitud >=6 ? 'margin-break' : "";*/
@@ -259,8 +265,7 @@
                         $total=0;
                     @endphp
 
-                    @foreach ($facturaPredial->data['liquidacion']['vigencias'] as $vigencia)
-                        @if ($vigencia['isSelected'])
+                    @foreach ($periodosFacturados as $vigencia)
                         @php
                             $total +=$vigencia['total_liquidacion'];
                         @endphp
@@ -278,7 +283,6 @@
                             <td class="fs-0">${{ number_format($vigencia['alumbrado'],0,',','.') }}</td>
                             <td class="fs-0">${{ number_format($vigencia['total_liquidacion'],0,',','.') }}</td>
                         </tr>
-                        @endif
                     @endforeach
                     <tr>
                         <td colspan="6" class="border-none"></td>
@@ -318,7 +322,7 @@
                     </td>
                     <td colspan="3">
                         <p class="fs-0 vertical-top fw-bold">Periodo facturado</p>
-                        <p class="fs-0">2013-2023</p>
+                        <p class="fs-0">{{ $periodoFacturado }}</p>
                     </td>
                     <td colspan="3">
                         <p class="fs-0 vertical-top fw-bold">No liquidación</p>
@@ -351,7 +355,7 @@
                     </td>
                     <td colspan="3">
                         <p class="fs-0 vertical-top fw-bold">Periodo facturado</p>
-                        <p class="fs-0">2013-2023</p>
+                        <p class="fs-0">{{ $periodoFacturado }}</p>
                     </td>
                     <td colspan="3">
                         <p class="fs-0 vertical-top fw-bold">No liquidación</p>
