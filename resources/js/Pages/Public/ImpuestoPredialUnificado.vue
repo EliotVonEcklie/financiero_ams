@@ -545,7 +545,7 @@ function getTotal() {
             result.intereses += vigencia.total_intereses
             result.descuentos += vigencia.descuento_intereses
             result.liquidacion += vigencia.total_liquidacion
-            result.predial += vigencia.valor_predial
+            result.predial += vigencia.predial
             result.total_avaluo += vigencia.valor_avaluo
         })
     }

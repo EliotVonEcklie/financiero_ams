@@ -1,16 +1,5 @@
 @php
-    function showCharacters($string, $end = 2){
-        $getchars = Str::substr($string, 0, $end);
-        $newString = implode("",explode(" ",$string));
-        $arrString = mb_str_split($newString);
-        $result = "";
-        for ($i=0; $i < count($arrString) ; $i++) {
-            $arrString[$i] = $i >= $end ? "*" : $arrString[$i];
-        }
 
-        $result = implode($arrString);
-        return $result;
-    }
 @endphp
 <!DOCTYPE html>
 <html lang="es">

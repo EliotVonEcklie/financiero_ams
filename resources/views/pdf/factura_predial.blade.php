@@ -139,12 +139,12 @@
             .page-break-after{
                 page-break-after: always;
             }
-            header{
-                position: fixed;
-                top: -3px;
-                left: 0px;
-                right: 0px;
-                height: 30px;
+
+            .margin-break{
+                margin-top:7rem;
+            }
+            .page-num::before{
+                content: 'Página ' counter(page)
             }
             footer {
                 position: fixed;
@@ -152,13 +152,15 @@
                 left: 0px;
                 right: 0px;
                 height: 30px;
-                width:100vw;
+                width: 100vw;
             }
-            .margin-break{
-                margin-top:7rem;
-            }
-            .page-num::before{
-                content: 'Página ' counter(page)
+            header{
+                position: fixed;
+                top: 0;
+                left: 0px;
+                right: 0px;
+                height: 120px;
+                width: 100vw;
             }
         </style>
     </head>
@@ -208,7 +210,7 @@
                 </tr>
             </table>
         </footer>
-        <main style="margin-top:8rem;">
+        <main style="margin-top:3cm">
             <table class="border-none">
                 <tr>
                     <td colspan="10" class="border-none bg-primary fw-bold text-center fs-3">Recibo de cobro impuesto predial unificado</td>
