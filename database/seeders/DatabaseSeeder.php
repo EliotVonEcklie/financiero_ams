@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'nombre' => 'Unidad'
         ]);
 
-        for ($i = 1970; $i <= (int) now()->year; $i++) {
+        for ($i = 1970; $i <= now()->year; $i++) {
             \App\Models\VigenciaUnidadMonetaria::create([
                 'vigencia' => $i,
                 'unidad_monetaria_id' => $unidad->id,
