@@ -24,18 +24,21 @@ class FacturaPredial extends Model
 
     public function updatePagueHasta()
     {
-        $vigencias = Collection::make($this->data['liquidacion']['vigencias']);
+        $data = $this->data;
+
+        $vigencias = Collection::make($data['liquidacion']['vigencias']);
 
         $deuda = $vigencias->where('isSelected', true)->every(function ($vigencia) {
             return $vigencia['total_intereses'] > 0 || $vigencia['vigencia'] < now()->year;
         });
 
         if ($deuda) {
-            $this->data['pague_hasta'] = now();
+            $data['pague_hasta'] = now();
         } else {
-            $this->data['pague_hasta'] = Descuento::firstDayWithoutDescuento();
+            $data['pague_hasta'] = Descuento::firstDayWithoutDescuento();
         }
 
+        $this->data = $data;
         $this->save();
     }
 }

@@ -8,7 +8,7 @@
     $tablas = round($longitud/$limite) > 0 ? round($longitud/$limite) : 1;
     $index = 0;
     $total=0;
-    $periodoFacturado =count($periodosFacturados)> 1 ? $periodosFacturados[count($periodosFacturados)-1]['vigencia'].' - '.$periodosFacturados[0]['vigencia'] : $periodosFacturados[0]['vigencia'];
+    $periodoFacturado =$periodosFacturados[count($periodosFacturados)-1]['vigencia'].' - '.$periodosFacturados[0]['vigencia'];
 @endphp
 
 <!DOCTYPE html>

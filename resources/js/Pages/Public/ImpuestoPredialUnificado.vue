@@ -182,7 +182,7 @@
                         <button class="inline-block p-4 border-b-2 rounded-t-lg" id="periodos-tab" data-tabs-target="#periodos" type="button" role="tab" aria-controls="periodos" aria-selected="false">Periodos a liquidar</button>
                     </li>
                     <li class="me-2" role="presentation">
-                        <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="recibos-tab" data-tabs-target="#recibos" type="button" role="tab" aria-controls="recibos" aria-selected="false">Liquidaciones generadas</button>
+                        <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" @click="router.reload({ preserveState: true })" id="recibos-tab" data-tabs-target="#recibos" type="button" role="tab" aria-controls="recibos" aria-selected="false">Liquidaciones generadas</button>
                     </li>
                 </ul>
             </div>
@@ -378,12 +378,6 @@
                                         Nro
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Nro Alterno
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Tipo
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
                                         Emisión
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -399,53 +393,37 @@
                                         Total
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Descuento
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Neto
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
                                         Pagada
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <tbody v-if="predio != '' && facturasGeneradas.length > 0">
+                                <tr v-for="factura in facturasGeneradas" :key="factura.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="px-6 py-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path fill="#77dd77" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"/></svg>
+                                        <svg v-if="factura.data.recibo_pagado" class="fill-green-400" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="none"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"/></svg>
+                                        <svg v-else class="fill-red-500" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="none"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"/></svg>
                                     </td>
                                     <td class="px-6 py-4">
-                                        11111111111111
+                                        {{ factura.id }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        11111111111112
+                                        {{ dateIsoToGregorian(factura.created_at) }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        AUTOMATICO
+                                        {{ dateIsoToGregorian(factura.data.pague_hasta) }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        01/12/2023
+                                        {{ factura.data.facturado_desde }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        02/12/2023
+                                        {{ factura.data.facturado_hasta }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        2020
+                                        {{ formatNumber(factura.data.totales.liquidacion) }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        2020
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        250.000
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        0
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        0
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Si
+                                        <span v-if="factura.data.recibo_pagado">Si</span>
+                                        <span v-else>No</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -459,7 +437,7 @@
 
 <script setup>
 import Layout from './Layout.vue'
-import { ref, nextTick, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { router } from '@inertiajs/vue3'
 import ModalPse from './Components/ModalPse.vue'
 import axios from 'axios'
@@ -468,14 +446,23 @@ const props = defineProps({ tenant: Object, predios: Object, predio: Object })
 const isCheckAll = ref(true)
 let predio = props.predio
 let vigencias = predio.liquidacion === undefined ? [] : predio.liquidacion.vigencias
+const facturasGeneradas = computed(() => props.predio.factura_predials.reverse());
 
 onMounted(() => {
     isCheckAll.value = true
     vigencias.forEach(vigencia => vigencia.isSelected = true)
 })
-
+function dateIsoToGregorian(date){
+    if(date !==undefined){
+        date = date.substring(0,10);
+        date = date.split("-");
+        date = date[2]+"/"+date[1]+"/"+date[0];
+    }
+    return date;
+}
 function createEstadoCuenta() {
-    predio.totales = getTotal();
+    predio.totales = getTotal(true);
+
     axios.post(route('public.estado_cuentas.store'), { data: predio })
     .then(res => {
         window.open(route('public.estado_cuentas.show', { estado_cuenta: res.data.id }), '_blank')
@@ -483,7 +470,15 @@ function createEstadoCuenta() {
 }
 
 function createRecibo() {
+    let periodosFacturados = vigencias.filter(function(vigencia){
+        return vigencia.isSelected === true;
+    });
+    periodosFacturados = periodosFacturados.reverse()
+    predio.totales = getTotal()
     predio.recibo_pagado = false
+    predio.facturado_desde = periodosFacturados[0].vigencia
+    predio.facturado_hasta = periodosFacturados[periodosFacturados.length-1].vigencia;
+
     axios.post(route('public.factura_predials.store'), { data: predio })
     .then(res => {
         window.open(route('public.factura_predials.show', { factura_predial: res.data.id }), '_blank')
@@ -526,7 +521,7 @@ async function updateCheckAll(evt, vigencia) {
     }
 }
 
-function getTotal() {
+function getTotal(bypass = false) {
     let result = {
         'bomberil': 0,
         'alumbrado': 0,
@@ -539,7 +534,7 @@ function getTotal() {
     }
 
     if(vigencias.length > 0) {
-        vigencias.filter(vigencia => vigencia.isSelected).forEach(vigencia => {
+        vigencias.filter(vigencia => bypass || vigencia.isSelected).forEach(vigencia => {
             result.bomberil += vigencia.bomberil
             result.alumbrado += vigencia.alumbrado
             result.ambiental += vigencia.ambiental
