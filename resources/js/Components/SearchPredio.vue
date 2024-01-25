@@ -3,10 +3,9 @@ import { ref, watch } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import Table from '~Components/Table.vue'
 
-const title = 'Consultar Predio'
 defineProps({ predios: Array })
-const searchQuery = ref('')
 
+const searchQuery = defineModel('searchQuery')
 watch(searchQuery, searchQuery => {
     router.reload({ data: { searchQuery }, only: ['predios'] })
 })

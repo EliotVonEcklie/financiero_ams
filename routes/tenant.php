@@ -14,11 +14,13 @@ use App\Http\Controllers\UnidadMonetariaController;
 use App\Http\Controllers\VigenciaUnidadMonetariaController;
 use App\Http\Controllers\PredioTipoController;
 use App\Http\Middleware\FinancieroAuth;
+use App\Http\Middleware\SetTenantDefaultParameter;
 use App\Jobs\Tasificar;
 use App\Models\Predio;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Stancl\Tenancy\Middleware\InitializeTenancyByPath;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -34,11 +36,14 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 |
 */
 
-Route::middleware([
-    'web',
-    InitializeTenancyBySubdomain::class,
-    PreventAccessFromCentralDomains::class,
-])->group(function () {
+Route::group([
+    'prefix' => '/{tenant}',
+    'middleware' => [
+        'web',
+        InitializeTenancyByPath::class,
+        SetTenantDefaultParameter::class
+    ]
+], function () {
     Route::prefix('/financiero')->middleware(FinancieroAuth::class)->group(function () {
         Route::get('/login', function () {
             return inertia('Login');

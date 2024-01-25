@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Descuento;
 use App\Models\FacturaPredial;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -17,15 +16,14 @@ class FacturaPredialController extends Controller
     {
         $data = $request->input('data');
 
-        $pague_hasta = Descuento::firstDayWithoutDescuento();
-
         $facturaPredial = FacturaPredial::create([
             'ip' => $request->ip(),
             'data' => array_merge($data, [
-                'barcode' => DNS1DFacade::getBarcodePNG('4445645656' /* $data['barcode_id'] */, 'C39'),
-                'pague_hasta' => $pague_hasta,
+                'barcode' => DNS1DFacade::getBarcodePNG('4445645656' /* $data['barcode_id'] */, 'C39')
             ])
         ]);
+
+        $facturaPredial->updatePagueHasta();
 
         return response()->json(['id' => $facturaPredial->id]);
     }

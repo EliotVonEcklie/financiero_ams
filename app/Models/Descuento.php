@@ -46,9 +46,11 @@ class Descuento extends Model
     public static function firstDayWithoutDescuento()
     {
         $lastDescuento = self::where('es_nacional', false)
-            ->orderBy('hasta', 'desc')
+            ->where('hasta', '>=', now()->month)
+            ->orderBy('hasta', 'asc')
             ->first();
 
-        return Carbon::createFromDate(null, $lastDescuento->hasta)->lastOfMonth();
+        return $lastDescuento !== null ?
+            Carbon::createFromDate(null, $lastDescuento->hasta)->lastOfMonth() : now();
     }
 }

@@ -27,6 +27,7 @@ Route::post('/setup_municipio', function (Request $request) {
         $data = $request->all();
 
         \App\Models\Tenant::create([
+            'id' => $data['domain'],
             'tenancy_db_name' => $data['db_name'],
             'tenancy_db_username' => $data['db_username'],
             'tenancy_db_password' => $data['db_password'],
@@ -38,8 +39,6 @@ Route::post('/setup_municipio', function (Request $request) {
             'entidad' => $data['entidad'],
             'correo' => $data['correo'],
             'pagina' => $data['pagina']
-        ])->domains()->create([
-            'domain' => $data['domain']
         ]);
 
         return redirect(tenant_route($data['domain'], 'index'));
