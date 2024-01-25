@@ -2,7 +2,7 @@
     <header>
         <ModalRegistro :login="login" @showModal="showModal" @hideModal="hideModal" :tenant="tenant"/>
 
-        <nav class="bg-white border-gray-200 dark:bg-gray-900">
+        <nav class="bg-white border-gray-200 dark:bg-gray-900 lg:relative md:fixed md:top-0 md:z-40 md:w-full">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-3">
                 <Link :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img :src="img" class="lg:h-20 md:h-40" alt="Logo Entidad" />
@@ -24,54 +24,7 @@
                 </div>
             </div>
         </nav>
-        <nav :class="{'translate-x-0 ':mobileNav, 'translate-x-full ':mobileNav==false}" class="fixed z-50 top-0 transition-all h-full w-screen ">
-            <div class=" h-full bg-white overflow-y-auto dark:bg-gray-700" >
-                <div class="flex justify-between items-center mt-4 p-4">
-                    <Link :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img :src="img" class="h-20 md:h-40" alt="Logo Entidad" />
-                        <div class="flex flex-col">
-                            <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
-                            <span class="text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
-                        </div>
-                    </Link>
-                    <button type="button" @click="openMobileNav()" class="mx-5 my-5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                        <svg class="w-20 h-20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-                <ul class="mt-20 mb-20 ps-4 flex flex-col text-3xl space-y-20 font-medium">
-                    <li class="p-5  w-full hover:bg-bluep ">
-                        <Link :href="route('public.index')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white" aria-current="page">Inicio</Link>
-                    </li>
-                    <li class="p-5 hover:bg-bluep">
-                        <Link :href="route('public.impuesto_predial_unificado')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto predial unificado</Link>
-                    </li>
-                    <li class="p-5 hover:bg-bluep">
-                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto de industria y comercio</Link>
-                    </li>
-                    <li class="p-5 hover:bg-bluep">
-                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</Link>
-                    </li>
-                    <li class="p-5 hover:bg-bluep">
-                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Normatividad</Link>
-                    </li>
-                    <li class="p-5  w-full hover:bg-bluep ">
-                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Notificaciones jurídicas</Link>
-                    </li>
-                    <li class="p-5  w-full hover:bg-bluep ">
-                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Presentación electrónica</Link>
-                    </li>
-                    <li class="p-5  w-full hover:bg-bluep ">
-                        <Link href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Contacto</Link>
-                    </li>
-                    <li class="p-5  w-full hover:bg-bluep ">
-                        <button type="button" @click="showModal('modalRegistro');" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Iniciar sesión</button>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+
         <nav class="lg:block md:hidden bg-blue-100  dark:bg-gray-700">
             <div class="max-w-screen-xl px-4 py-3 mx-auto">
                 <div class="flex items-center justify-center">
@@ -102,27 +55,77 @@
                             </div>
                         </li>
                         <li>
-                            <Link href="#" class="text-gray-900 dark:text-white hover:underline">Normatividad</Link>
+                            <Link :href="route('public.normatividad')" class="text-gray-900 dark:text-white hover:underline">Normatividad</Link>
                         </li>
                         <li>
-                            <Link href="#" class="text-gray-900 dark:text-white hover:underline">Notificaciones jurídicas</Link>
+                            <Link :href="route('public.notificaciones')" class="text-gray-900 dark:text-white hover:underline">Notificaciones jurídicas</Link>
                         </li>
                         <li>
-                            <Link href="#" class="text-gray-900 dark:text-white hover:underline">Presentación electrónica</Link>
+                            <Link :href="route('public.presentacion')" class="text-gray-900 dark:text-white hover:underline">Presentación electrónica</Link>
                         </li>
                         <li>
-                            <Link href="#" class="text-gray-900 dark:text-white hover:underline">Contacto</Link>
+                            <Link :href="route('public.contacto')" class="text-gray-900 dark:text-white hover:underline">Contacto</Link>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        <nav :class="{'translate-x-0 ':mobileNav, 'translate-x-full ':mobileNav==false}" class="fixed z-50 top-0 transition-all h-full w-screen ">
+            <div class=" h-full bg-white overflow-y-auto dark:bg-gray-700" >
+                <div class="flex justify-between items-center mt-4 p-4">
+                    <Link :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
+                        <img :src="img" class="h-20 md:h-40" alt="Logo Entidad" />
+                        <div class="flex flex-col">
+                            <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
+                            <span class="text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
+                        </div>
+                    </Link>
+                    <button type="button" @click="openMobileNav()" class="mx-5 my-5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                        <svg class="w-20 h-20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <ul class="mt-20 mb-20 ps-4 flex flex-col text-3xl space-y-20 font-medium">
+                    <li class="p-5  w-full hover:bg-bluep ">
+                        <Link :href="route('public.index')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white" aria-current="page">Inicio</Link>
+                    </li>
+                    <li class="p-5 hover:bg-bluep">
+                        <Link :href="route('public.impuesto_predial_unificado')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto predial unificado</Link>
+                    </li>
+                    <li class="p-5 hover:bg-bluep">
+                        <Link v-if="login" href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</Link>
+                        <button type="button" v-else @click="showModal('modalRegistro')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</button>
+                    </li>
+                    <li class="p-5 hover:bg-bluep">
+                        <Link v-if="login" href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</Link>
+                        <button type="button" v-else @click="showModal('modalRegistro')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</button>
+                    </li>
+                    <li class="p-5 hover:bg-bluep">
+                        <Link :href="route('public.normatividad')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Normatividad</Link>
+                    </li>
+                    <li class="p-5  w-full hover:bg-bluep ">
+                        <Link :href="route('public.notificaciones')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Notificaciones jurídicas</Link>
+                    </li>
+                    <li class="p-5  w-full hover:bg-bluep ">
+                        <Link :href="route('public.presentacion')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Presentación electrónica</Link>
+                    </li>
+                    <li class="p-5  w-full hover:bg-bluep ">
+                        <Link :href="route('public.contacto')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Contacto</Link>
+                    </li>
+                    <li class="p-5  w-full hover:bg-bluep ">
+                        <button type="button" @click="showModal('modalRegistro');" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Iniciar sesión</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
-    <main class="mb-8 container mx-auto">
+    <main class="mb-8 container mx-auto lg:m-auto md:mt-56">
         <slot :login ="login" :showModal="showModal" :hideModal="hideModal" />
     </main>
-    <footer class="bg-gray-100 dark:bg-gray-900 min-h-1/2">
+    <footer class="bg-gray-100 dark:bg-gray-900 mt-10 lg:h-auto md:h-screen">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8 lg:flex lg:items-center justify-between lg:flex-row md:flex-col">
             <div class="mb-6">
                 <Link :href="tenant.pagina" class="flex items-center md:justify-center">
@@ -138,10 +141,10 @@
                     <h2 class="mb-6 lg:text-sm md:text-2xl font-semibold text-gray-900 uppercase dark:text-white">Centro de ayuda</h2>
                     <ul class="lg:text-base md:text-2xl text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
-                            <Link href="#" class="hover:underline">Preguntas frecuentes</Link>
+                            <Link :href="route('public.preguntas')" class="hover:underline">Preguntas frecuentes</Link>
                         </li>
                         <li class="mb-4">
-                            <Link href="#" class="hover:underline">Manuales de sistema</Link>
+                            <Link :href="route('public.manuales')" class="hover:underline">Manuales de sistema</Link>
                         </li>
                     </ul>
                 </div>
@@ -188,16 +191,16 @@
             <span class="lg:text-sm md:text-2xl text-gray-500 sm:text-center dark:text-gray-400 ">© 2023 <a href="#" class="hover:underline lg:text-sm md:text-2xl">Ideal 10 sas</a>. Todos los derechos reservados.</span>
             <ul class="flex flex-wrap items-center mt-3 lg:text-sm md:text-xl font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
                 <li>
-                    <Link href="#" class="hover:underline me-4 md:me-6">Normatividad</Link>
+                    <Link :href="route('public.normatividad')" class="hover:underline me-4 md:me-6">Normatividad</Link>
                 </li>
                 <li>
-                    <Link href="#" class="hover:underline me-4 md:me-6">Notificaciones jurídicas</Link>
+                    <Link :href="route('public.notificaciones')" class="hover:underline me-4 md:me-6">Notificaciones jurídicas</Link>
                 </li>
                 <li>
-                    <Link href="#" class="hover:underline me-4 md:me-6">Presentación electrónica</Link>
+                    <Link :href="route('public.presentacion')" class="hover:underline me-4 md:me-6">Presentación electrónica</Link>
                 </li>
                 <li>
-                    <Link href="#" class="hover:underline">Contacto</Link>
+                    <Link :href="route('public.contacto')" class="hover:underline">Contacto</Link>
                 </li>
             </ul>
         </div>

@@ -186,7 +186,7 @@
         <div class="flex justify-center items-center space-x-6 rtl:space-x-reverse mt-5">
             <button type="button" data-modal-target="modalBuscar" data-modal-toggle="modalBuscar" class="lg:w-auto md:w-full py-2.5 px-5 lg:text-sm md:text-2xl font-medium text-white focus:outline-none bg-bluep rounded-lg dark:bg-blue-500 dark:hover:bg-blue-700">Buscar</button>
         </div>
-        <div v-if="predio != '' && vigencias.length > 0">
+        <div v-if="predio != '' && vigencias.length > 0" class="lg:mt-auto md: mt-10">
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px lg:text-sm md:text-2xl font-medium text-center" id="options-tab" data-tabs-toggle="#options-tab-content" role="tablist">
                     <li class="me-2" role="presentation">
