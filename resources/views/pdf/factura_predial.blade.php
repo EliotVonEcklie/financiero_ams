@@ -295,7 +295,7 @@
                         </td>
                         <td colspan="2" class="text-center">
                             <p class="fs-0 vertical-top fw-bold">Fecha</p>
-                            <p class="fs-0">31/10/2023</p>
+                            <p class="fs-0">{{ (new \Illuminate\Support\Carbon($facturaPredial->data['pague_hasta']))->format('d/m/Y') }}</p>
                         </td>
                         <td colspan="2" class="text-right">
                             <p class="fs-0 vertical-top fw-bold">Valor</p>
