@@ -1,5 +1,20 @@
 <template>
     <Layout :tenant="tenant">
+        <div id="toast-danger" :class="{'hidden':alertText==''}" class="fixed top-0 right-0 z-40 mt-10 mr-5 flex items-center w-full lg:max-w-xs md:max-w-lg p-4 mb-4 text-gray-500 bg-white rounded-lg border border-red-400 dark:text-gray-400 dark:bg-gray-800" role="alert">
+            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+                <svg class="lg:w-5 lg:h-5 md:w-10 md:h-10" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+                </svg>
+                <span class="sr-only">Error icon</span>
+            </div>
+            <div class="ms-3 lg:text-sm md:text-3xl font-medium" v-html="alertText"></div>
+            <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2  p-1.5 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-danger" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <svg class="lg:w-5 lg:h-5 md:w-10 md:h-10"  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+            </button>
+        </div>
         <!--Modal-->
         <div id="modalBuscar" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-7xl max-h-full">
@@ -165,17 +180,13 @@
                             <p class="px-5 py-2 text-black dark:text-gray-400">{{ predio.destino_economico }}</p>
                         </td>
                     </tr>
-                    <tr class="text-center border-b border-gray-200 dark:border-gray-700">
-                        <td colspan="8" class="py-4 text-center">
-                            <div class="flex justify-center items-center space-x-6 rtl:space-x-reverse">
-                                <button type="button" data-modal-target="modalBuscar" data-modal-toggle="modalBuscar" class="py-2.5 px-5 me-2 mb-2 lg:text-sm md:text-2xl font-medium text-white focus:outline-none bg-bluep rounded-lg dark:bg-blue-500 dark:hover:bg-blue-700">Buscar</button>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
-        <div v-if="predio != '' && vigencias.length > 0">
+        <div class="flex justify-center items-center space-x-6 rtl:space-x-reverse mt-5">
+            <button type="button" data-modal-target="modalBuscar" data-modal-toggle="modalBuscar" class="lg:w-auto md:w-full py-2.5 px-5 lg:text-sm md:text-2xl font-medium text-white focus:outline-none bg-bluep rounded-lg dark:bg-blue-500 dark:hover:bg-blue-700">Buscar</button>
+        </div>
+        <div v-if="predio != '' && vigencias.length > 0" class="lg:mt-auto md: mt-10">
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px lg:text-sm md:text-2xl font-medium text-center" id="options-tab" data-tabs-toggle="#options-tab-content" role="tablist">
                     <li class="me-2" role="presentation">
@@ -189,25 +200,25 @@
 
             <div id="options-tab-content">
                 <div class="hidden rounded-lg bg-white dark:bg-gray-800" id="periodos" role="tabpanel" aria-labelledby="periodos-tab">
-                    <div class="flex flex-wrap justify-start space-x-3">
-                        <button type="button" data-modal-target="modalPse" data-modal-toggle="modalPse" class="flex justify-between space-x-3 items-center text-white bg-bluep hover:bg-blue-400 font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 me-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700">
+                    <div class="flex flex-wrap justify-start lg:space-x-3 md:space-x-0 md:mt-10 lg:space-y-0 md:space-y-6">
+                        <button type="button" data-modal-target="modalPse" data-modal-toggle="modalPse" class="flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-white bg-bluep hover:bg-blue-400 font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 dark:bg-blue-500 dark:hover:bg-blue-700">
                             <span>Pagar en línea</span>
                             <svg class="fill-white lg:w-8 lg:h-8 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188.25 187.833"  xmlns:v="https://vecta.io/nano"><radialGradient id="A" cx="96.011" cy="357.583" r="93.155" fx="45.827" fy="353.899" gradientTransform="matrix(1 0 0 1 0 -264)" gradientUnits="userSpaceOnUse"><stop offset=".316" stop-color="#2d5ca8"/><stop offset=".531" stop-color="#285496"/><stop offset=".729" stop-color="#1f4272"/><stop offset="1" stop-color="#0d2d4d"/></radialGradient><ellipse cx="94.345" cy="93.917" rx="93.157" ry="93.153" fill="url(#A)"/><path d="M119.47 71H97.417c-.099 0-.198-.014-.295.006-3.509.761-10.122 4.348-10.088 12.182C86.852 86.202 88.172 91 94.475 93h15.72c.696 0 4.989.982 4.704 8.47-.288 7.549-6.724 8.53-7.65 9.53H82.891c-.768 0-1.391.732-1.391 1.5s.623 1.5 1.391 1.5h24.492c.079 0 .157-.366.235-.38 3.344-.572 9.749-4.002 10.062-12.207.404-10.611-7.273-11.281-7.351-11.286.011-.003-15.516-.045-15.516-.045-5.301-.97-5.015-6.598-4.999-6.843.002-.034.003.054.003.02C89.76 76.152 96.514 74 97.581 74h21.89c.768 0 1.391-.732 1.391-1.5s-.624-1.5-1.392-1.5zm33.577-.157c-.127-.036-.259.157-.391.157h-16.478c-7.459 0-10.828 8.637-10.967 9.014-.023.061-.04.016-.055.08-.171.773-4.187 18.937-4.052 24.934.129 5.642 5.875 7.693 8.895 8.016.05.006.1-.043.151-.043h22.908c.778 0 1.41-.722 1.41-1.5s-.631-1.5-1.41-1.5h-22.822c-.717 0-6.212-.838-6.311-5.205-.053-2.344.614-6.83 1.418-11.362l31.881-.238c.68-.005 1.26-.482 1.377-1.153.062-.35 1.494-8.503 1.494-13.392-.001-5.817-6.76-7.724-7.048-7.808zm2.967 19.571l-30.154.252c.926-4.913 1.868-8.94 2.027-9.663.322-.805 3.088-7.004 8.291-7.004h16.255c.88 0 4.842 1.556 4.842 4.853 0 3.605-.866 9.106-1.261 11.562zM82.84 79.444C83.667 73.817 76.56 71 75.23 71l-15.344.166c-.121-.013-.246.067-.372.086-3.554.566-8.38 5.143-9.93 9.377l.024.029c-.155.472-.291 1.2-.498 2.294l-1.021 5.485-3.039 16.613-4.384 24.158a1.37 1.37 0 0 0 1.105 1.594c.082.015.164.023.245.023a1.37 1.37 0 0 0 1.347-1.128l3.957-21.805c3.579 4.515 8.031 4.989 8.254 5.01.055.006.11.01.167.005l14.091-.403c.121-.003.239-.022.354-.057 6.685-2.005 8.695-8.903 8.778-9.196a1.48 1.48 0 0 0 .033-.15l3.825-23.429c.01-.05.011-.178.018-.228zm-2.736-.053l-3.797 23.176c-.198.621-1.944 5.659-6.739 7.201l-13.8.394c-.636-.089-4.942-.881-7.732-6.195l4.139-22.397c1.279-3.436 5.416-7.128 7.737-7.525.526.032 1.245.033 2.24.035l5.333-.003 7.429-.02c1.628-.012 5.586 2.751 5.19 5.334z" fill="#fff"/><g fill="#fdb718"><ellipse cx="19.366" cy="66.019" rx="3.923" ry="4.185"/><path d="M15.405 52.808c0-1.839-1.119-3.384-2.665-3.945l-3.614 7.272c.658.531 1.468.858 2.356.858 2.167 0 3.923-1.874 3.923-4.185zM7.484 66.019c0-1.135-.427-2.162-1.115-2.916l-2.151 7.03c1.852-.335 3.266-2.043 3.266-4.114z"/><ellipse cx="19.913" cy="117.005" rx="3.923" ry="4.185"/><path d="M6.055 117.005c0-1.745-1.215-3.174-2.79-3.412l1.538 6.124c.757-.634 1.252-1.607 1.252-2.712zm9.332 13.647c0-2.311-1.756-4.185-3.923-4.185-1.547 0-2.871.963-3.51 2.35l2.635 5.906c.282.069.573.113.875.113 2.166.001 3.923-1.873 3.923-4.184zM22.046 104h-7.867c-.51-1-1.971-2.721-3.715-2.721-2.167 0-3.923 1.964-3.923 4.275s1.756 4.266 3.923 4.266c1.744 0 3.205-.821 3.715-2.821h6.44 2.217.188l8.251-15H44v-2H23.14l-8.575-15h-.598-2.207-8.684l-.561 3h10.803l7.018 12H1.25l-.062 2H28.87L22.046 104z"/></g><path d="M54.233 58.499h4.206a1.55 1.55 0 0 0 1.015 1.813l-.798 5.584h-4.424s-1.958-.725-.943-2.828c0 0 .925-1.124 1.741-1.124l4.052.136m7.915-3.581H62.79s-1.45.725-1.813 2.611c0 0-.979 2.756.181 4.786l.49.109H65.6m3.826-10.897L67.45 66.077m1.111-6.167s.503-.995 1.373-1.412c0 0 3.173-.308 3.735.49 0 0 .635.308.598 1.215l-.979 5.693" fill="none" stroke="#fff" stroke-miterlimit="10"/></svg>
                         </button>
-                        <button type="button" @click="createRecibo" :disabled="vigencias.every(vigencia => !vigencia.isSelected)" :class="{'text-gray-300 bg-gray-100 hover:bg-gray-100':vigencias.every(vigencia => !vigencia.isSelected),'text-white':vigencias.every(vigencia => vigencia.isSelected)}" class="flex justify-between space-x-3 items-center bg-bluep hover:bg-blue-400  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 me-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700">
+                        <button type="button" @click="createRecibo" :disabled="vigencias.every(vigencia => !vigencia.isSelected)" :class="{'text-gray-300 bg-gray-100 hover:bg-gray-100':vigencias.every(vigencia => !vigencia.isSelected),'text-white':vigencias.every(vigencia => vigencia.isSelected)}" class="flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center bg-bluep hover:bg-blue-400  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 dark:bg-blue-500 dark:hover:bg-blue-700">
                             <span>Imprimir liquidación predial</span>
                             <svg :class="{'fill-gray-300':vigencias.every(vigencia => !vigencia.isSelected),'fill-white':vigencias.every(vigencia => vigencia.isSelected)}" class="lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 384 512"><path d="M14 2.2C22.5-1.7 32.5-.3 39.6 5.8L80 40.4 120.4 5.8c9-7.7 22.3-7.7 31.2 0L192 40.4 232.4 5.8c9-7.7 22.3-7.7 31.2 0L304 40.4 344.4 5.8c7.1-6.1 17.1-7.5 25.6-3.6s14 12.4 14 21.8V488c0 9.4-5.5 17.9-14 21.8s-18.5 2.5-25.6-3.6L304 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L192 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L80 471.6 39.6 506.2c-7.1 6.1-17.1 7.5-25.6 3.6S0 497.4 0 488V24C0 14.6 5.5 6.1 14 2.2zM96 144c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96zM80 352c0 8.8 7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96c-8.8 0-16 7.2-16 16zM96 240c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96z"/></svg>
                         </button>
-                        <button type="button" @click="createEstadoCuenta" class="flex justify-between space-x-3 items-center text-white bg-bluep hover:bg-blue-400  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 me-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700">
+                        <button type="button" @click="createEstadoCuenta" class="flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-white bg-bluep hover:bg-blue-400  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 dark:bg-blue-500 dark:hover:bg-blue-700">
                             <span>Imprimir estado de cuenta</span>
                             <svg class="fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM80 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm16 96H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm0 32v64H288V256H96zM240 416h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
                         </button>
-                        <button type="button" disabled @click="createRecibo" class="cursor-not-allowed flex justify-between space-x-3 items-center text-gray-300 bg-gray-100  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 me-2 mb-2 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
+                        <button type="button" disabled @click="createRecibo" class="cursor-not-allowed flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-gray-300 bg-gray-100  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
                             <span>Imprimir paz y salvo</span>
                             <svg class="fill-gray-300 dark:fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
                         </button>
                     </div>
-                    <div  class="mt-3 relative overflow-x-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
+                    <div  class="mt-3 relative overflow-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
                         <table  class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -369,9 +380,9 @@
                     </div>
                 </div>
                 <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="recibos" role="tabpanel" aria-labelledby="recibos-tab">
-                    <div class="mt-3 relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <div class="mt-3 relative overflow-auto shadow-md sm:rounded-lg max-h-96">
+                        <table class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3"></th>
                                     <th scope="col" class="px-6 py-3">
@@ -395,10 +406,11 @@
                                     <th scope="col" class="px-6 py-3">
                                         Pagada
                                     </th>
+                                    <th scope="col" class="px-6 py-3"></th>
                                 </tr>
                             </thead>
                             <tbody v-if="predio != '' && facturasGeneradas.length > 0">
-                                <tr v-for="factura in facturasGeneradas" :key="factura.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr v-for="factura in facturasGeneradas" :key="factura.id" @click="showRecibo(factura.id)" class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="px-6 py-4">
                                         <svg v-if="factura.data.recibo_pagado" class="fill-green-400" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="none"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"/></svg>
                                         <svg v-else class="fill-red-500" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="none"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"/></svg>
@@ -422,9 +434,9 @@
                                         {{ formatNumber(factura.data.totales.liquidacion) }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span v-if="factura.data.recibo_pagado">Si</span>
-                                        <span v-else>No</span>
+                                        {{ factura.data.recibo_pagado ? 'Si' : 'No' }}
                                     </td>
+                                    <td class="px-6 py-4"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -441,17 +453,52 @@ import { ref, computed, onMounted } from 'vue'
 import { router } from '@inertiajs/vue3'
 import ModalPse from './Components/ModalPse.vue'
 import axios from 'axios'
+import { Dismiss } from 'flowbite'
 
 const props = defineProps({ tenant: Object, predios: Object, predio: Object })
 const isCheckAll = ref(true)
+const alertText = ref("");
+let alertTimeOut;
 let predio = props.predio
 let vigencias = predio.liquidacion === undefined ? [] : predio.liquidacion.vigencias
-const facturasGeneradas = computed(() => props.predio.factura_predials.reverse());
+const facturasGeneradas = predio.length > 0 ? [] : computed(() => props.predio.factura_predials.reverse());
 
 onMounted(() => {
     isCheckAll.value = true
     vigencias.forEach(vigencia => vigencia.isSelected = true)
 })
+function showRecibo(id){
+    let factura = {};
+    facturasGeneradas.value.forEach(fa => {
+        if(fa.id == id){
+            factura = fa;
+            return;
+        }
+    });
+    let horaActual = new Date();
+    let dateVencimiento = new Date(factura.data.pague_hasta);
+    let dateActual =new Date();
+    dateVencimiento.setHours(23,59,0,0)
+    dateActual.setHours(horaActual.getHours(), horaActual.getMinutes(),0,0);
+    if(factura.data.recibo_pagado){
+        window.clearTimeout(alertTimeOut)
+        hideAlert("La factura ya está pagada");
+        return false;
+    }else if(dateActual > dateVencimiento){
+        window.clearTimeout(alertTimeOut)
+        hideAlert("La factura ya está vencida");
+        return false;
+    }
+    window.open(route('public.factura_predials.show', { factura_predial: id }), '_blank')
+}
+function hideAlert(text){
+    alertText.value = text;
+    alertTimeOut = window.setTimeout(function(){
+        alertText.value = "";
+    },3000)
+
+
+}
 function dateIsoToGregorian(date){
     if(date !==undefined){
         date = date.substring(0,10);
@@ -470,9 +517,7 @@ function createEstadoCuenta() {
 }
 
 function createRecibo() {
-    let periodosFacturados = vigencias.filter(function(vigencia){
-        return vigencia.isSelected === true;
-    });
+    let periodosFacturados = vigencias.filter(vigencia => vigencia.isSelected);
     periodosFacturados = periodosFacturados.reverse()
     predio.totales = getTotal()
     predio.recibo_pagado = false

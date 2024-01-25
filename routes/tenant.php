@@ -126,6 +126,30 @@ Route::group([
             return inertia('Public/Inscripcion');
         })->name('inscripcion');
 
+        Route::get('/normatividad',function(){
+            return inertia('Public/Normatividad');
+        })->name('normatividad');
+
+        Route::get('/notificaciones',function(){
+            return inertia('Public/NotificacionesJuridicas');
+        })->name('notificaciones');
+
+        Route::get('/presentacion',function(){
+            return inertia('Public/PresentacionElectronica');
+        })->name('presentacion');
+
+        Route::get('/contacto',function(){
+            return inertia('Public/Contacto');
+        })->name('contacto');
+
+        Route::get('/preguntas',function(){
+            return inertia('Public/PreguntasFrecuentes');
+        })->name('preguntas');
+
+        Route::get('/manuales',function(){
+            return inertia('Public/ManualSistema');
+        })->name('manuales');
+
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
         Route::resource('factura_predials', FacturaPredialController::class)->only(['store', 'show']);
     });

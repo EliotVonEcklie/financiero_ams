@@ -9,8 +9,8 @@ export default {
     theme: {
         extend: {},
         colors: {
-            'greenp1': '#77dd77',
-            'bluep': '#84b6f4',
+            'greenp1': '#31C48D',
+            'bluep': '#76A9FA',
             'greenp2': '#b0f2c2'
         }
     },
