@@ -96,9 +96,22 @@ class Liquidacion
             return $result;
         }
 
-        $result['valor_avaluo'] = Round::pesos($avaluo->valor_avaluo);
+        $result['valor_avaluo'] = $avaluo->valor_avaluo;
         $result['tasa_por_mil'] = $avaluo->tasa_por_mil;
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
+
+        if ($result['estatuto']->norma_predial) {
+            $avaluo_anterior = $avaluo->predio->avaluos()
+                ->where('vigencia', $avaluo->vigencia - 1)
+                ->first();
+
+            $predial_anterior = $this->calculate_tarifa(
+                $avaluo_anterior->valor_avaluo,
+                $avaluo_anterior->tasa_por_mil
+            );
+
+            $result['predial'] = $result['predial'] > ($predial_anterior * 2) ? $predial_anterior : $result['predial'];
+        }
 
         if ($this->descuento_incentivo > 0) {
             $result['predial_descuento'] = $this->calculate_tarifa($result['predial'], $this->descuento_incentivo, false);
