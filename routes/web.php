@@ -35,13 +35,13 @@ Route::post('/setup_municipio', function (Request $request) {
             'nit' => $data['nit'],
             'lema' => $data['lema'],
             'imagen' => base64_encode($request->file('imagen')->get()),
-            'direccion' => $data['direccion'],
-            'entidad' => $data['entidad'],
-            'correo' => $data['correo'],
-            'pagina' => $data['pagina']
+            'direccion' => $data['direccion'] ?? '',
+            'entidad' => $data['entidad'] ?? '',
+            'correo' => $data['correo'] ?? '',
+            'pagina' => $data['pagina'] ?? ''
         ]);
 
-        return redirect(tenant_route($data['domain'], 'index'));
+        return to_route('index', ['tenant' => $data['domain']]);
     } else {
         return response()->file(public_path('img/burro.png'));
     }

@@ -42,10 +42,23 @@ class Tasificar implements ShouldQueue, ShouldBeUnique
                 if ($estratificacion->tarifa_type === '\App\Models\RangoAvaluo') {
                     $rangoAvaluo = $estratificacion->tarifa;
 
-                    $vigencia_unidad = VigenciaUnidadMonetaria::
-                        where('unidad_monetaria_id', $rangoAvaluo->unidad_monetaria->id)
-                        ->where('vigencia', $avaluo->vigencia)
-                        ->first();
+                    if ($rangoAvaluo->unidad_monetaria->nombre === 'Unidad') {
+                        $vigencia_unidad = VigenciaUnidadMonetaria::where('unidad_monetaria_id', $rangoAvaluo->unidad_monetaria->id)
+                            ->first();
+
+                        if ($vigencia_unidad === null || $vigencia_unidad->valor !== 1) {
+                            throw new RuntimeException('La unidad monetaria "Unidad" no tiene valor 1!');
+                        }
+                    } else {
+                        $vigencia_unidad = VigenciaUnidadMonetaria::
+                            where('unidad_monetaria_id', $rangoAvaluo->unidad_monetaria->id)
+                            ->where('vigencia', $avaluo->vigencia)
+                            ->first();
+
+                        if ($vigencia_unidad === null) {
+                            throw new RuntimeException('No se encontró vigencia unidad monetaria para la vigencia ' . $avaluo->vigencia);
+                        }
+                    }
 
                     $valor_avaluo = $avaluo->valor_avaluo;
 
