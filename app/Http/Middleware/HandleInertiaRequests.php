@@ -37,7 +37,16 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'tenant' => fn () => tenant()
+            'tenant' => fn () => tenant()->only(
+                'nombre',
+                'nit',
+                'lema',
+                'imagen',
+                'direccion',
+                'entidad',
+                'correo',
+                'pagina'
+            )
         ]);
     }
 }

@@ -45,7 +45,7 @@ const step = ref(1)
 
                 <div class="w-full mt-2">
                     <Transition name="fade" mode="out-in">
-                        <component :is="step == 1 ? Form : Results" @step="step = 2"></component>
+                        <component :is="step == 1 ? Form : Results" @step="router.get(route('index')) /*step = 2*/"></component>
                     </Transition>
                 </div>
             </section>

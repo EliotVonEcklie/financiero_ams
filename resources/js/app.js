@@ -5,10 +5,8 @@ import VueEcho from 'vue-echo-laravel'
 import { initFlowbite } from 'flowbite'
 import numbers from './numbers'
 
-router.on('finish', (e) => {
-    if (e.detail.visit.completed) {
-        initFlowbite()
-    }
+router.on('navigate', () => {
+    initFlowbite()
 })
 
 createInertiaApp({

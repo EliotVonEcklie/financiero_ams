@@ -6,14 +6,13 @@ import { router } from '@inertiajs/vue3'
 import axios from 'axios'
 
 const title = 'Estatutos'
-const props = defineProps({ estatutos: Array })
 
-function softDelete(allSelected) {
-    props.estatutos.forEach(async x => {
-        if (allSelected || x.selected) {
-            await axios.put(route('estatutos.update', x.id), { 'toggle': true })
-        }
-    })
+defineProps({ estatutos: Array })
+
+function softDelete(selectedElements) {
+    selectedElements.forEach(async x =>
+        await axios.put(route('estatutos.update', x.id), { 'toggle': true })
+    )
 
     router.reload()
 }

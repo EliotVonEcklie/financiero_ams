@@ -16,7 +16,30 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/setup_municipio', function (Request $request) {
     if ($request->input('app_key') == env('APP_KEY')) {
-        return inertia('SetupMunicipio', ['app_key' => $request->input('app_key')]);
+        $tenant = \App\Models\Tenant::find($request->input('tenant_id'));
+
+        if ($tenant) {
+            $tenant = [
+                'domain' => $tenant->id,
+                'db_name' => $tenant->tenancy_db_name,
+                'db_username' => $tenant->tenancy_db_username,
+                'db_password' => $tenant->tenancy_db_password,
+                'nombre' => $tenant->nombre,
+                'nit' => $tenant->nit,
+                'lema' => $tenant->lema,
+                'imagen' => $tenant->imagen,
+                'direccion' => $tenant->direccion,
+                'entidad' => $tenant->entidad,
+                'correo' => $tenant->correo,
+                'pagina' => $tenant->pagina,
+                'telefono' => $tenant->telefono,
+            ];
+        }
+
+        return inertia('SetupMunicipio', [
+            'app_key' => $request->input('app_key'),
+            'tenant' => $tenant
+        ]);
     } else {
         return response()->file(resource_path('img/burro.png'));
     }
@@ -26,8 +49,9 @@ Route::post('/setup_municipio', function (Request $request) {
     if ($request->input('app_key') == env('APP_KEY')) {
         $data = $request->all();
 
-        \App\Models\Tenant::create([
-            'id' => $data['domain'],
+        \App\Models\Tenant::updateOrCreate([
+            'id' => $data['domain']
+        ], [
             'tenancy_db_name' => $data['db_name'],
             'tenancy_db_username' => $data['db_username'],
             'tenancy_db_password' => $data['db_password'],

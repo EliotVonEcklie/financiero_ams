@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('ip');
             $table->json('data');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const props = defineProps({ predio: Object })
 
-const title = 'Consultar Estado de Cuenta: Predio ' + props.predio.codigo_catastro
+const title = 'Consultar Factura Liquidación: Predio ' + props.predio.codigo_catastro
 
 const estatutoFlags = computed(() => {
     return {
@@ -19,34 +19,37 @@ const estatutoFlags = computed(() => {
 })
 
 const allSelected = ref(false)
-watch(allSelected, allSelected => {
-    props.predio.liquidacion.vigencias.forEach(v => v.selected = allSelected)
-})
+function allSelectedUpdate(evt) {
+    allSelected.value = evt.target.checked
+    props.predio.liquidacion.vigencias.forEach(v => v.selected = allSelected.value)
+}
 
-const selectedVigencias = computed(() => {
-    return props.predio.liquidacion.vigencias.filter(v => v.selected)
-})
-watch(selectedVigencias, selectedVigencias => {
+const selectedVigencias = computed(() =>
+    props.predio.liquidacion.vigencias.filter(v => v.selected)
+)
+watch(selectedVigencias, selectedVigencias =>
     allSelected.value = selectedVigencias.length === props.predio.liquidacion.vigencias.length
-})
+)
 
 function create() {
     props.predio.totales = {
-        bomberil: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.bomberil, 0),
-        alumbrado: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.alumbrado, 0),
-        ambiental: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.ambiental, 0),
-        intereses: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.total_intereses, 0),
-        descuentos: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.descuento_intereses, 0),
-        liquidacion: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.total_liquidacion, 0),
-        predial: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.predial, 0),
-        total_avaluo: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.valor_avaluo, 0)
+        bomberil: selectedVigencias.value.reduce((a, v) => a + v.bomberil, 0),
+        alumbrado: selectedVigencias.value.reduce((a, v) => a + v.alumbrado, 0),
+        ambiental: selectedVigencias.value.reduce((a, v) => a + v.ambiental, 0),
+        intereses: selectedVigencias.value.reduce((a, v) => a + v.total_intereses, 0),
+        descuentos: selectedVigencias.value.reduce((a, v) => a + v.descuento_intereses, 0),
+        liquidacion: selectedVigencias.value.reduce((a, v) => a + v.total_liquidacion, 0),
+        predial: selectedVigencias.value.reduce((a, v) => a + v.predial, 0),
+        total_avaluo: selectedVigencias.value.reduce((a, v) => a + v.valor_avaluo, 0)
     }
 
+    props.predio.factura_pagada = false
     props.predio.private = true
+    props.predio.liquidacion.vigencias.forEach(v => v.isSelected = v.selected)
 
-    axios.post(route('estado_cuentas.store', props.predio.id), { data: props.predio })
+    axios.post(route('factura_predials.store', props.predio.id), { data: props.predio })
     .then(res => {
-        window.open(route('estado_cuentas.show', res.data.id), '_blank')
+        window.open(route('factura_predials.show', res.data.id), '_blank')
     })
 }
 </script>
@@ -152,7 +155,7 @@ function create() {
                             <tr>
                                 <th scope="col" class="p-4">
                                     <div class="flex items-center">
-                                        <input id="checkbox-all-search" type="checkbox" v-model="allSelected" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <input id="checkbox-all-search" type="checkbox" :checked="allSelected" @input="allSelectedUpdate" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="checkbox-all-search" class="sr-only">checkbox</label>
                                     </div>
                                 </th>
@@ -314,7 +317,10 @@ function create() {
                     </table>
                 </div>
 
-                <button @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Generar estado de cuenta</button>
+                <button v-if="selectedVigencias.length !== 0" @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Generar factura de liquidación</button>
+                <div v-else class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                    <span class="font-medium">No ha seleccionado ninguna vigencia!</span> Para generar una factura debe seleccionar al menos una vigencia.
+                </div>
             </section>
         </main>
     </Layout>
