@@ -23,7 +23,8 @@ createInertiaApp({
         let app = createApp({ render: () => h(App, props) })
 
         app.config.globalProperties.$numbers = numbers
-        app.config.globalProperties.$month = (month) => new Date(new Date().getFullYear(), month - 1, 1).toLocaleString('es-CO', { month: 'long' })
+        app.config.globalProperties.$month = month => new Date(new Date().getFullYear(), month - 1, 1).toLocaleString('es-CO', { month: 'long' })
+        app.config.globalProperties.$date = date => new Date(date).toLocaleString('es-CO', { month: 'long', day: 'numeric', year: 'numeric' })
 
         app.use(plugin)
             .use(ZiggyVue)

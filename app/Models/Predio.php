@@ -63,17 +63,20 @@ class Predio extends Model
             ->first();
     }
 
-    public function estado_de_cuenta()
+    public function factura_predials()
     {
-        $pdf = Pdf::loadView('pdf.estado_de_cuenta', []);
-        return $pdf->stream();
+        return FacturaPredial::where('data->id', $this->id)->get();
     }
 
     /**
      * Get a predio by searching a query.
      */
-    public static function search(string $query) {
-        $predios = Predio::select(
+    public static function search(string|null $query, bool $sensible = true) {
+        if (!$query) {
+            return [];
+        }
+
+        $prediosQuery = Predio::select(
                 'predios.id',
                 'codigo_catastro',
                 'total',
@@ -86,20 +89,29 @@ class Predio extends Model
             ->join('historial_predios', 'predios.id', '=', 'predio_id')
             ->join('predio_tipos', 'predio_tipos.id', '=', 'predio_tipo_id')
             ->where('codigo_catastro', 'like', '%' . $query . '%')
-            ->orWhere('direccion', 'like', '%' . $query . '%')
-            ->orderBy('codigo_catastro', 'asc')
+            ->orWhere('direccion', 'like', '%' . $query . '%');
+
+        if (!$sensible) {
+            $prediosQuery = $prediosQuery
+                ->orWhere('documento', 'like', '%' . $query . '%')
+                ->orWhere('nombre_propietario', 'like', '%' . $query . '%');
+        }
+
+        $predios = $prediosQuery->orderBy('codigo_catastro', 'asc')
             ->take(50)
             ->get();
 
-        foreach ($predios as $predio) {
-            $predio->documento = Censor::str($predio->documento, -2);
-            $predio->nombre_propietario = Censor::str($predio->nombre_propietario);
+        if ($sensible) {
+            foreach ($predios as $predio) {
+                $predio->documento = Censor::str($predio->documento, -2);
+                $predio->nombre_propietario = Censor::str($predio->nombre_propietario);
+            }
         }
 
         return $predios;
     }
 
-    public static function show($id) {
+    public static function show($id, $sensible = true) {
         $predio = self::find($id);
 
         $liquidacion = new Liquidacion($predio->avaluos()->orderBy('vigencia', 'desc')->get());
@@ -109,7 +121,12 @@ class Predio extends Model
             'Código: ' + $predio->latest_avaluo()->codigo_destino_economico->codigo :
             $predio->latest_avaluo()->codigo_destino_economico->destino_economico->nombre;
 
+        $codigo_destino_economico = $predio->latest_avaluo()->codigo_destino_economico->codigo;
+
         $interes_vigente = Interes::getInteresVigente();
+
+        $documento = $sensible ? Censor::str($latest_historial->documento, -2) : $latest_historial->documento;
+        $nombre_propietario = $sensible ? Censor::str($latest_historial->nombre_propietario) : $latest_historial->nombre_propietario;
 
         return [
             'id' => $predio->id,
@@ -117,17 +134,20 @@ class Predio extends Model
             'total' => sprintf('%03d', $predio->total),
             'orden' => sprintf('%03d', $predio->orden),
             'valor_avaluo' => $predio->latest_avaluo()->valor_avaluo,
-            'documento' => Censor::str($latest_historial->documento, -2),
-            'nombre_propietario' => Censor::str($latest_historial->nombre_propietario),
+            'documento' => $documento,
+            'nombre_propietario' => $nombre_propietario,
             'direccion' => $latest_historial->direccion,
             'hectareas' => $latest_historial->hectareas,
             'metros_cuadrados' => $latest_historial->metros_cuadrados,
             'area_construida' => $latest_historial->area_construida,
             'predio_tipo' => $latest_historial->predio_tipo->nombre,
+            'predio_tipo_codigo' => $sensible ? null : $latest_historial->predio_tipo->codigo,
             'destino_economico' => $destino_economico,
+            'codigo_destino_economico' => $sensible ? null : $codigo_destino_economico,
             'interes_vigente' => $interes_vigente !== null ? $interes_vigente->moratorio : 0,
             'descuento_vigente' => $liquidacion->descuento_incentivo,
-            'liquidacion' => $liquidacion->toArray()
+            'liquidacion' => $liquidacion->toArray(),
+            'factura_predials' => $predio->factura_predials()
         ];
     }
 }

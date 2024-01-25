@@ -1,19 +1,19 @@
 function decimal (value: number): string {
-    return new Intl.NumberFormat('es-ES', {
+    return new Intl.NumberFormat('es-CO', {
         style: 'decimal'
-    }).format(value);
+    }).format(value)
 }
 
 function currency (value: number, currency: string): string {
-    return `${decimal(value)}  ${currency}`;
+    return `${decimal(value)}  ${currency}`
 }
 
 function cop (value: number): string {
-    return `$ ${currency(value, 'COP')}`;
+    return `$${decimal(value)}`
 }
 
 export default {
-    decimal: decimal,
-    currency: currency,
-    cop: cop
+    decimal,
+    currency,
+    cop
 }

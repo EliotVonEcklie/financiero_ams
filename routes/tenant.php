@@ -83,6 +83,7 @@ Route::middleware([
 
         Route::resource('upload_igac', UploadIgacController::class);
         Route::resource('estatutos', EstatutoController::class)->withTrashed();
+        Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['index', 'create', 'store', 'show']);
     });
 
     Route::name('public.')->group(function () {
