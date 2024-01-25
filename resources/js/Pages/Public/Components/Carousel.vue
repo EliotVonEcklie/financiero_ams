@@ -1,7 +1,7 @@
 <template>
-    <div id="controls-carousel" class="relative w-full" data-carousel="static">
+    <div id="controls-carousel" class="relative w-full lg:block md:hidden" data-carousel="static">
             <!-- Carousel wrapper -->
-            <div class="relative h-56 overflow-hidden rounded-lg md:h-98">
+            <div class="relative h-56 overflow-hidden rounded-lg">
                 <!-- Item 1 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <img :src="banner" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">

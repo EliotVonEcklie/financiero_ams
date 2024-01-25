@@ -380,6 +380,7 @@
                     </div>
                 </div>
                 <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="recibos" role="tabpanel" aria-labelledby="recibos-tab">
+                    <p class="lg:text-base md:text-2xl">Haz click en cualquier recibo generado para volverlo a imprimir</p>
                     <div class="mt-3 relative overflow-auto shadow-md sm:rounded-lg max-h-96">
                         <table class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

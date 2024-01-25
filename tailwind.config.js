@@ -10,7 +10,7 @@ export default {
         extend: {},
         colors: {
             'greenp1': '#31C48D',
-            'bluep': '#76A9FA',
+            'bluep': '#3F83F8',
             'greenp2': '#b0f2c2'
         }
     },
