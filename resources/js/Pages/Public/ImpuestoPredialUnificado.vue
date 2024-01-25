@@ -182,7 +182,7 @@
                         <button class="inline-block p-4 border-b-2 rounded-t-lg" id="periodos-tab" data-tabs-target="#periodos" type="button" role="tab" aria-controls="periodos" aria-selected="false">Periodos a liquidar</button>
                     </li>
                     <li class="me-2" role="presentation">
-                        <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="recibos-tab" data-tabs-target="#recibos" type="button" role="tab" aria-controls="recibos" aria-selected="false">Liquidaciones generadas</button>
+                        <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" @click="router.reload({ preserveState: true })" id="recibos-tab" data-tabs-target="#recibos" type="button" role="tab" aria-controls="recibos" aria-selected="false">Liquidaciones generadas</button>
                     </li>
                 </ul>
             </div>
@@ -437,7 +437,7 @@
 
 <script setup>
 import Layout from './Layout.vue'
-import { ref, nextTick, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { router } from '@inertiajs/vue3'
 import ModalPse from './Components/ModalPse.vue'
 import axios from 'axios'
@@ -446,7 +446,7 @@ const props = defineProps({ tenant: Object, predios: Object, predio: Object })
 const isCheckAll = ref(true)
 let predio = props.predio
 let vigencias = predio.liquidacion === undefined ? [] : predio.liquidacion.vigencias
-let facturasGeneradas = predio.factura_predials;
+const facturasGeneradas = computed(() => props.predio.factura_predials.reverse());
 
 onMounted(() => {
     isCheckAll.value = true
@@ -477,7 +477,8 @@ function createRecibo() {
     predio.totales = getTotal()
     predio.recibo_pagado = false
     predio.facturado_desde = periodosFacturados[0].vigencia
-    predio.facturado_hasta = periodosFacturados.length >1 ? periodosFacturados[periodosFacturados.length-1].vigencia : periodosFacturados[0].vigencia;
+    predio.facturado_hasta = periodosFacturados[periodosFacturados.length-1].vigencia;
+
     axios.post(route('public.factura_predials.store'), { data: predio })
     .then(res => {
         window.open(route('public.factura_predials.show', { factura_predial: res.data.id }), '_blank')
