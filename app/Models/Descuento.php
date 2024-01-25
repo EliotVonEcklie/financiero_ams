@@ -47,7 +47,7 @@ class Descuento extends Model
     {
         $lastDescuento = self::where('es_nacional', false)
             ->where('hasta', '>=', now()->month)
-            ->orderBy('hasta', 'desc')
+            ->orderBy('hasta', 'asc')
             ->first();
 
         return $lastDescuento !== null ?
