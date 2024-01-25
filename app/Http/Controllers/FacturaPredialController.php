@@ -17,13 +17,11 @@ class FacturaPredialController extends Controller
     {
         $data = $request->input('data');
 
-        $pague_hasta = Descuento::firstDayWithoutDescuento();
-
         $facturaPredial = FacturaPredial::create([
             'ip' => $request->ip(),
             'data' => array_merge($data, [
                 'barcode' => DNS1DFacade::getBarcodePNG('4445645656' /* $data['barcode_id'] */, 'C39'),
-                'pague_hasta' => $pague_hasta,
+                'pague_hasta' => Descuento::firstDayWithoutDescuento(),
             ])
         ]);
 
