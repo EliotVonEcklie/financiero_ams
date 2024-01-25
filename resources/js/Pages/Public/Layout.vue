@@ -121,7 +121,7 @@
             </div>
         </nav>
     </header>
-
+    <Banner/>
     <main class="mb-8 container mx-auto lg:m-auto md:mt-56">
         <slot :login ="login" :showModal="showModal" :hideModal="hideModal" />
     </main>
@@ -212,6 +212,7 @@ import { onMounted, ref } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { initFlowbite, Modal } from 'flowbite'
 import ModalRegistro from './Components/ModalRegistro.vue'
+import Banner from './Components/Carousel.vue'
 
 onMounted(() => {
     initFlowbite()
