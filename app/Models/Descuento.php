@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -40,5 +41,14 @@ class Descuento extends Model
             ->first();
 
         return $incentivo !== null ? $incentivo->porcentaje : 0;
+    }
+
+    public static function firstDayWithoutDescuento()
+    {
+        $lastDescuento = self::where('es_nacional', false)
+            ->orderBy('hasta', 'desc')
+            ->first();
+
+        return Carbon::createFromDate(null, $lastDescuento->hasta)->lastOfMonth();
     }
 }
