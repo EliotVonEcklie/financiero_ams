@@ -483,6 +483,7 @@ function createEstadoCuenta() {
 }
 
 function createRecibo() {
+    predio.recibo_pagado = false
     axios.post(route('public.factura_predials.store'), { data: predio })
     .then(res => {
         window.open(route('public.factura_predials.show', { factura_predial: res.data.id }), '_blank')

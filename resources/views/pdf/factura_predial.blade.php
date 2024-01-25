@@ -1,15 +1,14 @@
 @php
-    $pageBreak = count($facturaPredial->data['liquidacion']['vigencias']) >=6 ? 'page-break-after' :  "";
-    $marginBreak = count($facturaPredial->data['liquidacion']['vigencias']) >=6 ? 'margin-break' : "";
+    $limite = 8;
+    $constante = 8;
     $periodosFacturados = array_values(array_filter($facturaPredial->data['liquidacion']['vigencias'],function($filter){
         return $filter['isSelected'] == true;
     }));
-
+    $longitud = count($periodosFacturados);
+    $tablas = round($longitud/$limite) > 0 ? round($longitud/$limite) : 1;
+    $index = 0;
+    $total=0;
     $periodoFacturado =count($periodosFacturados)> 1 ? $periodosFacturados[count($periodosFacturados)-1]['vigencia'].' - '.$periodosFacturados[0]['vigencia'] : $periodosFacturados[0]['vigencia'];
-
-    /*$longitud = 10;
-    $pageBreak = $longitud >=6 ? 'page-break-after' :  "";
-    $marginBreak = $longitud >=6 ? 'margin-break' : "";*/
 @endphp
 
 <!DOCTYPE html>
@@ -165,26 +164,6 @@
         </style>
     </head>
     <body>
-        <header>
-            <table>
-                <tr>
-                    <td rowspan="2" class="w33">
-                        <div style="display: block; margin-left: auto; margin-right: auto; font-size: 16px; text-align: center;">
-                            <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="60" width="60"alt="">
-                        </div>
-                    </td>
-                    <td rowspan="2" class="w33 text-center">
-                        <p class="fs-2">{{ tenant()->nombre }}</p>
-                        <p>NIT: {{ tenant()->nit }}</p>
-                        <p>{{ tenant()->entidad }}</p>
-                    </td>
-                    <td class="bg-primary w-33 fs-2 fw-bold text-center">No. de liquidación</td>
-                </tr>
-                <tr>
-                    <td class="text-center">{{ $facturaPredial->id }}</td>
-                </tr>
-            </table>
-        </header>
         <footer>
             <table class="border-none">
                 <tr ><td colspan="10" class="border-none"></td></tr>
@@ -210,44 +189,64 @@
                 </tr>
             </table>
         </footer>
-        <main style="margin-top:3cm">
+        <main>
+            @for ( $i = 0;  $i < $tablas ;  $i++)
+            <div>
+                <table>
+                    <tr>
+                        <td rowspan="2" class="w33">
+                            <div style="display: block; margin-left: auto; margin-right: auto; font-size: 16px; text-align: center;">
+                                <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="60" width="60"alt="">
+                            </div>
+                        </td>
+                        <td rowspan="2" class="w33 text-center">
+                            <p class="fs-2">{{ tenant()->nombre }}</p>
+                            <p>NIT: {{ tenant()->nit }}</p>
+                            <p>{{ tenant()->entidad }}</p>
+                        </td>
+                        <td class="bg-primary w-33 fs-2 fw-bold text-center">No. de liquidación</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">{{ $facturaPredial->id }}</td>
+                    </tr>
+                </table>
+                <table class="border-none">
+                    <tr>
+                        <td colspan="10" class="border-none bg-primary fw-bold text-center fs-3">Recibo de cobro impuesto predial unificado</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td colspan="3" >
+                            <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
+                            <p class="fs-1">{{ $facturaPredial->data['codigo_catastro']}}</p>
+                        </td>
+                        <td colspan="3" >
+                            <p class="fs-1 vertical-top fw-bold">Dirección</p>
+                            <p class="fs-1">{{ $facturaPredial->data['direccion']}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="fs-1 vertical-top fw-bold">Nombres y apellidos</p>
+                            <p class="fs-1">{{ $facturaPredial->data['nombre_propietario']}}</p>
+                        </td>
+                        <td colspan="2">
+                            <p class="fs-1 vertical-top fw-bold">Identificación</p>
+                            <p class="fs-1">{{ $facturaPredial->data['documento']}}</p>
+                        </td>
+                        <td>
+                            <p class="fs-1 vertical-top fw-bold fw-bold">Área del terreno </p>
+                            <p class="fs-1">{{ $facturaPredial->data['hectareas']}} Ha - {{ $facturaPredial->data['metros_cuadrados']}} m2</p>
+                        </td>
+                        <td colspan="2">
+                            <p class="fs-1 vertical-top fw-bold">Área construida</p>
+                            <p class="fs-1">{{ $facturaPredial->data['area_construida']}} m2</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <table class="border-none">
-                <tr>
-                    <td colspan="10" class="border-none bg-primary fw-bold text-center fs-3">Recibo de cobro impuesto predial unificado</td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td colspan="3" >
-                        <p class="fs-1 vertical-top fw-bold">Referencia Catastral</p>
-                        <p class="fs-1">{{ $facturaPredial->data['codigo_catastro']}}</p>
-                    </td>
-                    <td colspan="3" >
-                        <p class="fs-1 vertical-top fw-bold">Dirección</p>
-                        <p class="fs-1">{{ $facturaPredial->data['direccion']}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p class="fs-1 vertical-top fw-bold">Nombres y apellidos</p>
-                        <p class="fs-1">{{ $facturaPredial->data['nombre_propietario']}}</p>
-                    </td>
-                    <td colspan="2">
-                        <p class="fs-1 vertical-top fw-bold">Identificación</p>
-                        <p class="fs-1">{{ $facturaPredial->data['documento']}}</p>
-                    </td>
-                    <td>
-                        <p class="fs-1 vertical-top fw-bold fw-bold">Área del terreno </p>
-                        <p class="fs-1">{{ $facturaPredial->data['hectareas']}} Ha - {{ $facturaPredial->data['metros_cuadrados']}} m2</p>
-                    </td>
-                    <td colspan="2">
-                        <p class="fs-1 vertical-top fw-bold">Área construida</p>
-                        <p class="fs-1">{{ $facturaPredial->data['area_construida']}} m2</p>
-                    </td>
-                </tr>
-            </table>
-
-            <table class="border-none {{ $pageBreak }}">
                 <tr class="bg-primary  p-1">
                     <th class="fs-0">Vigencia</th>
                     <th class="fs-0">Avaluo</th>
@@ -263,29 +262,32 @@
                     <th class="fs-0">Total</th>
                 </tr>
                 <tbody>
-                    @php
-                        $total=0;
-                    @endphp
-
-                    @foreach ($periodosFacturados as $vigencia)
+                    @for ( $j =  $index;  $j < $longitud ;  $j++)
                         @php
-                            $total +=$vigencia['total_liquidacion'];
+                            $total +=$periodosFacturados[$j]['total_liquidacion'];
                         @endphp
+                        @if ($j > $limite)
+                            @php
+                            $index += $constante;
+                            $limite +=$constante;
+                            @endphp
+                            @break
+                        @endif
                         <tr>
-                            <td class="fs-0">{{ $vigencia['vigencia'] }}</td>
-                            <td class="fs-0">${{ number_format($vigencia['valor_avaluo'],0,',','.')}} </td>
-                            <td class="fs-0">{{ $vigencia['tasa_por_mil'] }}</td>
-                            <td class="fs-0">${{ number_format($vigencia['predial'],0,',','.')}} </td>
-                            <td class="fs-0">${{ number_format($vigencia['predial_intereses'],0,',','.') }}</td>
-                            <td class="fs-0">${{ number_format($vigencia['total_intereses'],0,',','.') }}  </td>
-                            <td class="fs-0">${{ number_format($vigencia['descuento_intereses'],0,',','.') }}</td>
-                            <td class="fs-0">${{ number_format($vigencia['bomberil'],0,',','.') }}</td>
-                            <td class="fs-0">${{ number_format($vigencia['ambiental'],0,',','.') }}</td>
-                            <td class="fs-0">${{ number_format($vigencia['bomberil_intereses']+$vigencia['ambiental_intereses'],0,',','.') }}</td>
-                            <td class="fs-0">${{ number_format($vigencia['alumbrado'],0,',','.') }}</td>
-                            <td class="fs-0">${{ number_format($vigencia['total_liquidacion'],0,',','.') }}</td>
+                            <td class="fs-0">{{ $periodosFacturados[$j]['vigencia'] }}</td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['valor_avaluo'],0,',','.')}} </td>
+                            <td class="fs-0">{{ $periodosFacturados[$j]['tasa_por_mil'] }}</td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['predial'],0,',','.')}} </td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['predial_intereses'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['total_intereses'],0,',','.') }}  </td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['descuento_intereses'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['bomberil'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['ambiental'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['bomberil_intereses']+$periodosFacturados[$j]['ambiental_intereses'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['alumbrado'],0,',','.') }}</td>
+                            <td class="fs-0">${{ number_format($periodosFacturados[$j]['total_liquidacion'],0,',','.') }}</td>
                         </tr>
-                    @endforeach
+                    @endfor
                     <tr>
                         <td colspan="6" class="border-none"></td>
                         <td colspan="2" class="fs-2 bg-primary fw-bold">
@@ -303,7 +305,11 @@
                     <tr><td class="border-none" colspan="12"></td></tr>
                 </tbody>
             </table>
-            <table class="border-none {{ $marginBreak }}" >
+            @if ($i+1 != $tablas)
+                <div style="page-break-after: always;"></div>
+            @endif
+            @endfor
+            <table class="border-none" >
                 <tr>
                     <td class="border-none text-center fs-0"  colspan="10">
                         Contra la presente liquidacion procede el recurso de reconsideracion dentro de los dos (2) meses siguientes a su notificacion
