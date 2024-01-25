@@ -13,7 +13,7 @@ defineProps({ predios: Array })
             <h1 class="text-3xl text-left">{{ title }}</h1>
 
             <section class="border-t-2 mt-2 pt-6">
-                <SearchPredio :href="route('estado_cuentas.create')" :predios="predios" />
+                <SearchPredio :href="route('factura_predials.create')" :predios="predios" />
             </section>
         </main>
     </Layout>

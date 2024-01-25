@@ -89,6 +89,17 @@ Route::group([
         Route::resource('upload_igac', UploadIgacController::class);
         Route::resource('estatutos', EstatutoController::class)->withTrashed();
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['index', 'create', 'store', 'show']);
+        Route::controller(FacturaPredialController::class)
+            ->name('factura_predials.')
+            ->prefix('/factura_predials')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/search', 'search')->name('search');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::put('/{factura_predial}', 'update')->name('update');
+                Route::get('/{factura_predial}', 'show')->name('show');
+            });
     });
 
     Route::name('public.')->group(function () {

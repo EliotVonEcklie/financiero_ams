@@ -105,12 +105,14 @@ class Liquidacion
                 ->where('vigencia', $avaluo->vigencia - 1)
                 ->first();
 
-            $predial_anterior = $this->calculate_tarifa(
-                $avaluo_anterior->valor_avaluo,
-                $avaluo_anterior->tasa_por_mil
-            );
+            if($avaluo_anterior) {
+                $predial_anterior = $this->calculate_tarifa(
+                    $avaluo_anterior->valor_avaluo,
+                    $avaluo_anterior->tasa_por_mil
+                );
 
-            $result['predial'] = $result['predial'] > ($predial_anterior * 2) ? $predial_anterior : $result['predial'];
+                $result['predial'] = $result['predial'] > ($predial_anterior * 2) ? $predial_anterior : $result['predial'];
+            }
         }
 
         if ($this->descuento_incentivo > 0) {
@@ -173,6 +175,10 @@ class Liquidacion
 
             $result['total_liquidacion'] += $result['total_intereses'];
         }
+
+        $result['estatuto'] = $result['estatuto']->only(
+            'nombre', 'norma_predial', 'bomberil', 'ambiental', 'alumbrado', 'recibo_caja'
+        );
 
         $this->total_liquidacion += $result['total_liquidacion'];
         $this->total_valor_avaluo += $result['valor_avaluo'];

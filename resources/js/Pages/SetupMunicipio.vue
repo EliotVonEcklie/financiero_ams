@@ -1,29 +1,35 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3'
-import { onMounted } from 'vue'
+import { Head, useForm, router } from '@inertiajs/vue3'
+import { onMounted, ref } from 'vue'
 import { initFlowbite } from 'flowbite'
 
 onMounted(() => {
     initFlowbite()
 })
-const props = defineProps({ app_key: String })
+
+const title = 'Setup Municipio'
+
+const props = defineProps({ app_key: String, tenant: Object })
+
 const form = useForm({
     app_key: props.app_key,
-    domain: null,
-    db_name: null,
-    db_username: null,
-    db_password: null,
-    nombre: null,
-    nit: null,
-    lema: null,
+    domain: props.tenant?.domain,
+    db_name: props.tenant?.db_name,
+    db_username: props.tenant?.db_username,
+    db_password: props.tenant?.db_password,
+    nombre: props.tenant?.nombre,
+    nit: props.tenant?.nit,
+    lema: props.tenant?.lema,
     imagen: null,
-    direccion: null,
-    entidad: null,
-    correo: null,
-    pagina: null,
-    telefono: null
+    direccion: props.tenant?.direccion,
+    entidad: props.tenant?.entidad,
+    correo: props.tenant?.correo,
+    pagina: props.tenant?.pagina,
+    telefono: props.tenant?.telefono
 })
-const title = 'Setup Municipio'
+
+const tenant_id = ref('')
+
 </script>
 <template>
     <Head :title="title + ' Ideal10'"></Head>
@@ -32,6 +38,15 @@ const title = 'Setup Municipio'
         <h1 class="text-3xl text-left">{{ title }}</h1>
 
         <section class="border-t-2 mt-2 pt-6">
+            <div class="mb-5">
+                <div class="mb-5">
+                    <label for="tenant_id" class="block mb-2 text-sm font-medium">Buscar tenant</label>
+                    <input v-model="tenant_id" type="text" id="tenant_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+
+                <button @click="router.reload({ data: { app_key, tenant_id } })" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+            </div>
+
             <form @submit.prevent="form.post(route('setup_municipio'))">
                 <div class="mb-5">
                     <label for="app-key" class="block mb-2 text-sm font-medium">App Key</label>
@@ -92,6 +107,7 @@ const title = 'Setup Municipio'
                 </div>
 
                 <label for="imagen" class="block mb-2 text-sm font-medium">Imagen</label>
+                <img v-if="tenant?.imagen" :src="'data:image/jpg;base64,' + tenant.imagen">
                 <input class="block mb-5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="imagen" @input="form.imagen = $event.target.files[0]" type="file">
 
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Guardar</button>

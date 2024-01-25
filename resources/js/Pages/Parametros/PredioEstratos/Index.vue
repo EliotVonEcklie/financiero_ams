@@ -5,14 +5,12 @@ import StateIndicator from '~Components/StateIndicator.vue'
 import { router } from '@inertiajs/vue3'
 import axios from 'axios'
 
-const props = defineProps({ predioEstratos: Array })
+defineProps({ predioEstratos: Array })
 
-function softDelete(allSelected) {
-    props.predioEstratos.forEach(async x => {
-        if (allSelected || x.selected) {
-            await axios.put(route('predio_estratos.update', x.id), { 'toggle': true })
-        }
-    })
+function softDelete(selectedElements) {
+    selectedElements.forEach(async x =>
+        await axios.put(route('predio_estratos.update', x.id), { 'toggle': true })
+    )
 
     router.reload()
 }

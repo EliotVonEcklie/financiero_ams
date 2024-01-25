@@ -8,7 +8,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\UnauthorizedException;
-use Svg\Tag\Rect;
 
 class EstadoCuentaController extends Controller
 {
@@ -50,7 +49,7 @@ class EstadoCuentaController extends Controller
      */
     public function show(EstadoCuenta $estadoCuenta)
     {
-        if (($estadoCuenta->data['private'] ?? null) && !Auth::check()) {
+        if (($estadoCuenta->data['private'] ?? false) && !Auth::check()) {
             return tenant() ? to_route('login') : throw new UnauthorizedException();
         }
 
