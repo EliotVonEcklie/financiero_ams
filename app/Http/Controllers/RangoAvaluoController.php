@@ -52,7 +52,9 @@ class RangoAvaluoController extends Controller
     public function store(StoreRangoAvaluoRequest $request)
     {
         // Store the rango avaluo...
-        RangoAvaluo::create($request->validated());
+        $rangoAvaluo = RangoAvaluo::create($request->validated());
+        $rangoAvaluo->user_id = auth()->id();
+        $rangoAvaluo->save();
 
         return to_route('rango_avaluos.index');
     }
@@ -104,6 +106,8 @@ class RangoAvaluoController extends Controller
 
         // Update the rango avaluo...
         $rangoAvaluo->update($request->validated());
+        $rangoAvaluo->user_id = auth()->id();
+        $rangoAvaluo->save();
 
         return to_route('rango_avaluos.index');
     }

@@ -52,7 +52,9 @@ class VigenciaUnidadMonetariaController extends Controller
     public function store(StoreVigenciaUnidadMonetariaRequest $request)
     {
         // Store the unidad monetaria...
-        VigenciaUnidadMonetaria::create($request->validated());
+        $vigenciaUnidadMonetaria = VigenciaUnidadMonetaria::create($request->validated());
+        $vigenciaUnidadMonetaria->user_id = auth()->id();
+        $vigenciaUnidadMonetaria->save();
 
         return to_route('vigencia_unidad_monetarias.index');
     }
@@ -103,6 +105,8 @@ class VigenciaUnidadMonetariaController extends Controller
 
         // Update the unidad monetaria...
         $vigenciaUnidadMonetaria->update($request->validated());
+        $vigenciaUnidadMonetaria->user_id = auth()->id();
+        $vigenciaUnidadMonetaria->save();
 
         return to_route('vigencia_unidad_monetarias.index');
     }

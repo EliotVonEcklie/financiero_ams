@@ -41,7 +41,11 @@ class DescuentoController extends Controller
      */
     public function store(StoreDescuentoRequest $request)
     {
-        //
+        $descuento = Descuento::create($request->validated());
+        $descuento->user_id = auth()->id();
+        $descuento->save();
+
+        return to_route('descuentos.index');
     }
 
     /**
@@ -72,7 +76,19 @@ class DescuentoController extends Controller
      */
     public function update(UpdateDescuentoRequest $request, Descuento $descuento)
     {
-        //
+        if ($request->has('toggle')) {
+            if ($descuento->trashed()) {
+                $descuento->restore();
+            } else {
+                $descuento->delete();
+            }
+
+            return;
+        }
+
+        $descuento->update($request->validated());
+
+        return to_route('descuentos.index');
     }
 
     /**
@@ -80,6 +96,8 @@ class DescuentoController extends Controller
      */
     public function destroy(Descuento $descuento)
     {
-        //
+        $descuento->delete();
+
+        return to_route('descuentos.index');
     }
 }

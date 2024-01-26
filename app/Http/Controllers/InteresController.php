@@ -42,7 +42,9 @@ class InteresController extends Controller
      */
     public function store(StoreInteresRequest $request)
     {
-        Interes::create($request->validated());
+        $interes = Interes::create($request->validated());
+        $interes->user_id = auth()->id();
+        $interes->save();
 
         return to_route('interes.index');
     }
@@ -50,7 +52,7 @@ class InteresController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Interes $interes)
+    public function show(Interes $intere)
     {
 
     }
@@ -95,9 +97,9 @@ class InteresController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Interes $interes)
+    public function destroy(Interes $intere)
     {
-        $interes->delete();
+        $intere->delete();
 
         return to_route('interes.index');
     }
