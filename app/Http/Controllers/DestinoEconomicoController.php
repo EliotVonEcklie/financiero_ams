@@ -51,7 +51,7 @@ class DestinoEconomicoController extends Controller
     {
         // Store the destino economico...
         $destinoEconomico = DestinoEconomico::create($request->safe()->except('codigo_destino_economicos'));
-        $destinoEconomico->user_id = auth()->id;
+        $destinoEconomico->user_id = auth()->id();
         $destinoEconomico->save();
 
         foreach ($request->safe()['codigo_destino_economicos'] as $codigo_destino_economico) {
