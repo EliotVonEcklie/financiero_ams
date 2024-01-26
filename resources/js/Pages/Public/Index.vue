@@ -58,7 +58,7 @@
         </div>
         <section>
             <h2 class="lg:text-2xl md:text-4xl text-center font-medium text-gray-900 dark:text-white mb-8 mt-5">Te puede interesar</h2>
-            <div class="grid lg:grid-cols-6 md:grid-cols-3 items-center">
+            <div class="grid lg:grid-cols-5 md:grid-cols-3 items-center">
                 <div class="mb-3 max-w-sm bg-white dark:bg-gray-900">
                     <a href="#" class="flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-14 lg:h-14 md:w-24 md:h-24" viewBox="0 0 640 512"><path opacity="1" fill="#84b6f4" d="M384 32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H398.4c-5.2 25.8-22.9 47.1-46.4 57.3V448H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H320 128c-17.7 0-32-14.3-32-32s14.3-32 32-32H288V153.3c-23.5-10.3-41.2-31.6-46.4-57.3H128c-17.7 0-32-14.3-32-32s14.3-32 32-32H256c14.6-19.4 37.8-32 64-32s49.4 12.6 64 32zm55.6 288H584.4L512 195.8 439.6 320zM512 416c-62.9 0-115.2-34-126-78.9c-2.6-11 1-22.3 6.7-32.1l95.2-163.2c5-8.6 14.2-13.8 24.1-13.8s19.1 5.3 24.1 13.8l95.2 163.2c5.7 9.8 9.3 21.1 6.7 32.1C627.2 382 574.9 416 512 416zM126.8 195.8L54.4 320H199.3L126.8 195.8zM.9 337.1c-2.6-11 1-22.3 6.7-32.1l95.2-163.2c5-8.6 14.2-13.8 24.1-13.8s19.1 5.3 24.1 13.8l95.2 163.2c5.7 9.8 9.3 21.1 6.7 32.1C242 382 189.7 416 126.8 416S11.7 382 .9 337.1z"/></svg>
@@ -96,16 +96,6 @@
                     <div class="p-5 flex justify-center">
                         <a href="#">
                             <h5 class="mb-2 lg:text-base md:text-2xl text-center font-semibold tracking-tight text-gray-900 dark:text-white">Manual</h5>
-                        </a>
-                    </div>
-                </div>
-                <div class="mb-3 max-w-sm bg-white dark:bg-gray-900">
-                    <a href="#" class="flex justify-center items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-14 lg:h-14 md:w-24 md:h-24" viewBox="0 0 576 512"><path opacity="1" fill="#84b6f4" d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
-                    </a>
-                    <div class="p-5 flex justify-center">
-                        <a href="#">
-                            <h5 class="mb-2 lg:text-base md:text-2xl text-center font-semibold tracking-tight text-gray-900 dark:text-white">Videos tutoriales</h5>
                         </a>
                     </div>
                 </div>

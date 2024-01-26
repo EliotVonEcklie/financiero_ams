@@ -6,10 +6,10 @@
             <label for="floating_email" class="peer-focus:font-medium absolute lg:text-sm md:text-3xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Buscar por publicacion o descripción</label>
         </div>
         <div class="grid lg:grid-cols-2 md:grid-cols-1 lg:gap-4 md:gap-10 ">
-            <card-normatividad/>
-            <card-normatividad/>
-            <card-normatividad/>
-            <card-normatividad/>
+            <CardNormatividad/>
+            <CardNormatividad/>
+            <CardNormatividad/>
+            <CardNormatividad/>
         </div>
     </Layout>
 </template>
@@ -18,7 +18,6 @@
     import Layout from './Layout.vue'
     import CardNormatividad from './Components/CardNormatividad.vue'
     import { ref,reactive } from 'vue'
-import CardNormatividadVue from './Components/CardNormatividad.vue'
     defineProps({ tenant: Object })
 </script>
 
