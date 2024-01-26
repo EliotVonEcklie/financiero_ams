@@ -11,7 +11,7 @@ class StoreDescuentoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreDescuentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'es_nacional' => ['required', 'boolean'],
+            'hasta' => ['required', 'integer'],
+            'porcentaje' => ['required', 'integer']
         ];
     }
 }

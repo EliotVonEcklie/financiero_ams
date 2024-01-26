@@ -11,7 +11,7 @@ class UpdateDescuentoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateDescuentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'toggle' => ['nullable', 'boolean'],
+            'es_nacional' => ['exclude_if:toggle,true', 'required', 'boolean'],
+            'hasta' => ['exclude_if:toggle,true', 'required', 'integer'],
+            'porcentaje' => ['exclude_if:toggle,true', 'required', 'integer']
         ];
     }
 }
