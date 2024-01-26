@@ -33,6 +33,10 @@ class Tasificar implements ShouldQueue, ShouldBeUnique
         $avaluos = Avaluo::where('tasa_por_mil', -1)->lazyById();
 
         foreach ($avaluos as $avaluo) {
+            if ($avaluo->codigo_destino_economico->destino_economico === null) {
+                continue;
+            }
+
             $estratificacionesAvaluo = $estratificaciones->where('vigencia', $avaluo->vigencia)
                 ->where('predio_tipo_id', $avaluo->predio_tipo->id)
                 ->where('destino_economico_id', $avaluo->codigo_destino_economico->destino_economico->id)
