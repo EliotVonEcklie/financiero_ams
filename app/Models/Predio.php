@@ -118,7 +118,7 @@ class Predio extends Model
 
         $latest_historial = $predio->latest_historial_predio();
         $destino_economico = $predio->latest_avaluo()->codigo_destino_economico->destino_economico === null ?
-            'Código: ' + $predio->latest_avaluo()->codigo_destino_economico->codigo :
+            'Código: ' . $predio->latest_avaluo()->codigo_destino_economico->codigo :
             $predio->latest_avaluo()->codigo_destino_economico->destino_economico->nombre;
 
         $codigo_destino_economico = $predio->latest_avaluo()->codigo_destino_economico->codigo;
