@@ -111,7 +111,7 @@ class DestinoEconomicoController extends Controller
 
         // Update the destino economico...
         $destinoEconomico->update($request->safe()->except('codigo_destino_economicos'));
-        $destinoEconomico->user = auth()->user();
+        $destinoEconomico->user_id = auth()->id();
         $destinoEconomico->save();
 
         foreach ($request->safe()['codigo_destino_economicos'] as $codigo_destino_economico) {
