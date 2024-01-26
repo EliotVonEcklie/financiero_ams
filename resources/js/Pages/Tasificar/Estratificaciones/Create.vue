@@ -3,6 +3,7 @@ import Layout from '~Layouts/Tasificar.vue'
 import { useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { FwbSelect } from 'flowbite-vue'
+import numbers from '~/js/numbers'
 
 const props = defineProps({
     predioTipos: Array,
@@ -21,7 +22,9 @@ const predioTiposSelect = props.predioTipos.map(x => ({ value: x.id, name: x.nom
 const destinoEconomicosSelect = props.destinoEconomicos.map(x => ({ value: x.id, name: x.nombre }))
 const rangoAvaluosSelect = props.rangoAvaluos.map(x => ({
     value: { id: x.id, type: '\\App\\Models\\RangoAvaluo'},
-    name: x.id + ' | ' + 'Desde ' + x.desde + ' hasta ' + x.hasta + ' - ' + x.unidadMonetaria.nombre
+    name: x.id + ' | ' + 'Desde ' + numbers.currency(x.desde, x.unidadMonetaria.nombre) +
+        (x.hasta === -1 ? ' en adelante' :
+        ' hasta ' + numbers.currency(x.hasta, x.unidadMonetaria.nombre))
 }))
 const predioEstratosSelect = props.predioEstratos.map(x => ({
     value: { id: x.id, type: '\\App\\Models\\PredioEstrato' },
