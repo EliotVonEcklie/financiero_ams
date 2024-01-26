@@ -2,6 +2,39 @@
     <Layout :tenant="tenant" v-slot="{ login, showModal, hideModal }">
 
         <h2 class="text-2xl md:text-4xl text-center font-medium text-gray-900 dark:text-white mb-8 mt-5">Selección de impuestos</h2>
+        <div class="flex justify-center space-x-6">
+            <div class="flex justify-center">
+                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <a :href="route('public.impuesto_predial_unificado')" class="flex justify-center items-center">
+                        <svg class="lg:w-24 lg:h-24 fill-blue-900" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    </a>
+                    <div class="flex justify-center">
+                        <button type="button" @click="showModal('modalRegistro')" class="lg:text-sm md:text-2xl text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Impuesto predial unificado</button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <a :href="route('public.impuesto_predial_unificado')" class="flex justify-center items-center">
+                        <svg class="lg:w-24 lg:h-24 fill-blue-900" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"  viewBox="0 0 24 24"  fill="none"><g><rect fill="none" height="24" width="24"/></g><g><path d="M22,10v12H2V10l7-3v2l5-2l0,0l0,3H22z M17.2,8.5L18,2h3l0.8,6.5H17.2z M11,18h2v-4h-2V18z M7,18h2v-4H7V18z M17,14h-2v4h2 V14z"/></g></svg>
+                    </a>
+                    <div class="flex justify-center">
+                        <button type="button" @click="showModal('modalRegistro')" class="lg:text-sm md:text-2xl text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Impuesto predial unificado</button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <a :href="route('public.impuesto_predial_unificado')" class="flex justify-center items-center">
+                        <svg class="lg:w-24 lg:h-24 fill-blue-900" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+                    </a>
+                    <div class="flex justify-center">
+                        <button type="button" @click="showModal('modalRegistro')" class="lg:text-sm md:text-2xl text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Impuesto predial unificado</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
         <div class="grid lg:grid-cols-3 gap-4 h-72 md:grid-cols-1 md:h-full">
             <div class="lg:w-full lg:h-72  bg-white dark:bg-gray-900 relative">
                 <a :href="route('public.impuesto_predial_unificado')" class="flex justify-center items-center">
@@ -55,7 +88,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div>-->
         <section>
             <h2 class="lg:text-2xl md:text-4xl text-center font-medium text-gray-900 dark:text-white mb-8 mt-5">Te puede interesar</h2>
             <div class="grid lg:grid-cols-5 md:grid-cols-3 items-center">
