@@ -187,6 +187,8 @@ class EstratificacionController extends Controller
             'tarifa_type' => $validated['tarifa']['type'],
             'tasa' => $validated['tasa']
         ]);
+        $estratificacion->user_id = auth()->id();
+        $estratificacion->save();
 
         return to_route('estratificacions.index');
     }

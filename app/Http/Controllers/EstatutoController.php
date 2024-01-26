@@ -54,7 +54,9 @@ class EstatutoController extends Controller
      */
     public function store(StoreEstatutoRequest $request)
     {
-        Estatuto::create($request->validated());
+        $estatuto = Estatuto::create($request->validated());
+        $estatuto->user_id = auth()->id();
+        $estatuto->save();
 
         return to_route('estatutos.index');
     }
@@ -82,7 +84,21 @@ class EstatutoController extends Controller
      */
     public function update(UpdateEstatutoRequest $request, Estatuto $estatuto)
     {
+        if ($request->has('toggle')) {
+            if ($estatuto->trashed()) {
+                $estatuto->restore();
+            } else {
+                $estatuto->delete();
+            }
 
+            return;
+        }
+
+        $estatuto->update($request->validated());
+        $estatuto->user_id = auth()->id();
+        $estatuto->save();
+
+        return to_route('estatutos.index');
     }
 
     /**

@@ -41,7 +41,9 @@ class DescuentoController extends Controller
      */
     public function store(StoreDescuentoRequest $request)
     {
-        Descuento::create($request->validated());
+        $descuento = Descuento::create($request->validated());
+        $descuento->user_id = auth()->id();
+        $descuento->save();
 
         return to_route('descuentos.index');
     }
