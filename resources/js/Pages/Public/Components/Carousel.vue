@@ -1,7 +1,7 @@
 <template>
     <div id="controls-carousel" class="relative w-full lg:block md:hidden" data-carousel="static">
             <!-- Carousel wrapper -->
-            <div class="relative h-1/2 overflow-hidden rounded-lg">
+            <div class="relative h-[50vh] overflow-hidden">
                 <!-- Item 1 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <img :src="banner" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
@@ -33,6 +33,7 @@
 
 <script lang="ts" setup>
     import banner from '~/img/public/banner.png'
+    import banner1 from '~/img/public/banner1.jpg'
 </script>
 
 <style scoped>
