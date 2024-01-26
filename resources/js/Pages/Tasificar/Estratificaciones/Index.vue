@@ -22,7 +22,7 @@ function formatTarifa($numbers, tarifa) {
 
         return `Rango ${tarifa.id} : ${desde} ~ ${hasta}`
     } else if (tarifa.type == "\\App\\Models\\PredioEstrato") {
-        return 'Estrato ' . tarifa.estrato
+        return 'Estrato ' + tarifa.estrato
     } else {
         return 'Tarifa Desconocida'
     }
@@ -35,7 +35,7 @@ function formatTarifa($numbers, tarifa) {
             empty-message="No hay estratificaciones registradas."
             :headers="['Id', 'Vigencia', 'Tipo Predio', 'Destino Económico', 'Tarifa', 'Tasa', 'Estado']"
             :elements="estratificaciones"
-            :allow-create="true" :allow-edit="true" :allow-soft-delete="true" :allow-delete="false"
+            allow-create allow-edit allow-soft-delete
             @create="router.get(route('estratificacions.create'))"
             @edit="x => router.get(route('estratificacions.edit', x))"
             @soft-delete="softDelete"
