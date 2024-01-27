@@ -462,7 +462,7 @@ const alertText = ref("");
 let alertTimeOut;
 let predio = props.predio
 let vigencias = predio.liquidacion === undefined ? [] : predio.liquidacion.vigencias
-const facturasGeneradas = predio.length > 0 ? [] : computed(() => props.predio.factura_predials.reverse());
+const facturasGeneradas = predio.length > 0 ? [] : computed(() => props.predio.factura_predials);
 
 onMounted(() => {
     isCheckAll.value = true
