@@ -17,6 +17,10 @@ class VigenciaUnidadMonetaria extends Model
         'valor'
     ];
 
+    protected $casts = [
+        'valor' => 'float'
+    ];
+
     public function unidad_monetaria(): BelongsTo
     {
         return $this->belongsTo(UnidadMonetaria::class);
