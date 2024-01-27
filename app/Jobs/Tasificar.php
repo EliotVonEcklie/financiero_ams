@@ -50,7 +50,7 @@ class Tasificar implements ShouldQueue, ShouldBeUnique
                         $vigencia_unidad = VigenciaUnidadMonetaria::where('unidad_monetaria_id', $rangoAvaluo->unidad_monetaria->id)
                             ->first();
 
-                        if ($vigencia_unidad === null || $vigencia_unidad->valor !== 1) {
+                        if ($vigencia_unidad === null || $vigencia_unidad->valor !== 1.0) {
                             throw new RuntimeException('La unidad monetaria "Unidad" no tiene valor 1!');
                         }
                     } else {
