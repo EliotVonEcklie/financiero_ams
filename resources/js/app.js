@@ -23,6 +23,8 @@ createInertiaApp({
         app.config.globalProperties.$numbers = numbers
         app.config.globalProperties.$month = month => new Date(new Date().getFullYear(), month - 1, 1).toLocaleString('es-CO', { month: 'long' })
         app.config.globalProperties.$date = date => new Date(date).toLocaleString('es-CO', { month: 'long', day: 'numeric', year: 'numeric' })
+        app.config.globalProperties.$goBack = () => window.history.back()
+        app.config.globalProperties.$goForward = () => window.history.forward()
 
         app.use(plugin)
             .use(ZiggyVue)
