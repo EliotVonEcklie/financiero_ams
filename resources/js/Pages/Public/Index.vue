@@ -1,22 +1,22 @@
 <template>
     <Layout :tenant="tenant" v-slot="{ login, showModal, hideModal }">
 
-        <h2 class="text-2xl md:text-4xl text-center font-medium text-gray-900 dark:text-white mb-8 mt-5">Selección de impuestos</h2>
+        <!--<h2 class="text-2xl md:text-4xl text-center font-medium text-gray-900 dark:text-white mb-8 mt-5">Selección de impuestos</h2>
         <div class="flex justify-center space-x-6">
             <div class="flex justify-center">
                 <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a :href="route('public.impuesto_predial_unificado')" class="flex justify-center items-center">
-                        <svg class="lg:w-24 lg:h-24 fill-blue-900" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                        <svg class="lg:w-24 lg:h-24 fill-blue-600" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
                     </a>
                     <div class="flex justify-center">
-                        <button type="button" @click="showModal('modalRegistro')" class="lg:text-sm md:text-2xl text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Impuesto predial unificado</button>
+                        <button type="button" @click="showModal('modalRegistro')" class="lg:text-sm md:text-2xl text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Impuesto predial unificado</button>
                     </div>
                 </div>
             </div>
             <div class="flex justify-center">
                 <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a :href="route('public.impuesto_predial_unificado')" class="flex justify-center items-center">
-                        <svg class="lg:w-24 lg:h-24 fill-blue-900" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"  viewBox="0 0 24 24"  fill="none"><g><rect fill="none" height="24" width="24"/></g><g><path d="M22,10v12H2V10l7-3v2l5-2l0,0l0,3H22z M17.2,8.5L18,2h3l0.8,6.5H17.2z M11,18h2v-4h-2V18z M7,18h2v-4H7V18z M17,14h-2v4h2 V14z"/></g></svg>
+                        <svg class="lg:w-24 lg:h-24 fill-blue-600" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"  viewBox="0 0 24 24"  fill="none"><g><rect fill="none" height="24" width="24"/></g><g><path d="M22,10v12H2V10l7-3v2l5-2l0,0l0,3H22z M17.2,8.5L18,2h3l0.8,6.5H17.2z M11,18h2v-4h-2V18z M7,18h2v-4H7V18z M17,14h-2v4h2 V14z"/></g></svg>
                     </a>
                     <div class="flex justify-center">
                         <button type="button" @click="showModal('modalRegistro')" class="lg:text-sm md:text-2xl text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Impuesto predial unificado</button>
@@ -26,14 +26,14 @@
             <div class="flex justify-center">
                 <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a :href="route('public.impuesto_predial_unificado')" class="flex justify-center items-center">
-                        <svg class="lg:w-24 lg:h-24 fill-blue-900" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+                        <svg class="lg:w-24 lg:h-24 fill-blue-600" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
                     </a>
                     <div class="flex justify-center">
                         <button type="button" @click="showModal('modalRegistro')" class="lg:text-sm md:text-2xl text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Impuesto predial unificado</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!--
         <div class="grid lg:grid-cols-3 gap-4 h-72 md:grid-cols-1 md:h-full">
             <div class="lg:w-full lg:h-72  bg-white dark:bg-gray-900 relative">
@@ -89,6 +89,35 @@
                 </div>
             </div>
         </div>-->
+        <section class="mb-20">
+            <div class="flex justify-center lg:flex-row md:flex-col lg:space-x-6 md:space-x-0 lg:space-y-0 md:space-y-6 mt-20">
+                <div class="flex justify-center">
+                    <div class="flex items-center flex-col text-center max-w-sm p-6 dark:bg-gray-800 dark:border-gray-700">
+                        <svg class="lg:w-14 lg:h-14 md:w-24 md:h-24 fill-blue-600" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="none"><g><rect fill="none" height="24" width="24"/></g><g><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20c-4.41,0-8-3.59-8-8c0-4.41,3.59-8,8-8 s8,3.59,8,8C20,16.41,16.41,20,12,20z M12.89,11.1c-1.78-0.59-2.64-0.96-2.64-1.9c0-1.02,1.11-1.39,1.81-1.39 c1.31,0,1.79,0.99,1.9,1.34l1.58-0.67c-0.15-0.44-0.82-1.91-2.66-2.23V5h-1.75v1.26c-2.6,0.56-2.62,2.85-2.62,2.96 c0,2.27,2.25,2.91,3.35,3.31c1.58,0.56,2.28,1.07,2.28,2.03c0,1.13-1.05,1.61-1.98,1.61c-1.82,0-2.34-1.87-2.4-2.09L8.1,14.75 c0.63,2.19,2.28,2.78,3.02,2.96V19h1.75v-1.24c0.52-0.09,3.02-0.59,3.02-3.22C15.9,13.15,15.29,11.93,12.89,11.1z"/></g></svg>
+                        <h5 class="mb-4 lg:text-xl md:text-2xl font-bold dark:text-white">Pagos rápidos</h5>
+                        <p class="lg:text-base md:text-2xl dark:text-white">Realiza tus pagos en minutos, sin complicaciones ni demoras</p>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="flex items-center flex-col text-center max-w-sm p-6 dark:bg-gray-800 dark:border-gray-700">
+                        <svg class="lg:w-14 lg:h-14 md:w-24 md:h-24 fill-blue-600" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="none"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6.5 10h-2v7h2v-7zm6 0h-2v7h2v-7zm8.5 9H2v2h19v-2zm-2.5-9h-2v7h2v-7zm-7-6.74L16.71 6H6.29l5.21-2.74m0-2.26L2 6v2h19V6l-9.5-5z"/></svg>
+                        <h5 class="mb-4 lg:text-xl md:text-2xl font-bold dark:text-white">Todo en un Solo Lugar</h5>
+                        <p class="lg:text-base md:text-2xl dark:text-white">Centraliza tus obligaciones: impuestos prediales, industria y comercio, y retenciones, en una plataforma fácil de usar</p>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="flex items-center flex-col text-center max-w-sm p-6 dark:bg-gray-800 dark:border-gray-700">
+                        <svg class="lg:w-14 lg:h-14 md:w-24 md:h-24 fill-blue-600" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="none"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                        <h5 class="mb-4 lg:text-xl md:text-2xl font-bold dark:text-white">Seguridad garantizada</h5>
+                        <p class="lg:text-base md:text-2xl dark:text-white">Protegemos tu información con las últimas medidas de seguridad. Paga con confianza.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mb-20">
+            <FormContacto :tenant="tenant"/>
+        </section>
+        <!--
         <section>
             <h2 class="lg:text-2xl md:text-4xl text-center font-medium text-gray-900 dark:text-white mb-8 mt-5">Te puede interesar</h2>
             <div class="grid lg:grid-cols-5 md:grid-cols-3 items-center">
@@ -155,13 +184,13 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
     </Layout>
 </template>
 
 <script setup>
 import Layout from './Layout.vue'
-
+import FormContacto from './Components/FormContacto.vue';
 
 defineProps({ tenant: Object })
 defineEmits(['hideModal', 'showModal'])
