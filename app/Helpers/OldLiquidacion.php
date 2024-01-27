@@ -2,7 +2,6 @@
 
 namespace App\Helpers;
 
-use App\Calculations\Liquidacion;
 use App\Models\Descuento;
 use App\Models\Interes;
 use Illuminate\Support\Facades\DB;
