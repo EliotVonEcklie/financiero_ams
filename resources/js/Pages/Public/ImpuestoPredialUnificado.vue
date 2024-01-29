@@ -456,8 +456,8 @@ const isCheckAll = ref(true)
 const alertText = ref("");
 let alertTimeOut;
 let predio = props.predio
-let vigencias = predio.liquidacion === undefined ? [] : predio.liquidacion.vigencias
-const facturasGeneradas = predio.length > 0 ? [] : computed(() => props.predio.factura_predials);
+let vigencias = predio.liquidacion?.vigencias ?? []
+const facturasGeneradas = computed(() => props.predio?.factura_predials ?? [])
 
 onMounted(() => {
     isCheckAll.value = true

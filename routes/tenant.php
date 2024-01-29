@@ -16,6 +16,7 @@ use App\Http\Controllers\PredioTipoController;
 use App\Http\Middleware\FinancieroAuth;
 use App\Http\Middleware\SetTenantDefaultParameter;
 use App\Jobs\Tasificar;
+use App\Models\Avaluo;
 use App\Models\Predio;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -79,8 +80,15 @@ Route::group([
             Route::get('/dispatch', function () {
                 Tasificar::dispatch();
 
-                return to_route('tasificar.index');
+                return to_route('tasificar.process');
             })->name('tasificar.dispatch');
+
+            Route::get('/process', function () {
+                return inertia('Tasificar/Process', [
+                    'predios' => Avaluo::where('tasa_por_mil', -1)->get(),
+                    'prediosTasa' => Avaluo::whereNot('tasa_por_mil', -1)->get()
+                ]);
+            })->name('tasificar.process');
 
             Route::resource('rango_avaluos', RangoAvaluoController::class)->withTrashed();
             Route::resource('estratificacions', EstratificacionController::class)->withTrashed();
