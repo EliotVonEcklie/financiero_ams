@@ -19,7 +19,11 @@ function softDelete(selectedElements) {
 
 function softDeleteOne(id) {
     axios.put(route('factura_predials.update', id), { 'toggle': true })
-    .then(router.reload)
+    .then(router.reload())
+}
+
+function openPdf(evt) {
+    evt.target.dispatchEvent(new MouseEvent('click', { ctrlKey: true }))
 }
 </script>
 
@@ -70,7 +74,7 @@ function softDeleteOne(id) {
                         </td>
 
                         <td class="px-6 py-4">
-                            <a :href="route('factura_predials.show', { factura_predial: element.id })" target="_blank" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            <a :href="route('factura_predials.show', { factura_predial: element.id })" target="_blank" @click.prevent="openPdf" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                                 Ver PDF
                             </a>
                         </td>

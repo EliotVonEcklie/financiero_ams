@@ -93,7 +93,13 @@ class FacturaPredialController extends Controller
         }
 
         return Pdf::loadView('pdf.factura_predial', [
-            'facturaPredial' => $facturaPredial
+            'facturaPredial' => [
+                'id' => $facturaPredial->id,
+                'ip' => $facturaPredial,
+                'data' => $facturaPredial->data,
+                'created_at' => $facturaPredial->created_at,
+                'state' => !$facturaPredial->trashed()
+            ]
         ])->stream($facturaPredial->id . '_' . now()->format('YmdHis') . '_factura-de-pago.pdf');
     }
 }

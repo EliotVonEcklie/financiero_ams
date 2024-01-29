@@ -13,7 +13,6 @@ use App\Http\Controllers\RangoAvaluoController;
 use App\Http\Controllers\UnidadMonetariaController;
 use App\Http\Controllers\VigenciaUnidadMonetariaController;
 use App\Http\Controllers\PredioTipoController;
-use App\Http\Controllers\PazSalvoController;
 use App\Http\Middleware\FinancieroAuth;
 use App\Http\Middleware\SetTenantDefaultParameter;
 use App\Jobs\Tasificar;
@@ -98,17 +97,9 @@ Route::group([
         Route::resource('upload_igac', UploadIgacController::class);
         Route::resource('estatutos', EstatutoController::class)->withTrashed();
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['index', 'create', 'store', 'show']);
-        Route::controller(FacturaPredialController::class)
-            ->name('factura_predials.')
-            ->prefix('/factura_predials')
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/search', 'search')->name('search');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/', 'store')->name('store');
-                Route::put('/{factura_predial}', 'update')->name('update');
-                Route::get('/{factura_predial}', 'show')->name('show');
-            });
+
+        Route::get('/factura_predials/search', [FacturaPredialController::class, 'search'])->name('factura_predials.search');
+        Route::resource('factura_predials', FacturaPredialController::class)->withTrashed();
     });
 
     Route::name('public.')->group(function () {
@@ -161,6 +152,5 @@ Route::group([
 
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
         Route::resource('factura_predials', FacturaPredialController::class)->only(['store', 'show']);
-        Route::get('/paz_salvos',[PazSalvoController::class,'show']);
     });
 });
