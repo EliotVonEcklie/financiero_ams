@@ -1,17 +1,16 @@
 <template>
     <header>
         <ModalRegistro :login="login" @showModal="showModal" @hideModal="hideModal" :tenant="tenant"/>
-
         <nav id="main-nav" :class="{'bg-white text-black':navBarScrollActive,'text-white':!navBarScrollActive}" class="fixed top-0 w-full px-3 transition-all bg-transparent border-gray-200 dark:bg-gray-900 md:top-0 md:z-40">
             <div class="flex flex-wrap justify-between items-center w-full p-3">
                 <Link :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img :src="img" class="lg:h-20 md:h-40" alt="Logo Entidad" />
+                    <img :src="img" class="xl:h-20 lg:h-24 md:h-36" alt="Logo Entidad" />
                     <div class="flex flex-col">
-                        <span  class="self-center lg:text-2xl font-semibold whitespace-nowrap md:text-3xl ">{{ tenant.nombre.toUpperCase() }} - META</span>
-                        <span  class="lg:text-sm  md:text-2xl">{{ tenant.entidad.toUpperCase() }}</span>
+                        <span  class="self-center xl:text-2xl lg:text-3xl font-semibold whitespace-nowrap md:text-3xl ">{{ tenant.nombre.toUpperCase() }} - META</span>
+                        <span  class="xl:text-sm lg:text-2xl  md:text-2xl">{{ tenant.entidad.toUpperCase() }}</span>
                     </div>
                 </Link>
-                <div class="lg:block md:hidden px-4 py-3">
+                <div class="xl:block lg:hidden md:hidden px-4 py-3">
                     <div class="flex items-center justify-center">
                         <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                             <li class="px-2.5 py-2.5  rounded-lg hover:bg-blue-600 hover:text-white">
@@ -51,16 +50,16 @@
                             <li class="px-2.5 py-2.5  rounded-lg hover:bg-blue-600 hover:text-white">
                                 <Link :href="route('public.contacto')">Contacto</Link>
                             </li>
+                            <li class="flex items-center">
+                                <button :class="{'border border-white':!navBarScrollActive,'border border-blue-600 text-blue-600':navBarScrollActive}" type="button" @click="showModal('modalRegistro')" class="hover:text-white hover:border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-600">Iniciar sesión</button>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <div class="flex items-center md:hidden lg:block">
-                    <button :class="{'border border-white':!navBarScrollActive,'border border-blue-600 text-blue-600':navBarScrollActive}" type="button" @click="showModal('modalRegistro')" class="hover:text-white hover:border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-600">Iniciar sesión</button>
-                </div>
-                <div class="flex items-center md:block lg:hidden ">
+                <div class="flex items-center lg:block xl:hidden md:block ">
                     <button :class="{'border border-white':!navBarScrollActive,'border border-blue-600 text-blue-600':navBarScrollActive}" type="button" @click="openMobileNav()" class="hover:text-white hover:border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-600">
                         <span class="sr-only">Open main menu</span>
-                        <svg class="w-14 h-14" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                        <svg class="lg:h-8 lg:w-8 md:w-14 md:h-14" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
                         </svg>
                     </button>
@@ -71,7 +70,7 @@
             <div class=" h-full bg-white overflow-y-auto dark:bg-gray-700" >
                 <div class="flex justify-between items-center mt-4 p-4">
                     <Link :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img :src="img" class="h-20 md:h-40" alt="Logo Entidad" />
+                        <img :src="img" class="xl:h-20 lg:h-24 md:h-36" alt="Logo Entidad" />
                         <div class="flex flex-col">
                             <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                             <span class="text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
@@ -92,8 +91,8 @@
                         <Link :href="route('public.impuesto_predial_unificado')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto predial unificado</Link>
                     </li>
                     <li class="p-5 hover:bg-blue-600 transition-all">
-                        <Link v-if="login" href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</Link>
-                        <button type="button" v-else @click="showModal('modalRegistro')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</button>
+                        <Link v-if="login" href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto industria y comercio</Link>
+                        <button type="button" v-else @click="showModal('modalRegistro')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Impuesto industria y comercio</button>
                     </li>
                     <li class="p-5 hover:bg-blue-600 transition-all">
                         <Link v-if="login" href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</Link>
@@ -119,7 +118,7 @@
         </nav>
     </header>
     <Carousel :tenant="tenant" :login ="login" :showModal="showModal" :hideModal="hideModal"/>
-    <main class="mb-8 container mx-auto lg:m-auto">
+    <main class="mb-8 container mx-auto">
         <slot :login ="login" :showModal="showModal" :hideModal="hideModal" :navBarScrollActive="navBarScrollActive" />
     </main>
     <footer class="bg-gray-100 dark:bg-gray-900 mt-10 lg:h-auto md:h-screen p-10">
