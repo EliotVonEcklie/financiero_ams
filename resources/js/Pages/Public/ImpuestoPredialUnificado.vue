@@ -385,7 +385,6 @@
                         <table class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3"></th>
                                     <th scope="col" class="px-6 py-3">
                                         Nro
                                     </th>
@@ -405,17 +404,13 @@
                                         Total
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Pagada
+                                        Estado de pago
                                     </th>
-                                    <th scope="col" class="px-6 py-3"></th>
                                 </tr>
                             </thead>
                             <tbody v-if="predio != '' && facturasGeneradas.length > 0">
                                 <tr v-for="factura in facturasGeneradas" :key="factura.id" @click="showRecibo(factura.id)" class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-6 py-4">
-                                        <svg v-if="factura.data.recibo_pagado" class="fill-green-400" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="none"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"/></svg>
-                                        <svg v-else class="fill-red-500" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="none"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"/></svg>
-                                    </td>
+
                                     <td class="px-6 py-4">
                                         {{ factura.id }}
                                     </td>
@@ -435,9 +430,9 @@
                                         {{ formatNumber(factura.data.totales.liquidacion) }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ factura.data.recibo_pagado ? 'Si' : 'No' }}
+                                        <span v-if="factura.data.recibo_pagado" class="bg-green-500 text-white lg:text-xs md:text-2xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Pagado</span>
+                                        <span v-else class="bg-red-500 text-white lg:text-xs md:text-2xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Sin pagar</span>
                                     </td>
-                                    <td class="px-6 py-4"></td>
                                 </tr>
                             </tbody>
                         </table>
