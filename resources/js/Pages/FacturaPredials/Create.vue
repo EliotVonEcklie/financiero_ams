@@ -31,7 +31,7 @@ watch(selectedVigencias, selectedVigencias =>
     allSelected.value = selectedVigencias.length === props.predio.liquidacion.vigencias.length
 )
 
-const pdfUrl = ref('')
+const pdfUrl = ref(null)
 
 function create() {
     props.predio.totales = {
@@ -57,7 +57,17 @@ function create() {
 <template>
     <Layout :title="title">
         <main class="p-4 mt-[69px] text-gray-900 dark:text-white">
-            <h1 class="text-3xl text-left">{{ title }}</h1>
+            <div class="flex flex-row justify-between">
+                <h1 class="text-3xl text-left">{{ title }}</h1>
+
+                <a v-if="pdfUrl" :href="pdfUrl" target="_blank" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ver PDF</a>
+                <div v-else>
+                    <button v-if="selectedVigencias.length !== 0" @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Generar factura de liquidación</button>
+                    <div v-else class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                        <span class="font-medium">No ha seleccionado ninguna vigencia!</span> Para generar una factura debe seleccionar al menos una vigencia.
+                    </div>
+                </div>
+            </div>
 
             <section class="border-t-2 mt-2 pt-6">
                 <h2 class="text-2xl text-left mb-5">Información del predio</h2>
@@ -316,15 +326,6 @@ function create() {
                         </tfoot>
                     </table>
                 </div>
-
-                <div v-if="pdfUrl === ''">
-                    <button v-if="selectedVigencias.length !== 0" @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Generar factura de liquidación</button>
-                    <div v-else class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
-                        <span class="font-medium">No ha seleccionado ninguna vigencia!</span> Para generar una factura debe seleccionar al menos una vigencia.
-                    </div>
-                </div>
-                <Link v-else :href="pdfUrl" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ver PDF</Link>
-
             </section>
         </main>
     </Layout>
