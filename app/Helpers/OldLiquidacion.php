@@ -10,8 +10,10 @@ class OldLiquidacion
 {
     public static function save(Liquidacion $liquidacion)
     {
+        $liquidacion_array = $liquidacion->toArray();
+
         $tesoliquidapredial = DB::table('tesoliquidapredial')->create([
-            'codigocatastral' => $liquidacion->avaluo->predio->codigo_catastro,
+            'codigocatastral' => $liquidacion_array->avaluo->predio->codigo_catastro,
             'fecha' => now(),
             'vigencia' => $liquidacion->avaluo->vigencia,
             'tercero' => '',
@@ -44,5 +46,7 @@ class OldLiquidacion
             'estado' => 'N',
             'user' => ''
         ]);
+
+        DB::table('tesoliquidapredial_det')->create([]);
     }
 }

@@ -89,7 +89,7 @@ class FacturaPredialController extends Controller
     public function show(FacturaPredial $facturaPredial)
     {
         if (($facturaPredial->data['private'] ?? false) && !Auth::check()) {
-            return tenant() ? to_route('login') : throw new UnauthorizedException();
+            throw new UnauthorizedException();
         }
 
         return Pdf::loadView('pdf.factura_predial', [

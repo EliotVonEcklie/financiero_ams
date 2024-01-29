@@ -77,14 +77,9 @@ class Predio extends Model
         }
 
         $prediosQuery = Predio::select(
-                'predios.id',
-                'codigo_catastro',
-                'total',
-                'orden',
-                'documento',
-                'nombre_propietario',
-                'direccion',
-                'predio_tipos.nombre as predio_tipo'
+                'historial_predios.id',
+                'predio_id',
+                'max(fecha)'
             )
             ->join('historial_predios', 'predios.id', '=', 'predio_id')
             ->join('predio_tipos', 'predio_tipos.id', '=', 'predio_tipo_id')
@@ -117,9 +112,8 @@ class Predio extends Model
         $liquidacion = new Liquidacion($predio->avaluos()->orderBy('vigencia', 'desc')->get());
 
         $latest_historial = $predio->latest_historial_predio();
-        $destino_economico = $predio->latest_avaluo()->codigo_destino_economico->destino_economico === null ?
-            'Código: ' . $predio->latest_avaluo()->codigo_destino_economico->codigo :
-            $predio->latest_avaluo()->codigo_destino_economico->destino_economico->nombre;
+        $destino_economico = $predio->latest_avaluo()->codigo_destino_economico->destino_economico?->nombre ??
+            'Código: ' . $predio->latest_avaluo()->codigo_destino_economico->codigo;
 
         $codigo_destino_economico = $predio->latest_avaluo()->codigo_destino_economico->codigo;
 
@@ -144,7 +138,7 @@ class Predio extends Model
             'predio_tipo_codigo' => $sensible ? null : $latest_historial->predio_tipo->codigo,
             'destino_economico' => $destino_economico,
             'codigo_destino_economico' => $sensible ? null : $codigo_destino_economico,
-            'interes_vigente' => $interes_vigente !== null ? $interes_vigente->moratorio : 0,
+            'interes_vigente' => $interes_vigente?->moratorio ?? 0,
             'descuento_vigente' => $liquidacion->descuento_incentivo,
             'liquidacion' => $liquidacion->toArray(),
             'factura_predials' => $predio->factura_predials()
