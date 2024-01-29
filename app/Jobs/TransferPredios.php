@@ -57,7 +57,7 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
             'avaluo' => $predio->latest_avaluo()->valor_avaluo,
             'vigencia' => $predio->latest_avaluo()->vigencia,
             'estado' => 'S',
-            'tipopredio' => strtolower($predio->latest_avaluo()->predio_tipo->nombre),
+            'tipopredio' => strtolower(substr($predio->latest_avaluo()->predio_tipo->nombre, 0, 6)),
             'clasifica' => $predio->latest_avaluo()->predio_tipo->nombre === 'Rural' ? 1 : ($predio->latest_avaluo()->predio_tipo->nombre === 'Urbano' ? 2 : 0),
             'estratos' => ''
         ];
@@ -101,7 +101,7 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
                 'met2' => $avaluo->metros_cuadrados,
                 'areacon' => $avaluo->area_construida,
                 'tasa' => $avaluo->tasa_por_mil,
-                'tipopredio' => $avaluo->predio_tipo->nombre === 'Rural' ? 1 : ($avaluo->predio_tipo->nombre === 'Urbano' ? 2 : 0),
+                'tipopredio' => substr($avaluo->predio_tipo->nombre, 0, 5) === 'Rural' ? 1 : (substr($avaluo->predio_tipo->nombre, 0, 6) === 'Urbano' ? 2 : 0),
                 'estratos' => '',
                 'destino_economico' => $avaluo->codigo_destino_economico->codigo,
                 'tasa_bomberil' => 0
