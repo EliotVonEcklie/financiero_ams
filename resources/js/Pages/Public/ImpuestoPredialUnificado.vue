@@ -503,6 +503,7 @@ function dateIsoToGregorian(date){
 }
 function createEstadoCuenta() {
     predio.totales = getTotal(true);
+    predio.factura_predials = undefined
 
     axios.post(route('public.estado_cuentas.store'), { data: predio })
     .then(res => {
@@ -519,6 +520,7 @@ function createRecibo() {
     predio.factura_pagada = false
     predio.facturado_desde = periodosFacturados[0].vigencia
     predio.facturado_hasta = periodosFacturados[periodosFacturados.length-1].vigencia;
+    predio.factura_predials = undefined;
 
     axios.post(route('public.factura_predials.store'), { data: predio })
     .then(res => {
