@@ -161,6 +161,17 @@
                 height: 120px;
                 width: 100vw;
             }
+            .state{
+                top: 50%;
+                left: 50%;
+                position: fixed;
+                font-size: 4cm;
+                color:#FF0000;
+                opacity: 0.5;
+                transform: translate(-50%,-50%);
+                z-index: -10;
+                text-transform: uppercase;
+            }
         </style>
     </head>
     <body>
@@ -189,6 +200,9 @@
                 </tr>
             </table>
         </footer>
+        @if(!$facturaPredial->state)
+        <div class="state">anulado</div>
+        @endif
         <main>
             @for ( $i = 0;  $i < $tablas ;  $i++)
             <div>
