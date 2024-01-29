@@ -63,7 +63,7 @@
 
                 </div>
             </div>
-            <ListRedesSociales class="mt-5" />
+            <ListRedesSociales :tenant="tenant" class="mt-5" />
         </div>
     </div>
 </template>

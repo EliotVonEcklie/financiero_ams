@@ -143,13 +143,12 @@
         </style>
     </head>
     <body>
-
         <footer>
             <table class="border-none">
                 <tr ><td colspan="10" class="border-none"></td></tr>
                 <tr>
                     <td class="border-none">
-                        <p class="text-center">
+                        <p class="text-center fs-">
                             Señor contribuyente: La Alcaldía Municipal del {{ tenant()->nombre }} META apoyado en la modernización y depuración de la
                             información existente, en caso de no ver algún pago que usted realizó, le solicitamos anexar los documentos correspondientes a
                             pagos de vigencias anteriores para actualización de su estado de cuenta.
@@ -167,16 +166,16 @@
                 </tr>
                 <tr >
                     <td class= "border-none">
-                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $estadoCuenta->created_at->format('Y-m-d H:i:s') }}</p>
+                        <p class="fs-s-1 text-start">Fecha y hora elaboración: {{ $estadoCuenta->created_at->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none">
-                        <p class="fs-0 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
+                        <p class="fs-s-1 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none" colspan="8">
-                        <p class="fs-0 text-center">Dirección IP: {{ $estadoCuenta->ip }}</p>
+                        <p class="fs-s-1 text-center">Dirección IP: {{ $estadoCuenta->ip }}</p>
                     </td>
                     <td class="border-none">
-                        <p class="fs-0 text-right page-num"></p>
+                        <p class="fs-s-1 text-right page-num"></p>
                     </td>
                 </tr>
             </table>

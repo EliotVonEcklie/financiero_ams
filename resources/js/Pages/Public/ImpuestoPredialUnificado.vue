@@ -213,7 +213,7 @@
                             <span>Imprimir estado de cuenta</span>
                             <svg class="fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM80 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm16 96H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm0 32v64H288V256H96zM240 416h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
                         </button>
-                        <button type="button" disabled @click="createRecibo" class="cursor-not-allowed flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-gray-300 bg-gray-100  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
+                        <button type="button" @click="createPazSalvo" class="cursor-not-allowed flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-gray-300 bg-gray-100  font-bold rounded-lg lg:text-sm md:text-2xl px-2 py-2.5 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
                             <span>Imprimir paz y salvo</span>
                             <svg class="fill-gray-300 dark:fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
                         </button>
@@ -511,7 +511,9 @@ function createEstadoCuenta() {
         window.open(route('public.estado_cuentas.show', { estado_cuenta: res.data.id }), '_blank')
     })
 }
-
+function createPazSalvo(){
+    window.open(route('public.paz_salvos'));
+}
 function createRecibo() {
     let periodosFacturados = vigencias.filter(vigencia => vigencia.isSelected);
     periodosFacturados = periodosFacturados.reverse()

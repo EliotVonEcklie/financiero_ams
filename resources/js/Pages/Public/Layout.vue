@@ -151,7 +151,7 @@
                     <li> <Link :href="route('public.preguntas')" class="hover:underline">Preguntas frecuentes</Link></li>
                 </ul>
             </nav>
-            <ListRedesSociales class="flex justify-center"/>
+            <ListRedesSociales :tenant ="tenant" class="flex justify-center"/>
         </div>
         <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <ul class="flex justify-center space-x-6 lg:text-base md:text-2xl text-gray-500 dark:text-gray-400 font-medium">
