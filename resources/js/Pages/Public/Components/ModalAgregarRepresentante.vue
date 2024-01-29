@@ -85,7 +85,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const props = defineProps(['idRepresentante','objRepresentante','hideModal']);
+const props = defineProps(['idRepresentante','arrRepresentante','hideModal']);
 const emits = defineEmits(['addRepresentante']);
 let txtDocumento = ref()
 let txtSelectDocumento = ref('Seleccione tipo de documento');
@@ -96,13 +96,14 @@ let txtSegundoApellido =ref()
 let txtSelectRepresentante = ref('Seleccione tipo de representante')
 let txtTelefono = ref()
 let txtCorreo = ref()
-let txtId = ref(0)
-
+let txtId = props.arrRepresentante.length > 0 ? props.arrRepresentante[0].id : ref()
+let contador = 0;
 function addRepresentante(){
-    txtId.value++;
+    console.log(props.arrRepresentante);
+    contador +=1;
     let obj =
     {
-        "id":txtId.value,
+        "id":contador,
         "tipo_documento":txtSelectDocumento.value,
         "documento":txtDocumento.value,
         "nombre":txtNombre.value,
@@ -119,7 +120,6 @@ function addRepresentante(){
 function resetFields(){
     txtSelectDocumento.value = 'Seleccione tipo de documento'
     txtSelectRepresentante.value = "Seleccione tipo de representante"
-    txtId.value = ""
     txtDocumento.value = ""
     txtNombre.value = ""
     txtSegundoNombre.value = ""

@@ -430,7 +430,7 @@
                                         {{ formatNumber(factura.data.totales.liquidacion) }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span v-if="factura.data.recibo_pagado" class="bg-green-500 text-white lg:text-xs md:text-2xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Pagado</span>
+                                        <span v-if="factura.data.factura_pagada" class="bg-green-500 text-white lg:text-xs md:text-2xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Pagado</span>
                                         <span v-else class="bg-red-500 text-white lg:text-xs md:text-2xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Sin pagar</span>
                                     </td>
                                 </tr>
@@ -518,7 +518,7 @@ function createRecibo() {
     let periodosFacturados = vigencias.filter(vigencia => vigencia.isSelected);
     periodosFacturados = periodosFacturados.reverse()
     predio.totales = getTotal()
-    predio.recibo_pagado = false
+    predio.factura_pagada = false
     predio.facturado_desde = periodosFacturados[0].vigencia
     predio.facturado_hasta = periodosFacturados[periodosFacturados.length-1].vigencia;
 
