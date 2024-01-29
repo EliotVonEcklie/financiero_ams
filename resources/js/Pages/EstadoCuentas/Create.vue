@@ -53,7 +53,7 @@ function create() {
 
 <template>
     <Layout :title="title">
-        <main class="p-4 mt-[69px] text-gray-900 dark:text-white">
+        <main class="p-4 pt-20 text-gray-900 dark:text-white">
             <div class="flex flex-row justify-between">
                 <h1 class="text-3xl text-left">{{ title }}</h1>
 
