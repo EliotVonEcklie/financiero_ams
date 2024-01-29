@@ -40,7 +40,7 @@ return [
             'queue' => 'default',
             'retry_after' => 2400,
             'after_commit' => false,
-            'connection' => 'central',
+            'connection' => 'mysql',
         ],
 
         'beanstalkd' => [
