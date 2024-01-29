@@ -296,7 +296,7 @@
                             @if ($j > $limite)
                                 @php
                                     $index += $constante;
-                                    $limite +=$constante
+                                    $limite +=$constante;
                                 @endphp
                                 @break
                             @endif

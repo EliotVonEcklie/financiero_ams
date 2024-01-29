@@ -219,7 +219,7 @@
                         </button>
                     </div>
                     <div  class="mt-3 relative overflow-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
-                        <table  class="w-full lg:text-xs md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <table  class="w-full lg:text-xs md:text-2xl text-center  text-gray-500 dark:text-gray-400">
                             <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="p-4">
@@ -249,16 +249,16 @@
                                     <th scope="col" class="px-6 py-3">
                                         Total Intereses Predial
                                     </th>
-                                    <th v-if="vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3">
+                                    <th  scope="col" class="px-6 py-3">
                                         Sobretasa Bomberil
                                     </th>
-                                    <th v-if="vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
+                                    <th  scope="col" class="px-6 py-3">
                                         Sobretasa Ambiental
                                     </th>
-                                    <th v-if="vigencias[0].estatuto.bomberil || vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3">
+                                    <th  scope="col" class="px-6 py-3">
                                         Sobretasa intereses
                                     </th>
-                                    <th v-if="vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3">
+                                    <th  scope="col" class="px-6 py-3">
                                         Alumbrado
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -270,7 +270,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="vigencia in vigencias" :key="vigencia.vigencia"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr v-for="vigencia in vigencias" :key="vigencia.vigencia"  class="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="w-4 p-4">
                                         <div class="flex items-center">
                                             <input id="checkbox-table-search-3" type="checkbox" :checked="vigencia.isSelected" @change="evt => updateCheckAll(evt, vigencia)" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -298,17 +298,17 @@
                                     <td class="px-6 py-4">
                                         {{formatNumber(vigencia.total_intereses)}}
                                     </td>
-                                    <td v-if="vigencias[0].estatuto.bomberil" class="px-6 py-4">
-                                        {{ formatNumber(vigencia.bomberil) }}
+                                    <td  class="px-6 py-4">
+                                        {{ vigencias[0].estatuto.bomberil ? formatNumber(vigencia.bomberil) : formatNumber(0) }}
                                     </td>
-                                    <td v-if="vigencias[0].estatuto.ambiental" class="px-6 py-4">
-                                        {{ formatNumber(vigencia.ambiental) }}
+                                    <td  class="px-6 py-4">
+                                        {{ vigencias[0].estatuto.bomberil ? formatNumber(vigencia.ambiental) : formatNumber(0) }}
                                     </td>
-                                    <td v-if="vigencias[0].estatuto.ambiental || vigencias[0].estatuto.bomberil" class="px-6 py-4">
-                                        {{ formatNumber(vigencia.ambiental_intereses + vigencia.bomberil_intereses) }}
+                                    <td  class="px-6 py-4">
+                                        {{ vigencias[0].estatuto.ambiental || vigencias[0].estatuto.bomberil ? formatNumber(vigencia.ambiental_intereses + vigencia.bomberil_intereses) : formatNumber(0) }}
                                     </td>
-                                    <td v-if="vigencias[0].estatuto.alumbrado" class="px-6 py-4">
-                                        {{ formatNumber(vigencia.alumbrado) }}
+                                    <td  class="px-6 py-4">
+                                        {{ vigencias[0].estatuto.alumbrado ? formatNumber(vigencia.alumbrado) : formatNumber(0) }}
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ formatNumber(vigencia.descuento_intereses) }}
@@ -317,27 +317,26 @@
                                         {{ formatNumber(vigencia.total_liquidacion) }}
                                     </td>
                                 </tr>
-                                <tr class="font-bold text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <td></td>
+                                <tr class="text-center font-bold text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <td colspan="2" class="px-2 py-4 text-bold">
                                         Total avaluo
                                     </td>
-                                    <td class="px-2 py-4 text-bold">
+                                    <td colspan="2" class="px-2 py-4 text-bold">
                                         Total Predial
                                     </td>
-                                    <td colspan="2" v-if="vigencias[0].estatuto.bomberil" class="px-2 py-4 text-bold ">
+                                    <td colspan="2"  class="px-2 py-4 text-bold ">
                                         Total Bomberil
                                     </td>
 
-                                    <td  colspan="2" v-if="vigencias[0].estatuto.ambiental" class="px-2 py-4 text-bold ">
+                                    <td colspan="2"  class="px-2 py-4 text-bold ">
                                         Total Ambiental
                                     </td>
 
-                                    <td  colspan="2" v-if="vigencias[0].estatuto.alumbrado" class="px-2 py-4 text-bold ">
+                                    <td colspan="2"  class="px-2 py-4 text-bold ">
                                         Total Alumbrado
                                     </td>
 
-                                    <td colspan="2"  class="px-2 py-4 text-bold ">
+                                    <td   class="px-2 py-4 text-bold ">
                                         Total Intereses
                                     </td>
 
@@ -348,24 +347,23 @@
                                         Total Liquidación
                                     </td>
                                 </tr>
-                                <tr class="border-b border-gray-200 dark:border-gray-700">
-                                    <td></td>
-                                    <td colspan="2" class="px-2 py-4 dark:bg-gray-800">
+                                <tr class="text-center border-b border-gray-200 dark:border-gray-700">
+                                    <td  colspan="2" class="px-2 py-4 dark:bg-gray-800">
                                         <p class="px-5 py-2">{{ formatNumber(getTotal().total_avaluo) }}</p>
                                     </td>
-                                    <td class="px-2 py-4 dark:bg-gray-800">
+                                    <td colspan="2" class="px-2 py-4 dark:bg-gray-800">
                                         <p class="px-5 py-2">{{ formatNumber(getTotal().predial) }}</p>
                                     </td>
-                                    <td colspan="2" v-if="predio !='' && vigencias[0].estatuto.bomberil" class="px-2 py-4 dark:bg-gray-800">
-                                        <p class="px-5 py-2">{{ formatNumber(getTotal().bomberil) }}</p>
-                                    </td>
-                                    <td colspan="2" v-if="predio !='' && vigencias[0].estatuto.ambiental" class="px-2 py-4 dark:bg-gray-800">
-                                        <p class="px-5 py-2">{{ formatNumber(getTotal().ambiental) }}</p>
-                                    </td>
-                                    <td colspan="2" v-if="predio !='' && vigencias[0].estatuto.alumbrado" class="px-2 py-4 dark:bg-gray-800">
-                                        <p class="px-5 py-2">{{ formatNumber(getTotal().alumbrado) }}</p>
+                                    <td  colspan="2" class="px-2 py-4 dark:bg-gray-800">
+                                        <p class="px-5 py-2">{{ predio !='' && vigencias[0].estatuto.bomberil ? formatNumber(getTotal().bomberil) : formatNumber(0) }}</p>
                                     </td>
                                     <td colspan="2" class="px-2 py-4 dark:bg-gray-800">
+                                        <p class="px-5 py-2">{{ predio !='' && vigencias[0].estatuto.ambiental ? formatNumber(getTotal().ambiental) : formatNumber(0) }}</p>
+                                    </td>
+                                    <td colspan="2"  class="px-2 py-4 dark:bg-gray-800">
+                                        <p class="px-5 py-2">{{ predio !='' && vigencias[0].estatuto.alumbrado ? formatNumber(getTotal().alumbrado) : formatNumber(0) }}</p>
+                                    </td>
+                                    <td  class="px-2 py-4 dark:bg-gray-800">
                                         <p class="px-5 py-2 ">{{ formatNumber(getTotal().intereses) }}</p>
                                     </td>
                                     <td class="px-2 py-4  dark:bg-gray-800">
