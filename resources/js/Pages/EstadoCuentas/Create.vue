@@ -30,6 +30,8 @@ watch(selectedVigencias, selectedVigencias => {
     allSelected.value = selectedVigencias.length === props.predio.liquidacion.vigencias.length
 })
 
+const pdfUrl = ref('')
+
 function create() {
     props.predio.totales = {
         bomberil: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.bomberil, 0),
@@ -45,9 +47,7 @@ function create() {
     props.predio.private = true
 
     axios.post(route('estado_cuentas.store', props.predio.id), { data: props.predio })
-    .then(res => {
-        window.open(route('estado_cuentas.show', res.data.id), '_blank')
-    })
+    .then(res => pdfUrl.value = route('estado_cuentas.show', res.data.id))
 }
 </script>
 
@@ -314,7 +314,9 @@ function create() {
                     </table>
                 </div>
 
-                <button @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Generar estado de cuenta</button>
+                <button v-if="pdfUrl !== ''" @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Generar estado de cuenta</button>
+                <Link v-else :href="pdfUrl" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ver PDF</Link>
+
             </section>
         </main>
     </Layout>

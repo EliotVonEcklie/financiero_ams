@@ -31,6 +31,8 @@ watch(selectedVigencias, selectedVigencias =>
     allSelected.value = selectedVigencias.length === props.predio.liquidacion.vigencias.length
 )
 
+const pdfUrl = ref('')
+
 function create() {
     props.predio.totales = {
         bomberil: selectedVigencias.value.reduce((a, v) => a + v.bomberil, 0),
@@ -48,9 +50,7 @@ function create() {
     props.predio.liquidacion.vigencias.forEach(v => v.isSelected = v.selected)
 
     axios.post(route('factura_predials.store', props.predio.id), { data: props.predio })
-    .then(res => {
-        window.open(route('factura_predials.show', res.data.id), '_blank')
-    })
+    .then(res => pdfUrl.value = route('factura_predials.show', res.data.id))
 }
 </script>
 
@@ -317,10 +317,14 @@ function create() {
                     </table>
                 </div>
 
-                <button v-if="selectedVigencias.length !== 0" @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Generar factura de liquidación</button>
-                <div v-else class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
-                    <span class="font-medium">No ha seleccionado ninguna vigencia!</span> Para generar una factura debe seleccionar al menos una vigencia.
+                <div v-if="pdfUrl === ''">
+                    <button v-if="selectedVigencias.length !== 0" @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Generar factura de liquidación</button>
+                    <div v-else class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                        <span class="font-medium">No ha seleccionado ninguna vigencia!</span> Para generar una factura debe seleccionar al menos una vigencia.
+                    </div>
                 </div>
+                <Link v-else :href="pdfUrl" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ver PDF</Link>
+
             </section>
         </main>
     </Layout>
