@@ -476,7 +476,7 @@ function showRecibo(id){
     let dateActual =new Date();
     dateVencimiento.setHours(23,59,0,0)
     dateActual.setHours(horaActual.getHours(), horaActual.getMinutes(),0,0);
-    if(factura.data.recibo_pagado){
+    if(factura.data.factura_pagada){
         window.clearTimeout(alertTimeOut)
         hideAlert("La factura ya está pagada");
         return false;
