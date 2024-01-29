@@ -13,6 +13,7 @@ use App\Http\Controllers\RangoAvaluoController;
 use App\Http\Controllers\UnidadMonetariaController;
 use App\Http\Controllers\VigenciaUnidadMonetariaController;
 use App\Http\Controllers\PredioTipoController;
+use App\Http\Controllers\PazSalvoController;
 use App\Http\Middleware\FinancieroAuth;
 use App\Http\Middleware\SetTenantDefaultParameter;
 use App\Jobs\Tasificar;
@@ -160,5 +161,6 @@ Route::group([
 
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
         Route::resource('factura_predials', FacturaPredialController::class)->only(['store', 'show']);
+        Route::get('/paz_salvos',[PazSalvoController::class,'show']);
     });
 });
