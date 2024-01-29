@@ -1,6 +1,6 @@
 <script setup>
 import Layout from '~Layouts/Private.vue'
-import { Link, router } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
 import axios from 'axios'
 import Table from '~Components/Table.vue'
 import StateIndicator from '~Components/StateIndicator.vue'
@@ -25,7 +25,7 @@ function softDeleteOne(id) {
 
 <template>
     <Layout :title="title">
-        <main class="p-4 mt-[69px] text-gray-900 dark:text-white">
+        <main class="p-4 pt-20 text-gray-900 dark:text-white">
             <h1 class="text-3xl text-left">{{ title }}</h1>
 
             <section class="border-t-2 mt-2 pt-6">
@@ -70,9 +70,9 @@ function softDeleteOne(id) {
                         </td>
 
                         <td class="px-6 py-4">
-                            <Link :href="href" :data="{ predio: element.id }" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            <a :href="route('factura_predials.show', { factura_predial: element.id })" target="_blank" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                                 Ver PDF
-                            </Link>
+                            </a>
                         </td>
                     </template>
                 </Table>

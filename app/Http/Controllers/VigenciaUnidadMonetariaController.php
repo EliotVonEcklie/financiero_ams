@@ -76,7 +76,7 @@ class VigenciaUnidadMonetariaController extends Controller
             'vigenciaUnidadMonetaria' => [
                 'id' => $vigenciaUnidadMonetaria->id,
                 'vigencia' => $vigenciaUnidadMonetaria->vigencia,
-                'unidad_monetaria_id' => $vigenciaUnidadMonetaria->unidadMonetaria->id,
+                'unidad_monetaria_id' => $vigenciaUnidadMonetaria->unidad_monetaria->id,
                 'valor' => $vigenciaUnidadMonetaria->valor
             ],
             'unidadMonetarias' => UnidadMonetaria::all()->map(function ($unidadMonetaria) {

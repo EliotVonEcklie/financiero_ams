@@ -21,4 +21,7 @@ export default defineConfig({
             '~': path.resolve(__dirname, 'resources'),
         },
     },
+    build: {
+        chunkSizeWarningLimit: 1000,
+    }
 });

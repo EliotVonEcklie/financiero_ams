@@ -16,9 +16,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class ImportPredios implements ShouldQueue, ShouldBeUnique
+class ImportPredios implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 2400;
 
     private $predio_tipos;
     private $tesopredios;
@@ -78,6 +85,14 @@ class ImportPredios implements ShouldQueue, ShouldBeUnique
     public function import_historial_predio($tesopredioavaluo, $tesopredio, $predio)
     {
         $predio_tipo = $this->predio_tipos->where('codigo', substr($tesopredio->cedulacatastral, 0, 2))->first();
+
+        if ($predio_tipo === null) {
+            Storage::put('err_predios/importpredios/' . now() . '.csv',
+                $tesopredioavaluo->codigocatastral . ',' . $tesopredioavaluo->tot . ',' . $tesopredioavaluo->ord . "\n"
+            );
+
+            $predio_tipo = $this->predio_tipos->first();
+        }
 
         $codigo_destino_economico = CodigoDestinoEconomico::firstOrCreate([
             'codigo' => $tesopredioavaluo->destino_economico

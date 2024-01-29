@@ -9,7 +9,7 @@ defineProps({ predios: Array })
 
 <template>
     <Layout :title="title">
-        <main class="p-4 mt-[69px] text-gray-900 dark:text-white">
+        <main class="p-4 pt-20 text-gray-900 dark:text-white">
             <h1 class="text-3xl text-left">{{ title }}</h1>
 
             <section class="border-t-2 mt-2 pt-6">

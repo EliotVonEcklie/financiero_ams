@@ -7,7 +7,7 @@ defineProps({ title: String })
 
 <template>
     <Layout :title="title + ' - Parámetros Generales'" sidebar>
-        <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-[301px] h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Menú">
+        <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-[301px] pt-20 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Menú">
             <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                 <ul class="space-y-2 font-medium">
                     <li>
@@ -49,7 +49,7 @@ defineProps({ title: String })
             </div>
         </aside>
 
-        <main class="p-4 mt-[69px] sm:ml-[301px] text-gray-900 dark:text-white">
+        <main class="p-4 pt-20 sm:ml-[301px] text-gray-900 dark:text-white">
             <h1 class="text-3xl text-left">{{ title }}</h1>
 
             <section class="border-t-2 mt-2 pt-6">
