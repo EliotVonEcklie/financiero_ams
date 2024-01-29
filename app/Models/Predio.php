@@ -77,9 +77,14 @@ class Predio extends Model
         }
 
         $prediosQuery = Predio::select(
-                'historial_predios.id',
-                'predio_id',
-                'max(fecha)'
+                'predios.id',
+                'codigo_catastro',
+                'total',
+                'orden',
+                'documento',
+                'nombre_propietario',
+                'direccion',
+                'predio_tipos.nombre as predio_tipo'
             )
             ->join('historial_predios', 'predios.id', '=', 'predio_id')
             ->join('predio_tipos', 'predio_tipos.id', '=', 'predio_tipo_id')
