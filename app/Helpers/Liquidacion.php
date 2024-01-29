@@ -69,6 +69,7 @@ class Liquidacion
     {
         $result = [
             'vigencia' => $avaluo->vigencia,
+            'avaluo_id' => $avaluo->id,
             'estatuto' => $this->estatutos
                 ->where('vigencia_desde', '<=', $avaluo->vigencia)
                 ->where('vigencia_hasta', '>=', $avaluo->vigencia)
