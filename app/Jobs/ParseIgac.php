@@ -19,7 +19,7 @@ use App\Models\HistorialPredio;
 use App\Models\PredioEstrato;
 use App\Models\PredioTipo;
 
-class ParseIgac implements ShouldQueue, ShouldBeUnique
+class ParseIgac implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -28,7 +28,7 @@ class ParseIgac implements ShouldQueue, ShouldBeUnique
      *
      * @var int
      */
-    public $timeout = 2000;
+    public $timeout = 2400;
 
     /**
      * Create a new job instance.

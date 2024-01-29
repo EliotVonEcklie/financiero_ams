@@ -13,7 +13,7 @@ use App\Models\Estratificacion;
 use App\Models\VigenciaUnidadMonetaria;
 use RuntimeException;
 
-class Tasificar implements ShouldQueue, ShouldBeUnique
+class Tasificar implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -22,7 +22,7 @@ class Tasificar implements ShouldQueue, ShouldBeUnique
      *
      * @var int
      */
-    public $timeout = 500;
+    public $timeout = 2400;
 
     /**
      * Execute the job.

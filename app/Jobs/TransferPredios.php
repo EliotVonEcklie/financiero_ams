@@ -21,7 +21,7 @@ class TransferPredios implements ShouldQueue, ShouldBeUnique
      *
      * @var int
      */
-    public $timeout = 180;
+    public $timeout = 2400;
 
     /**
      * Execute the job.

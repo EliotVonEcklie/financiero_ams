@@ -38,8 +38,9 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 2000,
+            'retry_after' => 2400,
             'after_commit' => false,
+            'connection' => 'central',
         ],
 
         'beanstalkd' => [
