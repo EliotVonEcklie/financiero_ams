@@ -76,8 +76,8 @@ class ImportPredios implements ShouldQueue
 
         $predio = Predio::firstOrCreate([
             'codigo_catastro' => $tesopredioavaluo->codigocatastral,
-            'total' => $tesopredioavaluo->tot,
-            'orden' => $tesopredioavaluo->ord
+            'total' => $tesopredioavaluo->tot === '' ? 1 : $tesopredioavaluo->tot,
+            'orden' => $tesopredioavaluo->ord === '' ? 1 : $tesopredioavaluo->ord
         ]);
 
         $historial_predio = $this->import_historial_predio($tesopredioavaluo, $tesopredio, $predio);
@@ -110,9 +110,9 @@ class ImportPredios implements ShouldQueue
             'documento' => $tesopredio->documento,
             'nombre_propietario' => $tesopredio->nombrepropietario,
             'direccion' => $tesopredio->direccion,
-            'hectareas' => $tesopredio->ha,
-            'metros_cuadrados' => $tesopredio->met2,
-            'area_construida' => $tesopredio->areacon,
+            'hectareas' => $tesopredio->ha === '' ? 0 : $tesopredio->ha,
+            'metros_cuadrados' => $tesopredio->met2 === '' ? 0 : $tesopredio->met2,
+            'area_construida' => $tesopredio->areacon === '' ? 0 : $tesopredio->areacon,
             'predio_tipo_id' => $predio_tipo->id
         ]);
     }
