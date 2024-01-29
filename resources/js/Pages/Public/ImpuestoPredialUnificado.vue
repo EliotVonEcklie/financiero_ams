@@ -219,7 +219,7 @@
                         </button>
                     </div>
                     <div  class="mt-3 relative overflow-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
-                        <table  class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <table  class="w-full lg:text-xs md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="p-4">

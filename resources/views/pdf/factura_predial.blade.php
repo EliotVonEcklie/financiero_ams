@@ -275,17 +275,17 @@
                         @endif
                         <tr>
                             <td class="fs-s-1">{{ $periodosFacturados[$j]['vigencia'] }}</td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['valor_avaluo'],0,',','.')}} </td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['valor_avaluo'],0,',','.')}} </td>
                             <td class="fs-s-1">{{ $periodosFacturados[$j]['tasa_por_mil'] }}</td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['predial'],0,',','.')}} </td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['predial_intereses'],0,',','.') }}</td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['total_intereses'],0,',','.') }}  </td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['descuento_intereses'],0,',','.') }}</td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['bomberil'],0,',','.') }}</td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['ambiental'],0,',','.') }}</td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['bomberil_intereses']+$periodosFacturados[$j]['ambiental_intereses'],0,',','.') }}</td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['alumbrado'],0,',','.') }}</td>
-                            <td class="fs-s-1">${{ number_format($periodosFacturados[$j]['total_liquidacion'],0,',','.') }}</td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['predial'],0,',','.')}} </td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['predial_intereses'],0,',','.') }}</td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['total_intereses'],0,',','.') }}  </td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['descuento_intereses'],0,',','.') }}</td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['bomberil'],0,',','.') }}</td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['ambiental'],0,',','.') }}</td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['bomberil_intereses']+$periodosFacturados[$j]['ambiental_intereses'],0,',','.') }}</td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['alumbrado'],0,',','.') }}</td>
+                            <td class="fs-s-1">{{ number_format($periodosFacturados[$j]['total_liquidacion'],0,',','.') }}</td>
                         </tr>
                     @endfor
                     <tr>

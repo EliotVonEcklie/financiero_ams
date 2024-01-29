@@ -148,7 +148,7 @@
                 <tr ><td colspan="10" class="border-none"></td></tr>
                 <tr>
                     <td class="border-none">
-                        <p class="text-center fs-">
+                        <p class="text-center fs-1">
                             Señor contribuyente: La Alcaldía Municipal del {{ tenant()->nombre }} META apoyado en la modernización y depuración de la
                             información existente, en caso de no ver algún pago que usted realizó, le solicitamos anexar los documentos correspondientes a
                             pagos de vigencias anteriores para actualización de su estado de cuenta.
@@ -302,20 +302,19 @@
                             @endif
                             <tr>
                                 <td class="fs-s-1">{{ $vigencias[$j]['vigencia'] }}</td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['valor_avaluo'],0,',','.')}} </td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['valor_avaluo'],0,',','.')}} </td>
                                 <td class="fs-s-1">{{ $vigencias[$j]['tasa_por_mil'] }}</td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['predial'],0,',','.')}} </td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['predial_intereses'],0,',','.') }}</td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['total_intereses'],0,',','.') }}  </td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['descuento_intereses'],0,',','.') }}</td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['bomberil'],0,',','.') }}</td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['ambiental'],0,',','.') }}</td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['bomberil_intereses']+$vigencias[$j]['ambiental_intereses'],0,',','.') }}</td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['alumbrado'],0,',','.') }}</td>
-                                <td class="fs-s-1">${{ number_format($vigencias[$j]['total_liquidacion'],0,',','.') }}</td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['predial'],0,',','.')}} </td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['predial_intereses'],0,',','.') }}</td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['total_intereses'],0,',','.') }}  </td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['descuento_intereses'],0,',','.') }}</td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['bomberil'],0,',','.') }}</td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['ambiental'],0,',','.') }}</td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['bomberil_intereses']+$vigencias[$j]['ambiental_intereses'],0,',','.') }}</td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['alumbrado'],0,',','.') }}</td>
+                                <td class="fs-s-1">{{ number_format($vigencias[$j]['total_liquidacion'],0,',','.') }}</td>
                             </tr>
                         @endfor
-
                         <!--
                         @for ( $j =  $index;  $j < $longitud ;  $j++)
                             @if ($j > $limite)
