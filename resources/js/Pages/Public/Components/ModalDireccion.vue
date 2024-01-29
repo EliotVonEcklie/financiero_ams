@@ -87,8 +87,8 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center justify-end p-4 space-x-2 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button @click="$emit('getAddress', txtDireccion) && hideModal('modalDireccion')" type="button" class="text-white bg-greenp1 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirmar</button>
-                    <button @click="hideModal('modalDireccion')" type="button" class="text-white bg-red-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+                    <button @click="$emit('getAddress', txtDireccion) && hideModal('modalDireccion')" type="button" class="text-blue-600 bg-white border border-blue-600 hover:text-white hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirmar</button>
+                    <button @click="hideModal('modalDireccion')" type="button" class=" text-red-600 border border-red-600 bg-white hover:text-white hover:bg-red-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
                 </div>
             </div>
         </div>

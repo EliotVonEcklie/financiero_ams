@@ -181,7 +181,7 @@
             </li>
         </ul>
         <div class="flex justify-center">
-            <span class="text-center lg:text-sm md:text-2xl text-gray-500 sm:text-center dark:text-gray-400 ">© 2023 <a href="#" class="hover:underline lg:text-sm md:text-2xl">Ideal 10 sas</a>. Todos los derechos reservados.</span>
+            <span class="text-center lg:text-sm md:text-2xl text-gray-500 sm:text-center dark:text-gray-400 ">© 2024 <a href="#" class="hover:underline lg:text-sm md:text-2xl">Ideal 10 sas</a>. Todos los derechos reservados.</span>
         </div>
         <!--<div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8 lg:flex lg:items-center justify-between lg:flex-row md:flex-col">
             <div class="mb-6">
@@ -311,3 +311,9 @@ window.document.onscroll = () => {
 
 }
 </script>
+
+<style>
+    html{
+        scroll-behavior: smooth;
+    }
+</style>

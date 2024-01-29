@@ -268,12 +268,23 @@
             <table class="border-none">
                 <tr>
                     <td class="border-none"></td>
+                    <td class="border-none text-center fs-2" colspan="2">fs-s-1</td>
                     <td class="border-none"></td>
+                </tr>
+                <tr>
+                    <td  class="border-none"></td>
+                    <td colspan="2" class="border-none border-bottom"></td>
+                    <td class="border-none"></td>
+                </tr>
+                <tr>
+                    <td class="border-none"></td>
+                    <td class="border-none text-center fw-bold fs-2" colspan="2">
+                        <p>LUZ OMAIRA MURILLO HERNANDEZ</p>
+                        <p>SECRETARIA DE HACIENDA</p>
+                    </td>
                     <td class="border-none"></td>
                 </tr>
             </table>
         </main>
-
-
     </body>
 </html>

@@ -175,16 +175,16 @@
                 </tr>
                 <tr >
                     <td class= "border-none">
-                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $facturaPredial->created_at->format('Y-m-d H:i:s') }}</p>
+                        <p class="fs-s-1 text-start">Fecha y hora elaboración: {{ $facturaPredial->created_at->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none">
-                        <p class="fs-0 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
+                        <p class="fs-s-1 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none" colspan="8">
-                        <p class="fs-0 text-center">Dirección IP: {{ $facturaPredial->ip }}</p>
+                        <p class="fs-s-1 text-center">Dirección IP: {{ $facturaPredial->ip }}</p>
                     </td>
                     <td class="border-none">
-                        <p class="fs-0 text-right page-num"></p>
+                        <p class="fs-s-1 text-right page-num"></p>
                     </td>
                 </tr>
             </table>

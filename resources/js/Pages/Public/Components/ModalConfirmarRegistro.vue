@@ -34,8 +34,8 @@
                     </div>
                 </div>
                 <div class="flex justify-end items-center space-x-2 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <a :href="route('public.inscripcion')" type="button" class="text-white bg-greenp1 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Inscribirse</a>
-                    <button @click="hideModal('modalConfirmarRegistro')" type="button" class="text-white bg-red-500 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+                    <a :href="route('public.inscripcion')" type="button" class="text-blue-600 border border-blue-600 bg-white font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Inscribirse</a>
+                    <button @click="hideModal('modalConfirmarRegistro')" type="button" class="text-red-600 bg-white border border-red-600 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center hover:bg-red-600 hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
                 </div>
             </div>
         </div>

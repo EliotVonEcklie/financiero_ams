@@ -19,6 +19,7 @@
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 space-y-4">
                     <div class="grid lg:grid-cols-2 lg:gap-4 md:grid-cols-1">
+                        <input type="hidden" :v-model="txtId">
                         <div class="relative z-0 w-full mb-5 group">
                             <label for="underline_select" class="sr-only">Tipo de documento</label>
                             <select v-model="txtSelectDocumento" class="block py-2.5 px-0 w-full lg:text-sm md:text-2xl text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
@@ -73,8 +74,8 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center justify-end p-4 space-x-2 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button @click="addRepresentante" type="button" class="text-white bg-greenp1 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirmar</button>
-                    <button @click="hideModal('modalRepresentante')" type="button" class="text-white bg-red-500 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+                    <button @click="addRepresentante" type="button" class="text-blue-600 bg-white border border-blue-600 hover:text-white hover:bg-blue-600 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirmar</button>
+                    <button @click="hideModal('modalRepresentante')" type="button" class="text-red-600 bg-white border border-red-600 hover:text-white hover:bg-red-600 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -86,41 +87,46 @@ import { ref } from 'vue'
 
 const props = defineProps(['idRepresentante','objRepresentante','hideModal']);
 const emits = defineEmits(['addRepresentante']);
-let txtDocumento = props.idRepresentante != "" ? props.objRepresentante['documento']  : ref('')
-let txtSelectDocumento = props.idRepresentante != "" ? props.objRepresentante['tipo_documento']  : ref('')
-let txtNombre = props.idRepresentante != "" ? props.objRepresentante['nombre']  : ref('')
-let txtSegundoNombre = props.idRepresentante != "" ? props.objRepresentante['segundo_nombre']  : ref('')
-let txtApellido= props.idRepresentante != "" ? props.objRepresentante['apellido']  : ref('')
-let txtSegundoApellido = props.idRepresentante != "" ? props.objRepresentante['segundo_apellido']  : ref('')
-let txtSelectRepresentante = props.idRepresentante != "" ? props.objRepresentante['representante']  : ref('')
-let txtTelefono = props.idRepresentante != "" ? props.objRepresentante['telefono']  : ref('')
-let txtCorreo = props.idRepresentante != "" ? props.objRepresentante['correo']  : ref('')
-console.log(props.objRepresentante['documento']);
+let txtDocumento = ref()
+let txtSelectDocumento = ref('Seleccione tipo de documento');
+let txtNombre = ref()
+let txtSegundoNombre = ref()
+let txtApellido= ref()
+let txtSegundoApellido =ref()
+let txtSelectRepresentante = ref('Seleccione tipo de representante')
+let txtTelefono = ref()
+let txtCorreo = ref()
+let txtId = ref(0)
+
 function addRepresentante(){
-    let obj ={}
-    if(props.idRepresentante.value !=""){
-        obj ={
-            "tipo_documento":txtSelectDocumento.value,
-            "documento":txtDocumento.value,
-            "nombre":txtNombre.value,
-            "segundo_nombre":txtSegundoNombre.value,
-            "apellido": txtApellido.value,
-            "segundo_apellido":txtSegundoApellido.value,
-            "representante": txtSelectRepresentante.value,
-            "telefono":txtTelefono.value,
-            "correo":txtCorreo.value,
-        }
-    }else{
-        obj ={
-            "tipo_documento":objRepresentante['tipo_documento'],
-            "documento":objRepresentante['documento'],
-            "nombre":objRepresentante['nombre'],
-            "representante":objRepresentante['representante'],
-            "telefono":objRepresentante['telefono'],
-            "correo":objRepresentante['correo'],
-        }
+    txtId.value++;
+    let obj =
+    {
+        "id":txtId.value,
+        "tipo_documento":txtSelectDocumento.value,
+        "documento":txtDocumento.value,
+        "nombre":txtNombre.value,
+        "segundo_nombre":txtSegundoNombre.value,
+        "apellido": txtApellido.value,
+        "segundo_apellido":txtSegundoApellido.value,
+        "representante": txtSelectRepresentante.value,
+        "telefono":txtTelefono.value,
+        "correo":txtCorreo.value,
     }
     emits('addRepresentante',obj);
+    resetFields()
+}
+function resetFields(){
+    txtSelectDocumento.value = 'Seleccione tipo de documento'
+    txtSelectRepresentante.value = "Seleccione tipo de representante"
+    txtId.value = ""
+    txtDocumento.value = ""
+    txtNombre.value = ""
+    txtSegundoNombre.value = ""
+    txtApellido.value = ""
+    txtSegundoApellido.value = ""
+    txtTelefono.value = ""
+    txtCorreo.value = ""
 }
 function setValues(){
     if(props.idRepresentante.value != 0){

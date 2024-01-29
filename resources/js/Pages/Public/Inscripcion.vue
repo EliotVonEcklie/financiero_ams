@@ -4,7 +4,7 @@
         <ModalAgregarRepresentante :hideModal="hideModal" @addRepresentante="addRepresentante" :idRepresentante="idRepresentante" :objRepresentante="objRepresentante"/>
         <div class="mt-10">
             <h1 class="text-center lg:text-2xl md:text-4xl mb-5 dark:text-white">Inscripción del contribuyente</h1>
-            <ol class="flex items-center w-full p-3 space-x-2 lg:text-sm md:text-2xl gap-3  md:flex-wrap md:items-center font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
+            <ol id="inscripcion" class="flex items-center w-full p-3 space-x-2 lg:text-sm md:text-2xl gap-3  md:flex-wrap md:items-center font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
                 <li class="flex items-center text-blue-600 dark:text-blue-500">
                     <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border border-blue-600 rounded-full shrink-0 dark:border-blue-500">
                         1
@@ -32,7 +32,7 @@
             </ol>
             <form v-if="pageForm == 1" class="w-full mt-10">
                 <div>
-                    <h3 class="bg-bluep text-white p-4 lg:text-base md:text-3xl mb-5">Información del contribuyente</h3>
+                    <h3 class="bg-gray-200 text-gray-500 font-bold p-4 lg:text-base md:text-3xl mb-5">Información del contribuyente</h3>
                     <div class="grid lg:grid-cols-6 lg:gap-4 md:grid-cols-1">
                         <div class="relative z-0 w-full mb-5 group">
                             <label for="underline_select" class="sr-only">Tipo de documento</label>
@@ -95,38 +95,38 @@
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
                             <div class="flex items-center">
-                                <input id="checked-checkbox" type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checked-checkbox" class="ms-2 lg:text-sm md:text-xl font-medium text-gray-900 dark:text-gray-300">¿Gran Contribuyente?</label>
                             </div>
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
                             <div class="flex items-center">
-                                <input id="checked-checkbox" type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checked-checkbox" class="ms-2 lg:text-sm md:text-xl font-medium text-gray-900 dark:text-gray-300">¿Declara Alumbrado?</label>
                             </div>
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
                             <div class="flex items-center">
-                                <input id="checked-checkbox" type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checked-checkbox" class="ms-2 lg:text-sm md:text-xl font-medium text-gray-900 dark:text-gray-300">¿Agente Retenedor?</label>
                             </div>
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
                             <div class="flex items-center">
-                                <input id="checked-checkbox" type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checked-checkbox" class="ms-2 lg:text-sm md:text-xl font-medium text-gray-900 dark:text-gray-300">¿Agente Auto-Retenedor?</label>
                             </div>
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
                             <div class="flex items-center">
-                                <input id="checked-checkbox" type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checked-checkbox" class="ms-2 lg:text-sm md:text-xl font-medium text-gray-900 dark:text-gray-300">¿Contribuyente Temporal?</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <h3 class="bg-bluep text-white p-4 lg:text-base sm:text-3xl mb-5">Información del contador o revisor fiscal</h3>
+                    <h3 class="bg-gray-200 text-gray-500 font-bold p-4 lg:text-base sm:text-3xl mb-5">Información del contador o revisor fiscal</h3>
                     <div class="grid lg:grid-cols-4 lg:gap-4 md:grid-cols-2">
                         <div class="relative z-0 w-full mb-5 group">
                             <input type="text" class="block py-2.5 px-0 w-full lg:text-sm md:text-2xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -155,7 +155,7 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="bg-bluep text-white p-4 lg:text-base sm:text-3xl mb-5">Información de notificación judicial</h3>
+                    <h3 class="bg-gray-200 text-gray-500 font-bold p-4 lg:text-base sm:text-3xl mb-5">Información de notificación judicial</h3>
                     <div class="grid lg:grid-cols-3 lg:gap-4 md:grid-cols-1">
                         <div class="relative z-0 w-full mb-5 group">
                             <label for="underline_select" class="sr-only">Departamento</label>
@@ -181,7 +181,7 @@
                                 <div class="flex">
                                     <input type="text" disabled class="block py-2.5 px-0 w-full lg:text-sm md:text-2xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" :value="txtDireccion" required />
                                     <label for="floating_first_name" class="peer-focus:font-medium absolute lg:text-sm md:text-3xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Dirección</label>
-                                    <button type="button" @click="showModal('modalDireccion')" class="p-2.5 ms-2 text-sm font-medium text-white bg-bluep rounded-lg border dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <button type="button" @click="showModal('modalDireccion')" class="p-2.5 ms-2 text-sm font-medium text-blue-600  bg-white border-blue-600 hover:text-white hover:bg-blue-600 rounded-lg border dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                         </svg>
@@ -213,13 +213,13 @@
                 <div class="flex justify-end flex-col space-x-2">
                     <div class="relative z-0 w-full mb-5 group">
                         <div class="flex justify-end items-center">
-                            <input checked id="checked-checkbox" type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <input checked type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                             <label for="checked-checkbox" class="ms-2 lg:text-sm md:text-2xl font-medium text-gray-900 dark:text-gray-300">Autorizar envio de correo</label>
                         </div>
                     </div>
                     <div class="relative z-0 w-full mb-5 group">
                         <div class="flex justify-end items-center">
-                            <input checked id="checked-checkbox" type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <input checked type="checkbox" value="" class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                             <label for="checked-checkbox" class="ms-2 lg:text-sm md:text-2xl font-medium text-gray-900 dark:text-gray-300">Autorizar manejo de datos</label>
                         </div>
                     </div>
@@ -227,11 +227,11 @@
             </form>
             <form v-if="pageForm == 2" class="w-full mt-10">
                 <div>
-                    <h3 class="bg-bluep text-white p-4 lg:text-base md:text-3xl mb-5">Representante legal</h3>
+                    <h3 class="bg-gray-200 text-gray-500 font-bold p-4 lg:text-base md:text-3xl mb-5">Representante legal</h3>
                     <div>
                         <div class="relative overflow-auto max-h-56">
-                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <table class="w-full lg:text-sm md:text-2xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-2 py-2">
                                             Nombre completo
@@ -248,7 +248,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(item, index) in arrRepresentantes" :key="index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <tr v-for="item in arrRepresentantes" :key="item.id"
+                                    :data-nombre="item.nombre"
+                                    :data-segundo-nombre="item.segundo_nombre"
+                                    :data-apellido="item.apellido"
+                                    :data-segundo-apellido="item.segundo_apellido"
+                                    :data-tipo-documento="item.tipo_documento"
+                                    :data-documento="item.documento"
+                                    :data-representante="item.representante"
+                                    :data-celular="item.celular"
+                                    :data-correo="item.correo"
+                                    :data-id = "item.id"
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <td class="px-2 py-2">
                                            {{item.nombre+" "+item.segundo_nombre+" "+item.apellido+" "+item.segundo_apellido}}
                                         </td>
@@ -259,21 +270,23 @@
                                             {{item.representante}}
                                         </td>
                                         <td class="px-2 py-2 flex items-center space-x-2">
-                                            <button type="button" @click="showModal('modalRepresentante'); editItem(index)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><svg fill="none" class="fill-white lg:w-4 lg:h-4 md:w-7 md:h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg></button>
-                                            <button type="button" @click="delRepresentenate(index)" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg fill="none" class="fill-white lg:w-4 lg:h-4 md:w-7 md:h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg></button>
+                                            <button type="button" @click="editRepresentante(item.id)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><svg fill="none" class="fill-white lg:w-4 lg:h-4 md:w-7 md:h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg></button>
+                                            <button type="button" @click="delRepresentante(item.id)" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg fill="none" class="fill-white lg:w-4 lg:h-4 md:w-7 md:h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg></button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div><button type="button" @click="showModal('modalRepresentante')" class="w-full text-white bg-green-400 hover:bg-green-500 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Añadir representante legal </button></div>
+                        <div class="flex justify-center mt-5">
+                            <button type="button" @click="showModal('modalRepresentante')" class="text-green-500  bg-white border border-green-500 hover:bg-green-500 hover:text-white font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Añadir representante legal </button>
+                        </div>
                     </div>
                 </div>
             </form>
-            <div class="flex justify-end space-x-2">
-                <button v-if="pageForm>1" @click="previousPage" type="button" class="text-black bg-gray-100 hover:bg-gray-200 font-bold rounded-lg lg:text-sm md:text-2xl w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Atrás</button>
-                <button v-if="pageForm < 3" type="button" @click="nextPage" class="text-white bg-bluep hover:bg-blue-400 font-bold rounded-lg lg:text-sm md:text-2xl w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Siguiente</button>
-            </div>
+        </div>
+        <div class="flex justify-end mt-5 space-x-2">
+            <a href="#inscripcion" v-if="pageForm>1" @click="previousPage" type="button" class="bg-white text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-lg lg:text-sm md:text-2xl w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Atrás</a>
+            <a href="#inscripcion" v-if="pageForm < 3" type="button" @click="nextPage" class="bg-white text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white font-bold rounded-lg lg:text-sm md:text-2xl w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Siguiente</a>
         </div>
     </Layout>
 </template>
@@ -300,15 +313,17 @@ function nextPage() {
     pageForm.value++
 }
 function addRepresentante(obj){
-    arrRepresentantes.push(obj);
+    arrRepresentantes.value =  arrRepresentantes.push(obj);
 }
-function delRepresentenate(id){
-    arrRepresentantes.splice(id,1);
+function delRepresentante(id){
+    let index = arrRepresentantes.map(item=>item.id).indexOf(id)
+    arrRepresentantes.value = arrRepresentantes.splice(index,1);
 }
-function editItem(id){
-    //console.log(id);
-    idRepresentante.value = id;
-    objRepresentante= arrRepresentantes[id];
+function editRepresentante(id){
+    let index = arrRepresentantes.map(item=>item.id).indexOf(id)
+    objRepresentante.value =arrRepresentantes.value[index];
+    console.log(id);
+    //objRepresentante= arrRepresentantes[id];
     //console.log(objRepresentante);
 }
 
