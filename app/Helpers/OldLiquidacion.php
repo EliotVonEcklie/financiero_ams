@@ -74,7 +74,7 @@ class OldLiquidacion
                 $total_predial_descuento_intereses +
                 $total_bomberil_descuento_intereses +
                 $total_ambiental_descuento_intereses,
-            'concepto' => substr('Años Liquidados: ' . implode(' ', array_column($liquidacion_array['vigencias'], 'vigencia')), 0, 200),
+            'concepto' => substr('Años Liquidados: ' . implode(' ', array_column($selected_vigencias, 'vigencia')), 0, 200),
             'estado' => 'S',
             'ord' => sprintf('%03d', $predio->orden),
             'tot' => sprintf('%03d', $predio->total)
