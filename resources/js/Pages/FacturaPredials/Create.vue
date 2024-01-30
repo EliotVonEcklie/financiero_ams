@@ -58,7 +58,9 @@ function create() {
 }
 
 function openPdf(evt) {
-    evt.target.dispatchEvent(new MouseEvent('click', { ctrlKey: true }))
+    if (!evt.ctrlKey) {
+        evt.target.dispatchEvent(new MouseEvent('click', { ctrlKey: true }))
+    }
 }
 </script>
 
@@ -186,48 +188,51 @@ function openPdf(evt) {
                                     Vigencia
                                 </th>
 
-                                <th scope="col" class="px-6 py-3">
+                                <th class="px-6 py-3">
                                     Avalúo
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th class="px-6 py-3">
                                     Tasa
                                 </th>
 
-                                <th v-if="estatutoFlags.descuento" scope="col" class="px-6 py-3">
-                                    Descuento Incentivo
+                                <th class="px-6 py-3">
+                                    Valor<br>Predial
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Recaudo Predial
+                                <th v-if="estatutoFlags.descuento" class="px-6 py-3">
+                                    Descuento<br>Incentivo
+                                </th>
+                                <th class="px-6 py-3">
+                                    Recaudo<br>Predial
                                 </th>
 
-                                <th v-if="estatutoFlags.bomberil" scope="col" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
+                                <th v-if="estatutoFlags.bomberil" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
                                     Bomberil
                                 </th>
-                                <th v-if="estatutoFlags.bomberil" scope="col" class="px-6 py-3">
+                                <th v-if="estatutoFlags.bomberil" class="px-6 py-3">
                                     Intereses
                                 </th>
-                                <th v-if="estatutoFlags.bomberil && estatutoFlags.descuento_bomberil" scope="col" class="px-6 py-3">
+                                <th v-if="estatutoFlags.bomberil && estatutoFlags.descuento_bomberil" class="px-6 py-3">
                                     Descuento
                                 </th>
 
-                                <th v-if="estatutoFlags.ambiental" scope="col" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
+                                <th v-if="estatutoFlags.ambiental" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
                                     Ambiental
                                 </th>
-                                <th v-if="estatutoFlags.ambiental" scope="col" class="px-6 py-3">
+                                <th v-if="estatutoFlags.ambiental" class="px-6 py-3">
                                     Intereses
                                 </th>
-                                <th v-if="estatutoFlags.ambiental && estatutoFlags.descuento_ambiental" scope="col" class="px-6 py-3">
+                                <th v-if="estatutoFlags.ambiental && estatutoFlags.descuento_ambiental" class="px-6 py-3">
                                     Descuento
                                 </th>
 
-                                <th v-if="estatutoFlags.alumbrado" scope="col" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
+                                <th v-if="estatutoFlags.alumbrado" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
                                     Alumbrado
                                 </th>
 
-                                <th scope="col" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
+                                <th class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
                                     Liquidación
                                 </th>
-                                <th scope="col" class="px-6 py-3 rounded-e-lg">
+                                <th class="px-6 py-3 rounded-e-lg">
                                     Días de mora
                                 </th>
                             </tr>
@@ -252,6 +257,9 @@ function openPdf(evt) {
                                     {{ vigencia.tasa_por_mil }} x mil
                                 </td>
 
+                                <td class="px-6 py-4">
+                                    {{ $numbers.cop(vigencia.predial + vigencia.predial_descuento) }}
+                                </td>
                                 <td v-if="estatutoFlags.descuento" class="px-6 py-4">
                                     {{ vigencia.predial_descuento > 0 ? $numbers.cop(vigencia.predial_descuento) : 'N/A' }}
                                 </td>
@@ -299,6 +307,9 @@ function openPdf(evt) {
                                 <td class="px-6 py-3"></td>
                                 <td class="px-6 py-3"></td>
 
+                                <td class="px-6 py-3">
+                                    {{ $numbers.cop(selectedVigencias.reduce((a, v) => a + v.predial + v.predial_descuento, 0)) }}
+                                </td>
                                 <td v-if="estatutoFlags.descuento" class="px-6 py-3">
                                     {{ $numbers.cop(selectedVigencias.reduce((a, v) => a + v.predial_descuento, 0)) }}
                                 </td>

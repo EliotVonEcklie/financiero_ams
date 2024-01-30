@@ -48,6 +48,7 @@ class Liquidacion
     {
         return [
             'vigencias' => $this->vigencias,
+            'predio_id' => $this->avaluos->first()->predio->id,
             'total_liquidacion' => $this->total_liquidacion,
             'total_valor_avaluo' => $this->total_valor_avaluo,
             'total_predial' => $this->total_predial,
@@ -93,12 +94,13 @@ class Liquidacion
             'total_intereses' => 0
         ];
 
-        if ($result['estatuto'] === null) {
+        $result['valor_avaluo'] = $avaluo->valor_avaluo;
+        $result['tasa_por_mil'] = $avaluo->tasa_por_mil;
+
+        if ($result['estatuto'] === null || $result['tasa_por_mil'] === -1.0) {
             return $result;
         }
 
-        $result['valor_avaluo'] = $avaluo->valor_avaluo;
-        $result['tasa_por_mil'] = $avaluo->tasa_por_mil;
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
 
         if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {
@@ -118,7 +120,7 @@ class Liquidacion
             }
         }
 
-        if ($result['vigencia'] === now()->year && $this->descuento_incentivo > 0) {
+        if ($result['vigencia'] == now()->year && $this->descuento_incentivo > 0) {
             $result['predial_descuento'] = $this->calculate_tarifa($result['predial'], $this->descuento_incentivo, false);
             $result['predial'] -= $result['predial_descuento'];
         }
@@ -157,7 +159,7 @@ class Liquidacion
 
         $result['total_liquidacion'] = Round::pesos($result['predial'] + $result['bomberil'] + $result['ambiental'] + $result['alumbrado'] + $result['estatuto']->recibo_caja);
 
-        if ($this->descuento_incentivo === 0) {
+        if ($result['vigencia'] != now()->year || $this->descuento_incentivo == 0) {
             $from = new Carbon($result['vigencia'] . '-01-01');
 
             $result['dias_mora'] = Interes::diasMora($from);
