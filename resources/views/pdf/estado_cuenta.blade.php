@@ -6,6 +6,26 @@
     $longitud = count($vigencias);
     $tablas = round($longitud/$limite) > 0 ? round($longitud/$limite) : 1;
     $index = 0;
+
+    $estatutoFlags = [
+        'bomberil' => false,
+        'ambiental' => false,
+        'alumbrado' => false
+    ];
+
+    array_walk($vigencias, function($vigencia) use (&$estatutoFlags) {
+        if ($vigencia['estatuto']['bomberil']) {
+            $estatutoFlags['bomberil'] = true;
+        }
+
+        if ($vigencia['estatuto']['ambiental']) {
+            $estatutoFlags['ambiental'] = true;
+        }
+
+        if ($vigencia['estatuto']['alumbrado']) {
+            $estatutoFlags['alumbrado'] = true;
+        }
+    });
 @endphp
 <!DOCTYPE html>
 <html lang="es">
@@ -105,6 +125,11 @@
                 font-weight: normal;
                 border: 1px solid #CCC;
             }
+
+            .body-table td {
+                text-align: right;
+            }
+
             .border-none {
                 border: none
             }
@@ -276,19 +301,25 @@
                         <tr><td class="border-none" colspan="10"></td></tr>
                     </table>
                 </div>
-                <table>
+                <table class="body-table">
                     <tr class="bg-primary  p-1">
                         <th class="fs-0">Vigencia</th>
                         <th class="fs-0">Avaluo</th>
-                        <th class="fs-0">Tasa x Mil</th>
-                        <th class="fs-0">Predial</th>
-                        <th class="fs-0">Intereses Predial</th>
-                        <th class="fs-0">Descuento intereses</th>
-                        <th class="fs-0">Total intereses predial</th>
-                        <th class="fs-0">Sobretasa bomberil</th>
-                        <th class="fs-0">Sobretasa ambiental</th>
-                        <th class="fs-0">Sobretasa intereses</th>
-                        <th class="fs-0">Alumbrado</th>
+                        <th class="fs-0">Tasa</th>
+                        <th class="fs-0">Valor<br>Predial</th>
+                        <th class="fs-0">Descuento<br>Incentivo</th>
+                        <th class="fs-0">Recaudo<br>Predial</th>
+                        <th class="fs-0">Intereses<br>Predial</th>
+                        @if($estatutoFlags['bomberil'])
+                            <th class="fs-0">Sobretasa bomberil</th>
+                        @endif
+                        @if($estatutoFlags['ambiental'])
+                            <th class="fs-0">Sobretasa ambiental</th>
+                        @endif
+                        @if($estatutoFlags['alumbrado'])
+                            <th class="fs-0">Alumbrado</th>
+                        @endif
+                        <th class="fs-0">Intereses<br>Sobretasas</th>
                         <th class="fs-0">Total</th>
                     </tr>
                     <tbody>
@@ -303,15 +334,21 @@
                             <tr>
                                 <td class="fs-s-1">{{ $vigencias[$j]['vigencia'] }}</td>
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['valor_avaluo'],0,',','.')}} </td>
-                                <td class="fs-s-1">{{ $vigencias[$j]['tasa_por_mil'] }}</td>
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial'],0,',','.')}} </td>
+                                <td class="fs-s-1">{{ $vigencias[$j]['tasa_por_mil'] }} x mil</td>
+                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial'] + $vigencias[$j]['predial_descuento'],0,',','.')}} </td>
+                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial_descuento'],0,',','.') }}</td>
+                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial'],0,',','.') }}  </td>
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial_intereses'],0,',','.') }}</td>
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['total_intereses'],0,',','.') }}  </td>
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['descuento_intereses'],0,',','.') }}</td>
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['bomberil'],0,',','.') }}</td>
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['ambiental'],0,',','.') }}</td>
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['bomberil_intereses']+$vigencias[$j]['ambiental_intereses'],0,',','.') }}</td>
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['alumbrado'],0,',','.') }}</td>
+                                @if ($estatutoFlags['bomberil'])
+                                    <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['bomberil'],0,',','.') }}</td>
+                                @endif
+                                @if ($estatutoFlags['ambiental'])
+                                    <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['ambiental'],0,',','.') }}</td>
+                                @endif
+                                @if ($estatutoFlags['alumbrado'])
+                                    <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['alumbrado'],0,',','.') }}</td>
+                                @endif
+                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['bomberil_intereses'] + $vigencias[$j]['ambiental_intereses'],0,',','.') }}</td>
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['total_liquidacion'],0,',','.') }}</td>
                             </tr>
                         @endfor
@@ -334,24 +371,34 @@
                 <div style="page-break-after: always;"></div>
                 @endif
             @endfor
-            <table>
+            <table class="body-table">
                 <tr class="bg-primary  p-1">
-                    <th class="fs-0 fw-bold">Total avaluo</th>
-                    <th class="fs-0 fw-bold">Total predial</th>
-                    <th class="fs-0 fw-bold">Total bomberil</th>
-                    <th class="fs-0 fw-bold">Total ambiental</th>
-                    <th class="fs-0 fw-bold">Total alumbrado</th>
+                    <th class="fs-0 fw-bold">Total recuado predial</th>
+                    @if($estatutoFlags['bomberil'])
+                        <th class="fs-0 fw-bold">Total bomberil</th>
+                    @endif
+                    @if($estatutoFlags['ambiental'])
+                        <th class="fs-0 fw-bold">Total ambiental</th>
+                    @endif
+                    @if($estatutoFlags['alumbrado'])
+                        <th class="fs-0 fw-bold">Total alumbrado</th>
+                    @endif
                     <th class="fs-0 fw-bold">Total intereses</th>
-                    <th class="fs-0 fw-bold">Total descuento</th>
+                    <th class="fs-0 fw-bold">Total descuento intereses</th>
                     <th class="fs-0 fw-bold">Total liquidacion</th>
                 </tr>
                 <tbody>
                     <tr>
-                        <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['total_avaluo'], 0, ',', '.') }}</td>
                         <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['predial'], 0, ',', '.') }}</td>
-                        <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['bomberil'], 0, ',', '.') }}</td>
-                        <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['ambiental'], 0, ',', '.') }}</td>
-                        <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['alumbrado'], 0, ',', '.') }}</td>
+                        @if($estatutoFlags['bomberil'])
+                            <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['bomberil'], 0, ',', '.') }}</td>
+                        @endif
+                        @if($estatutoFlags['ambiental'])
+                            <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['ambiental'], 0, ',', '.') }}</td>
+                        @endif
+                        @if($estatutoFlags['alumbrado'])
+                            <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['alumbrado'], 0, ',', '.') }}</td>
+                        @endif
                         <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['intereses'], 0, ',', '.') }}</td>
                         <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['descuentos'], 0, ',', '.') }}</td>
                         <td class="fs-0" style="white-space: nowrap;">${{ number_format($estadoCuenta->data['totales']['liquidacion'], 0, ',', '.') }}</td>
