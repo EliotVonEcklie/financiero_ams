@@ -48,7 +48,7 @@ function create() {
     props.predio.private = true
     props.predio.liquidacion.vigencias.forEach(v => v.isSelected = v.selected)
 
-    let { factura_predials: _, ...clean_predio } = predio;
+    let { factura_predials: _, ...clean_predio } = props.predio;
 
     axios.post(route('estado_cuentas.store', props.predio.id), { data: clean_predio })
     .then(res => pdfUrl.value = route('estado_cuentas.show', res.data.id))
@@ -238,7 +238,7 @@ function openPdf(evt) {
                         </thead>
                         <tbody>
                             <tr v-for="vigencia in predio.liquidacion.vigencias" class="bg-white dark:bg-gray-800">
-                                <td class="w-4 p-4">
+                                <td class="w-4 max-w-5 p-4">
                                     <div class="flex items-center">
                                         <input id="checkbox-table-search-1" type="checkbox" v-model="vigencia.selected" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
