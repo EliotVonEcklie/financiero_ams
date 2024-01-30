@@ -35,7 +35,7 @@ class Liquidacion
     public function __construct(Collection|array $avaluos)
     {
         $this->estatutos = Estatuto::all();
-        $this->descuento_incentivo = Descuento::getDescuentoIncentivo();
+        $this->descuento_incentivo = Descuento::getDescuento?username=idealsas&password=ideal247Incentivo();
         $this->descuento_intereses = Descuento::getDescuentoIntereses();
         $this->avaluos = Collection::make($avaluos);
 
@@ -159,7 +159,7 @@ class Liquidacion
 
         $result['total_liquidacion'] = Round::pesos($result['predial'] + $result['bomberil'] + $result['ambiental'] + $result['alumbrado'] + $result['estatuto']->recibo_caja);
 
-        if ($this->descuento_incentivo === 0) {
+        if ($result['vigencia'] !== now()->year && $this->descuento_incentivo === 0) {
             $from = new Carbon($result['vigencia'] . '-01-01');
 
             $result['dias_mora'] = Interes::diasMora($from);
