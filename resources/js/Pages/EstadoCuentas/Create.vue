@@ -46,7 +46,6 @@ function create() {
     }
 
     props.predio.private = true
-    props.predio.liquidacion.vigencias.forEach(v => v.isSelected = v.selected)
 
     let { factura_predials: _, ...clean_predio } = props.predio;
 

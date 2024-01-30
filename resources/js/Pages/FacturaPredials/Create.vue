@@ -52,7 +52,6 @@ function create() {
     props.predio.facturado_desde = Math.min(...selectedVigencias.value.map(v => v.vigencia))
     props.predio.facturado_hasta = Math.max(...selectedVigencias.value.map(v => v.vigencia))
     props.predio.private = true
-    props.predio.liquidacion.vigencias.forEach(v => v.isSelected = v.selected)
 
     let { factura_predials: _, ...clean_predio } = props.predio;
 
