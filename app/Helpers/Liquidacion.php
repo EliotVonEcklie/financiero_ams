@@ -35,7 +35,7 @@ class Liquidacion
     public function __construct(Collection|array $avaluos)
     {
         $this->estatutos = Estatuto::all();
-        $this->descuento_incentivo = Descuento::getDescuento?username=idealsas&password=ideal247Incentivo();
+        $this->descuento_incentivo = Descuento::getDescuentoIncentivo();
         $this->descuento_intereses = Descuento::getDescuentoIntereses();
         $this->avaluos = Collection::make($avaluos);
 
