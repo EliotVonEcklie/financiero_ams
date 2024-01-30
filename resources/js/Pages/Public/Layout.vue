@@ -1,7 +1,7 @@
 <template>
     <header>
         <ModalRegistro :login="login" @showModal="showModal" @hideModal="hideModal" :tenant="tenant"/>
-        <nav id="main-nav" :class="{'bg-white text-black':navBarScrollActive,'text-white':!navBarScrollActive}" class="fixed top-0 w-full px-3 transition-all bg-transparent border-gray-200 dark:bg-gray-900 md:top-0 md:z-40">
+        <nav id="main-nav"  class="bg-white text-black dark:text-white fixed top-0 w-full px-3 transition-all bg-transparent border-gray-200 dark:bg-gray-900 md:top-0 md:z-40">
             <div class="flex flex-wrap justify-between items-center w-full p-3">
                 <Link :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img :src="img" class="xl:h-20 lg:h-24 md:h-36" alt="Logo Entidad" />
@@ -17,7 +17,7 @@
                                 <Link :href="route('public.index')" aria-current="page">Inicio</Link>
                             </li>
                             <li class="px-2.5 py-2.5  rounded-lg hover:bg-blue-600 hover:text-white">
-                                <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Selección de impuesto <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:text-white md:dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Selección de impuesto <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
@@ -25,11 +25,11 @@
                                 <div id="dropdownNavbar" class="z-50 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
                                         <li>
-                                            <Link :href="route('public.impuesto_predial_unificado')" class="block px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Impuesto Predial Unificado</Link>
+                                            <Link :href="route('public.impuesto_predial_unificado')" class="block px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white">Impuesto Predial Unificado</Link>
                                         </li>
                                         <li>
                                             <Link v-if="login" href="#" class="text-start block px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Impuesto de industria y comercio</Link>
-                                            <button v-else type="button" @click="showModal('modalRegistro')" class="text-start block px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Impuesto de industria y comercio</button>
+                                            <button v-else type="button" @click="showModal('modalRegistro')" class="text-start block px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white">Impuesto de industria y comercio</button>
                                         </li>
                                         <li>
                                             <Link v-if="login" href="#" class="text-start block px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Retención de industria y comercio</Link>
@@ -51,13 +51,13 @@
                                 <Link :href="route('public.contacto')">Contacto</Link>
                             </li>
                             <li class="flex items-center">
-                                <button :class="{'border border-white':!navBarScrollActive,'border border-blue-600 text-blue-600':navBarScrollActive}" type="button" @click="showModal('modalRegistro')" class="hover:text-white hover:border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-600">Iniciar sesión</button>
+                                <button  type="button" @click="showModal('modalRegistro')" class="border border-blue-600 text-blue-600 dark:text-white hover:text-white hover:border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-white dark:text-600 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-600">Iniciar sesión</button>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="flex items-center lg:block xl:hidden md:block ">
-                    <button :class="{'border border-white':!navBarScrollActive,'border border-blue-600 text-blue-600':navBarScrollActive}" type="button" @click="openMobileNav()" class="hover:text-white hover:border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-600">
+                    <button type="button" @click="openMobileNav()" class="border border-blue-600 text-blue-600 hover:text-white hover:border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-white dark:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-600">
                         <span class="sr-only">Open main menu</span>
                         <svg class="lg:h-8 lg:w-8 md:w-14 md:h-14" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
@@ -117,8 +117,7 @@
             </div>
         </nav>
     </header>
-    <Carousel :tenant="tenant" :login ="login" :showModal="showModal" :hideModal="hideModal"/>
-    <main class="mb-8 container mx-auto">
+    <main class="mb-8 ">
         <slot :login ="login" :showModal="showModal" :hideModal="hideModal" :navBarScrollActive="navBarScrollActive" />
     </main>
     <footer class="bg-gray-100 dark:bg-gray-900 mt-10 lg:h-auto md:h-screen p-10">
@@ -131,7 +130,7 @@
                 </Link>
             </div>
             <nav>
-                <ul class="flex justify-center items-center lg:flex-row md:flex-col lg:space-x-10 md:space-x-0 lg:space-y-0 md:space-y-6 lg:text-base md:text-3xl">
+                <ul class="flex justify-center items-center lg:flex-row md:flex-col lg:space-x-10 md:space-x-0 lg:space-y-0 md:space-y-6 lg:text-base md:text-3xl dark:text-gray-400">
                     <li>
                         <Link :href="route('public.normatividad')" class="hover:underline">Inicio</Link>
                     </li>
@@ -156,7 +155,7 @@
         <ul class="flex justify-center space-x-6 lg:text-base md:text-2xl text-gray-500 dark:text-gray-400 font-medium">
             <li v-if="tenant.telefono">
                 <div class="flex space-x-2 items-center">
-                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
+                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 dark:fill-gray-400" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
                     <span>{{ tenant.telefono }}</span>
                 </div>
             </li>
@@ -268,7 +267,6 @@ import { onMounted, ref } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { initFlowbite, Modal } from 'flowbite'
 import ModalRegistro from './Components/ModalRegistro.vue'
-import Carousel from './Components/Carousel.vue'
 import ListRedesSociales from './Components/ListRedesSociales.vue'
 
 onMounted(() => {

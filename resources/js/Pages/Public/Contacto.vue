@@ -1,6 +1,6 @@
 <template>
     <Layout :tenant="tenant">
-        <FormContacto :tenant="tenant"/>
+        <FormContacto :tenant="tenant" class="xl:mt-36 md:mt-48 mx-auto container" />
     </Layout>
 </template>
 

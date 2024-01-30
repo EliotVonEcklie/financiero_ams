@@ -1,4 +1,5 @@
 <template>
+    <!--
     <div class="relative mb-40">
         <img class="object-cover lg:h-[30rem] md:h-[40rem] w-full brightness-50 " :src="banner" alt="image description">
         <div class="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center flex-col space-y-5">
@@ -53,16 +54,23 @@
                 </div>
             </div>
         </div>
-    </div>
-<!--
-    <div id="controls-carousel" class="relative w-full lg:block md:hidden" data-carousel="static">
-            <div class="relative h-[50vh] overflow-hidden">
+    </div>-->
+    <div class="relative mt-24 mb-40">
+        <div id="controls-carousel" class="relative w-full" data-carousel="static">
+            <div class="relative h-1/2 overflow-hidden">
                 <div class="relative hidden duration-700 ease-in-out" data-carousel-item>
-                    <img :src="banner" class="brightness-50 absolute object-cover block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">HolaXDDDDDD</div>
+                    <img class="object-cover lg:h-[30rem] md:h-[40rem] w-full brightness-50 " :src="banner" alt="image description">
+                    <div class="xl:w-1/2 md:w-full p-4 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center flex-col space-y-5">
+                        <h2 class="font-bold text-white xl:text-6xl lg:text-5xl md:text-5xl">Un solo destino para tus impuestos</h2>
+                        <p class="xl:text-base lg:text-xl md:text-2xl text-white">Centraliza tus obligaciones en un solo lugar. Desde impuestos prediales hasta retenciones de industria y comercio, nuestro portal te ofrece la solución integral que necesitas. Aprovecha la facilidad, ¡comienza ahora mismo!</p>
+                    </div>
                 </div>
                 <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                    <img :src="banner" class="brightness-50 object-cover absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    <img class="object-cover lg:h-[30rem] md:h-[40rem] w-full brightness-50 " :src="banner" alt="image description">
+                    <div class="xl:w-1/2 md:w-full p-4 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center flex-col space-y-5">
+                        <h2 class="font-bold text-white xl:text-6xl lg:text-5xl md:text-5xl">Un solo destino para tus impuestos</h2>
+                        <p class="xl:text-base lg:text-xl md:text-2xl text-white">Centraliza tus obligaciones en un solo lugar. Desde impuestos prediales hasta retenciones de industria y comercio, nuestro portal te ofrece la solución integral que necesitas. Aprovecha la facilidad, ¡comienza ahora mismo!</p>
+                    </div>
                 </div>
             </div>
             <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
@@ -81,11 +89,13 @@
                     <span class="sr-only">Next</span>
                 </span>
             </button>
-        </div>-->
-
+        </div>
+        <CardImpuestos :tenant="tenant" :login ="login" :showModal="showModal" :hideModal="hideModal" class="absolute z-30 -bottom-[8rem] left-1/2 -translate-x-1/2 "/>
+    </div>
 </template>
 
 <script lang="ts" setup>
+    import CardImpuestos from './CardImpuestos.vue';
     import banner from '~/img/public/banner2.jpg'
     defineProps({ tenant: Object,showModal:Function,hideModal:Function, login:Boolean })
 </script>
