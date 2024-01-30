@@ -40,7 +40,10 @@ class Liquidacion
         $this->avaluos = Collection::make($avaluos);
 
         foreach ($this->avaluos as $avaluo) {
-            array_push($this->vigencias, $this->liquidar($avaluo));
+            $result = $this->liquidar($avaluo);
+            if ($result !== null) {
+                array_push($this->vigencias, $result);
+            }
         }
     }
 
@@ -68,6 +71,10 @@ class Liquidacion
 
     private function liquidar(Avaluo $avaluo)
     {
+        if ($avaluo->pagado) {
+            return null;
+        }
+
         $result = [
             'vigencia' => $avaluo->vigencia,
             'avaluo_id' => $avaluo->id,
