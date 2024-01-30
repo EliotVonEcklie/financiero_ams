@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\OldLiquidacion;
 use App\Models\FacturaPredial;
 use App\Models\Predio;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,7 +53,7 @@ class FacturaPredialController extends Controller
         ]);
     }
 
-    private function generateBarcode()
+    private function generateBarcode($id, $total_liquidacion, $pague_hasta)
     {
         $codigo_barras = DB::table('codigosbarras')
             ->select('codigo', 'codini')
@@ -59,8 +61,20 @@ class FacturaPredialController extends Controller
             ->where('tipo', '01')
             ->first();
 
-        return DNS1DFacade::getBarcodePNG($codigo_barras->codigo, 'C128');
-        //$barcode = chr(241) . $codigo_barras->codini
+        $barcode = chr(241) . $codigo_barras->codini . $codigo_barras->codigo . '802001' .
+            sprintf('%07d', $id) . '111005001' .
+            chr(241) . '3900' . sprintf('%010d', $total_liquidacion) .
+            chr(241) . '96' . (new Carbon($pague_hasta))->format('Ymd');
+
+        $barcode_human = '(' . $codigo_barras->codini . ')' . $codigo_barras->codigo . '(8020)01' .
+            sprintf('%07d', $id) . '111005001' .
+            '(3900)' . sprintf('%010d', $total_liquidacion) .
+            '(96)' . (new Carbon($pague_hasta))->format('Ymd');
+
+        return [
+            'img' => DNS1DFacade::getBarcodePNG($barcode, 'C128'),
+            'human' => $barcode_human
+        ];
     }
 
     /**
@@ -70,14 +84,21 @@ class FacturaPredialController extends Controller
     {
         $data = $request->input('data');
 
+        $data['pague_hasta'] = FacturaPredial::getPagueHasta(collect($data['liquidacion']['vigencias']));
+
+        $old_liquidacion_id = OldLiquidacion::save($data['liquidacion'], auth()->user()?->name ?? '');
+
         $facturaPredial = FacturaPredial::create([
+            'id' => $old_liquidacion_id,
             'ip' => $request->ip(),
             'data' => array_merge($data, [
-                'barcode' => $this->generateBarcode()
+                'barcode' => $this->generateBarcode(
+                    $old_liquidacion_id,
+                    $data['liquidacion']['total_liquidacion'],
+                    $data['pague_hasta']
+                )
             ])
         ]);
-
-        $facturaPredial->updatePagueHasta();
 
         return response()->json(['id' => $facturaPredial->id]);
     }
@@ -108,7 +129,7 @@ class FacturaPredialController extends Controller
         return Pdf::loadView('pdf.factura_predial', [
             'facturaPredial' => (object) [
                 'id' => $facturaPredial->id,
-                'ip' => $facturaPredial,
+                'ip' => $facturaPredial->ip,
                 'data' => $facturaPredial->data,
                 'created_at' => $facturaPredial->created_at,
                 'state' => !$facturaPredial->trashed()

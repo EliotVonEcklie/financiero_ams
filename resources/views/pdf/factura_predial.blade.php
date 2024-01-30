@@ -172,6 +172,12 @@
                 z-index: -10;
                 text-transform: uppercase;
             }
+
+            .barcode {
+                margin-top: 5mm;
+                width: 140mm;
+                height: 14mm;
+            }
         </style>
     </head>
     <body>
@@ -352,11 +358,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="10" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode'] }}" height="30" alt="barcode" /></td>
+                    <td colspan="10" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode']['img'] }}" class="barcode" alt="barcode" /></td>
                 </tr>
                 <tr>
                     <td colspan="10" class="border-none text-center">
-                        <p class="fs-s-1">(415)7709998105867(8020)010001178011100501(3900)0000469514(96)20231031</p>
+                        <p class="fs-s-1">{{ $facturaPredial->data['barcode']['human'] }}</p>
                         <p class="fs-s-1">
                             Señor Cajero: Por favor no colocar el sello en el código de barras
                         </p>
@@ -385,11 +391,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="10" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode'] }}" height="30" alt="barcode" /></td>
+                    <td colspan="10" class="border-none text-center"><img src="data:image/png;base64,{{ $facturaPredial->data['barcode']['img'] }}" class="barcode" alt="barcode" /></td>
                 </tr>
                 <tr>
                     <td colspan="10" class="border-none text-center">
-                        <p class="fs-s-1">(415)7709998105867(8020)010001178011100501(3900)0000469514(96)20231031</p>
+                        <p class="fs-s-1">{{ $facturaPredial->data['barcode']['human'] }}</p>
                         <p class="fs-s-1">
                             Señor Cajero: Por favor no colocar el sello en el código de barras
                         </p>

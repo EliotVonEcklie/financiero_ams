@@ -94,12 +94,13 @@ class Liquidacion
             'total_intereses' => 0
         ];
 
-        if ($result['estatuto'] === null) {
+        $result['valor_avaluo'] = $avaluo->valor_avaluo;
+        $result['tasa_por_mil'] = $avaluo->tasa_por_mil;
+
+        if ($result['estatuto'] === null || $result['tasa_por_mil'] === -1.0) {
             return $result;
         }
 
-        $result['valor_avaluo'] = $avaluo->valor_avaluo;
-        $result['tasa_por_mil'] = $avaluo->tasa_por_mil;
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
 
         if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {

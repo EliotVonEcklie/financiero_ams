@@ -13,7 +13,7 @@ class OldLiquidacion
     {
         $predio = Predio::find($liquidacion_array['predio_id']);
 
-        $tesoliquidapredial = DB::table('tesoliquidapredial')->create([
+        $tesoliquidapredial = DB::table('tesoliquidapredial')->insertGetId([
             'codigocatastral' => $predio->codigo_catastro,
             'fecha' => now(),
             'vigencia' => now()->year,
@@ -40,8 +40,8 @@ class OldLiquidacion
         ]);
 
         foreach ($liquidacion_array['vigencias'] as $vigencia) {
-            DB::table('tesoliquidapredial_desc')->create([
-                'id_predial' => $tesoliquidapredial->idpredial,
+            DB::table('tesoliquidapredial_desc')->insert([
+                'id_predial' => $tesoliquidapredial,
                 'cod_catastral' => $predio->codigo_catastro,
                 'vigencia' => $vigencia['vigencia'],
                 'descuentointpredial' => $vigencia['predial_descuento_intereses'],
@@ -52,8 +52,8 @@ class OldLiquidacion
                 'user' => $user_name
             ]);
 
-            DB::table('tesoliquidapredial_det')->create([
-                'idpredial' => $tesoliquidapredial->idpredial,
+            DB::table('tesoliquidapredial_det')->insert([
+                'idpredial' => $tesoliquidapredial,
                 'vigliquidada' => $vigencia['vigencia'],
                 'avaluo' => $vigencia['valor_avaluo'],
                 'tasav' => $vigencia['tasa_por_mil'],
@@ -69,6 +69,6 @@ class OldLiquidacion
             ]);
         }
 
-        return $tesoliquidapredial->idpredial;
+        return $tesoliquidapredial;
     }
 }
