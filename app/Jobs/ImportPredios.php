@@ -127,7 +127,7 @@ class ImportPredios implements ShouldQueue
             'vigencia' => $tesopredioavaluo->vigencia
         ], [
             'codigo_destino_economico_id' => $historial_predio->codigo_destino_economico_id,
-            'pagado' => $tesopredioavaluo->pago === 'S',
+            'pagado' => $tesopredioavaluo->pago != 'N',
             'direccion' => $historial_predio->direccion,
             'valor_avaluo' => $tesopredioavaluo->avaluo,
             'hectareas' => $historial_predio->hectareas,
