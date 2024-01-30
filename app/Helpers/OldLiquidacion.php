@@ -14,10 +14,10 @@ class OldLiquidacion
         $predio = Predio::find($liquidacion_array['predio_id']);
 
         $tesoliquidapredial = DB::table('tesoliquidapredial')->insertGetId([
-            'codigocatastral' => $predio->codigo_catastro,
+            'codigocatastral' => substr($predio->codigo_catastro, 0, 30),
             'fecha' => now(),
-            'vigencia' => now()->year,
-            'tercero' => $predio->latest_historial_predio()->documento,
+            'vigencia' => substr(now()->year, 0, 4),
+            'tercero' => substr($predio->latest_historial_predio()->documento, 0, 30),
             'tasamora' => Interes::getInteresVigente(now())->moratorio,
             'descuento' => Descuento::getDescuentoIncentivo(),
             'tasapredial' => $predio->latest_avaluo()->tasa_por_mil,
@@ -33,7 +33,7 @@ class OldLiquidacion
                 $liquidacion_array['total_predial_descuento_intereses'] +
                 $liquidacion_array['total_bomberil_descuento_intereses'] +
                 $liquidacion_array['total_ambiental_descuento_intereses'],
-            'concepto' => 'Años Liquidados: ' . implode(' ', array_column($liquidacion_array['vigencias'], 'vigencia')),
+            'concepto' => substr('Años Liquidados: ' . implode(' ', array_column($liquidacion_array['vigencias'], 'vigencia')), 0, 200),
             'estado' => 'S',
             'ord' => sprintf('%03d', $predio->orden),
             'tot' => sprintf('%03d', $predio->total)
@@ -42,19 +42,19 @@ class OldLiquidacion
         foreach ($liquidacion_array['vigencias'] as $vigencia) {
             DB::table('tesoliquidapredial_desc')->insert([
                 'id_predial' => $tesoliquidapredial,
-                'cod_catastral' => $predio->codigo_catastro,
-                'vigencia' => $vigencia['vigencia'],
+                'cod_catastral' => substr($predio->codigo_catastro, 0, 30),
+                'vigencia' => (string) $vigencia['vigencia'],
                 'descuentointpredial' => $vigencia['predial_descuento_intereses'],
                 'descuentointbomberil' => $vigencia['bomberil_descuento_intereses'],
                 'descuentointambiental' => $vigencia['ambiental_descuento_intereses'],
                 'val_alumbrado' => $vigencia['alumbrado'],
                 'estado' => 'S',
-                'user' => $user_name
+                'user' => substr($user_name, 0, 50)
             ]);
 
             DB::table('tesoliquidapredial_det')->insert([
                 'idpredial' => $tesoliquidapredial,
-                'vigliquidada' => $vigencia['vigencia'],
+                'vigliquidada' => (string) $vigencia['vigencia'],
                 'avaluo' => $vigencia['valor_avaluo'],
                 'tasav' => $vigencia['tasa_por_mil'],
                 'predial' => $vigencia['predial'],
