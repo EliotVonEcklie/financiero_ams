@@ -7,6 +7,7 @@ use App\Models\Predio;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\UnauthorizedException;
 use Milon\Barcode\Facades\DNS1DFacade;
 
@@ -50,6 +51,18 @@ class FacturaPredialController extends Controller
         ]);
     }
 
+    private function generateBarcode()
+    {
+        $codigo_barras = DB::table('codigosbarras')
+            ->select('codigo', 'codini')
+            ->where('estado', 'S')
+            ->where('tipo', '01')
+            ->first();
+
+        return DNS1DFacade::getBarcodePNG($codigo_barras->codigo, 'C128');
+        //$barcode = chr(241) . $codigo_barras->codini
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -60,7 +73,7 @@ class FacturaPredialController extends Controller
         $facturaPredial = FacturaPredial::create([
             'ip' => $request->ip(),
             'data' => array_merge($data, [
-                'barcode' => DNS1DFacade::getBarcodePNG('4445645656' /* $data['barcode_id'] */, 'C39')
+                'barcode' => $this->generateBarcode()
             ])
         ]);
 

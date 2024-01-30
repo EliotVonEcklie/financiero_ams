@@ -48,6 +48,7 @@ class Liquidacion
     {
         return [
             'vigencias' => $this->vigencias,
+            'predio_id' => $this->avaluos->first()->predio->id,
             'total_liquidacion' => $this->total_liquidacion,
             'total_valor_avaluo' => $this->total_valor_avaluo,
             'total_predial' => $this->total_predial,
