@@ -50,6 +50,8 @@ class ImportPredios implements ShouldQueue
         $old_predios_list = '';
 
         foreach ($this->tesoprediosavaluos as $tesopredioavaluo) {
+            Log::warning($tesopredioavaluo->codigocatastral . ' Pago: ' . $tesopredioavaluo->pago . ' - ' . $tesopredioavaluo->pago != 'N');
+
             if (strlen($tesopredioavaluo->codigocatastral) === 25) {
                 $this->import_predio($tesopredioavaluo);
             } else {
