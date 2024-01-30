@@ -15,7 +15,7 @@ function toggleTheme() {
 }
 
 function duplicateWindow() {
-    window.open(window.top.location, '_blank')
+    window.postMessage('duplicateWindow', '*')
 }
 </script>
 <template>
