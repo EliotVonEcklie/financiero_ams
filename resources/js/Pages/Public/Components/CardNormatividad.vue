@@ -8,7 +8,7 @@
                     <h5 class="mb-2 lg:text-2xl md:text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia eaque voluptas quo amet saepe</h5>
                 </a>
                 <p class="mb-3 lg:text-base md:text-2xl font-normal text-gray-500 dark:text-gray-400">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis excepturi laudantium autem minima ad, doloribus in, animi omnis possimus mollitia aspernatur nisi ipsa impedit veritatis reprehenderit? Voluptatibus culpa doloremque modi.</p>
-                <a href="#" class="inline-flex items-center px-3 py-2 lg:text-sm md:text-2xl font-medium text-center text-white bg-bluep rounded-lg hover:bg-blue-600  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <a href="#" class="inline-flex items-center px-3 py-2 lg:text-sm md:text-2xl font-medium text-center text-blue-600 border border-blue-600 bg-white rounded-lg hover:bg-blue-600 hover:text-white  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Ver más
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>

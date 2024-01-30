@@ -4,7 +4,7 @@
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <!-- Modal header -->
-                <div class="bg-bluep flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <div class="bg-blue-600 flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                     <h3 class="lg:text-xl md:text-3xl font-semibold text-white dark:text-white">
                         Información de notificación jurídica
                     </h3>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end items-center space-x-2 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button @click="hideModal('modalMostrarNotificacion')" type="button" class="text-white bg-gray-500 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cerrar</button>
+                    <button @click="hideModal('modalMostrarNotificacion')" type="button" class="text-gray-500 bg-white border border-gray-500 hover:text-white hover:bg-gray-500 font-medium rounded-lg lg:text-sm md:text-2xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cerrar</button>
                 </div>
             </div>
         </div>

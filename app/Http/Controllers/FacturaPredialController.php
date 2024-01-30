@@ -106,7 +106,7 @@ class FacturaPredialController extends Controller
         }
 
         return Pdf::loadView('pdf.factura_predial', [
-            'facturaPredial' => [
+            'facturaPredial' => (object) [
                 'id' => $facturaPredial->id,
                 'ip' => $facturaPredial,
                 'data' => $facturaPredial->data,

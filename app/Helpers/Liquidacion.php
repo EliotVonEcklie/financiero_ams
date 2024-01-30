@@ -119,7 +119,7 @@ class Liquidacion
             }
         }
 
-        if ($this->descuento_incentivo > 0) {
+        if ($result['vigencia'] === now()->year && $this->descuento_incentivo > 0) {
             $result['predial_descuento'] = $this->calculate_tarifa($result['predial'], $this->descuento_incentivo, false);
             $result['predial'] -= $result['predial_descuento'];
         }
