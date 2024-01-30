@@ -49,10 +49,7 @@ class ImportPredios implements ShouldQueue
 
         $old_predios_list = '';
 
-        Log::warning(print_r($this->tesoprediosavaluos->where('codigocatastral', '0002000000020082000000000')->where('pago', '<>', 'N')->all()));
-
-        /*
-        foreach ($this->tesoprediosavaluos->where('pago', '<>', 'N') as $tesopredioavaluo) {
+        foreach ($this->tesoprediosavaluos as $tesopredioavaluo) {
             Log::warning($tesopredioavaluo->codigocatastral . ' Pago: ' . $tesopredioavaluo->pago . ' - ' . $tesopredioavaluo->pago != 'N');
 
             if (strlen($tesopredioavaluo->codigocatastral) === 25) {
@@ -64,7 +61,7 @@ class ImportPredios implements ShouldQueue
 
         if ($old_predios_list !== '') {
             Storage::put('old_predios/importpredios/' . now() . '.csv', $old_predios_list);
-        }*/
+        }
     }
 
     public function import_predio($tesopredioavaluo)
