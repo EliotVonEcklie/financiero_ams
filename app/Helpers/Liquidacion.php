@@ -118,7 +118,7 @@ class Liquidacion
             }
         }
 
-        if ($this->descuento_incentivo > 0) {
+        if ($result['vigencia'] === now()->year && $this->descuento_incentivo > 0) {
             $result['predial_descuento'] = $this->calculate_tarifa($result['predial'], $this->descuento_incentivo, false);
             $result['predial'] -= $result['predial_descuento'];
         }
@@ -157,7 +157,7 @@ class Liquidacion
 
         $result['total_liquidacion'] = Round::pesos($result['predial'] + $result['bomberil'] + $result['ambiental'] + $result['alumbrado'] + $result['estatuto']->recibo_caja);
 
-        if ($this->descuento_incentivo === 0) {
+        if ($result['vigencia'] === now()->year && $this->descuento_incentivo === 0) {
             $from = new Carbon($result['vigencia'] . '-01-01');
 
             $result['dias_mora'] = Interes::diasMora($from);
