@@ -146,7 +146,6 @@
                     <li>
                         <Link :href="route('public.contacto')" class="hover:underline">Contacto</Link>
                     </li>
-                    <li> <Link :href="route('public.preguntas')" class="hover:underline">Preguntas frecuentes</Link></li>
                 </ul>
             </nav>
             <ListRedesSociales :tenant ="tenant" class="flex justify-center"/>
