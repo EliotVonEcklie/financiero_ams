@@ -10,6 +10,7 @@ const title = 'Consultar Estado de Cuenta: Predio ' + props.predio.codigo_catast
 const estatutoFlags = computed(() => {
     return {
         descuento: props.predio.liquidacion.vigencias.some(v => v.predial_descuento > 0),
+        predial_intereses: props.predio.liquidacion.vigencias.some(v => v.predial_intereses > 0),
         bomberil: props.predio.liquidacion.vigencias.some(v => v.estatuto.bomberil),
         descuento_bomberil: props.predio.liquidacion.vigencias.some(v => v.bomberil_descuento_intereses > 0),
         ambiental: props.predio.liquidacion.vigencias.some(v => v.estatuto.ambiental),
@@ -46,7 +47,9 @@ function create() {
 
     props.predio.private = true
 
-    axios.post(route('estado_cuentas.store', props.predio.id), { data: props.predio })
+    let { factura_predials: _, ...clean_predio } = props.predio;
+
+    axios.post(route('estado_cuentas.store', props.predio.id), { data: clean_predio })
     .then(res => pdfUrl.value = route('estado_cuentas.show', res.data.id))
 }
 
@@ -75,14 +78,18 @@ function openPdf(evt) {
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ predio.nombre_propietario }}
                                 </th>
-                                <td class="px-6 py-4"></td>
-                                <td class="px-6 py-4"></td>
                                 <th scope="row" class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 px-6 py-3">
                                     Documento Propietario
                                 </th>
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ predio.documento }}
                                 </th>
+                                <th scope="row" class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 px-6 py-3">
+                                    Descuento Incentivo<br>Vigente
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ predio.descuento_vigente }}%
+                                </td>
                             </tr>
                             <tr class="bg-white dark:bg-gray-800">
                                 <th scope="row" class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 px-6 py-3">
@@ -172,7 +179,7 @@ function openPdf(evt) {
                                     </div>
                                 </th>
 
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-3 py-3">
                                     Vigencia
                                 </th>
 
@@ -192,25 +199,28 @@ function openPdf(evt) {
                                 <th class="px-6 py-3">
                                     Recaudo<br>Predial
                                 </th>
+                                <th v-if="estatutoFlags.predial_intereses" class="px-6 py-3">
+                                    Intereses<br>Predial
+                                </th>
 
                                 <th v-if="estatutoFlags.bomberil" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
                                     Bomberil
                                 </th>
                                 <th v-if="estatutoFlags.bomberil" class="px-6 py-3">
-                                    Intereses
+                                    Intereses<br>Bomberil
                                 </th>
                                 <th v-if="estatutoFlags.bomberil && estatutoFlags.descuento_bomberil" scope="col" class="px-6 py-3">
-                                    Descuento
+                                    Descuento<br>Bomberil
                                 </th>
 
                                 <th v-if="estatutoFlags.ambiental" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
                                     Ambiental
                                 </th>
                                 <th v-if="estatutoFlags.ambiental" class="px-6 py-3">
-                                    Intereses
+                                    Intereses<br>Ambiental
                                 </th>
                                 <th v-if="estatutoFlags.ambiental && estatutoFlags.descuento_ambiental" class="px-6 py-3">
-                                    Descuento
+                                    Descuento<br>Ambiental
                                 </th>
 
                                 <th v-if="estatutoFlags.alumbrado" class="px-6 py-3 border-l-2 border-l-gray-200 dark:border-l-gray-500">
@@ -227,7 +237,7 @@ function openPdf(evt) {
                         </thead>
                         <tbody>
                             <tr v-for="vigencia in predio.liquidacion.vigencias" class="bg-white dark:bg-gray-800">
-                                <td class="w-4 p-4">
+                                <td class="w-4 max-w-5 p-4">
                                     <div class="flex items-center">
                                         <input id="checkbox-table-search-1" type="checkbox" v-model="vigencia.selected" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
@@ -254,14 +264,17 @@ function openPdf(evt) {
                                 <td class="px-6 py-4">
                                     {{ $numbers.cop(vigencia.predial) }}
                                 </td>
+                                <td v-if="estatutoFlags.predial_intereses" class="px-6 py-4">
+                                    {{ vigencia.predial_intereses > 0 ? $numbers.cop(vigencia.predial_intereses) : 'N/A' }}
+                                </td>
 
                                 <td v-if="estatutoFlags.bomberil" class="px-6 py-4 border-l-2 border-l-gray-200 dark:border-l-gray-500">
                                     {{ vigencia.estatuto.bomberil ? $numbers.cop(vigencia.bomberil) : 'N/A' }}
                                 </td>
                                 <td v-if="estatutoFlags.bomberil" class="px-6 py-4">
-                                    {{ vigencia.estatuto.bomberil ? $numbers.cop(vigencia.bomberil_intereses) : 'N/A' }}
+                                    {{ vigencia.estatuto.bomberil && vigencia.bomberil_intereses > 0 ? $numbers.cop(vigencia.bomberil_intereses) : 'N/A' }}
                                 </td>
-                                <td v-if="estatutoFlags.bomberil  && estatutoFlags.descuento_bomberil" class="px-6 py-4">
+                                <td v-if="estatutoFlags.bomberil && estatutoFlags.descuento_bomberil" class="px-6 py-4">
                                     {{ vigencia.estatuto.bomberil && vigencia.bomberil_descuento_intereses > 0 ? $numbers.cop(vigencia.bomberil_descuento_intereses) : 'N/A' }}
                                 </td>
 
@@ -269,9 +282,9 @@ function openPdf(evt) {
                                     {{ vigencia.estatuto.ambiental ? $numbers.cop(vigencia.ambiental) : 'N/A' }}
                                 </td>
                                 <td v-if="estatutoFlags.ambiental" class="px-6 py-4">
-                                    {{ vigencia.estatuto.ambiental ? $numbers.cop(vigencia.ambiental_intereses) : 'N/A' }}
+                                    {{ vigencia.estatuto.ambiental && vigencia.ambiental_intereses > 0 ? $numbers.cop(vigencia.ambiental_intereses) : 'N/A' }}
                                 </td>
-                                <td v-if="estatutoFlags.ambiental  && estatutoFlags.descuento_ambiental" class="px-6 py-4">
+                                <td v-if="estatutoFlags.ambiental && estatutoFlags.descuento_ambiental" class="px-6 py-4">
                                     {{ vigencia.estatuto.ambiental && vigencia.ambiental_descuento_intereses > 0 ? $numbers.cop(vigencia.ambiental_descuento_intereses) : 'N/A' }}
                                 </td>
 
@@ -283,7 +296,7 @@ function openPdf(evt) {
                                     {{ $numbers.cop(vigencia.total_liquidacion) }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ vigencia.dias_mora }} días
+                                    {{ vigencia.dias_mora > 0 ? vigencia.dias_mora + ' días' : 'Sín mora'}}
                                 </td>
                             </tr>
                         </tbody>
@@ -303,6 +316,9 @@ function openPdf(evt) {
                                 </td>
                                 <td class="px-6 py-3">
                                     {{ $numbers.cop(selectedVigencias.reduce((a, v) => a + v.predial, 0)) }}
+                                </td>
+                                <td v-if="estatutoFlags.predial_intereses" class="px-6 py-3">
+                                    {{ $numbers.cop(selectedVigencias.reduce((a, v) => a + v.predial_intereses, 0)) }}
                                 </td>
 
                                 <td v-if="estatutoFlags.bomberil" class="px-6 py-4 border-l-2 border-l-gray-200 dark:border-l-gray-500">

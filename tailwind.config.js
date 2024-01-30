@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: 'media',
+    darkMode: 'class',
     content: [
         './resources/**/*.{blade.php,js,vue}',
         './node_modules/flowbite/**/*.{js,jsx,ts,tsx}',

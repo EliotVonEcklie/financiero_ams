@@ -1,8 +1,8 @@
 @php
     $limite = 8;
     $constante = 8;
-    $periodosFacturados = array_values(array_filter($facturaPredial->data['liquidacion']['vigencias'],function($filter){
-        return $filter['isSelected'] == true;
+    $periodosFacturados = array_values(array_filter($facturaPredial->data['liquidacion']['vigencias'], function($filter) {
+        return $filter['isSelected'] ?? $filter['selected'] ?? false;
     }));
     $longitud = count($periodosFacturados);
     $tablas = round($longitud/$limite) > 0 ? round($longitud/$limite) : 1;

@@ -1,10 +1,7 @@
 <script setup>
 import Layout from '~Layouts/Tasificar.vue'
-import { router } from '@inertiajs/vue3'
 
 defineProps({ predios: Array, prediosTasa: Array })
-
-setTimeout(() => setInterval(() => router.reload({ only: ['predios', 'prediosTasa'] }), 1000), 1000)
 </script>
 
 <template>
