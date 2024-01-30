@@ -157,7 +157,7 @@ class Liquidacion
 
         $result['total_liquidacion'] = Round::pesos($result['predial'] + $result['bomberil'] + $result['ambiental'] + $result['alumbrado'] + $result['estatuto']->recibo_caja);
 
-        if ($result['vigencia'] === now()->year && $this->descuento_incentivo === 0) {
+        if ($this->descuento_incentivo === 0) {
             $from = new Carbon($result['vigencia'] . '-01-01');
 
             $result['dias_mora'] = Interes::diasMora($from);
