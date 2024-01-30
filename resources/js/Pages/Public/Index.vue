@@ -2,7 +2,7 @@
     <Layout :tenant="tenant" v-slot="{ login, showModal, hideModal }" >
         <Carousel  :tenant="tenant" :login ="login" :showModal="showModal" :hideModal="hideModal"/>
         <div class="container mx-auto">
-            <section class="mb-20">
+            <section class="mb-20 xl:block md:hidden">
                 <div class="flex justify-center lg:flex-row md:flex-col lg:space-x-6 md:space-x-0 lg:space-y-0 md:space-y-6 mt-20">
                     <div class="flex justify-center">
                         <div class="flex items-center flex-col text-center max-w-sm p-6">
