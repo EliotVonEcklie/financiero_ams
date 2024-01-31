@@ -21,7 +21,7 @@ class FacturaPredialController extends Controller
     public function index()
     {
         return inertia('FacturaPredials/Index', [
-            'facturaPredials' => FacturaPredial::withTrashed()->get()->map(function ($facturaPredial) {
+            'facturaPredials' => FacturaPredial::withTrashed()->orderByDesc('id')->get()->map(function ($facturaPredial) {
                 return [
                     'id' => $facturaPredial->id,
                     'created_at' => $facturaPredial->created_at,
