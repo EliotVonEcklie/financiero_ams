@@ -109,7 +109,7 @@ class FacturaPredialController extends Controller
     public function update(Request $request, FacturaPredial $facturaPredial)
     {
         if ($request->has('toggle')) {
-            if (!$facturaPredial->data['factura_pagada']) {
+            if (! $facturaPredial->data['factura_pagada']) {
                 $facturaPredial->delete();
             }
 
