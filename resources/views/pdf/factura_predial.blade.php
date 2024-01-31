@@ -326,24 +326,24 @@
                             @break
                         @endif
                         <tr>
-                            <td class="fs-s-1">{{ $vigencias[$j]['vigencia'] }}</td>
-                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['valor_avaluo'],0,',','.')}} </td>
-                            <td class="fs-s-1">{{ $vigencias[$j]['tasa_por_mil'] }} x mil</td>
-                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial'] + $vigencias[$j]['predial_descuento'],0,',','.')}} </td>
-                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial_descuento'],0,',','.') }}</td>
-                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial'],0,',','.') }}  </td>
-                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial_intereses'],0,',','.') }}</td>
+                            <td class="fs-s-1">{{ $periodosFacturados[$j]['vigencia'] }}</td>
+                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['valor_avaluo'],0,',','.')}} </td>
+                            <td class="fs-s-1">{{ $periodosFacturados[$j]['tasa_por_mil'] }} x mil</td>
+                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['predial'] + $periodosFacturados[$j]['predial_descuento'],0,',','.')}} </td>
+                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['predial_descuento'],0,',','.') }}</td>
+                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['predial'],0,',','.') }}  </td>
+                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['predial_intereses'],0,',','.') }}</td>
                             @if ($estatutoFlags['bomberil'])
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['bomberil'],0,',','.') }}</td>
+                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['bomberil'],0,',','.') }}</td>
                             @endif
                             @if ($estatutoFlags['ambiental'])
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['ambiental'],0,',','.') }}</td>
+                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['ambiental'],0,',','.') }}</td>
                             @endif
                             @if ($estatutoFlags['alumbrado'])
-                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['alumbrado'],0,',','.') }}</td>
+                                <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['alumbrado'],0,',','.') }}</td>
                             @endif
-                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['bomberil_intereses'] + $vigencias[$j]['ambiental_intereses'],0,',','.') }}</td>
-                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['total_liquidacion'],0,',','.') }}</td>
+                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['bomberil_intereses'] + $periodosFacturados[$j]['ambiental_intereses'],0,',','.') }}</td>
+                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['total_liquidacion'],0,',','.') }}</td>
                         </tr>
                     @endfor
                     <tr>
