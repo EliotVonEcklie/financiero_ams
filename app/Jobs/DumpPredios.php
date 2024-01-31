@@ -36,8 +36,9 @@ class DumpPredios implements ShouldQueue
     {
         // save all predios information
         $predios = Predio::select('codigo_catastro', 'total',
-        DB::raw('MIN(id) as first_id'),
-        DB::raw('GROUP_CONCAT(id) as ids'))
+                DB::raw('MIN(id) as first_id'),
+                DB::raw('GROUP_CONCAT(id) as ids')
+            )
             ->groupBy('codigo_catastro', 'total')
             ->orderBy('codigo_catastro')
             ->lazy();
@@ -56,7 +57,7 @@ class DumpPredios implements ShouldQueue
                 );
             }
 
-            foreach ($historial_predios->where('predio_id', $predio->first_id)->get() as $info) {
+            foreach ($historial_predios->where('predio_id', $predio->first_id)->all() as $info) {
                 array_push($infos,
                     $predio->codigo_catastro . ';' . $info->fecha . ';' . $info->codigo_destino_economico_id . ';' . $info->direccion . ';' .
                     $info->hectareas . ';' . $info->metros_cuadrados . ';' . $info->area_construida . ';' . $info->predio_estrato_id . ';' . $info->predio_tipo_id
@@ -69,10 +70,10 @@ class DumpPredios implements ShouldQueue
                 );
             }
 
-            Storage::put('dump/informacion.csv', implode("\n", $infos) . "\n");
-            Storage::put('dump/avaluos.csv', implode("\n", $avals) . "\n");
-            Storage::put('dump/propietarios.csv', implode("\n", $propietarios) . "\n");
-            Storage::put('dump/predios.csv', $predio->codigo_catastro . ';' . $predio->total . ';' . $predio->ids . "\n");
+            Storage::append('dump/informacion.csv', implode("\n", $infos) . "\n");
+            Storage::append('dump/avaluos.csv', implode("\n", $avals) . "\n");
+            Storage::append('dump/propietarios.csv', implode("\n", $propietarios) . "\n");
+            Storage::append('dump/predios.csv', $predio->codigo_catastro . ';' . $predio->total . ';' . $predio->ids . "\n");
         }
     }
 }
