@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Helpers\Liquidacion;
 use App\Helpers\Censor;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Dompdf\Dompdf;
 
 class Predio extends Model
 {
@@ -18,31 +16,51 @@ class Predio extends Model
      */
     protected $fillable = [
         'codigo_catastro',
-        'total',
-        'orden'
+        'propietario_principal'
     ];
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
-     * Get the historial predios for the predio.
-     */
-    public function historial_predios(): HasMany
-    {
-        return $this->hasMany(HistorialPredio::class);
-    }
-
-    /**
-     * Get the avaluos for the predio.
+     * Get the predio avaluos for the predio.
      */
     public function avaluos(): HasMany
     {
-        return $this->hasMany(Avaluo::class);
+        return $this->hasMany(PredioAvaluo::class);
+    }
+
+    /**
+     * Get the predio informacions for the predio.
+     */
+    public function informacions(): HasMany
+    {
+        return $this->hasMany(PredioInformacion::class);
+    }
+
+    /**
+     * Get the predio propietarios for the predio.
+     */
+    public function propietarios(): HasMany
+    {
+        return $this->hasMany(PredioPropietario::class);
+    }
+
+    /**
+     * Get the latest predio avaluo for the predio.
+     */
+    public function latest_avaluo()
+    {
+        return $this->avaluos()
+            ->orderBy('vigencia', 'desc')
+            ->first();
+    }
+
+    /**
+     * Get the latest predio avaluo for the predio.
+     */
+    public function latest_informacion()
+    {
+        return $this->informacions()
+            ->orderBy('created_at', 'desc')
+            ->first();
     }
 
     /**
@@ -54,14 +72,7 @@ class Predio extends Model
             ->first();
     }
 
-    /**
-     * Get the latest avaluo for the predio.
-     */
-    public function latest_avaluo() {
-        return $this->avaluos()
-            ->orderBy('vigencia', 'desc')
-            ->first();
-    }
+
 
     public function factura_predials()
     {
