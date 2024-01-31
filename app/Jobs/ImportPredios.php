@@ -26,7 +26,7 @@ class ImportPredios implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 2400;
+    public $timeout = 5000;
 
     private $predio_tipos;
     private $tesopredios;
