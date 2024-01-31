@@ -89,8 +89,8 @@ class TransferPredios implements ShouldQueue
 
             // Format data for old database
             $tesoprediosavaluos_data = [
-                //'vigencia' => $avaluo->vigencia,
-                //'codigocatastral' => $avaluo->predio->codigo_catastro,
+                'vigencia' => $avaluo->vigencia,
+                'codigocatastral' => $avaluo->predio->codigo_catastro,
                 //'avaluo' => $avaluo->valor_avaluo,
                 'pago' => 'S' //$avaluo->pagado ? 'S' : 'N',
                 //'estado' => 'S',
