@@ -37,7 +37,8 @@ class DumpPredios implements ShouldQueue
         // save all predios information
         $predios = Predio::select('codigo_catastro', 'total',
                 DB::raw('MIN(id) as first_id'),
-                DB::raw('GROUP_CONCAT(id) as ids')
+                DB::raw('GROUP_CONCAT(id) as ids'),
+                DB::raw('GROUP_CONCAT(orden) as ordenes')
             )
             ->groupBy('codigo_catastro', 'total')
             ->orderBy('codigo_catastro')
@@ -75,7 +76,7 @@ class DumpPredios implements ShouldQueue
             Storage::append('dump/' . $now . '/informacion.csv', implode("\n", $infos));
             Storage::append('dump/' . $now . '/avaluos.csv', implode("\n", $avals));
             Storage::append('dump/' . $now . '/propietarios.csv', implode("\n", $propietarios));
-            Storage::append('dump/' . $now . '/predios.csv', $predio->codigo_catastro . ';' . $predio->total . ';' . $predio->ids);
+            Storage::append('dump/' . $now . '/predios.csv', $predio->codigo_catastro . ';' . $predio->total . ';' . $predio->ids . ';' . $predio->ordenes);
         }
     }
 }
