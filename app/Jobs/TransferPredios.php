@@ -108,7 +108,7 @@ class TransferPredios implements ShouldQueue
 
             DB::table('tesoprediosavaluos')
             ->where('vigencia', $avaluo->vigencia)
-            ->where('codigocatrastal', $avaluo->predio->codigo_catastro)
+            ->where('codigocatastral', $avaluo->predio->codigo_catastro)
             ->update($tesoprediosavaluos_data/*, ['vigencia', 'codigocatastral'], [
                 //'avaluo',
                 'pago'//,
