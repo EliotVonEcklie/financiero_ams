@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class ImportPredios implements ShouldQueue
+class DumpPredios implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
