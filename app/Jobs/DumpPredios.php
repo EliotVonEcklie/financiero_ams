@@ -43,6 +43,8 @@ class DumpPredios implements ShouldQueue
             ->orderBy('codigo_catastro')
             ->lazy();
 
+        $now = now();
+
         foreach ($predios as $predio) {
             $historial_predios = HistorialPredio::whereIn('predio_id', explode(',', $predio->ids))->get();
             $avaluos = Avaluo::where('predio_id', $predio->first_id)->get();
@@ -70,10 +72,10 @@ class DumpPredios implements ShouldQueue
                 );
             }
 
-            Storage::append('dump/' . now() . '/informacion.csv', implode("\n", $infos) . "\n");
-            Storage::append('dump/' . now() . '/avaluos.csv', implode("\n", $avals) . "\n");
-            Storage::append('dump/' . now() . '/propietarios.csv', implode("\n", $propietarios) . "\n");
-            Storage::append('dump/' . now() . '/predios.csv', $predio->codigo_catastro . ';' . $predio->total . ';' . $predio->ids . "\n");
+            Storage::append('dump/' . $now . '/informacion.csv', implode("\n", $infos) . "\n");
+            Storage::append('dump/' . $now . '/avaluos.csv', implode("\n", $avals) . "\n");
+            Storage::append('dump/' . $now . '/propietarios.csv', implode("\n", $propietarios) . "\n");
+            Storage::append('dump/' . $now . '/predios.csv', $predio->codigo_catastro . ';' . $predio->total . ';' . $predio->ids . "\n");
         }
     }
 }
