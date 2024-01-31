@@ -70,10 +70,10 @@ class DumpPredios implements ShouldQueue
                 );
             }
 
-            Storage::append('dump/informacion.csv', implode("\n", $infos) . "\n");
-            Storage::append('dump/avaluos.csv', implode("\n", $avals) . "\n");
-            Storage::append('dump/propietarios.csv', implode("\n", $propietarios) . "\n");
-            Storage::append('dump/predios.csv', $predio->codigo_catastro . ';' . $predio->total . ';' . $predio->ids . "\n");
+            Storage::append('dump/' . now() . '/informacion.csv', implode("\n", $infos) . "\n");
+            Storage::append('dump/' . now() . '/avaluos.csv', implode("\n", $avals) . "\n");
+            Storage::append('dump/' . now() . '/propietarios.csv', implode("\n", $propietarios) . "\n");
+            Storage::append('dump/' . now() . '/predios.csv', $predio->codigo_catastro . ';' . $predio->total . ';' . $predio->ids . "\n");
         }
     }
 }
