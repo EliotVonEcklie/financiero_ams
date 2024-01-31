@@ -343,7 +343,7 @@
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['alumbrado'],0,',','.') }}</td>
                             @endif
                             <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['bomberil_intereses'] + $periodosFacturados[$j]['ambiental_intereses'],0,',','.') }}</td>
-                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['total_liquidacion'],0,',','.') }}</td>
+                            <td colspan="2" class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['total_liquidacion'],0,',','.') }}</td>
                         </tr>
                     @endfor
                     <tr>
