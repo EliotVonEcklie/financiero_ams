@@ -22,12 +22,18 @@ class FacturaPredialController extends Controller
     {
         return inertia('FacturaPredials/Index', [
             'facturaPredials' => FacturaPredial::withTrashed()->orderByDesc('id')->get()->map(function ($facturaPredial) {
+                $total_liquidacion = array_reduce(array_values(array_filter($facturaPredial->data['liquidacion']['vigencias'], function($v) {
+                    return $v['isSelected'] ?? $v['selected'] ?? false;
+                })), function($a, $v) {
+                    return $a + $v['total_liquidacion'];
+                }, 0);
+
                 return [
                     'id' => $facturaPredial->id,
                     'created_at' => $facturaPredial->created_at,
                     'codigo_catastro' => $facturaPredial->data['codigo_catastro'],
-                    'total' => $facturaPredial->data['total'],
-                    'orden' => $facturaPredial->data['orden'],
+                    'contribuyente' => $facturaPredial->data['documento'] . ' - ' . $facturaPredial->data['nombre_propietario'],
+                    'total_liquidacion' => $total_liquidacion,
                     'pague_hasta' => $facturaPredial->data['pague_hasta'],
                     'factura_pagada' => $facturaPredial->data['factura_pagada'],
                     'state' => !$facturaPredial->trashed()
