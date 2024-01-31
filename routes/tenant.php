@@ -154,9 +154,9 @@ Route::group([
             return inertia('Public/ManualSistema');
         })->name('manuales');
 
-        Route::get('/prueba',function(){
-            return inertia('Public/Prueba');
-        })->name('prueba');
+        Route::get('/pago_confirmado',function(){
+            return inertia('Public/PagoConfirmado');
+        })->name('pago_confirmado');
 
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
         Route::resource('factura_predials', FacturaPredialController::class)->only(['store', 'show']);
