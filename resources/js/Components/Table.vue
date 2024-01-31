@@ -78,7 +78,7 @@ watch(selectedElements, selectedElements =>
                                 <label for="checkbox-all-search" class="sr-only">checkbox</label>
                             </div>
                         </th>
-                        <th v-for="header in headers" scope="col" class="px-6 py-3">{{ header }}</th>
+                        <th v-for="header in headers" scope="col" :class="{ 'px-2': header == 'Id', 'px-6': header != 'Id' }" class="py-3">{{ header }}</th>
                         <th v-if="allowEdit" scope="col" class="px-6 py-3">Acción</th>
                     </tr>
                 </thead>
@@ -91,7 +91,7 @@ watch(selectedElements, selectedElements =>
                             </div>
                         </td>
 
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-2 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <slot name="id" :element="element" />
                         </th>
 
