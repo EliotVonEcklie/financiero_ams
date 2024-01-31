@@ -22,7 +22,7 @@ return new class extends Migration
             $table->dropColumn(['total', 'orden']);
 
             // Create new columns
-            $table->foreignId('propietario_principal')->nullable()->default(null);
+            $table->foreignId('main_propietario_id')->nullable()->default(null);
             $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();
 

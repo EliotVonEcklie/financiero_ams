@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Helpers\Liquidacion;
 use App\Helpers\Censor;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Predio extends Model
 {
@@ -64,15 +65,12 @@ class Predio extends Model
     }
 
     /**
-     * Get the latest historial predio for the predio.
+     * Get the main predio propietario for the predio.
      */
-    public function latest_historial_predio() {
-        return $this->historial_predios()
-            ->orderBy('fecha', 'desc')
-            ->first();
+    public function main_propietario(): BelongsTo
+    {
+        return $this->belongsTo(PredioPropietario::class, 'main_propietario_id');
     }
-
-
 
     public function factura_predials()
     {
@@ -83,7 +81,7 @@ class Predio extends Model
      * Get a predio by searching a query.
      */
     public static function search(string|null $query, bool $sensible = true) {
-        if (!$query) {
+        if (! $query) {
             return [];
         }
 
@@ -91,21 +89,21 @@ class Predio extends Model
                 'predios.id',
                 'codigo_catastro',
                 'total',
-                'orden',
-                'documento',
-                'nombre_propietario',
-                'direccion',
-                'predio_tipos.nombre as predio_tipo'
+                'pp.documento',
+                'pp.nombre_propietario',
+                'pi.direccion',
+                'pt.nombre as predio_tipo'
             )
-            ->join('historial_predios', 'predios.id', '=', 'predio_id')
-            ->join('predio_tipos', 'predio_tipos.id', '=', 'predio_tipo_id')
+            ->join('predio_informacions pi', 'predios.id', '=', 'pi.predio_id')
+            ->join('predio_propietarios pp', 'predios.id', '=', 'pp.predio_id')
+            ->join('predio_tipos pt', 'pt.id', '=', 'pi.predio_tipo_id')
             ->where('codigo_catastro', 'like', '%' . $query . '%')
-            ->orWhere('direccion', 'like', '%' . $query . '%');
+            ->orWhere('pi.direccion', 'like', '%' . $query . '%');
 
         if (!$sensible) {
             $prediosQuery = $prediosQuery
-                ->orWhere('documento', 'like', '%' . $query . '%')
-                ->orWhere('nombre_propietario', 'like', '%' . $query . '%');
+                ->orWhere('pp.documento', 'like', '%' . $query . '%')
+                ->orWhere('pp.nombre_propietario', 'like', '%' . $query . '%');
         }
 
         $predios = $prediosQuery->orderBy('codigo_catastro', 'asc')
