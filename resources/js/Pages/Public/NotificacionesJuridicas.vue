@@ -1,7 +1,7 @@
 <template>
     <Layout :tenant="tenant" v-slot="{ showModal, hideModal }">
         <ModalMostrarNotificacion :hideModal="hideModal"/>
-        <div class="xl:mt-36 md:mt-48 mx-auto container">
+        <div class="xl:mt-24 xl:p-10 md:mt-48 mx-auto container">
             <h2 class="text-2xl md:text-5xl text-center font-medium text-gray-900 dark:text-white mb-8 mt-5">Notificaciones jurídicas</h2>
             <div class="mt-10 relative z-0 w-full mb-20 group ">
                 <input type="text" class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />

@@ -1,7 +1,7 @@
 <template>
     <Layout :tenant="tenant" v-slot="{ login, showModal, hideModal }" >
         <Carousel  :tenant="tenant" :login ="login" :showModal="showModal" :hideModal="hideModal"/>
-        <div class="container mx-auto">
+        <div class="container mx-auto xl:p-4">
             <section class="mb-20 xl:block md:hidden">
                 <div class="flex justify-center lg:flex-row md:flex-col lg:space-x-6 md:space-x-0 lg:space-y-0 md:space-y-6 mt-20">
                     <div class="flex justify-center">
