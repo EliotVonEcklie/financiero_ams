@@ -29,7 +29,7 @@ class FacturaPredialController extends Controller
                     'total' => $facturaPredial->data['total'],
                     'orden' => $facturaPredial->data['orden'],
                     'pague_hasta' => $facturaPredial->data['pague_hasta'],
-                    'pagado' => $facturaPredial->data['factura_pagada'],
+                    'factura_pagada' => $facturaPredial->data['factura_pagada'],
                     'state' => !$facturaPredial->trashed()
                 ];
             })

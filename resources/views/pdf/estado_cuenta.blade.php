@@ -174,7 +174,7 @@
                 <tr>
                     <td class="border-none">
                         <p class="text-center fs-1">
-                            Señor contribuyente: La Alcaldía Municipal del {{ tenant()->nombre }} META apoyado en la modernización y depuración de la
+                            Señor contribuyente: La Alcaldía Municipal del {{ tenant()->nombre }} apoyado en la modernización y depuración de la
                             información existente, en caso de no ver algún pago que usted realizó, le solicitamos anexar los documentos correspondientes a
                             pagos de vigencias anteriores para actualización de su estado de cuenta.
                         </p>
