@@ -60,7 +60,7 @@ class TransferPredios implements ShouldQueue
             'clasifica' => $predio->latest_avaluo()->predio_tipo->nombre === 'Rural' ? 1 : ($predio->latest_avaluo()->predio_tipo->nombre === 'Urbano' ? 2 : 0),
             'estratos' => ''
         ];
-
+/*
         DB::table('tesopredios')->upsert($tesopredios_data, ['cedulacatastral', 'ord', 'tot'], [
             'e',
             'd',
@@ -76,7 +76,7 @@ class TransferPredios implements ShouldQueue
             'tipopredio',
             'clasifica',
             'estratos'
-        ]);
+        ]);*/
     }
 
     /**
@@ -85,41 +85,41 @@ class TransferPredios implements ShouldQueue
      * @param \Illuminate\Support\Collection $avaluos The avaluos to transfer.
      */
     public function transfer_avaluos(Collection $avaluos) {
-        foreach ($avaluos as $avaluo) {
+        foreach ($avaluos->where('vigencia', 2023)->where('pagado', true)->all() as $avaluo) {
 
             // Format data for old database
             $tesoprediosavaluos_data = [
-                'vigencia' => $avaluo->vigencia,
-                'codigocatastral' => $avaluo->predio->codigo_catastro,
-                'avaluo' => $avaluo->valor_avaluo,
-                'pago' => $avaluo->pagado ? 'S' : 'N',
-                'estado' => 'S',
-                'ord' => sprintf("%03d", $avaluo->predio->orden),
-                'tot' => sprintf("%03d", $avaluo->predio->total),
-                'ha' => $avaluo->hectareas,
-                'met2' => $avaluo->metros_cuadrados,
-                'areacon' => $avaluo->area_construida,
-                'tasa' => $avaluo->tasa_por_mil,
-                'tipopredio' => substr($avaluo->predio_tipo->nombre, 0, 5) === 'Rural' ? 1 : (substr($avaluo->predio_tipo->nombre, 0, 6) === 'Urbano' ? 2 : 0),
-                'estratos' => '',
-                'destino_economico' => $avaluo->codigo_destino_economico->codigo,
-                'tasa_bomberil' => 0
+                //'vigencia' => $avaluo->vigencia,
+                //'codigocatastral' => $avaluo->predio->codigo_catastro,
+                //'avaluo' => $avaluo->valor_avaluo,
+                'pago' => 'S' //$avaluo->pagado ? 'S' : 'N',
+                //'estado' => 'S',
+                //'ord' => sprintf("%03d", $avaluo->predio->orden),
+                //'tot' => sprintf("%03d", $avaluo->predio->total),
+                //'ha' => $avaluo->hectareas,
+                //'met2' => $avaluo->metros_cuadrados,
+                //'areacon' => $avaluo->area_construida,
+                //'tasa' => $avaluo->tasa_por_mil,
+                //'tipopredio' => substr($avaluo->predio_tipo->nombre, 0, 5) === 'Rural' ? 1 : (substr($avaluo->predio_tipo->nombre, 0, 6) === 'Urbano' ? 2 : 0),
+                //'estratos' => '',
+                //'destino_economico' => $avaluo->codigo_destino_economico->codigo,
+                //'tasa_bomberil' => 0
             ];
 
             DB::table('tesoprediosavaluos')->upsert($tesoprediosavaluos_data, ['vigencia', 'codigocatastral'], [
-                'avaluo',
-                'pago',
-                'estado',
-                'tot',
-                'ord',
-                'ha',
-                'met2',
-                'areacon',
-                'tasa',
-                'tipopredio',
-                'estratos',
-                'destino_economico',
-                'tasa_bomberil'
+                //'avaluo',
+                'pago'//,
+                //'estado',
+                //'tot',
+                //'ord',
+                //'ha',
+                //'met2',
+                //'areacon',
+                //'tasa',
+                //'tipopredio',
+                //'estratos',
+                //'destino_economico',
+                //'tasa_bomberil'
             ]);
         }
     }
