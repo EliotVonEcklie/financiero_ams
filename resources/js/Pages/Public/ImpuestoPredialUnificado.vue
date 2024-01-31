@@ -115,8 +115,6 @@
                     </div>
                 </div>
             </div>
-
-            <ModalPse />
         <div class="xl:mt-24 xl:p-10 md:mt-48 mx-auto container">
             <h1 class="text-2xl md:text-5xl text-center font-medium text-gray-900 dark:text-white mb-8 mt-5">Impuesto predial unificado</h1>
             <!--Información predio-->
@@ -452,7 +450,6 @@
 import Layout from './Layout.vue'
 import { ref, computed, onMounted } from 'vue'
 import { router } from '@inertiajs/vue3'
-import ModalPse from './Components/ModalPse.vue'
 import axios from 'axios'
 import { Dismiss } from 'flowbite'
 import CardImpuestos from './Components/CardImpuestos.vue';
@@ -460,7 +457,6 @@ import { loadScript } from "vue-plugin-load-script";
 
 
 const props = defineProps({ tenant: Object, predios: Object, predio: Object})
-let btnPayment=ref(null);
 const isCheckAll = ref(true)
 const alertText = ref("");
 const integrity = ref("");
@@ -498,6 +494,7 @@ function makeid(length) {
 }
 
 function showWompi(){
+    let timeOut;
     loadScript("https://checkout.wompi.co/widget.js")
     .then(() => {
             let currency = 'COP'
@@ -506,7 +503,6 @@ function showWompi(){
             let sign = 'test_integrity_MMP9tGxP6fm0LlwG4DKrflQjBedHBRZW';
             let concatString = new String(reference+total+currency+sign);
             sha256(concatString);
-            console.log(integrity.value);
             checkout = new WidgetCheckout({
                 currency: 'COP',
                 amountInCents: total,
@@ -519,10 +515,10 @@ function showWompi(){
                 consumption: 800,
                 }
             });
-            checkout.open(function ( result ) {
-                console.log(result.transaction);
-                console.log(result.id)
-            })
+            window.clearTimeout(timeOut);
+            timeOut = window.setTimeout(function(){
+                checkout.open(function ( result ) {})
+            },1000);
         })
     .catch(function(e){
         console.log(e);
