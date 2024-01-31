@@ -21,8 +21,8 @@ class VigenciaUnidadMonetariaController extends Controller
                     'id' => $vigenciaUnidadMonetaria->id,
                     'vigencia' => $vigenciaUnidadMonetaria->vigencia,
                     'unidadMonetaria' => [
-                        'id' => $vigenciaUnidadMonetaria->unidadMonetaria->id,
-                        'nombre' => $vigenciaUnidadMonetaria->unidadMonetaria->nombre
+                        'id' => $vigenciaUnidadMonetaria->unidad_monetaria->id,
+                        'nombre' => $vigenciaUnidadMonetaria->unidad_monetaria->nombre
                     ],
                     'valor' => $vigenciaUnidadMonetaria->valor,
                     'state' => !$vigenciaUnidadMonetaria->trashed()

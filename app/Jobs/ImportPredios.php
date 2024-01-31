@@ -9,7 +9,6 @@ use App\Models\PredioEstrato;
 use App\Models\PredioTipo;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -27,7 +26,7 @@ class ImportPredios implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 2400;
+    public $timeout = 5000;
 
     private $predio_tipos;
     private $tesopredios;
