@@ -295,7 +295,7 @@
             <table class="border-none body-table">
                 <tr class="bg-primary  p-1">
                     <th class="fs-0">Vigencia</th>
-                    <th class="fs-0">Avaluo</th>
+                    <th colspan="3" class="fs-0">Avaluo</th>
                     <th class="fs-0">Tasa</th>
                     <th class="fs-0">Valor<br>Predial</th>
                     <th class="fs-0">Descuento<br>Incentivo</th>
@@ -327,7 +327,7 @@
                         @endif
                         <tr>
                             <td class="fs-s-1">{{ $periodosFacturados[$j]['vigencia'] }}</td>
-                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['valor_avaluo'],0,',','.')}} </td>
+                            <td colspan="3" class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['valor_avaluo'],0,',','.')}} </td>
                             <td class="fs-s-1">{{ $periodosFacturados[$j]['tasa_por_mil'] }} x mil</td>
                             <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['predial'] + $periodosFacturados[$j]['predial_descuento'],0,',','.')}} </td>
                             <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['predial_descuento'],0,',','.') }}</td>
@@ -343,7 +343,7 @@
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['alumbrado'],0,',','.') }}</td>
                             @endif
                             <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['bomberil_intereses'] + $periodosFacturados[$j]['ambiental_intereses'],0,',','.') }}</td>
-                            <td colspan="2" class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['total_liquidacion'],0,',','.') }}</td>
+                            <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($periodosFacturados[$j]['total_liquidacion'],0,',','.') }}</td>
                         </tr>
                     @endfor
                     <tr>
