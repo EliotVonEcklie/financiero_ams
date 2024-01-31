@@ -174,7 +174,7 @@
                 <tr>
                     <td class="border-none">
                         <p class="text-center fs-1">
-                            Señor contribuyente, La Alcaldía Municipal del {{ tenant()->nombre }} lo invita a pagar su impuesto predial.
+                            Señor contribuyente, La Alcaldía del municipio de {{ tenant()->nombre }} lo invita a pagar su impuesto predial.
                             Recuerde que para realizar su pago, deben acercarse a la secretaría de hacienda municipal y reclamar la liquidación correspondiente.
 	                        'Evitese sanciones y embargos'.
                         </p>

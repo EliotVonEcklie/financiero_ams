@@ -506,6 +506,7 @@ function showWompi(){
             let sign = 'test_integrity_MMP9tGxP6fm0LlwG4DKrflQjBedHBRZW';
             let concatString = new String(reference+total+currency+sign);
             sha256(concatString);
+            console.log(integrity.value);
             checkout = new WidgetCheckout({
                 currency: 'COP',
                 amountInCents: total,
