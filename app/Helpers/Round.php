@@ -6,6 +6,10 @@ class Round
 {
     public static function pesos(int|float $value) {
         $value = ceil($value);
+
+        return $value;
+
+        /*
         $last_digits = (int) substr((int) $value, -2);
 
         if ($last_digits > 50) {
@@ -15,5 +19,6 @@ class Round
         } else {
             return $value;
         }
+        */
     }
 }
