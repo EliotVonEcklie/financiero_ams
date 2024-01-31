@@ -1,6 +1,6 @@
 <template>
     <Layout :tenant="tenant" v-slot="{ showModal, hideModal }">
-        <div class="xl:mt-36 md:mt-48 mx-auto container">
+        <div class="xl:mt-24 xl:p-10 md:mt-48 mx-auto container">
             <h2 class="text-2xl md:text-5xl text-center font-medium text-gray-900 dark:text-white mb-8 mt-5">Presentación electrónica</h2>
             <div class="w-full h-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <h5 class="mb-2 lg:text-2xl md:text-4xl font-semibold tracking-tight text-gray-900 dark:text-white">Normatividad</h5>
