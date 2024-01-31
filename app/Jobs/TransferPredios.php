@@ -89,8 +89,8 @@ class TransferPredios implements ShouldQueue
 
             // Format data for old database
             $tesoprediosavaluos_data = [
-                'vigencia' => $avaluo->vigencia,
-                'codigocatastral' => $avaluo->predio->codigo_catastro,
+                //'vigencia' => $avaluo->vigencia,
+                //'codigocatastral' => $avaluo->predio->codigo_catastro,
                 //'avaluo' => $avaluo->valor_avaluo,
                 'pago' => 'S' //$avaluo->pagado ? 'S' : 'N',
                 //'estado' => 'S',
@@ -106,7 +106,10 @@ class TransferPredios implements ShouldQueue
                 //'tasa_bomberil' => 0
             ];
 
-            DB::table('tesoprediosavaluos')->upsert($tesoprediosavaluos_data, ['vigencia', 'codigocatastral'], [
+            DB::table('tesoprediosavaluos')
+            ->where('vigencia', $avaluo->vigencia)
+            ->where('codigocatrastal', $avaluo->predio->codigo_catastro)
+            ->update($tesoprediosavaluos_data/*, ['vigencia', 'codigocatastral'], [
                 //'avaluo',
                 'pago'//,
                 //'estado',
@@ -120,7 +123,7 @@ class TransferPredios implements ShouldQueue
                 //'estratos',
                 //'destino_economico',
                 //'tasa_bomberil'
-            ]);
+            ]*/);
         }
     }
 }
