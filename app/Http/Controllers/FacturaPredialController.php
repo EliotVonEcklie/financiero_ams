@@ -21,7 +21,7 @@ class FacturaPredialController extends Controller
     public function index()
     {
         return inertia('FacturaPredials/Index', [
-            'facturaPredials' => FacturaPredial::withTrashed()->get()->map(function ($facturaPredial) {
+            'facturaPredials' => FacturaPredial::withTrashed()->orderByDesc('id')->get()->map(function ($facturaPredial) {
                 return [
                     'id' => $facturaPredial->id,
                     'created_at' => $facturaPredial->created_at,
@@ -29,7 +29,7 @@ class FacturaPredialController extends Controller
                     'total' => $facturaPredial->data['total'],
                     'orden' => $facturaPredial->data['orden'],
                     'pague_hasta' => $facturaPredial->data['pague_hasta'],
-                    'pagado' => $facturaPredial->data['factura_pagada'],
+                    'factura_pagada' => $facturaPredial->data['factura_pagada'],
                     'state' => !$facturaPredial->trashed()
                 ];
             })
@@ -109,7 +109,7 @@ class FacturaPredialController extends Controller
     public function update(Request $request, FacturaPredial $facturaPredial)
     {
         if ($request->has('toggle')) {
-            if (!$facturaPredial->data['factura_pagada']) {
+            if (! $facturaPredial->data['factura_pagada']) {
                 $facturaPredial->delete();
             }
 
