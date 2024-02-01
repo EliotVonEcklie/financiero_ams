@@ -50,6 +50,10 @@ class TranscribeCatastros implements ShouldQueue
         foreach ($this->lines() as $predio) {
             $conversion = $conversions->firstWhere('old', $predio[0]);
 
+            if (! $conversion) {
+                continue;
+            }
+
             Predio::firstOrCreate([
                 'codigo_catastro' => $conversion->current
             ])->avaluos()->updateOrCreate([
