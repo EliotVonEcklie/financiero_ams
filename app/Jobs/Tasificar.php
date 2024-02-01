@@ -39,13 +39,8 @@ class Tasificar implements ShouldQueue
         foreach (Predio::lazy() as $predio) {
             foreach ($predio->avaluos()->where('tasa_por_mil', -1)
                 ->lazyById() as $avaluo) {
-                $date_start = Carbon::create($avaluo->vigencia, 1, 1);
-                $date_end = Carbon::create($avaluo->vigencia, 12, 31);
 
-                $informacion = $predio->informacions()
-                    ->whereBetween('created_at', [$date_start, $date_end])
-                    ->orderBy('created_at', 'desc')
-                    ->first();
+                $informacion = $predio->informacion_on($avaluo->vigencia);
 
                 $this->tasificar_avaluo($avaluo, $informacion, $estratificaciones);
             }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Helpers\Liquidacion;
 use App\Helpers\Censor;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 
@@ -67,13 +68,40 @@ class Predio extends Model
     }
 
     /**
+     * Get the closest informacion for a given vigencia
+     */
+    public function informacion_on($vigencia): PredioInformacion
+    {
+        return $this->informacions()
+            ->where('created_at', '>=', Carbon::create($vigencia))
+            ->orderBy('created_at')
+            ->first();
+    }
+
+    /**
+     * Get the closest main propietario for a given vigencia
+     */
+    public function main_propietario_on($vigencia): PredioPropietario
+    {
+        return $this->propietarios()
+            ->whereBetween('orden', [1, $this->main_propietario])
+            ->where('created_at', '>=', Carbon::create($vigencia))
+            ->orderBy('created_at')
+            ->orderByDesc('orden')
+            ->first();
+    }
+
+    /**
      * Get the main predio propietario for the predio.
      */
     public function main_propietario(): PredioPropietario
     {
         return $this->propietarios()
             ->where('orden', $this->main_propietario)
-            ->first() ?? $this->propietarios()->first();
+            ->first() ?? $this->propietarios()
+            ->orderByDesc('created_at')
+            ->orderBy('orden')
+            ->first();
     }
 
     public function factura_predials(): Collection
