@@ -6,9 +6,6 @@ use App\Http\Requests\StoreIgacRequest;
 use App\Jobs\ParseIgac;
 use App\Jobs\TransferPredios;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Cache;
-
-use function Laravel\Prompts\error;
 
 class UploadIgacController extends Controller
 {
