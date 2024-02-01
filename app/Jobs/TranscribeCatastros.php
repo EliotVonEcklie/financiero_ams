@@ -4,23 +4,15 @@ namespace App\Jobs;
 
 use App\Helpers\TranscribeCatastro;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 use App\Models\Predio;
-use App\Models\CodigoDestinoEconomico;
-use App\Models\Avaluo;
-use App\Models\HistorialPredio;
-use App\Models\PredioEstrato;
-use App\Models\PredioTipo;
 
-class ParseIgac implements ShouldQueue
+class TranscribeCatastros implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -29,17 +21,16 @@ class ParseIgac implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 2400;
+    public $timeout = 5000;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(public string $r1_file)
-    {}
+    public function __construct() {}
 
     private function lines()
     {
-        $path = storage_path('app/data/cartera.csv');
+        $path = Storage::path('data/cartera.csv');
 
         $handle = fopen($path, 'r');
 
@@ -53,11 +44,22 @@ class ParseIgac implements ShouldQueue
      */
     public function handle(): void
     {
-        $conversions = TranscribeCatastro::transcribe($this->r1_file);
+        $conversions = TranscribeCatastro::transcribe(Storage::path('data/r1.txt'));
 
         foreach ($this->lines() as $predio) {
-            $conversion = $conversions->firstWhere('old', $predio[2]);
-            Predio::firstOrCreate();
+            $conversion = $conversions->firstWhere('old', $predio[0]);
+
+            if (! $conversion) {
+                continue;
+            }
+
+            Predio::firstOrCreate([
+                'codigo_catastro' => $conversion['current']
+            ])->avaluos()->updateOrCreate([
+                'vigencia' => $predio[1]
+            ], [
+                'valor_avaluo' => $predio[2]
+            ]);
         }
     }
 }

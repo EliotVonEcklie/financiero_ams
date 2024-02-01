@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -14,8 +13,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use App\Models\Predio;
 use App\Models\CodigoDestinoEconomico;
-use App\Models\Avaluo;
-use App\Models\HistorialPredio;
 use App\Models\PredioEstrato;
 use App\Models\PredioTipo;
 
@@ -41,56 +38,61 @@ class ParseIgac implements ShouldQueue
      */
     public function handle(): void
     {
+        $predio_tipos = PredioTipo::all();
+
         // Do R1
 
         LazyCollection::make(function () {
             yield from $this->generate_lines($this->r1_file);
-        })->each(function ($r1_line) {
+        })->each(function ($r1_line) use ($predio_tipos) {
             $r1_data = $this->parse_line_r1($r1_line);
 
             // Find or create Predio
             $predio = Predio::firstOrCreate([
                 'codigo_catastro' => $r1_data->codigo_catastro,
-                'total' => $r1_data->total,
-                'orden' => $r1_data->orden
+                'total' => $r1_data->total
             ]);
 
-            // Find or create CodigoDestinoEconomico
-            $codigo_destino_economico = CodigoDestinoEconomico::firstOrCreate([
-                'codigo' => $r1_data->codigo_destino_economico
-            ]);
-
-            $predio_tipo = PredioTipo::where('codigo', $r1_data->tipo_predio)->firstOrFail();
-
-            // Update or create HistorialPredio
-            HistorialPredio::updateOrCreate([
-                'predio_id' => $predio->id,
-                'fecha' => $r1_data->vigencia
+            $predio->propietarios()->updateOrCreate([
+                'orden' => $r1_data->orden,
+                'created_at' => $r1_data->vigencia
             ], [
-                'codigo_destino_economico_id' => $codigo_destino_economico->id,
+                'nombre' => $r1_data->nombre_propietario,
                 'tipo_documento' => $r1_data->tipo_documento,
-                'documento' => $r1_data->documento,
-                'nombre_propietario' => $r1_data->nombre_propietario,
-                'direccion' => $r1_data->direccion,
-                'hectareas' => $r1_data->hectareas,
-                'metros_cuadrados' => $r1_data->metros_cuadrados,
-                'area_construida' => $r1_data->area_construida,
-                'predio_tipo_id' => $predio_tipo->id
+                'documento' => $r1_data->documento
             ]);
 
-            // Update or create Avaluo
-            Avaluo::updateOrCreate([
-                'predio_id' => $predio->id,
-                'vigencia' => $r1_data->vigencia->year
-            ], [
-                'codigo_destino_economico_id' => $codigo_destino_economico->id,
-                'direccion' => $r1_data->direccion,
-                'valor_avaluo' => $r1_data->valor_avaluo,
-                'hectareas' => $r1_data->hectareas,
-                'metros_cuadrados' => $r1_data->metros_cuadrados,
-                'area_construida' => $r1_data->area_construida,
-                'predio_tipo_id' => $predio_tipo->id
-            ]);
+            if (! $predio->informacions()->where('created_at', $r1_data->vigencia)->first()) {
+                // Find or create CodigoDestinoEconomico
+                $codigo_destino_economico = CodigoDestinoEconomico::firstOrCreate([
+                    'codigo' => $r1_data->codigo_destino_economico
+                ]);
+
+                $predio_tipo = $predio_tipos->where('codigo', $r1_data->tipo_predio)->firstOrFail();
+
+                // Update or create Predio Informacion
+                $informacion = $predio->informacions()->create([
+                    'created_at' => $r1_data->vigencia
+                ], [
+                    'direccion' => $r1_data->direccion,
+                    'hectareas' => $r1_data->hectareas,
+                    'metros_cuadrados' => $r1_data->metros_cuadrados,
+                    'area_construida' => $r1_data->area_construida
+                ]);
+
+                $informacion->codigo_destino_economico()->associate($codigo_destino_economico);
+                $informacion->predio_tipo()->associate($predio_tipo);
+                $informacion->save();
+            }
+
+            if (! $predio->avaluos()->where('vigencia', $r1_data->vigencia->year)->first()) {
+                // Update or create Predio Avaluo
+                $predio->avaluos()->updateOrCreate([
+                    'vigencia' => $r1_data->vigencia->year
+                ], [
+                    'valor_avaluo' => $r1_data->valor_avaluo
+                ]);
+            }
         });
 
         // Done parsing, delete the file
@@ -112,7 +114,6 @@ class ParseIgac implements ShouldQueue
             // Find Predio
             $predio = Predio::where('codigo_catastro', $r2_data->codigo_catastro)
                 ->where('total', $r2_data->total)
-                ->where('orden', $r2_data->orden)
                 ->first();
 
             if ($predio === null) {
@@ -121,15 +122,10 @@ class ParseIgac implements ShouldQueue
 
             $predio_estrato = PredioEstrato::where('estrato', $r2_data->estrato)->firstOrFail();
 
-            // Find and update latest HistorialPredio
-            $historial_predio = $predio->latest_historial_predio();
-            $historial_predio->predio_estrato_id = $predio_estrato->id;
-            $historial_predio->save();
-
-            // Find and update latest Avaluo
-            $avaluo = $predio->latest_avaluo();
-            $avaluo->predio_estrato_id = $predio_estrato->id;
-            $avaluo->save();
+            // Find and update latest informacion
+            $predio->latest_informacion()
+                ->predio_estrato()
+                ->associate($predio_estrato);
         });
     }
 
@@ -210,8 +206,6 @@ class ParseIgac implements ShouldQueue
     {
         // codigo catastro
         $codigo_catastro = mb_substr($line, 5, 25);
-        // orden
-        $orden = (int) mb_substr($line, 31, 3);
         // total
         $total = (int) mb_substr($line, 34, 3);
         // estrato
@@ -219,7 +213,6 @@ class ParseIgac implements ShouldQueue
 
         return (object) [
             'codigo_catastro' => $codigo_catastro,
-            'orden' => $orden,
             'total' => $total,
             'estrato' => $estrato
         ];

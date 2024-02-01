@@ -24,7 +24,7 @@ class Descuento extends Model
         // find nacional descuento
         $nacional = self::where('es_nacional', true)
             ->where('hasta', '>=', $date->year)
-            ->orderBy('hasta', 'desc')
+            ->orderByDesc('hasta')
             ->first();
 
         return $nacional !== null ? $nacional->porcentaje : 0;
@@ -37,7 +37,7 @@ class Descuento extends Model
         // find descuento for month
         $incentivo = self::where('es_nacional', false)
             ->where('hasta', '>=', $date->month)
-            ->orderBy('hasta', 'asc')
+            ->orderBy('hasta')
             ->first();
 
         return $incentivo !== null ? $incentivo->porcentaje : 0;
@@ -47,7 +47,7 @@ class Descuento extends Model
     {
         $lastDescuento = self::where('es_nacional', false)
             ->where('hasta', '>=', now()->month)
-            ->orderBy('hasta', 'asc')
+            ->orderBy('hasta')
             ->first();
 
         return $lastDescuento !== null ?

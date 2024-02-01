@@ -16,14 +16,11 @@ use App\Http\Controllers\PredioTipoController;
 use App\Http\Middleware\FinancieroAuth;
 use App\Http\Middleware\SetTenantDefaultParameter;
 use App\Jobs\Tasificar;
-use App\Models\Avaluo;
 use App\Models\Predio;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\PredioAvaluo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByPath;
-use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,9 +47,9 @@ Route::group([
             return inertia('Login');
         })->withoutMiddleware(FinancieroAuth::class)->name('login');
 
-        Route::get('/test', function () {
-            return Pdf::loadView('pdf.private.test')->stream();
-        })->name('test');
+        //Route::get('/test', function () {
+        //    return Pdf::loadView('pdf.private.test')->stream();
+        //})->name('test');
 
         Route::get('/', function () {
             return inertia('Index');
@@ -85,8 +82,8 @@ Route::group([
 
             Route::get('/process', function () {
                 return inertia('Tasificar/Process', [
-                    'predios' => Avaluo::where('tasa_por_mil', -1)->get(),
-                    'prediosTasa' => Avaluo::whereNot('tasa_por_mil', -1)->get()
+                    'predios' => PredioAvaluo::where('tasa_por_mil', -1)->get(),
+                    'prediosTasa' => PredioAvaluo::whereNot('tasa_por_mil', -1)->get()
                 ]);
             })->name('tasificar.process');
 

@@ -3,15 +3,12 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Collection;
 
 class TranscribeCatastro {
     protected static function lines(string $file)
     {
-        $path = Storage::path($file);
-
-        $handle = fopen($path, 'r');
+        $handle = fopen($file, 'r');
 
         while (($line = fgets($handle)) !== false) {
             $line = mb_convert_encoding($line, 'UTF-8', 'Windows-1252'); // IGAC files arrive encoded in CP1252

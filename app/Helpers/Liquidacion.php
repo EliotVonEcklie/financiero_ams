@@ -2,15 +2,17 @@
 
 namespace App\Helpers;
 
-use App\Models\Avaluo;
 use App\Models\Descuento;
 use App\Models\Estatuto;
 use App\Models\Interes;
+use App\Models\Predio;
+use App\Models\PredioAvaluo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class Liquidacion
 {
+    private Predio $predio;
     private Collection $estatutos;
     private Collection $avaluos;
 
@@ -32,16 +34,22 @@ class Liquidacion
     public float $total_alumbrado = 0;
     public float $total_intereses = 0;
 
-    public function __construct(Collection|array $avaluos)
+    public function __construct(Predio $predio, array $vigencias = null)
     {
+        $this->predio = $predio;
+
         $this->estatutos = Estatuto::all();
+
         $this->descuento_incentivo = Descuento::getDescuentoIncentivo();
         $this->descuento_intereses = Descuento::getDescuentoIntereses();
-        $this->avaluos = Collection::make($avaluos);
+
+        $this->avaluos = $this->predio->avaluos()
+            ->whereIn('vigencia', $vigencias ?? $this->predio->avaluos()->pluck('vigencia'))
+            ->orderByDesc('vigencia')
+            ->get();
 
         foreach ($this->avaluos as $avaluo) {
-            $result = $this->liquidar($avaluo);
-            if ($result !== null) {
+            if (($result = $this->liquidar($avaluo)) !== null) {
                 array_push($this->vigencias, $result);
             }
         }
@@ -51,7 +59,7 @@ class Liquidacion
     {
         return [
             'vigencias' => $this->vigencias,
-            'predio_id' => $this->avaluos->first()->predio->id,
+            'predio_id' => $this->predio->id,
             'total_liquidacion' => $this->total_liquidacion,
             'total_valor_avaluo' => $this->total_valor_avaluo,
             'total_predial' => $this->total_predial,
@@ -69,7 +77,7 @@ class Liquidacion
         ];
     }
 
-    private function liquidar(Avaluo $avaluo)
+    private function liquidar(PredioAvaluo $avaluo)
     {
         if ($avaluo->pagado) {
             return null;
@@ -111,9 +119,8 @@ class Liquidacion
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
 
         if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {
-            $avaluo_anterior = $avaluo->predio->avaluos()
-                ->where('vigencia', $avaluo->vigencia - 1)
-                ->first();
+            $avaluo_anterior = $this->predio->avaluos()
+                ->firstWhere('vigencia', $avaluo->vigencia - 1);
 
             if($avaluo_anterior) {
                 $predial_anterior = $this->calculate_tarifa(
@@ -148,23 +155,31 @@ class Liquidacion
             );
         }
 
+        $info = $this->predio->informacion_on($avaluo->vigencia);
+
         if ($result['estatuto']->alumbrado) {
-            if ($result['estatuto']->alumbrado_urbano && $avaluo->predio_tipo->codigo === '01') {
+            if ($result['estatuto']->alumbrado_urbano && substr($info->predio_tipo->nombre, 0, 6) === 'Urbano') {
                 $result['alumbrado'] = $this->calculate_tarifa(
-                    $result['predial'],
+                    $result['valor_avaluo'],
                     $result['estatuto']->alumbrado_tasa,
                     $result['estatuto']->alumbrado_tarifa
                 );
-            } else if ($result['estatuto']->alumbrado_rural && $avaluo->predio_tipo->codigo === '00') {
+            } else if ($result['estatuto']->alumbrado_rural && substr($info->predio_tipo->nombre, 0, 5) === 'Rural') {
                 $result['alumbrado'] = $this->calculate_tarifa(
-                    $result['predial'],
+                    $result['valor_avaluo'],
                     $result['estatuto']->alumbrado_tasa,
                     $result['estatuto']->alumbrado_tarifa
                 );
             }
         }
 
-        $result['total_liquidacion'] = Round::pesos($result['predial'] + $result['bomberil'] + $result['ambiental'] + $result['alumbrado'] + $result['estatuto']->recibo_caja);
+        $result['total_liquidacion'] = Round::pesos(
+            $result['predial'] +
+            $result['bomberil'] +
+            $result['ambiental'] +
+            $result['alumbrado'] +
+            $result['estatuto']->recibo_caja
+        );
 
         if ($result['vigencia'] != now()->year || $this->descuento_incentivo == 0) {
             $from = new Carbon($result['vigencia'] . '-01-01');
@@ -180,10 +195,18 @@ class Liquidacion
             $result['ambiental_intereses'] = Interes::calculateMoratorio($result['ambiental'], $from);
             $result['ambiental_descuento_intereses'] = $this->calculate_tarifa($result['ambiental_intereses'], $this->descuento_intereses, false);
 
-            $result['descuento_intereses'] = Round::pesos($result['predial_descuento_intereses'] + $result['bomberil_descuento_intereses'] + $result['ambiental_descuento_intereses']);
+            $result['descuento_intereses'] = Round::pesos(
+                $result['predial_descuento_intereses'] +
+                $result['bomberil_descuento_intereses'] +
+                $result['ambiental_descuento_intereses']
+            );
 
-            $result['total_intereses'] = Round::pesos(($result['predial_intereses'] + $result['bomberil_intereses'] + $result['ambiental_intereses']) -
-                $result['descuento_intereses']);
+            $result['total_intereses'] = Round::pesos((
+                    $result['predial_intereses'] +
+                    $result['bomberil_intereses'] +
+                    $result['ambiental_intereses']
+                ) - $result['descuento_intereses']
+            );
 
             $result['total_liquidacion'] += $result['total_intereses'];
         }
