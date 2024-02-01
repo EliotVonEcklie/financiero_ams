@@ -93,24 +93,33 @@ class Predio extends Model
                 'predios.id',
                 'codigo_catastro',
                 'total',
-                'pp.documento',
-                'pp.nombre_propietario',
-                'pi.direccion',
-                'pt.nombre as predio_tipo'
+                'predio_informacions.direccion',
+                'predio_propietarios.documento',
+                'predio_propietarios.nombre_propietario',
+                'predio_tipos.nombre as predio_tipo'
             )
-            ->join('predio_informacions pi', 'predios.id', '=', 'pi.predio_id')
-            ->join('predio_propietarios pp', 'predios.id', '=', 'pp.predio_id')
-            ->join('predio_tipos pt', 'pt.id', '=', 'pi.predio_tipo_id')
+            ->join('predio_informacions', 'predios.id', '=', 'predio_informacions.predio_id')
+            ->join('predio_propietarios', 'predios.id', '=', 'predio_propietarios.predio_id')
+            ->join('predio_tipos', 'predio_tipos.id', '=', 'predio_tipo_id')
             ->where('codigo_catastro', 'like', '%' . $query . '%')
-            ->orWhere('pi.direccion', 'like', '%' . $query . '%');
+            ->orWhere('predio_informacions.direccion', 'like', '%' . $query . '%');
 
         if (!$sensible) {
             $prediosQuery = $prediosQuery
-                ->orWhere('pp.documento', 'like', '%' . $query . '%')
-                ->orWhere('pp.nombre_propietario', 'like', '%' . $query . '%');
+                ->orWhere('predio_propietarios.documento', 'like', '%' . $query . '%')
+                ->orWhere('predio_propietarios.nombre_propietario', 'like', '%' . $query . '%');
         }
 
-        $predios = $prediosQuery->orderBy('codigo_catastro', 'asc')
+        $predios = $prediosQuery->groupBy(
+                'predios.id',
+                'codigo_catastro',
+                'total',
+                'predio_informacions.direccion',
+                'predio_propietarios.documento',
+                'predio_propietarios.nombre_propietario',
+                'predio_tipos.nombre'
+            )
+            ->orderBy('codigo_catastro', 'asc')
             ->take(50)
             ->get();
 
@@ -145,7 +154,7 @@ class Predio extends Model
             'id' => $predio->id,
             'codigo_catastro' => $predio->codigo_catastro,
             'total' => sprintf('%03d', $predio->total),
-            'orden' => sprintf('%03d', $predio->orden),
+            'orden' => sprintf('%03d', $main_propietario->orden),
             'valor_avaluo' => $predio->latest_avaluo()->valor_avaluo,
             'documento' => $documento,
             'nombre_propietario' => $nombre_propietario,

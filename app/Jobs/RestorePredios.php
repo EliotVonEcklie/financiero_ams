@@ -55,16 +55,17 @@ class RestorePredios implements ShouldQueue
 
         $predios = Predio::lazy();
 
-        // load up all dumped avaluos
+        // load up all dumped propietarios
 
-        foreach ($this->dumped('avaluos') as $avaluo) {
-            $predios->where('codigo_catastro', $avaluo[0])
+        foreach ($this->dumped('propietarios') as $propietario) {
+            $predios->where('codigo_catastro', $propietario[0])
                 ->first()
-                ->avaluos()->create([
-                    'vigencia' => $avaluo[1],
-                    'pagado' => (boolean) $avaluo[2],
-                    'valor_avaluo' => (int) $avaluo[3],
-                    'tasa_por_mil' => (float) $avaluo[4]
+                ->propietarios()->create([
+                    'orden' => (int) $propietario[1],
+                    'created_at' => new Carbon($propietario[2]),
+                    'tipo_documento' => $propietario[3],
+                    'documento' => $propietario[4],
+                    'nombre_propietario' => $propietario[5]
                 ]);
         }
 
@@ -85,17 +86,16 @@ class RestorePredios implements ShouldQueue
                 ]);
         }
 
-        // load up all dumped propietarios
+        // load up all dumped avaluos
 
-        foreach ($this->dumped('propietarios') as $propietario) {
-            $predios->where('codigo_catastro', $propietario[0])
+        foreach ($this->dumped('avaluos') as $avaluo) {
+            $predios->where('codigo_catastro', $avaluo[0])
                 ->first()
-                ->propietarios()->create([
-                    'orden' => (int) $propietario[1],
-                    'created_at' => new Carbon($propietario[2]),
-                    'tipo_documento' => $propietario[3],
-                    'documento' => $propietario[4],
-                    'nombre_propietario' => $propietario[5]
+                ->avaluos()->create([
+                    'vigencia' => $avaluo[1],
+                    'pagado' => (boolean) $avaluo[2],
+                    'valor_avaluo' => (int) $avaluo[3],
+                    'tasa_por_mil' => (float) $avaluo[4]
                 ]);
         }
     }
