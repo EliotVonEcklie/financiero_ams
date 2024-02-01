@@ -1,6 +1,6 @@
 @php
-    $limite = 12;
-    $constante = 12;
+    $limite = 15;
+    $constante = 15;
     $arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,26,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48];
     $vigencias = $estadoCuenta->data['liquidacion']['vigencias'];
     $longitud = count($vigencias);
@@ -305,7 +305,7 @@
                     <tr class="bg-primary  p-1">
                         <th class="fs-0">Vigencia</th>
                         <th class="fs-0">Avaluo</th>
-                        <th class="fs-0">Tasa</th>
+                        <th class="fs-0">Tasa x mil</th>
                         <th class="fs-0">Valor<br>Predial</th>
                         <th class="fs-0">Descuento<br>Incentivo</th>
                         <th class="fs-0">Recaudo<br>Predial</th>
@@ -334,7 +334,7 @@
                             <tr>
                                 <td class="fs-s-1">{{ $vigencias[$j]['vigencia'] }}</td>
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['valor_avaluo'],0,',','.')}} </td>
-                                <td class="fs-s-1">{{ $vigencias[$j]['tasa_por_mil'] }} x mil</td>
+                                <td class="fs-s-1">{{ $vigencias[$j]['tasa_por_mil'] }}</td>
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial'] + $vigencias[$j]['predial_descuento'],0,',','.')}} </td>
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial_descuento'],0,',','.') }}</td>
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['predial'],0,',','.') }}  </td>
@@ -352,19 +352,6 @@
                                 <td class="fs-s-1" style="white-space: nowrap;">${{ number_format($vigencias[$j]['total_liquidacion'],0,',','.') }}</td>
                             </tr>
                         @endfor
-                        <!--
-                        @for ( $j =  $index;  $j < $longitud ;  $j++)
-                            @if ($j > $limite)
-                                @php
-                                    $index += $constante;
-                                    $limite +=$constante
-                                @endphp
-                                @break
-                            @endif
-                            <tr>
-                                <td>{{ $arr[$j] }}</td>
-                            </tr>
-                        @endfor-->
                     </tbody>
                 </table>
                 @if ($i+1 != $tablas)
