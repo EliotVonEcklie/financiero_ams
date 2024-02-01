@@ -160,8 +160,15 @@ class Predio extends Model
             }
         }
 
-        $predio->total = sprintf('%03d', $predio->total);
-        $predio->orden = sprintf('%03d', $predio->orden);
+        foreach ($predios as $predio) {
+            if ($sensible) {
+                $predio->documento = Censor::str($predio->documento, -2);
+                $predio->nombre_propietario = Censor::str($predio->nombre_propietario);
+            }
+
+            $predio->total = sprintf('%03d', $predio->total);
+            $predio->orden = sprintf('%03d', $predio->orden);
+        }
 
         return $predios;
     }
