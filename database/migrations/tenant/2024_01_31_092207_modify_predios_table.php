@@ -13,16 +13,20 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Drop old tables
+        Schema::dropIfExists('avaluos');
+        Schema::dropIfExists('historial_predios');
+
         // Remove all data
         DB::table('predios')->truncate();
 
         Schema::table('predios', function (Blueprint $table) {
             // Drop old columns
             $table->dropUnique(['codigo_catastro', 'total', 'orden']);
-            $table->dropColumn(['total', 'orden']);
+            $table->dropColumn('orden');
 
             // Create new columns
-            $table->foreignId('main_propietario_id')->nullable()->default(null);
+            $table->integer('main_propietario')->default(1);
             $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();
 

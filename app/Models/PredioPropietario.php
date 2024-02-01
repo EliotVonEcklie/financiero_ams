@@ -10,12 +10,7 @@ class PredioPropietario extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'predio_id',
-        'tipo_documento',
-        'documento',
-        'nombre_propietario'
-    ];
+    protected $fillable = [];
 
     public function predio(): BelongsTo
     {

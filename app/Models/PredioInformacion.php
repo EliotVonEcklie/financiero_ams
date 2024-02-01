@@ -10,20 +10,25 @@ class PredioInformacion extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'direccion',
-        'area',
-        'estrato',
-        'uso_suelo',
-        'tipo_suelo',
-        'barrio',
-        'comuna',
-        'latitud',
-        'longitud'
-    ];
+    protected $fillable = [];
 
     public function predio(): BelongsTo
     {
         return $this->belongsTo(Predio::class);
+    }
+
+    public function codigo_destino_economico(): BelongsTo
+    {
+        return $this->belongsTo(CodigoDestinoEconomico::class);
+    }
+
+    public function predio_estrato(): BelongsTo
+    {
+        return $this->belongsTo(PredioEstrato::class);
+    }
+
+    public function predio_tipo(): BelongsTo
+    {
+        return $this->belongsTo(PredioTipo::class);
     }
 }

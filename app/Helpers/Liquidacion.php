@@ -6,11 +6,13 @@ use App\Models\Avaluo;
 use App\Models\Descuento;
 use App\Models\Estatuto;
 use App\Models\Interes;
+use App\Models\Predio;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class Liquidacion
 {
+    private Predio $predio;
     private Collection $estatutos;
     private Collection $avaluos;
 
@@ -32,16 +34,21 @@ class Liquidacion
     public float $total_alumbrado = 0;
     public float $total_intereses = 0;
 
-    public function __construct(Collection|array $avaluos)
+    public function __construct(Predio $predio, array $vigencias = null)
     {
+        $this->predio = $predio;
+
         $this->estatutos = Estatuto::all();
+
         $this->descuento_incentivo = Descuento::getDescuentoIncentivo();
         $this->descuento_intereses = Descuento::getDescuentoIntereses();
-        $this->avaluos = Collection::make($avaluos);
+
+        $this->avaluos = $this->predio->avaluos()
+            ->whereIn('vigencia', $vigencias ?? $this->predio->avaluos()->pluck('vigencia'))
+            ->get();
 
         foreach ($this->avaluos as $avaluo) {
-            $result = $this->liquidar($avaluo);
-            if ($result !== null) {
+            if ($result = $this->liquidar($avaluo) !== null) {
                 array_push($this->vigencias, $result);
             }
         }
@@ -51,7 +58,7 @@ class Liquidacion
     {
         return [
             'vigencias' => $this->vigencias,
-            'predio_id' => $this->avaluos->first()->predio->id,
+            'predio_id' => $this->predio->id,
             'total_liquidacion' => $this->total_liquidacion,
             'total_valor_avaluo' => $this->total_valor_avaluo,
             'total_predial' => $this->total_predial,
@@ -111,7 +118,7 @@ class Liquidacion
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
 
         if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {
-            $avaluo_anterior = $avaluo->predio->avaluos()
+            $avaluo_anterior = $this->predio->avaluos()
                 ->where('vigencia', $avaluo->vigencia - 1)
                 ->first();
 

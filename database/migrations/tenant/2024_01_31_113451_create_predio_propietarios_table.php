@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();
 
-            $table->unique(['predio_id', 'fecha']);
+            $table->unique(['predio_id', 'orden', 'created_at']);
         });
     }
 

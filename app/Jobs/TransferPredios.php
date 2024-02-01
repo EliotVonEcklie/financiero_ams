@@ -29,7 +29,7 @@ class TransferPredios implements ShouldQueue
     {
         foreach (Predio::lazy() as $predio) {
             $this->transfer_predio($predio);
-            $this->transfer_avaluos($predio->avaluos);
+            $this->transfer_avaluos($predio);
         }
     }
 
@@ -39,6 +39,9 @@ class TransferPredios implements ShouldQueue
      * @param Predio $predio The predio to transfer.
      */
     public function transfer_predio(Predio $predio) {
+        $propietario = $predio->main_propietario();
+        $latest_info = $predio->latest_informacion();
+        $latest_avaluo = $predio->latest_avaluo();
 
         // Format data for old database
         $tesopredios_data = [
@@ -46,18 +49,18 @@ class TransferPredios implements ShouldQueue
             'ord' => sprintf('%03d', $predio->orden),
             'tot' => sprintf('%03d', $predio->total),
             'e' => '',
-            'd' => $predio->latest_historial_predio()->tipo_documento,
-            'documento' => $predio->latest_historial_predio()->documento,
-            'nombrepropietario' => $predio->latest_historial_predio()->nombre_propietario,
-            'direccion' => $predio->latest_historial_predio()->direccion,
-            'ha' => $predio->latest_historial_predio()->hectareas,
-            'met2' => $predio->latest_historial_predio()->metros_cuadrados,
-            'areacon' => $predio->latest_historial_predio()->area_construida,
-            'avaluo' => $predio->latest_avaluo()->valor_avaluo,
-            'vigencia' => $predio->latest_avaluo()->vigencia,
+            'd' => $propietario->tipo_documento,
+            'documento' => $propietario->documento,
+            'nombrepropietario' => $propietario->nombre_propietario,
+            'direccion' => $latest_info->direccion,
+            'ha' => $latest_info->hectareas,
+            'met2' => $latest_info->metros_cuadrados,
+            'areacon' => $latest_info->area_construida,
+            'avaluo' => $latest_avaluo->valor_avaluo,
+            'vigencia' => $latest_avaluo->vigencia,
             'estado' => 'S',
-            'tipopredio' => strtolower(substr($predio->latest_avaluo()->predio_tipo->nombre, 0, 6)),
-            'clasifica' => $predio->latest_avaluo()->predio_tipo->nombre === 'Rural' ? 1 : ($predio->latest_avaluo()->predio_tipo->nombre === 'Urbano' ? 2 : 0),
+            'tipopredio' => strtolower(substr($latest_info->predio_tipo->nombre, 0, 6)),
+            'clasifica' => $latest_info->predio_tipo->nombre === 'Rural' ? 1 : ($latest_info->predio_tipo->nombre === 'Urbano' ? 2 : 0),
             'estratos' => ''
         ];
 
@@ -84,25 +87,31 @@ class TransferPredios implements ShouldQueue
      *
      * @param \Illuminate\Support\Collection $avaluos The avaluos to transfer.
      */
-    public function transfer_avaluos(Collection $avaluos) {
-        foreach ($avaluos as $avaluo) {
+    public function transfer_avaluos(Predio $predio) {
+        foreach ($predio->propietarios() as $propietario) {
+            $avaluo = $predio->avaluos()
+                ->where('vigencia', $propietario->created_at->year)
+                ->first();
+            $informacion = $predio->informacions()
+                ->where('created_at', $propietario->created_at)
+                ->first();
 
             // Format data for old database
             $tesoprediosavaluos_data = [
-                'vigencia' => $avaluo->vigencia,
-                'codigocatastral' => $avaluo->predio->codigo_catastro,
+                'vigencia' => $propietario->created_at->year,
+                'codigocatastral' => $predio->codigo_catastro,
                 'avaluo' => $avaluo->valor_avaluo,
                 'pago' => $avaluo->pagado ? 'S' : 'N',
                 'estado' => 'S',
-                'ord' => sprintf("%03d", $avaluo->predio->orden),
-                'tot' => sprintf("%03d", $avaluo->predio->total),
-                'ha' => $avaluo->hectareas,
-                'met2' => $avaluo->metros_cuadrados,
-                'areacon' => $avaluo->area_construida,
+                'ord' => sprintf("%03d", $propietario->orden),
+                'tot' => sprintf("%03d", $predio->total),
+                'ha' => $informacion->hectareas,
+                'met2' => $informacion->metros_cuadrados,
+                'areacon' => $informacion->area_construida,
                 'tasa' => $avaluo->tasa_por_mil,
-                'tipopredio' => substr($avaluo->predio_tipo->nombre, 0, 5) === 'Rural' ? 1 : (substr($avaluo->predio_tipo->nombre, 0, 6) === 'Urbano' ? 2 : 0),
+                'tipopredio' => substr($informacion->predio_tipo->nombre, 0, 5) === 'Rural' ? 1 : (substr($informacion->predio_tipo->nombre, 0, 6) === 'Urbano' ? 2 : 0),
                 'estratos' => '',
-                'destino_economico' => $avaluo->codigo_destino_economico->codigo,
+                'destino_economico' => $informacion->codigo_destino_economico->codigo,
                 'tasa_bomberil' => 0
             ];
 

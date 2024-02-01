@@ -10,9 +10,7 @@ class PredioAvaluo extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'valor_avaluo'
-    ];
+    protected $fillable = [];
 
     public function predio(): BelongsTo
     {

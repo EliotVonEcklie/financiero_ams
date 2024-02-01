@@ -58,7 +58,7 @@ class OldLiquidacion
             'codigocatastral' => substr($predio->codigo_catastro, 0, 30),
             'fecha' => now(),
             'vigencia' => substr(now()->year, 0, 4),
-            'tercero' => substr($predio->latest_historial_predio()->documento, 0, 30),
+            'tercero' => substr($predio->main_propietario()->documento, 0, 30),
             'tasamora' => Interes::getInteresVigente(now())->moratorio,
             'descuento' => Descuento::getDescuentoIncentivo(),
             'tasapredial' => $predio->latest_avaluo()->tasa_por_mil,
