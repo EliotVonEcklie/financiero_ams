@@ -26,11 +26,14 @@ class FacturaPredial extends Model
     {
         $pague_hasta = now();
 
-        $deuda = $vigencias->where('isSelected', true)->orWhere('selected', true)->every(function ($vigencia) {
+        $deuda = $vigencias->filter(function ($v) {
+            return $v['selected'] ?? $v['isSelected'];
+        })
+        ->every(function ($vigencia) {
             return $vigencia['total_intereses'] > 0 || $vigencia['vigencia'] < now()->year;
         });
 
-        if (!$deuda) {
+        if (! $deuda) {
             $pague_hasta = Descuento::firstDayWithoutDescuento();
         }
 
