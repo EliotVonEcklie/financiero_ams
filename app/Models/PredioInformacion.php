@@ -10,7 +10,16 @@ class PredioInformacion extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = [
+        'created_at',
+        'codigo_destino_economico_id',
+        'direccion',
+        'hectareas',
+        'metros_cuadrados',
+        'area_construida',
+        'predio_estrato_id',
+        'predio_tipo_id'
+    ];
 
     public function predio(): BelongsTo
     {

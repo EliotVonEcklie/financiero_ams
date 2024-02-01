@@ -2,11 +2,11 @@
 
 namespace App\Helpers;
 
-use App\Models\Avaluo;
 use App\Models\Descuento;
 use App\Models\Estatuto;
 use App\Models\Interes;
 use App\Models\Predio;
+use App\Models\PredioAvaluo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
@@ -48,7 +48,7 @@ class Liquidacion
             ->get();
 
         foreach ($this->avaluos as $avaluo) {
-            if ($result = $this->liquidar($avaluo) !== null) {
+            if (($result = $this->liquidar($avaluo)) !== null) {
                 array_push($this->vigencias, $result);
             }
         }
@@ -76,7 +76,7 @@ class Liquidacion
         ];
     }
 
-    private function liquidar(Avaluo $avaluo)
+    private function liquidar(PredioAvaluo $avaluo)
     {
         if ($avaluo->pagado) {
             return null;
@@ -158,13 +158,13 @@ class Liquidacion
         if ($result['estatuto']->alumbrado) {
             if ($result['estatuto']->alumbrado_urbano && $avaluo->predio_tipo->codigo === '01') {
                 $result['alumbrado'] = $this->calculate_tarifa(
-                    $result['predial'],
+                    $result['valor_avaluo'],
                     $result['estatuto']->alumbrado_tasa,
                     $result['estatuto']->alumbrado_tarifa
                 );
             } else if ($result['estatuto']->alumbrado_rural && $avaluo->predio_tipo->codigo === '00') {
                 $result['alumbrado'] = $this->calculate_tarifa(
-                    $result['predial'],
+                    $result['valor_avaluo'],
                     $result['estatuto']->alumbrado_tasa,
                     $result['estatuto']->alumbrado_tarifa
                 );

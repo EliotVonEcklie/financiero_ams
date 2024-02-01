@@ -10,7 +10,12 @@ class PredioAvaluo extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = [
+        'vigencia',
+        'pagado',
+        'valor_avaluo',
+        'tasa_por_mil'
+    ];
 
     public function predio(): BelongsTo
     {

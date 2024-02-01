@@ -17,6 +17,8 @@ class Predio extends Model
      * @var array
      */
     protected $fillable = [
+        'codigo_catastro',
+        'total',
         'main_propietario_id'
     ];
 
