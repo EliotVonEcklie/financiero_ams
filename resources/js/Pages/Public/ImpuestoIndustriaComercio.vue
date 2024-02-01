@@ -313,7 +313,7 @@
                     </div>
                     <fwb-accordion>
                         <fwb-accordion-panel>
-                        <fwb-accordion-header>Otras actividades</fwb-accordion-header>
+                        <fwb-accordion-header class="text-gray-700 bg-gray-200">Otras actividades</fwb-accordion-header>
                         <fwb-accordion-content>
                             <div ref="actividadContent" v-for="actividad in arrActividad" :key="actividad.id" class="grid lg:grid-cols-4 md:grid-cols-1 mb-4 lg:space-x-2 md:space-x-0 lg:space-y-0 md:space-y-2">
                                 <div>
@@ -339,7 +339,7 @@
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
                                             </svg>
                                         </div>
-                                        <input type="number"  @change="setValueIngresos($event,actividad.id)"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                                        <input type="number"  @input="setValueIngresos($event,actividad.id)"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
                                     </div>
                                 </div>
                                 <div>
@@ -391,7 +391,7 @@
                             <tbody>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td>
-                                        ${{ formatNumber(intTotalIngresosGravados) }}
+                                        ${{ formatNumber(intTotalGravable) }}
                                     </td>
                                     <td class="px-6 py-4">
                                         ${{ formatNumber(totalIngresosGravados) }}
@@ -411,120 +411,110 @@
                     </div>
                 </form>
                 <form v-if="pageForm == 4" class="w-full mt-10">
-                    <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                        <p class="w-full lg:text-sm md:text-3xl">Total ingresos ordinarios y extraordinarios del periodo en todo el país:</p>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                    </svg>
+                    <div >
+                        <h3 class="p-4 bg-gray-200 text-gray-500 font-bold  lg:text-base md:text-3xl mb-5">Impuesto a cargo</h3>
+                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
+                            <p class="w-full lg:text-sm md:text-3xl">Total Impuesto de Industria y Comercio:</p>
+                            <div class="relative z-0 w-full mb-5 group">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
+                                        </svg>
+                                    </div>
+                                    <input type="number"  class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" disabled required>
                                 </div>
-                                <input type="number"  v-model="intTotalPeriodo" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                            </div>
+                        </div>
+                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
+                            <div class="flex items-center space-x-2 w-full">
+                                <p class="lg:text-sm md:text-3xl">Impuesto de Avisos y Tableros 15%, ¿Tiene avisos? </p>
+                                <div class="flex items-center">
+                                    <input id="default-radio-1" type="radio" value="" name="default-radio" class="lg:w-4 lg:h-4 md:w-8 md:h-8 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="default-radio-1" class="ms-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-gray-300">Si</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="lg:w-4 lg:h-4 md:w-8 md:h-8 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="default-radio-2" class="ms-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-gray-300">No</label>
+                                </div>
+                            </div>
+                            <div class="relative z-0 w-full mb-5 group">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
+                                        </svg>
+                                    </div>
+                                    <input type="number"  class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled placeholder="0.00" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
+                            <p class="w-full lg:text-sm md:text-3xl">Pago Por Unidades Comerciales Adicionales del Sector Financiero:</p>
+                            <div class="relative z-0 w-full mb-5 group">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
+                                        </svg>
+                                    </div>
+                                    <input type="number"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
+                            <p class="w-full lg:text-sm md:text-3xl">Sobretasa Bomberil (Ley 1575 de 2012) (Si la hay, Liquídela Según el Acuerdo Municipal o Distrital):</p>
+                            <div class="relative z-0 w-full mb-5 group">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
+                                        </svg>
+                                    </div>
+                                    <input type="number"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
+                            <p class="w-full lg:text-sm md:text-3xl">Sobretasa de Seguridad (Ley 1421 de 2011) (Si la hay, Liquídela Según el Acuerdo Municipal o Distrital):</p>
+                            <div class="relative z-0 w-full mb-5 group">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
+                                        </svg>
+                                    </div>
+                                    <input type="number"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
+                            <p class="w-full lg:text-sm md:text-3xl font-bold">Total impuesto a cargo:</p>
+                            <div class="relative z-0 w-full mb-5 group">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
+                                        </svg>
+                                    </div>
+                                    <input type="number"  class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" disabled required>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                        <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Fuera de Este Municipio o Distrito:</p>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                    </svg>
+                    <div>
+                        <h3 class="p-4 bg-gray-200 text-gray-500 font-bold  lg:text-base md:text-3xl mb-5">Deducciones, sanciones y anticipos</h3>
+                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
+                            <p class="w-full lg:text-sm md:text-3xl">Total Impuesto de Industria y Comercio:</p>
+                            <div class="relative z-0 w-full mb-5 group">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
+                                        </svg>
+                                    </div>
+                                    <input type="number"  class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" disabled required>
                                 </div>
-                                <input type="number"  v-model="intIngresoFuera" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                        <p class="w-full lg:text-sm md:text-3xl">Total Ingresos Ordinarios y Extraordinarios en Este Municipio:</p>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                    </svg>
-                                </div>
-                                <input type="text"  :value="intTotalFormat" class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" disabled required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                        <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Devolución, Rebajas, Descuentos:</p>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                    </svg>
-                                </div>
-                                <input type="number"  v-model="intIngresoDescuento" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                        <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Exportaciones:</p>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                    </svg>
-                                </div>
-                                <input type="number"  v-model="intIngresoExportacion" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                        <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Venta de Activos Fijos:</p>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                    </svg>
-                                </div>
-                                <input type="number"  v-model="intIngresoVenta" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                        <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Actividades Excluidas o No Sujetas y Otros Ingresos No Gravados:</p>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                    </svg>
-                                </div>
-                                <input type="number"  v-model="intIngresoActividades" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                        <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Otras Actividades Exentas En Este Municipio o Distrito (Por Acuerdo):</p>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                    </svg>
-                                </div>
-                                <input type="number"  v-model="intIngresoExentas" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                        <p class="w-full lg:text-sm md:text-3xl fw-bold">Total ingresos gravables:</p>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                    </svg>
-                                </div>
-                                <input type="text" :value="intTotalGravableFormat" class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" disabled required>
                             </div>
                         </div>
                     </div>
@@ -587,7 +577,7 @@
         arrActividad.forEach(function(result){
             total += result.value;
         });
-        return total;
+        return total+intTotalIngresosGravados.value;
     })
     let contador=0;
 
