@@ -4,6 +4,9 @@ import { ZiggyVue } from '~ziggy-vue'
 import VueEcho from 'vue-echo-laravel'
 import { initFlowbite } from 'flowbite'
 import numbers from './numbers'
+import LoadScript from 'vue-plugin-load-script';
+
+
 
 router.on('navigate', () => {
     initFlowbite()
@@ -25,7 +28,7 @@ createInertiaApp({
         app.config.globalProperties.$date = date => new Date(date).toLocaleString('es-CO', { month: 'long', day: 'numeric', year: 'numeric' })
         app.config.globalProperties.$goBack = () => window.history.back()
         app.config.globalProperties.$goForward = () => window.history.forward()
-
+        app.use(LoadScript)
         app.use(plugin)
             .use(ZiggyVue)
             /*.use(VueEcho, {

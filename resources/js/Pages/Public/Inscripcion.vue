@@ -156,7 +156,7 @@
             </div>
         </div>
         <ModalDireccion @getAddress="data => { updateAddress(data); hideModal('modalDireccion') }" :hideModal="hideModal" />
-        <div class="xl:mt-36 md:mt-48 mx-auto container">
+        <div class="xl:mt-24 xl:p-10 md:mt-48 mx-auto container">
             <div>
                 <h1 class="text-center lg:text-2xl md:text-4xl mb-5 dark:text-white">Inscripción del contribuyente</h1>
                 <ol id="inscripcion" class="flex items-center w-full p-3 space-x-2 lg:text-sm md:text-3xl gap-3  md:flex-wrap md:items-center font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">

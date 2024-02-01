@@ -119,6 +119,10 @@ Route::group([
             ]);
         })->name('impuesto_predial_unificado');
 
+        Route::get('/impuesto_industria_comercio',function(){
+            return inertia('Public/ImpuestoIndustriaComercio');
+        })->name('impuesto_industria_comercio');
+
         Route::get('/inscripcion',function(){
             return inertia('Public/Inscripcion');
         })->name('inscripcion');
@@ -146,6 +150,10 @@ Route::group([
         Route::get('/manuales',function(){
             return inertia('Public/ManualSistema');
         })->name('manuales');
+
+        Route::get('/pago_confirmado',function(){
+            return inertia('Public/PagoConfirmado');
+        })->name('pago_confirmado');
 
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
         Route::resource('factura_predials', FacturaPredialController::class)->only(['store', 'show']);

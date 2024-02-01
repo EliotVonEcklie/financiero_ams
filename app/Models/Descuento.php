@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -51,6 +51,6 @@ class Descuento extends Model
             ->first();
 
         return $lastDescuento !== null ?
-            Carbon::createFromDate(null, $lastDescuento->hasta)->lastOfMonth() : now();
+            Carbon::createMidnightDate(null, $lastDescuento->hasta, 1)->lastOfMonth() : Carbon::createMidnightDate();
     }
 }

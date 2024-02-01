@@ -115,7 +115,10 @@ class TransferPredios implements ShouldQueue
                 'tasa_bomberil' => 0
             ];
 
-            DB::table('tesoprediosavaluos')->upsert($tesoprediosavaluos_data, ['vigencia', 'codigocatastral'], [
+            DB::table('tesoprediosavaluos')
+            ->where('vigencia', $avaluo->vigencia)
+            ->where('codigocatastral', $avaluo->predio->codigo_catastro)
+            ->update($tesoprediosavaluos_data, ['vigencia', 'codigocatastral'], [
                 'avaluo',
                 'pago',
                 'estado',

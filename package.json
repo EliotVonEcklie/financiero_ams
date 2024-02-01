@@ -24,6 +24,7 @@
         "flowbite-vue": "^0.1.2",
         "nprogress": "^0.2.0",
         "pusher-js": "^8.4.0-rc2",
-        "vue-echo-laravel": "^1.0.0"
+        "vue-echo-laravel": "^1.0.0",
+        "vue-plugin-load-script": "^2.1.1"
     }
 }

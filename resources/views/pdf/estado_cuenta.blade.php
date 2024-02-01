@@ -174,9 +174,9 @@
                 <tr>
                     <td class="border-none">
                         <p class="text-center fs-1">
-                            Señor contribuyente: La Alcaldía Municipal del {{ tenant()->nombre }} META apoyado en la modernización y depuración de la
-                            información existente, en caso de no ver algún pago que usted realizó, le solicitamos anexar los documentos correspondientes a
-                            pagos de vigencias anteriores para actualización de su estado de cuenta.
+                            Señor contribuyente, La Alcaldía del municipio de {{ tenant()->nombre }} lo invita a pagar su impuesto predial.
+                            Recuerde que para realizar su pago, deben acercarse a la secretaría de hacienda municipal y reclamar la liquidación correspondiente.
+	                        'Evitese sanciones y embargos'.
                         </p>
                     </td>
                 </tr>
