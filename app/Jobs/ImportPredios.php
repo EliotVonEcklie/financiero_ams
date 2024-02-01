@@ -33,7 +33,10 @@ class ImportPredios implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->tesoprediosavaluos = DB::table('tesoprediosavaluos')->orderBy('vigencia')->lazy();
+        $this->tesoprediosavaluos = DB::table('tesoprediosavaluos')
+            ->select('codigocatastral', 'tot', 'vigencia', 'pago', 'avaluo', 'tasa')
+            ->orderBy('vigencia')
+            ->lazy();
 
         foreach ($this->tesoprediosavaluos as $tesopredioavaluo) {
             if (strlen($tesopredioavaluo->codigocatastral) === 25) {
