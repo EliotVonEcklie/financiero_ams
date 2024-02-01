@@ -26,8 +26,7 @@ class TranscribeCatastros implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public string $r1_file)
-    {}
+    public function __construct() {}
 
     private function lines()
     {
@@ -55,7 +54,7 @@ class TranscribeCatastros implements ShouldQueue
             }
 
             Predio::firstOrCreate([
-                'codigo_catastro' => $conversion->current
+                'codigo_catastro' => $conversion['current']
             ])->avaluos()->updateOrCreate([
                 'vigencia' => $predio[1]
             ], [
