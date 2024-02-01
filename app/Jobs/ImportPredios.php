@@ -42,7 +42,7 @@ class ImportPredios implements ShouldQueue
         }
     }
 
-    public function import($tesopredioavaluo)
+    private function import($tesopredioavaluo)
     {
         Predio::updateOrCreate([
             'codigo_catastro' => $tesopredioavaluo->codigocatastral
