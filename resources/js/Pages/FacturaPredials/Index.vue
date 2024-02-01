@@ -38,7 +38,9 @@ function softDelete(selectedElements) {
 }
 
 function openPdf(evt) {
-    evt.target.dispatchEvent(new MouseEvent('click', { ctrlKey: true }))
+    if (!evt.ctrlKey) {
+        evt.target.dispatchEvent(new MouseEvent('click', { ctrlKey: true }))
+    }
 }
 </script>
 
