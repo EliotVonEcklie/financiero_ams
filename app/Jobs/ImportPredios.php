@@ -45,8 +45,9 @@ class ImportPredios implements ShouldQueue
 
     public function import($tesopredioavaluo)
     {
-        Predio::firstOrCreate([
-            'codigo_catastro' => $tesopredioavaluo->codigocatastral,
+        Predio::updateOrCreate([
+            'codigo_catastro' => $tesopredioavaluo->codigocatastral
+        ], [
             'total' => (! $tesopredioavaluo->tot) ? 1 : $tesopredioavaluo->tot
         ])->avaluos()->updateOrCreate([
             'vigencia' => $tesopredioavaluo->vigencia
