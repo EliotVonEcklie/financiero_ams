@@ -45,6 +45,7 @@ class Liquidacion
 
         $this->avaluos = $this->predio->avaluos()
             ->whereIn('vigencia', $vigencias ?? $this->predio->avaluos()->pluck('vigencia'))
+            ->orderByDesc('vigencia')
             ->get();
 
         foreach ($this->avaluos as $avaluo) {
@@ -119,8 +120,7 @@ class Liquidacion
 
         if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {
             $avaluo_anterior = $this->predio->avaluos()
-                ->where('vigencia', $avaluo->vigencia - 1)
-                ->first();
+                ->firstWhere('vigencia', $avaluo->vigencia - 1);
 
             if($avaluo_anterior) {
                 $predial_anterior = $this->calculate_tarifa(
@@ -155,9 +155,12 @@ class Liquidacion
             );
         }
 
-$date_start = Carbon::create($avaluo->vigencia, 1, 1);
-            $date_end = Carbon::create($avaluo->vigencia, 12, 31);
-            $info = $this->predio->informacions()->whereBetween('created_at', [$date_start, $date_end])->orderByDesc('created_at')->first();
+        $date_start = Carbon::create($avaluo->vigencia, 1, 1);
+        $date_end = Carbon::create($avaluo->vigencia, 12, 31);
+        $info = $this->predio->informacions()
+            ->whereBetween('created_at', [$date_start, $date_end])
+            ->orderByDesc('created_at')
+            ->first();
 
         if ($result['estatuto']->alumbrado) {
             if ($result['estatuto']->alumbrado_urbano && substr($info->predio_tipo->nombre, 0, 6) === 'Urbano') {
@@ -175,7 +178,13 @@ $date_start = Carbon::create($avaluo->vigencia, 1, 1);
             }
         }
 
-        $result['total_liquidacion'] = Round::pesos($result['predial'] + $result['bomberil'] + $result['ambiental'] + $result['alumbrado'] + $result['estatuto']->recibo_caja);
+        $result['total_liquidacion'] = Round::pesos(
+            $result['predial'] +
+            $result['bomberil'] +
+            $result['ambiental'] +
+            $result['alumbrado'] +
+            $result['estatuto']->recibo_caja
+        );
 
         if ($result['vigencia'] != now()->year || $this->descuento_incentivo == 0) {
             $from = new Carbon($result['vigencia'] . '-01-01');
@@ -191,10 +200,18 @@ $date_start = Carbon::create($avaluo->vigencia, 1, 1);
             $result['ambiental_intereses'] = Interes::calculateMoratorio($result['ambiental'], $from);
             $result['ambiental_descuento_intereses'] = $this->calculate_tarifa($result['ambiental_intereses'], $this->descuento_intereses, false);
 
-            $result['descuento_intereses'] = Round::pesos($result['predial_descuento_intereses'] + $result['bomberil_descuento_intereses'] + $result['ambiental_descuento_intereses']);
+            $result['descuento_intereses'] = Round::pesos(
+                $result['predial_descuento_intereses'] +
+                $result['bomberil_descuento_intereses'] +
+                $result['ambiental_descuento_intereses']
+            );
 
-            $result['total_intereses'] = Round::pesos(($result['predial_intereses'] + $result['bomberil_intereses'] + $result['ambiental_intereses']) -
-                $result['descuento_intereses']);
+            $result['total_intereses'] = Round::pesos((
+                    $result['predial_intereses'] +
+                    $result['bomberil_intereses'] +
+                    $result['ambiental_intereses']
+                ) - $result['descuento_intereses']
+            );
 
             $result['total_liquidacion'] += $result['total_intereses'];
         }
