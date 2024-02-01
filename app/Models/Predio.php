@@ -104,7 +104,7 @@ class Predio extends Model
             ->where('codigo_catastro', 'like', '%' . $query . '%')
             ->orWhere('predio_informacions.direccion', 'like', '%' . $query . '%');
 
-        if (!$sensible) {
+        if (! $sensible) {
             $prediosQuery = $prediosQuery
                 ->orWhere('predio_propietarios.documento', 'like', '%' . $query . '%')
                 ->orWhere('predio_propietarios.nombre_propietario', 'like', '%' . $query . '%');
@@ -140,10 +140,10 @@ class Predio extends Model
 
         $main_propietario = $predio->main_propietario();
         $latest_info = $predio->latest_informacion();
-        $destino_economico = $predio->latest_avaluo()->codigo_destino_economico->destino_economico?->nombre ??
-            'Código: ' . $predio->latest_avaluo()->codigo_destino_economico->codigo;
 
-        $codigo_destino_economico = $predio->latest_avaluo()->codigo_destino_economico->codigo;
+        $codigo_destino_economico = $latest_info->codigo_destino_economico;
+        $destino_economico = $codigo_destino_economico->destino_economico?->nombre ??
+            'Código: ' . $codigo_destino_economico->codigo;
 
         $interes_vigente = Interes::getInteresVigente();
 
@@ -165,7 +165,7 @@ class Predio extends Model
             'predio_tipo' => $latest_info->predio_tipo->nombre,
             'predio_tipo_codigo' => $sensible ? null : $latest_info->predio_tipo->codigo,
             'destino_economico' => $destino_economico,
-            'codigo_destino_economico' => $sensible ? null : $codigo_destino_economico,
+            'codigo_destino_economico' => $sensible ? null : $codigo_destino_economico->codigo,
             'interes_vigente' => $interes_vigente?->moratorio ?? 0,
             'descuento_vigente' => $liquidacion->descuento_incentivo,
             'liquidacion' => $liquidacion->toArray(),
