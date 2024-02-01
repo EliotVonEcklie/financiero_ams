@@ -155,14 +155,18 @@ class Liquidacion
             );
         }
 
+$date_start = Carbon::create($avaluo->vigencia, 1, 1);
+            $date_end = Carbon::create($avaluo->vigencia, 12, 31);
+            $info = $this->predio->informacions()->whereBetween('created_at', [$date_start, $date_end])->get();
+
         if ($result['estatuto']->alumbrado) {
-            if ($result['estatuto']->alumbrado_urbano && $avaluo->predio_tipo->codigo === '01') {
+            if ($result['estatuto']->alumbrado_urbano && substr($info->predio_tipo->nombre, 0, 6) === 'Urbano') {
                 $result['alumbrado'] = $this->calculate_tarifa(
                     $result['valor_avaluo'],
                     $result['estatuto']->alumbrado_tasa,
                     $result['estatuto']->alumbrado_tarifa
                 );
-            } else if ($result['estatuto']->alumbrado_rural && $avaluo->predio_tipo->codigo === '00') {
+            } else if ($result['estatuto']->alumbrado_rural && substr($info->predio_tipo->nombre, 0, 5) === 'Rural') {
                 $result['alumbrado'] = $this->calculate_tarifa(
                     $result['valor_avaluo'],
                     $result['estatuto']->alumbrado_tasa,
