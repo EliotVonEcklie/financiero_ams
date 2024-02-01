@@ -60,9 +60,10 @@ class RestorePredios implements ShouldQueue
         foreach ($this->dumped('propietarios') as $propietario) {
             $predios->where('codigo_catastro', $propietario[0])
                 ->first()
-                ->propietarios()->create([
+                ->propietarios()->updateOrCreate([
                     'orden' => (int) $propietario[1],
                     'created_at' => new Carbon($propietario[2]),
+                ], [
                     'tipo_documento' => $propietario[3],
                     'documento' => $propietario[4],
                     'nombre_propietario' => $propietario[5]
@@ -74,8 +75,9 @@ class RestorePredios implements ShouldQueue
         foreach ($this->dumped('informacion') as $info) {
             $predios->where('codigo_catastro', $info[0])
                 ->first()
-                ->informacions()->create([
+                ->informacions()->updateOrCreate([
                     'created_at' => new Carbon($info[1]),
+                ], [
                     'codigo_destino_economico_id' => (int) $info[2],
                     'direccion' => $info[3],
                     'hectareas' => (int) $info[4],
@@ -91,8 +93,9 @@ class RestorePredios implements ShouldQueue
         foreach ($this->dumped('avaluos') as $avaluo) {
             $predios->where('codigo_catastro', $avaluo[0])
                 ->first()
-                ->avaluos()->create([
-                    'vigencia' => $avaluo[1],
+                ->avaluos()->updateOrCreate([
+                    'vigencia' => $avaluo[1]
+                ], [
                     'pagado' => (boolean) $avaluo[2],
                     'valor_avaluo' => (int) $avaluo[3],
                     'tasa_por_mil' => (float) $avaluo[4]
