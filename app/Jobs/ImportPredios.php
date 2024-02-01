@@ -20,7 +20,7 @@ class ImportPredios implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 5000;
+    public $timeout = 2400;
 
     private $tesoprediosavaluos;
 
@@ -36,18 +36,10 @@ class ImportPredios implements ShouldQueue
     {
         $this->tesoprediosavaluos = DB::table('tesoprediosavaluos')->orderBy('vigencia')->lazy();
 
-        $old_predios_list = '';
-
         foreach ($this->tesoprediosavaluos as $tesopredioavaluo) {
             if (strlen($tesopredioavaluo->codigocatastral) === 25) {
                 $this->import($tesopredioavaluo);
-            } else {
-                $old_predios_list .= $tesopredioavaluo->codigocatastral . ',' . $tesopredioavaluo->tot . ',' . $tesopredioavaluo->ord . "\n";
             }
-        }
-
-        if ($old_predios_list !== '') {
-            Storage::put('old_predios/importpredios/' . now() . '.csv', $old_predios_list);
         }
     }
 
@@ -55,7 +47,7 @@ class ImportPredios implements ShouldQueue
     {
         Predio::firstOrCreate([
             'codigo_catastro' => $tesopredioavaluo->codigocatastral,
-            'total' => ! $tesopredioavaluo->tot ? 1 : $tesopredioavaluo->tot
+            'total' => (! $tesopredioavaluo->tot) ? 1 : $tesopredioavaluo->tot
         ])->avaluos()->updateOrCreate([
             'vigencia' => $tesopredioavaluo->vigencia
         ], [
