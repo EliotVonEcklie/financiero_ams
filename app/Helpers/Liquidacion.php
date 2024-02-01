@@ -157,7 +157,7 @@ class Liquidacion
 
 $date_start = Carbon::create($avaluo->vigencia, 1, 1);
             $date_end = Carbon::create($avaluo->vigencia, 12, 31);
-            $info = $this->predio->informacions()->whereBetween('created_at', [$date_start, $date_end])->orderByDesc('created_get')->first();
+            $info = $this->predio->informacions()->whereBetween('created_at', [$date_start, $date_end])->orderByDesc('created_at')->first();
 
         if ($result['estatuto']->alumbrado) {
             if ($result['estatuto']->alumbrado_urbano && substr($info->predio_tipo->nombre, 0, 6) === 'Urbano') {
