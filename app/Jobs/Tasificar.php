@@ -125,6 +125,8 @@ class Tasificar implements ShouldQueue
                 $avaluo->save();
 
                 return true;
+            } else {
+                Log::warning('tenant: ' . tenant()->id . ', El avaluo ' . $valor_avaluo . ' no está en el rango (' . $desde . ', ' . $hasta . ') ' . $vigencia_unidad->unidad_monetaria->nombre);
             }
         } else if ($estratificacion->tarifa_type === '\App\Models\PredioEstrato') {
             $predioEstrato = $estratificacion->tarifa;
