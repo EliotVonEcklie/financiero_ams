@@ -55,7 +55,7 @@ function create() {
 
     let { factura_predials: _, ...clean_predio } = props.predio;
 
-    axios.post(route('factura_predials.store', props.predio.id), { data: clean_predio })
+    axios.post(route('factura_predials.store'), { data: clean_predio })
     .then(res => pdfUrl.value = route('factura_predials.show', res.data.id))
 }
 
