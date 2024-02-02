@@ -107,7 +107,7 @@ class Tasificar implements ShouldQueue
             $desde = (float) $rangoAvaluo->desde * $vigencia_unidad->valor;
             $hasta = (float) $rangoAvaluo->hasta * $vigencia_unidad->valor;
 
-            if ($valor_avaluo >= $desde && ($hasta == -1.0 || $valor_avaluo <= $hasta)) {
+            if ($valor_avaluo >= $desde && (($rangoAvaluo->hasta == -1.0) || $valor_avaluo <= $hasta)) {
                 $avaluo->tasa_por_mil = $estratificacion->tasa;
                 $avaluo->save();
 
