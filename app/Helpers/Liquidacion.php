@@ -125,9 +125,11 @@ class Liquidacion
 
         if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {
             $avaluo_anterior = $this->predio->avaluos()
-                ->firstWhere('vigencia', $avaluo->vigencia - 1);
+                ->where('tasa_por_mil', '<>', -1.0)
+                ->where('vigencia', $avaluo->vigencia - 1)
+                ->first();
 
-            if($avaluo_anterior) {
+            if($avaluo_anterior !== null) {
                 $predial_anterior = $this->calculate_tarifa(
                     $avaluo_anterior->valor_avaluo,
                     $avaluo_anterior->tasa_por_mil
