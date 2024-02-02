@@ -62,7 +62,7 @@ class ParseIgac implements ShouldQueue
                 'documento' => $r1_data->documento
             ]);
 
-            if (! $predio->informacions()->where('created_at', $r1_data->vigencia)->first()) {
+            if ($predio->informacions()->firstWhere('created_at', $r1_data->vigencia) === null) {
                 // Find or create CodigoDestinoEconomico
                 $codigo_destino_economico = CodigoDestinoEconomico::firstOrCreate([
                     'codigo' => $r1_data->codigo_destino_economico
@@ -83,7 +83,7 @@ class ParseIgac implements ShouldQueue
                 ]);
             }
 
-            if (! $predio->avaluos()->where('vigencia', $r1_data->vigencia->year)->first()) {
+            if ($predio->avaluos()->firstWhere('vigencia', $r1_data->vigencia->year) === null) {
                 // Update or create Predio Avaluo
                 $predio->avaluos()->updateOrCreate([
                     'vigencia' => $r1_data->vigencia->year
