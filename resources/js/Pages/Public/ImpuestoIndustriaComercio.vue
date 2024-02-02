@@ -70,7 +70,7 @@
                     </li>
                     <li  class="flex items-center">
                         <span   class=" flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 ">
-                            5
+                            8
                         </span>
                         Pago
                     </li>
@@ -116,84 +116,76 @@
                         <div>
                             <div class="grid lg:grid-cols-4 lg:gap-4 md:grid-cols-1">
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <label for="underline_select" class="sr-only">Tipo de documento</label>
-                                    <select id="underline_select" class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                                        <option selected>Seleccione tipo de documento</option>
+                                    <label for="countries" class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Tipo de documento</label>
+                                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="1">Cédula de ciudadania</option>
                                         <option value="2">Cédula extranjera</option>
                                         <option value="3">NIT</option>
                                         <option value="4">Pasaporte</option>
                                         <option value="5">Tarjeta de identidad</option>
-
                                     </select>
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <input type="text" class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label for="floating_first_name" class="peer-focus:font-medium absolute lg:text-sm md:text-3xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No. de Documento</label>
+                                    <label  class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Número de documento</label>
+                                    <input type="text"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <input type="text" class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label for="floating_last_name" class="peer-focus:font-medium absolute lg:text-sm md:text-3xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">D.V</label>
+                                    <label  class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">D.V</label>
+                                    <input type="text"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <input type="text" class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label for="floating_last_name" class="peer-focus:font-medium absolute lg:text-sm md:text-3xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombres y apellidos</label>
+                                    <label  class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Nombres y apellidos</label>
+                                    <input type="text"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="grid lg:grid-cols-3 lg:gap-4 md:grid-cols-1">
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <label for="underline_select" class="sr-only">Departamento</label>
-                                    <select class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                                        <option selected>Seleccione departamento</option>
+                                    <label for="countries" class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Departamento</label>
+                                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="1">Departamento</option>
                                         <option value="2">Departamento</option>
                                         <option value="3">Departamento</option>
-
                                     </select>
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <label for="underline_select" class="sr-only">Municipio</label>
-                                    <select class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                                        <option selected>Seleccione municipio</option>
+                                    <label for="countries" class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Municipio</label>
+                                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="1">Municipio</option>
                                         <option value="2">Municipio</option>
                                         <option value="3">Municipio</option>
                                     </select>
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <div class="relative w-full">
-                                        <div class="flex">
-                                            <input type="text" disabled class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" :value="txtDireccion" required />
-                                            <label for="floating_first_name" class="peer-focus:font-medium absolute lg:text-sm md:text-3xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Dirección</label>
-                                            <button type="button" @click="showModal('modalDireccion')" class="p-2.5 ms-2 text-sm font-medium text-blue-600  bg-white border-blue-600 hover:text-white hover:bg-blue-600 rounded-lg border dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                                </svg>
-                                                <span class="sr-only">Search</span>
-                                            </button>
-                                        </div>
+                                    <label  class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Dirección</label>
+                                    <div class="flex">
+                                        <input disabled type="text" :value="txtDireccion" required  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                        <button type="button" @click="showModal('modalDireccion')" class="p-2.5 ms-2 text-sm font-medium text-blue-600  bg-white border-blue-600 hover:text-white hover:bg-blue-600 rounded-lg border dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                            </svg>
+                                            <span class="sr-only">Search</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="grid lg:grid-cols-4 lg:gap-4 md:grid-cols-1">
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <input type="email" class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label for="floating_last_name" class="peer-focus:font-medium absolute lg:text-sm md:text-3xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Correo</label>
+                                    <label  class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Correo</label>
+                                    <input type="email"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <input type="text" class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label for="floating_last_name" class="peer-focus:font-medium absolute lg:text-sm md:text-3xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Teléfono</label>
+                                    <label  class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Teléfono</label>
+                                    <input type="text"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <input type="number" class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label for="floating_last_name" class="peer-focus:font-medium absolute lg:text-sm md:text-3xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Número de establecimientos</label>
+                                    <label  class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Número de establecimientos</label>
+                                    <input type="number"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                 </div>
                                 <div class="relative z-0 w-full mb-5 group">
-                                    <label for="underline_select" class="sr-only">Clasificación de contribuyente</label>
-                                    <select id="underline_select" class="block py-2.5 px-0 w-full lg:text-sm md:text-3xl text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                                        <option selected>Seleccione clasificación de contribuyente</option>
+                                    <label for="countries" class="block mb-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-white">Clasificación de contribuyente</label>
+                                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="1">Común</option>
                                         <option value="2">Simplificado</option>
                                         <option value="3">Contribuyente</option>
@@ -419,7 +411,7 @@
                                                     </svg>
                                                 </div>
                                                 <div class="flex justify-between">
-                                                    <input type="number"  value="0" class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled required>
+                                                    <input type="number"  :value="actividad.tax" class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled required>
                                                     <button type="button" @click="delActividad(actividad.id)" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg fill="none" class="fill-white lg:w-4 lg:h-4 md:w-7 md:h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg></button>
                                                 </div>
                                             </div>
@@ -433,7 +425,7 @@
                         </fwb-accordion>
                         <div class="mt-5 relative overflow-x-auto">
                             <table class="w-full lg:text-sm md:text-2xl text-center text-gray-500 dark:text-gray-400">
-                                <thead class="text-gray-700 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
+                                <thead class="text-gray-500 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="whitespace-nowrap px-6 py-3">
                                             El Total de Ingresos debe ser igual a:
@@ -461,13 +453,13 @@
                                             ${{ formatNumber(totalIngresosGravados) }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            ${{ formatNumber(0) }}
+                                            ${{ formatNumber(totalImpuestos) }}
                                         </td>
                                         <td class="px-6 py-4">
                                             ${{ formatNumber(0) }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            ${{ formatNumber(0) }}
+                                            ${{ formatNumber(impuestoLey56) }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -489,20 +481,16 @@
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
                                                         </svg>
                                                     </div>
-                                                    <input type="number"  class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" disabled required>
+                                                    <input type="number"  class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value ="totalImpuestoIndustriaComercio" placeholder="0.00" disabled required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
                                             <div class="flex items-center space-x-2 w-full">
-                                                <p class="lg:text-sm md:text-3xl">Impuesto de Avisos y Tableros 15%, ¿Tiene avisos? </p>
+                                                <p class="lg:text-sm md:text-3xl">Impuesto de Avisos y Tableros 15%</p>
                                                 <div class="flex items-center">
-                                                    <input id="default-radio-1" type="radio" value="" name="default-radio" class="lg:w-4 lg:h-4 md:w-8 md:h-8 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                    <label for="default-radio-1" class="ms-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-gray-300">Si</label>
-                                                </div>
-                                                <div class="flex items-center">
-                                                    <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="lg:w-4 lg:h-4 md:w-8 md:h-8 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                    <label for="default-radio-2" class="ms-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-gray-300">No</label>
+                                                    <input id="default-checkbox" type="checkbox" v-model="isAvisos" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="default-checkbox"  class="ms-2 lg:text-sm md:text-3xl font-medium text-gray-900 dark:text-gray-300">¿Tiene avisos?</label>
                                                 </div>
                                             </div>
                                             <div class="relative z-0 w-full mb-5 group">
@@ -512,7 +500,7 @@
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
                                                         </svg>
                                                     </div>
-                                                    <input type="number"  class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled placeholder="0.00" required>
+                                                    <input type="number"  class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value = "impuestoAvisos" disabled placeholder="0.00" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -525,7 +513,7 @@
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
                                                         </svg>
                                                     </div>
-                                                    <input type="number"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                                                    <input type="number" v-model="pagoPorUnidades" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -538,7 +526,7 @@
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
                                                         </svg>
                                                     </div>
-                                                    <input type="number"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                                                    <input type="number" v-model="sobretasaBomberil"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -551,7 +539,7 @@
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
                                                         </svg>
                                                     </div>
-                                                    <input type="number"  class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                                                    <input type="number"  v-model="sobretasaSeguridad" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -561,7 +549,7 @@
                         </fwb-accordion>
                         <div class="mt-5 relative overflow-x-auto">
                             <table class="w-full lg:text-sm md:text-2xl text-center text-gray-500 dark:text-gray-400">
-                                <thead class="text-gray-700 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
+                                <thead class="text-gray-500 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
                                             Total impuesto a cargo:
@@ -570,8 +558,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td>
-                                            ${{ formatNumber(0) }}
+                                        <td class="px-6 py-4">
+                                            ${{ formatNumber(totalImpuestoCargo) }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -687,7 +675,7 @@
                         </fwb-accordion>
                         <div class="mt-5 relative overflow-x-auto">
                             <table class="w-full lg:text-sm md:text-2xl text-center text-gray-500 dark:text-gray-400">
-                                <thead class="text-gray-700 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
+                                <thead class="text-gray-500 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
                                             Total sanciones:
@@ -702,7 +690,7 @@
                                 </thead>
                                 <tbody>
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td>
+                                        <td class="px-6 py-4">
                                             ${{ formatNumber(totalSanciones) }}
                                         </td>
                                         <td class="px-6 py-4">
@@ -718,33 +706,7 @@
                     </form>
                     <form  class="w-full mt-10">
                         <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                            <p class="w-full lg:text-sm md:text-3xl">Total ingresos ordinarios y extraordinarios del periodo en todo el país:</p>
-                            <div class="relative z-0 w-full mb-5 group">
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                        </svg>
-                                    </div>
-                                    <input type="number"  v-model="intTotalPeriodo" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                            <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Fuera de Este Municipio o Distrito:</p>
-                            <div class="relative z-0 w-full mb-5 group">
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                        </svg>
-                                    </div>
-                                    <input type="number"  v-model="intIngresoFuera" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                            <p class="w-full lg:text-sm md:text-3xl">Total Ingresos Ordinarios y Extraordinarios en Este Municipio:</p>
+                            <p class="w-full lg:text-sm md:text-3xl">Valor a pagar:</p>
                             <div class="relative z-0 w-full mb-5 group">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
@@ -757,7 +719,7 @@
                             </div>
                         </div>
                         <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                            <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Devolución, Rebajas, Descuentos:</p>
+                            <p class="w-full lg:text-sm md:text-3xl">Descuento Por Pronto Pago (Si Existe, Liquidelo Según el Acuerdo Municipal o Distrital):</p>
                             <div class="relative z-0 w-full mb-5 group">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
@@ -765,12 +727,12 @@
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
                                         </svg>
                                     </div>
-                                    <input type="number"  v-model="intIngresoDescuento" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                                    <input type="number"  v-model="intIngresoFuera" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                            <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Exportaciones:</p>
+                            <p class="w-full lg:text-sm md:text-3xl">Intereses de mora:</p>
                             <div class="relative z-0 w-full mb-5 group">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
@@ -778,12 +740,12 @@
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
                                         </svg>
                                     </div>
-                                    <input type="number"  v-model="intIngresoExportacion" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
+                                    <input type="number"  v-model="intIngresoFuera" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                            <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Venta de Activos Fijos:</p>
+                            <p class="w-full lg:text-sm md:text-3xl font-bold">Total a pagar:</p>
                             <div class="relative z-0 w-full mb-5 group">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
@@ -791,46 +753,7 @@
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
                                         </svg>
                                     </div>
-                                    <input type="number"  v-model="intIngresoVenta" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                            <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Actividades Excluidas o No Sujetas y Otros Ingresos No Gravados:</p>
-                            <div class="relative z-0 w-full mb-5 group">
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                        </svg>
-                                    </div>
-                                    <input type="number"  v-model="intIngresoActividades" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                            <p class="w-full lg:text-sm md:text-3xl">Menos Ingresos Por Otras Actividades Exentas En Este Municipio o Distrito (Por Acuerdo):</p>
-                            <div class="relative z-0 w-full mb-5 group">
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                        </svg>
-                                    </div>
-                                    <input type="number"  v-model="intIngresoExentas" class="bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-1 flex justify-between items-center lg:space-y-0 lg:flex-row md:flex-col md:space-y-3">
-                            <p class="w-full lg:text-sm md:text-3xl fw-bold">Total ingresos gravables:</p>
-                            <div class="relative z-0 w-full mb-5 group">
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                        <svg class="lg:w-4 lg:h-4 md:w-7 md:h-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.3a5 5 0 0 0 2.6 1.7c2.2.6 4.5-.5 5-2.3.4-2-1.3-4-3.6-4.5-2.3-.6-4-2.7-3.5-4.5.5-1.9 2.7-3 5-2.3 1 .2 1.8.8 2.5 1.6m-3.9 12v2m0-18v2.2"/>
-                                        </svg>
-                                    </div>
-                                    <input type="text" :value="intTotalGravableFormat" class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" disabled required>
+                                    <input type="text"  :value="intTotalFormat" class="cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 lg:text-sm md:text-3xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" disabled required>
                                 </div>
                             </div>
                         </div>
@@ -1084,7 +1007,7 @@
 </template>
 
 <script lang="ts" setup>
-    import {Ref,ref,computed,reactive, onMounted} from 'vue';
+    import {Ref,ref,ComputedRef,computed,reactive, onMounted} from 'vue';
     import {
         FwbAccordion,
         FwbAccordionContent,
@@ -1095,7 +1018,7 @@
     import ModalDireccion from './Components/ModalDireccion.vue'
     defineProps({ tenant: Object,showModal:Function,hideModal:Function, login:Boolean })
 
-    interface Actividad {id:number,value:number}
+    interface Actividad {id:number,value:number,tax:number}
     interface Sancion {id:number,percent:number,value:number}
 
 
@@ -1111,7 +1034,7 @@
     const intTotal:Ref<number> = ref(0);
     const intTotalGravable:Ref<number> = ref(0);
     const intTotalIngresosGravados:Ref<number>=ref(0);
-    const intTotalGravableFormat = computed(function() :string | 0 {
+    const intTotalGravableFormat:ComputedRef<string | 0> = computed(function() :string | 0 {
         intTotalGravable.value = intTotal.value -(
             intIngresoDescuento.value+
             intIngresoActividades.value+
@@ -1122,7 +1045,7 @@
         intTotalIngresosGravados.value = intTotalGravable.value;
         return formatNumber(intTotalGravable.value);
     })
-    const intTotalFormat = computed(function() :string | 0{
+    const intTotalFormat:ComputedRef<string | 0> = computed(function() :string | 0{
         intTotal.value = intTotalPeriodo.value-intIngresoFuera.value;
 
         return formatNumber(intTotal.value);
@@ -1130,26 +1053,52 @@
     const pages:Ref<HTMLElement | null> = ref(null);
     const stepper:Ref<HTMLElement | null> = ref(null);
     const options:Ref<HTMLElement | null> = ref(null);
-    let currentPage:number = 0;
-    let arrActividad = reactive<Array<Actividad>>([]);
-    let arrSanciones = reactive<Array<Sancion>>([]);
-    let totalIngresosGravados = computed(function() :number{
+    const totalIngresosGravados:ComputedRef<number> = computed(function() :number{
         let total = 0;
         arrActividad.forEach(function(result){
             total += result.value;
         });
         return total+intTotalIngresosGravados.value;
     })
-    let totalSanciones = computed(function() :number{
+    const totalImpuestos:ComputedRef<number> = computed(function() :number{
+        let total = 0;
+        arrActividad.forEach(function(result){
+            total += result.tax;
+        });
+        return total;
+    })
+    const totalSanciones:ComputedRef<number> = computed(function() :number{
         let total = 0;
         arrSanciones.forEach(function(result){
             total+=result.value;
         })
         return total;
     })
+    const totalImpuestoIndustriaComercio:ComputedRef<number> = computed(function() :number {return impuestoLey56.value+totalImpuestos.value });
+    const impuestoAvisos:ComputedRef<number> = computed(function() :number {
+        return isAvisos.value ? 0.15*totalImpuestoIndustriaComercio.value : 0
+    });
+    const pagoPorUnidades:Ref<number> = ref(0);
+    const sobretasaBomberil:Ref<number> = ref(0);
+    const sobretasaSeguridad:Ref<number> = ref(0);
+    const totalImpuestoCargo:ComputedRef<number> = computed(function() :number {
+        return impuestoAvisos.value+
+        totalImpuestoIndustriaComercio.value+
+        pagoPorUnidades.value+
+        sobretasaBomberil.value+
+        sobretasaSeguridad.value
+
+    })
+    const isOption2:Ref<boolean> = ref(false);
+    const isAvisos:Ref<boolean> = ref(false);
+
+    let impuestoLey56:Ref<number> = ref(1000);
+    let currentPage:number = 0;
+    let arrActividad = reactive<Array<Actividad>>([]);
+    let arrSanciones = reactive<Array<Sancion>>([]);
     let contadorActividad:number=0;
     let contadorSancion:number =0;
-    let isOption2:Ref<boolean> = ref(false);
+
 
     function changeActiveOption(option){
         let arrOptions:HTMLCollection = options.value.children;
@@ -1187,7 +1136,8 @@
         contadorActividad++;
         arrActividad.push({
             id:contadorActividad,
-            value:0
+            value:0,
+            tax:1000
         });
     }
     function addSancion() :void{
