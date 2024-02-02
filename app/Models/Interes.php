@@ -11,6 +11,8 @@ class Interes extends Model
 {
     use HasFactory, SoftDeletes;
 
+    static protected $intereses;
+
     protected $fillable = [
         'vigencia',
         'mes',
@@ -32,21 +34,23 @@ class Interes extends Model
         return $from->diffInDays($to ?? now());
     }
 
-    public static function getInteresVigente($date = null)
+    public static function getInteresVigente($date = null, $intereses = null)
     {
         $date ??= now();
+        $intereses ??= self::all();
 
-        return self::where('vigencia', $date->year)->where('mes', $date->month)->first();
+        return $intereses->where('vigencia', $date->year)->firstWhere('mes', $date->month);
     }
 
-    public static function calculateMoratorio($deuda, $from, $to = null)
+    public static function calculateMoratorio($deuda, $from, $to = null, $intereses = null)
     {
         $to ??= now();
+        $intereses ??= self::whereBetween('vigencia', [$from->year, $to->year])->get();
 
         $total = 0;
 
         for ($d = $from->copy(); $d < $to; $d->addDay()) {
-            $interes = self::getInteresVigente($d);
+            $interes = self::getInteresVigente($d, $intereses);
 
             if ($interes !== null) {
                 $total += ($interes->dailyMoratorioInteres() * $deuda) / 100;

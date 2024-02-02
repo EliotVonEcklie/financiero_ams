@@ -15,6 +15,7 @@ class Liquidacion
     private Predio $predio;
     private Collection $estatutos;
     private Collection $avaluos;
+    private Collection $intereses;
 
     public array $vigencias = [];
     public int $descuento_incentivo = 0;
@@ -43,8 +44,12 @@ class Liquidacion
         $this->descuento_incentivo = Descuento::getDescuentoIncentivo();
         $this->descuento_intereses = Descuento::getDescuentoIntereses();
 
+        $vigencias ??= $this->predio->avaluos()->pluck('vigencia');
+
+        $this->intereses = Interes::whereIn('vigencia', $vigencias);
+
         $this->avaluos = $this->predio->avaluos()
-            ->whereIn('vigencia', $vigencias ?? $this->predio->avaluos()->pluck('vigencia'))
+            ->whereIn('vigencia', $vigencias)
             ->orderByDesc('vigencia')
             ->get();
 
@@ -186,14 +191,26 @@ class Liquidacion
 
             $result['dias_mora'] = Interes::diasMora($from);
 
-            $result['predial_intereses'] = Interes::calculateMoratorio($result['predial'], $from);
-            $result['predial_descuento_intereses'] = $this->calculate_tarifa($result['predial_intereses'], $this->descuento_intereses, false);
+            $result['predial_intereses'] = Interes::calculateMoratorio($result['predial'], $from, $this->intereses);
+            $result['predial_descuento_intereses'] = $this->calculate_tarifa(
+                $result['predial_intereses'],
+                $this->descuento_intereses,
+                false
+            );
 
-            $result['bomberil_intereses'] = Interes::calculateMoratorio($result['bomberil'], $from);
-            $result['bomberil_descuento_intereses'] = $this->calculate_tarifa($result['bomberil_intereses'], $this->descuento_intereses, false);
+            $result['bomberil_intereses'] = Interes::calculateMoratorio($result['bomberil'], $from, $this->intereses);
+            $result['bomberil_descuento_intereses'] = $this->calculate_tarifa(
+                $result['bomberil_intereses'],
+                $this->descuento_intereses,
+                false
+            );
 
-            $result['ambiental_intereses'] = Interes::calculateMoratorio($result['ambiental'], $from);
-            $result['ambiental_descuento_intereses'] = $this->calculate_tarifa($result['ambiental_intereses'], $this->descuento_intereses, false);
+            $result['ambiental_intereses'] = Interes::calculateMoratorio($result['ambiental'], $from, $this->intereses);
+            $result['ambiental_descuento_intereses'] = $this->calculate_tarifa(
+                $result['ambiental_intereses'],
+                $this->descuento_intereses,
+                false
+            );
 
             $result['descuento_intereses'] = Round::pesos(
                 $result['predial_descuento_intereses'] +
