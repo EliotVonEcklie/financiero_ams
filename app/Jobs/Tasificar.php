@@ -36,7 +36,7 @@ class Tasificar implements ShouldQueue
         $estratificaciones = Estratificacion::all();
         $this->vigencia_unidad_monetarias = VigenciaUnidadMonetaria::all();
 
-        foreach (Predio::lazy() as $predio) {
+        foreach (Predio::lazyById() as $predio) {
             foreach ($predio->avaluos()->where('tasa_por_mil', -1)
                 ->lazyById() as $avaluo) {
 
