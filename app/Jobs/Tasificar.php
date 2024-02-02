@@ -65,14 +65,21 @@ class Tasificar implements ShouldQueue
             ->where('destino_economico_id', $informacion->codigo_destino_economico->destino_economico->id);
 
         if ($estratificacionesAvaluo->count() === 0) {
-            Log::error('tenant: ' . tenant()->id . ', No se encontró estratificación para el predio: ' . $avaluo->predio->id);
+            Log::error('tenant: ' . tenant()->id . ', No se encontró estratificación para el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
             return;
         }
 
+        $found = false;
+
         foreach($estratificacionesAvaluo as $estratificacion) {
             if ($this->check_estratificacion($avaluo, $informacion, $estratificacion)) {
+                $found = true;
                 break;
             }
+        }
+
+        if (!$found) {
+            Log::error('tenant: ' . tenant()->id . ', No se tasificó el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
         }
     }
 
