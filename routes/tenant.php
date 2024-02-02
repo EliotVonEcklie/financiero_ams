@@ -47,9 +47,9 @@ Route::group([
             return inertia('Login');
         })->withoutMiddleware(FinancieroAuth::class)->name('login');
 
-        //Route::get('/test', function () {
-        //    return Pdf::loadView('pdf.private.test')->stream();
-        //})->name('test');
+        Route::get('/test', function () {
+            return Pdf::loadView('pdf.private.test')->stream();
+        })->name('test');
 
         Route::get('/', function () {
             return inertia('Index');
