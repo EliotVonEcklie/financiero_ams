@@ -47,16 +47,23 @@ class ImportPredios implements ShouldQueue
 
     private function import($tesopredioavaluo)
     {
-        Predio::updateOrCreate([
+        $predio = Predio::updateOrCreate([
             'codigo_catastro' => substr($tesopredioavaluo->codigocatastral, 0, 30)
         ], [
             'total' => (int) (($tesopredioavaluo->tot == '') ? 1 : $tesopredioavaluo->tot)
-        ])->avaluos()->updateOrCreate([
-            'vigencia' => (int) substr($tesopredioavaluo->vigencia, 0, 4)
-        ], [
-            'pagado' => $tesopredioavaluo->pago != 'N',
-            'valor_avaluo' => (int) $tesopredioavaluo->avaluo,
-            'tasa_por_mil' => (int) $tesopredioavaluo->tasa
         ]);
+
+        $avaluo = $predio->avaluos()->firstWhere('vigencia', (int) substr($tesopredioavaluo->vigencia, 0, 4));
+
+        if ($avaluo !== null) {
+            $avaluo->pagado = $tesopredioavaluo->pago != 'N';
+            $avaluo->save();
+        } else {
+            $avaluo = $predio->avaluos()->create([
+                'vigencia' => (int) substr($tesopredioavaluo->vigencia, 0, 4),
+                'pagado' => $tesopredioavaluo->pago != 'N',
+                'valor_avaluo' => (int) $tesopredioavaluo->avaluo
+            ]);
+        }
     }
 }

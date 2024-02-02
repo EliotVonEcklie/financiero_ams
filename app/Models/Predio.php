@@ -70,13 +70,11 @@ class Predio extends Model
     /**
      * Get the closest informacion for a given vigencia
      */
-    public function informacion_on($vigencia, $strict = true): PredioInformacion
+    public function informacion_on($vigencia): PredioInformacion
     {
         return $this->informacions()
                 ->firstWhere('created_at', Carbon::create($vigencia))
-            ?? $strict
-            ? null
-            : $this->informacions()
+            ?? $this->informacions()
                 ->orderByDesc('created_at')
                 ->first();
     }
