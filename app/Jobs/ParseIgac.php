@@ -71,18 +71,16 @@ class ParseIgac implements ShouldQueue
                 $predio_tipo = $predio_tipos->where('codigo', $r1_data->tipo_predio)->firstOrFail();
 
                 // Update or create Predio Informacion
-                $informacion = $predio->informacions()->create([
+                $predio->informacions()->create([
                     'created_at' => $r1_data->vigencia
                 ], [
                     'direccion' => $r1_data->direccion,
                     'hectareas' => $r1_data->hectareas,
                     'metros_cuadrados' => $r1_data->metros_cuadrados,
-                    'area_construida' => $r1_data->area_construida
+                    'area_construida' => $r1_data->area_construida,
+                    'codigo_destino_economico_id' => $codigo_destino_economico->id,
+                    'predio_tipo_id' => $predio_tipo->id
                 ]);
-
-                $informacion->codigo_destino_economico()->associate($codigo_destino_economico);
-                $informacion->predio_tipo()->associate($predio_tipo);
-                $informacion->save();
             }
 
             if (! $predio->avaluos()->where('vigencia', $r1_data->vigencia->year)->first()) {
