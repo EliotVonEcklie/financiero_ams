@@ -27,7 +27,7 @@ class FacturaPredial extends Model
         $pague_hasta = now();
 
         $deuda = $vigencias->filter(function ($v) {
-            return $v['selected'] ?? $v['isSelected'];
+            return $v['selected'] ?? $v['isSelected'] ?? false;
         })
         ->every(function ($vigencia) {
             return $vigencia['total_intereses'] > 0 || $vigencia['vigencia'] < now()->year;
