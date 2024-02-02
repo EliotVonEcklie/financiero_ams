@@ -39,7 +39,7 @@ class Tasificar implements ShouldQueue
         foreach (PredioAvaluo::where('tasa_por_mil', -1)
             ->get() as $avaluo) {
 
-            $informacion = $avaluo->predio->informacion_on($avaluo->vigencia);
+            $informacion = $avaluo->predio->informacion_on($avaluo->vigencia, false);
 
             $this->tasificar_avaluo($avaluo, $informacion, $estratificaciones);
         }
