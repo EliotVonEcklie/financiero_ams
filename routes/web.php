@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\FinancieroCentralAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/setup_municipio', function (Request $request) {
-    if ($request->input('app_key') == env('APP_KEY')) {
+Route::middleware(FinancieroCentralAuth::class)->group(function () {
+    Route::get('/setup_municipio', function (Request $request) {
         $tenant = \App\Models\Tenant::find($request->input('tenant_id'));
 
         if ($tenant) {
@@ -40,13 +41,9 @@ Route::get('/setup_municipio', function (Request $request) {
             'app_key' => $request->input('app_key'),
             'tenant' => $tenant
         ]);
-    } else {
-        return response()->file(resource_path('img/burro.png'));
-    }
-});
+    });
 
-Route::post('/setup_municipio', function (Request $request) {
-    if ($request->input('app_key') == env('APP_KEY')) {
+    Route::post('/setup_municipio', function (Request $request) {
         $data = $request->all();
 
         \App\Models\Tenant::updateOrCreate([
@@ -66,7 +63,5 @@ Route::post('/setup_municipio', function (Request $request) {
         ]);
 
         return to_route('index', ['tenant' => $data['domain']]);
-    } else {
-        return response()->file(public_path('img/burro.png'));
-    }
-})->name('setup_municipio');
+    })->name('setup_municipio');
+});

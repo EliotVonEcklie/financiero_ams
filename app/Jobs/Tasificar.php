@@ -12,7 +12,6 @@ use App\Models\Predio;
 use App\Models\PredioAvaluo;
 use App\Models\PredioInformacion;
 use App\Models\VigenciaUnidadMonetaria;
-use Illuminate\Support\Carbon;
 use RuntimeException;
 
 class Tasificar implements ShouldQueue
@@ -36,14 +35,12 @@ class Tasificar implements ShouldQueue
         $estratificaciones = Estratificacion::all();
         $this->vigencia_unidad_monetarias = VigenciaUnidadMonetaria::all();
 
-        foreach (Predio::lazy() as $predio) {
-            foreach ($predio->avaluos()->where('tasa_por_mil', -1)
-                ->lazyById() as $avaluo) {
+        foreach (PredioAvaluo::where('tasa_por_mil', -1)
+            ->get() as $avaluo) {
 
-                $informacion = $predio->informacion_on($avaluo->vigencia);
+            $informacion = $avaluo->predio->informacion_on($avaluo->vigencia);
 
-                $this->tasificar_avaluo($avaluo, $informacion, $estratificaciones);
-            }
+            $this->tasificar_avaluo($avaluo, $informacion, $estratificaciones);
         }
     }
 
@@ -91,7 +88,7 @@ class Tasificar implements ShouldQueue
                     ->where('unidad_monetaria_id', $rangoAvaluo->unidad_monetaria->id)
                     ->first();
 
-                if ($vigencia_unidad === null || $vigencia_unidad->valor !== 1.0) {
+                if ($vigencia_unidad === null || $vigencia_unidad->valor != 1.0) {
                     throw new RuntimeException('La unidad monetaria "Unidad" no tiene valor 1!');
                 }
             } else {
@@ -105,12 +102,12 @@ class Tasificar implements ShouldQueue
                 }
             }
 
-            $valor_avaluo = $avaluo->valor_avaluo;
+            $valor_avaluo = (float) $avaluo->valor_avaluo;
 
-            $desde = $rangoAvaluo->desde * $vigencia_unidad->valor;
-            $hasta = $rangoAvaluo->hasta * $vigencia_unidad->valor;
+            $desde = (float) $rangoAvaluo->desde * $vigencia_unidad->valor;
+            $hasta = (float) $rangoAvaluo->hasta * $vigencia_unidad->valor;
 
-            if ($valor_avaluo >= $desde && ($hasta < 0 || $valor_avaluo <= $hasta)) {
+            if ($valor_avaluo >= $desde && (($rangoAvaluo->hasta == -1.0) || $valor_avaluo <= $hasta)) {
                 $avaluo->tasa_por_mil = $estratificacion->tasa;
                 $avaluo->save();
 

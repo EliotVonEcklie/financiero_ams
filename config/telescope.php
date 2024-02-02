@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Middleware\IdealAuth;
+use App\Http\Middleware\FinancieroCentralAuth;
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Watchers;
 
@@ -78,7 +78,8 @@ return [
 
     'middleware' => [
         'web',
-        //Authorize::class,
+        //FinancieroCentralAuth::class,
+        //Authorize::class
     ],
 
     /*
