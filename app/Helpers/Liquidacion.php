@@ -191,21 +191,21 @@ class Liquidacion
 
             $result['dias_mora'] = Interes::diasMora($from);
 
-            $result['predial_intereses'] = Interes::calculateMoratorio($result['predial'], $from, $this->intereses);
+            $result['predial_intereses'] = Interes::calculateMoratorio($result['predial'], $from, null, $this->intereses);
             $result['predial_descuento_intereses'] = $this->calculate_tarifa(
                 $result['predial_intereses'],
                 $this->descuento_intereses,
                 false
             );
 
-            $result['bomberil_intereses'] = Interes::calculateMoratorio($result['bomberil'], $from, $this->intereses);
+            $result['bomberil_intereses'] = Interes::calculateMoratorio($result['bomberil'], $from, null, $this->intereses);
             $result['bomberil_descuento_intereses'] = $this->calculate_tarifa(
                 $result['bomberil_intereses'],
                 $this->descuento_intereses,
                 false
             );
 
-            $result['ambiental_intereses'] = Interes::calculateMoratorio($result['ambiental'], $from, $this->intereses);
+            $result['ambiental_intereses'] = Interes::calculateMoratorio($result['ambiental'], $from, null, $this->intereses);
             $result['ambiental_descuento_intereses'] = $this->calculate_tarifa(
                 $result['ambiental_intereses'],
                 $this->descuento_intereses,
