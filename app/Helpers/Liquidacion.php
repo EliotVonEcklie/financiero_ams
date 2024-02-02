@@ -46,7 +46,7 @@ class Liquidacion
 
         $vigencias ??= $this->predio->avaluos()->pluck('vigencia');
 
-        $this->intereses = Interes::whereIn('vigencia', $vigencias);
+        $this->intereses = Interes::whereIn('vigencia', $vigencias)->get();
 
         $this->avaluos = $this->predio->avaluos()
             ->whereIn('vigencia', $vigencias)
