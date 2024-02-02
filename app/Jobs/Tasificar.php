@@ -63,6 +63,8 @@ class Tasificar implements ShouldQueue
             ->where('destino_economico_id', $informacion->codigo_destino_economico->destino_economico->id)
             ->all();
 
+        dump($estratificacionesAvaluo);
+
         foreach($estratificacionesAvaluo as $estratificacion) {
             if ($this->check_estratificacion($avaluo, $informacion, $estratificacion)) {
                 break;
