@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\IdealAuth;
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Watchers;
 
@@ -77,7 +78,8 @@ return [
 
     'middleware' => [
         'web',
-        Authorize::class,
+        IdealAuth::class,
+        //Authorize::class,
     ],
 
     /*
