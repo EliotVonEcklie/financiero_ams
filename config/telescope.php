@@ -78,7 +78,7 @@ return [
 
     'middleware' => [
         'web',
-        FinancieroCentralAuth::class,
+        //FinancieroCentralAuth::class,
         //Authorize::class
     ],
 
