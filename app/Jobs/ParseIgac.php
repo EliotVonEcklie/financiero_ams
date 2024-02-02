@@ -62,30 +62,28 @@ class ParseIgac implements ShouldQueue
                 'documento' => $r1_data->documento
             ]);
 
-            if (! $predio->informacions()->where('created_at', $r1_data->vigencia)->first()) {
+            if ($predio->informacions()->firstWhere('created_at', $r1_data->vigencia) === null) {
                 // Find or create CodigoDestinoEconomico
                 $codigo_destino_economico = CodigoDestinoEconomico::firstOrCreate([
                     'codigo' => $r1_data->codigo_destino_economico
                 ]);
 
-                $predio_tipo = $predio_tipos->where('codigo', $r1_data->tipo_predio)->firstOrFail();
+                $predio_tipo = $predio_tipos->firstOrFail('codigo', $r1_data->tipo_predio);
 
                 // Update or create Predio Informacion
-                $informacion = $predio->informacions()->create([
+                $predio->informacions()->create([
                     'created_at' => $r1_data->vigencia
                 ], [
                     'direccion' => $r1_data->direccion,
                     'hectareas' => $r1_data->hectareas,
                     'metros_cuadrados' => $r1_data->metros_cuadrados,
-                    'area_construida' => $r1_data->area_construida
+                    'area_construida' => $r1_data->area_construida,
+                    'codigo_destino_economico_id' => $codigo_destino_economico->id,
+                    'predio_tipo_id' => $predio_tipo->id
                 ]);
-
-                $informacion->codigo_destino_economico()->associate($codigo_destino_economico);
-                $informacion->predio_tipo()->associate($predio_tipo);
-                $informacion->save();
             }
 
-            if (! $predio->avaluos()->where('vigencia', $r1_data->vigencia->year)->first()) {
+            if ($predio->avaluos()->firstWhere('vigencia', $r1_data->vigencia->year) === null) {
                 // Update or create Predio Avaluo
                 $predio->avaluos()->updateOrCreate([
                     'vigencia' => $r1_data->vigencia->year
@@ -120,7 +118,7 @@ class ParseIgac implements ShouldQueue
                 return;
             }
 
-            $predio_estrato = PredioEstrato::where('estrato', $r2_data->estrato)->firstOrFail();
+            $predio_estrato = PredioEstrato::firstOrFail('estrato', $r2_data->estrato);
 
             // Find and update latest informacion
             $predio->latest_informacion()

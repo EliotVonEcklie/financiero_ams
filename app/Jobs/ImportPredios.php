@@ -36,10 +36,10 @@ class ImportPredios implements ShouldQueue
         $this->tesoprediosavaluos = DB::table('tesoprediosavaluos')
             ->select('codigocatastral', 'tot', 'vigencia', 'pago', 'avaluo', 'tasa')
             ->orderBy('vigencia')
-            ->lazy();
+            ->get();
 
         foreach ($this->tesoprediosavaluos as $tesopredioavaluo) {
-            if (strlen($tesopredioavaluo->codigocatastral) === 25) {
+            if (strlen($tesopredioavaluo->codigocatastral) >= 25) {
                 $this->import($tesopredioavaluo);
             }
         }
@@ -47,16 +47,23 @@ class ImportPredios implements ShouldQueue
 
     private function import($tesopredioavaluo)
     {
-        Predio::updateOrCreate([
-            'codigo_catastro' => $tesopredioavaluo->codigocatastral
+        $predio = Predio::updateOrCreate([
+            'codigo_catastro' => substr($tesopredioavaluo->codigocatastral, 0, 30)
         ], [
-            'total' => (! $tesopredioavaluo->tot) ? 1 : $tesopredioavaluo->tot
-        ])->avaluos()->updateOrCreate([
-            'vigencia' => $tesopredioavaluo->vigencia
-        ], [
-            'pagado' => $tesopredioavaluo->pago != 'N',
-            'valor_avaluo' => $tesopredioavaluo->avaluo,
-            'tasa_por_mil' => $tesopredioavaluo->tasa
+            'total' => (int) (($tesopredioavaluo->tot == '') ? 1 : $tesopredioavaluo->tot)
         ]);
+
+        $avaluo = $predio->avaluos()->firstWhere('vigencia', (int) substr($tesopredioavaluo->vigencia, 0, 4));
+
+        if ($avaluo !== null) {
+            $avaluo->pagado = $tesopredioavaluo->pago != 'N';
+            $avaluo->save();
+        } else {
+            $avaluo = $predio->avaluos()->create([
+                'vigencia' => (int) substr($tesopredioavaluo->vigencia, 0, 4),
+                'pagado' => $tesopredioavaluo->pago != 'N',
+                'valor_avaluo' => (int) $tesopredioavaluo->avaluo
+            ]);
+        }
     }
 }

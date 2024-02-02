@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIgacRequest;
 use App\Jobs\ParseIgac;
-use App\Jobs\TransferPredios;
-use Illuminate\Support\Facades\Bus;
 
 class UploadIgacController extends Controller
 {
@@ -22,10 +20,7 @@ class UploadIgacController extends Controller
         }
 
         // Dispatch the jobs.
-        Bus::chain([
-            new ParseIgac($path_r1, $path_r2),
-            new TransferPredios
-        ])->dispatch();
+        ParseIgac::dispatch($path_r1, $path_r2);
 
         return back();
     }

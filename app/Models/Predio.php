@@ -73,9 +73,10 @@ class Predio extends Model
     public function informacion_on($vigencia): PredioInformacion
     {
         return $this->informacions()
-            ->where('created_at', '>=', Carbon::create($vigencia))
-            ->orderBy('created_at')
-            ->first();
+                ->firstWhere('created_at', Carbon::create($vigencia))
+            ?? $this->informacions()
+                ->orderByDesc('created_at')
+                ->first();
     }
 
     /**
@@ -97,11 +98,12 @@ class Predio extends Model
     public function main_propietario(): PredioPropietario
     {
         return $this->propietarios()
-            ->where('orden', $this->main_propietario)
-            ->first() ?? $this->propietarios()
-            ->orderByDesc('created_at')
-            ->orderBy('orden')
-            ->first();
+                ->where('orden', $this->main_propietario)
+                ->first()
+            ?? $this->propietarios()
+                ->orderByDesc('created_at')
+                ->orderBy('orden')
+                ->first();
     }
 
     public function factura_predials(): Collection

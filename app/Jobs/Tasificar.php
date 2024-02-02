@@ -12,6 +12,7 @@ use App\Models\Predio;
 use App\Models\PredioAvaluo;
 use App\Models\PredioInformacion;
 use App\Models\VigenciaUnidadMonetaria;
+use Illuminate\Support\Facades\Log;
 use RuntimeException;
 
 class Tasificar implements ShouldQueue
@@ -54,14 +55,19 @@ class Tasificar implements ShouldQueue
     private function tasificar_avaluo(PredioAvaluo $avaluo, PredioInformacion $informacion, $estratificaciones): void
     {
         if ($informacion->codigo_destino_economico->destino_economico === null) {
+            Log::error('No se encontró destino económico para el predio: ' . $avaluo->predio->id);
             return;
         }
 
         $estratificacionesAvaluo = $estratificaciones
             ->where('vigencia', $avaluo->vigencia)
             ->where('predio_tipo_id', $informacion->predio_tipo->id)
-            ->where('destino_economico_id', $informacion->codigo_destino_economico->destino_economico->id)
-            ->all();
+            ->where('destino_economico_id', $informacion->codigo_destino_economico->destino_economico->id);
+
+        if ($estratificacionesAvaluo->count() === 0) {
+            Log::error('No se encontró estratificación para el predio: ' . $avaluo->predio->id);
+            return;
+        }
 
         foreach($estratificacionesAvaluo as $estratificacion) {
             if ($this->check_estratificacion($avaluo, $informacion, $estratificacion)) {
