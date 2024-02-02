@@ -43,8 +43,10 @@ class ReadPrescripciones implements ShouldQueue
             ->orderBy('cedulacatastral')
             ->lazy();
 
+        $predios = Predio::all();
+
         foreach ($prescripciones as $prescripcion) {
-            $predio = Predio::firstWhere('codigo_catastro', $prescripcion->cedulacatastral);
+            $predio = $predios->firstWhere('codigo_catastro', substr($prescripcion->cedulacatastral, 0, 30));
 
             $predio->avaluos()
                 ->whereIn('vigencia', explode(',', $prescripcion->vigencias))
