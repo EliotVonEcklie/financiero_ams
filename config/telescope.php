@@ -78,7 +78,6 @@ return [
 
     'middleware' => [
         'web',
-        IdealAuth::class,
         //Authorize::class,
     ],
 
