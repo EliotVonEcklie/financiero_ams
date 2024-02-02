@@ -165,13 +165,13 @@ class Liquidacion
         $info = $this->predio->informacion_on($avaluo->vigencia);
 
         if ($result['estatuto']->alumbrado) {
-            if ($result['estatuto']->alumbrado_urbano && substr($info->predio_tipo->nombre, 0, 6) === 'Urbano') {
+            if ($result['estatuto']->alumbrado_urbano && $info->get_predio_tipo() === 2) {
                 $result['alumbrado'] = $this->calculate_tarifa(
                     $result['valor_avaluo'],
                     $result['estatuto']->alumbrado_tasa,
                     $result['estatuto']->alumbrado_tarifa
                 );
-            } else if ($result['estatuto']->alumbrado_rural && substr($info->predio_tipo->nombre, 0, 5) === 'Rural') {
+            } else if ($result['estatuto']->alumbrado_rural && $info->get_predio_tipo() === 2) {
                 $result['alumbrado'] = $this->calculate_tarifa(
                     $result['valor_avaluo'],
                     $result['estatuto']->alumbrado_tasa,

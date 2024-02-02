@@ -36,6 +36,11 @@ class PredioInformacion extends Model
         return $this->belongsTo(PredioEstrato::class);
     }
 
+    public function get_predio_tipo(): int
+    {
+        return substr($this->predio->codigo_catastro, 0, 2) == '00' ? 1 : 2;
+    }
+
     public function predio_tipo(): BelongsTo
     {
         return $this->belongsTo(PredioTipo::class);

@@ -55,24 +55,31 @@ class Tasificar implements ShouldQueue
     private function tasificar_avaluo(PredioAvaluo $avaluo, PredioInformacion $informacion, $estratificaciones): void
     {
         if ($informacion->codigo_destino_economico->destino_economico === null) {
-            Log::error('No se encontró destino económico para el predio: ' . $avaluo->predio->id);
+            Log::error('tenant: ' . tenant()->id . ', No se encontró destino económico para el predio: ' . $avaluo->predio->id);
             return;
         }
 
         $estratificacionesAvaluo = $estratificaciones
             ->where('vigencia', $avaluo->vigencia)
-            ->where('predio_tipo_id', $informacion->predio_tipo->id)
+            ->where('predio_tipo_id', $informacion->get_predio_tipo())
             ->where('destino_economico_id', $informacion->codigo_destino_economico->destino_economico->id);
 
         if ($estratificacionesAvaluo->count() === 0) {
-            Log::error('No se encontró estratificación para el predio: ' . $avaluo->predio->id);
+            Log::error('tenant: ' . tenant()->id . ', No se encontró estratificación para el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
             return;
         }
 
+        $found = false;
+
         foreach($estratificacionesAvaluo as $estratificacion) {
             if ($this->check_estratificacion($avaluo, $informacion, $estratificacion)) {
+                $found = true;
                 break;
             }
+        }
+
+        if (!$found) {
+            Log::error('tenant: ' . tenant()->id . ', No se tasificó el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
         }
     }
 
@@ -108,16 +115,17 @@ class Tasificar implements ShouldQueue
                 }
             }
 
-            $valor_avaluo = (float) $avaluo->valor_avaluo;
+            $valor_avaluo = ceil($avaluo->valor_avaluo / $vigencia_unidad->valor);
+            $desde = (float) $rangoAvaluo->desde;
+            $hasta = (float) $rangoAvaluo->hasta;
 
-            $desde = (float) $rangoAvaluo->desde * $vigencia_unidad->valor;
-            $hasta = (float) $rangoAvaluo->hasta * $vigencia_unidad->valor;
-
-            if ($valor_avaluo >= $desde && (($rangoAvaluo->hasta == -1.0) || $valor_avaluo <= $hasta)) {
+            if ($valor_avaluo >= $desde && (($hasta == -1.0) || $valor_avaluo <= $hasta)) {
                 $avaluo->tasa_por_mil = $estratificacion->tasa;
                 $avaluo->save();
 
                 return true;
+            } else {
+                Log::warning('tenant: ' . tenant()->id . ', El avaluo ' . $valor_avaluo . ' no está en el rango (' . $desde . ', ' . $hasta . ') ' . $vigencia_unidad->unidad_monetaria->nombre);
             }
         } else if ($estratificacion->tarifa_type === '\App\Models\PredioEstrato') {
             $predioEstrato = $estratificacion->tarifa;

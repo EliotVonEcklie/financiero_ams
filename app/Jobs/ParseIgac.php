@@ -68,7 +68,8 @@ class ParseIgac implements ShouldQueue
                     'codigo' => $r1_data->codigo_destino_economico
                 ]);
 
-                $predio_tipo = $predio_tipos->firstOrFail('codigo', $r1_data->tipo_predio);
+                $predio_tipo = $predio_tipos->firstWhere('codigo', $r1_data->tipo_predio);
+                $predio_tipo ??= $predio_tipos->find(2); // Default to Urbano (2)
 
                 // Update or create Predio Informacion
                 $predio->informacions()->create([
