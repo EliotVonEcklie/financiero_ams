@@ -3,13 +3,13 @@
         <ModalRegistro :login="login" @showModal="showModal" @hideModal="hideModal" :tenant="tenant"/>
         <nav id="main-nav"  class="bg-white text-black dark:text-white fixed top-0 w-full transition-all bg-transparent border-gray-200 dark:bg-gray-900 md:top-0 md:z-40">
             <div class="flex flex-wrap justify-between items-center w-full p-3">
-                <Link :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <a :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img :src="img" class="xl:h-20 lg:h-24 md:h-36" alt="Logo Entidad" />
                     <div class="flex flex-col">
                         <span  class="self-center 2xl:text-2xl xl:text-sm lg:text-3xl font-semibold whitespace-nowrap md:text-3xl ">{{ tenant.nombre.toUpperCase() }} - META</span>
                         <span  class="xl:text-sm lg:text-2xl  md:text-2xl">{{ tenant.entidad.toUpperCase() }}</span>
                     </div>
-                </Link>
+                </a>
                 <div class="xl:block lg:hidden md:hidden lg:px-4 py-3 xl:px-2">
                     <div class="flex items-center justify-center">
                         <ul class="flex flex-row font-medium mt-0 lg:space-x-8 xl:space-x-2 2xl:space-x-8 rtl:space-x-reverse text-sm">
@@ -69,13 +69,13 @@
         <nav :class="{'translate-x-0 ':mobileNav, 'translate-x-full ':mobileNav==false}" class="fixed z-50 top-0 transition-all h-full w-screen ">
             <div class=" h-full bg-white overflow-y-auto dark:bg-gray-700" >
                 <div class="flex justify-between items-center mt-4 p-4">
-                    <Link :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <a :href="tenant.pagina" class="flex items-center space-x-3 rtl:space-x-reverse">
                         <img :src="img" class="xl:h-20 lg:h-24 md:h-36" alt="Logo Entidad" />
                         <div class="flex flex-col">
                             <span class="self-center text-2xl font-semibold whitespace-nowrap md:text-3xl dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                             <span class="text-sm text-gray-900 md:text-2xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
                         </div>
-                    </Link>
+                    </a>
                     <button type="button" @click="openMobileNav()" class="mx-5 my-5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
                         <svg class="w-20 h-20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -123,11 +123,11 @@
     <footer class="bg-gray-100 dark:bg-gray-900 mt-10 lg:h-auto md:h-screen p-10">
         <div class="grid grid-cols-1 lg:gap-5 md:gap-14">
             <div>
-                <Link :href="tenant.pagina" class="text-center flex items-center flex-col md:justify-center">
+                <a :href="tenant.pagina" class="text-center flex items-center flex-col md:justify-center">
                     <img :src="img" class="lg:h-16 md:h-24 mb-3" alt="Logo Entidad" />
                     <span class="self-center lg:text-base font-semibold md:text-2xl whitespace-nowrap dark:text-white">{{ tenant.nombre.toUpperCase() }} - META</span>
                     <span class="lg:text-sm text-gray-900 md:text-xl dark:text-white">{{ tenant.entidad.toUpperCase() }}</span>
-                </Link>
+                </a>
             </div>
             <nav>
                 <ul class="flex justify-center items-center lg:flex-row md:flex-col lg:space-x-10 md:space-x-0 lg:space-y-0 md:space-y-6 lg:text-base md:text-3xl dark:text-gray-400">
