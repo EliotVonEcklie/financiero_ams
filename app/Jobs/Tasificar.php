@@ -12,7 +12,6 @@ use App\Models\Predio;
 use App\Models\PredioAvaluo;
 use App\Models\PredioInformacion;
 use App\Models\VigenciaUnidadMonetaria;
-use Illuminate\Support\Carbon;
 use RuntimeException;
 
 class Tasificar implements ShouldQueue
@@ -36,14 +35,12 @@ class Tasificar implements ShouldQueue
         $estratificaciones = Estratificacion::all();
         $this->vigencia_unidad_monetarias = VigenciaUnidadMonetaria::all();
 
-        foreach (Predio::lazyById() as $predio) {
-            foreach ($predio->avaluos()->where('tasa_por_mil', -1)
-                ->lazyById() as $avaluo) {
+        foreach (PredioAvaluo::where('tasa_por_mil', -1)
+            ->lazyById() as $avaluo) {
 
-                $informacion = $predio->informacion_on($avaluo->vigencia);
+            $informacion = $avaluo->predio->informacion_on($avaluo->vigencia);
 
-                $this->tasificar_avaluo($avaluo, $informacion, $estratificaciones);
-            }
+            $this->tasificar_avaluo($avaluo, $informacion, $estratificaciones);
         }
     }
 
