@@ -36,7 +36,7 @@ class Tasificar implements ShouldQueue
         $this->vigencia_unidad_monetarias = VigenciaUnidadMonetaria::all();
 
         foreach (PredioAvaluo::where('tasa_por_mil', -1)
-            ->lazyById() as $avaluo) {
+            ->get() as $avaluo) {
 
             $informacion = $avaluo->predio->informacion_on($avaluo->vigencia);
 
@@ -90,7 +90,7 @@ class Tasificar implements ShouldQueue
                     ->where('unidad_monetaria_id', $rangoAvaluo->unidad_monetaria->id)
                     ->first();
 
-                if ($vigencia_unidad === null || $vigencia_unidad->valor !== 1.0) {
+                if ($vigencia_unidad === null || $vigencia_unidad->valor != 1.0) {
                     throw new RuntimeException('La unidad monetaria "Unidad" no tiene valor 1!');
                 }
             } else {
