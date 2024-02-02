@@ -68,7 +68,7 @@ class ParseIgac implements ShouldQueue
                     'codigo' => $r1_data->codigo_destino_economico
                 ]);
 
-                $predio_tipo = $predio_tipos->where('codigo', $r1_data->tipo_predio)->firstOrFail();
+                $predio_tipo = $predio_tipos->firstOrFail('codigo', $r1_data->tipo_predio);
 
                 // Update or create Predio Informacion
                 $predio->informacions()->create([
@@ -118,7 +118,7 @@ class ParseIgac implements ShouldQueue
                 return;
             }
 
-            $predio_estrato = PredioEstrato::where('estrato', $r2_data->estrato)->firstOrFail();
+            $predio_estrato = PredioEstrato::firstOrFail('estrato', $r2_data->estrato);
 
             // Find and update latest informacion
             $predio->latest_informacion()

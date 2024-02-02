@@ -97,11 +97,12 @@ class Predio extends Model
     public function main_propietario(): PredioPropietario
     {
         return $this->propietarios()
-            ->where('orden', $this->main_propietario)
-            ->first() ?? $this->propietarios()
-            ->orderByDesc('created_at')
-            ->orderBy('orden')
-            ->first();
+                ->where('orden', $this->main_propietario)
+                ->first()
+            ?? $this->propietarios()
+                ->orderByDesc('created_at')
+                ->orderBy('orden')
+                ->first();
     }
 
     public function factura_predials(): Collection
