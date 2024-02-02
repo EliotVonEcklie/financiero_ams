@@ -4,8 +4,8 @@ import { ZiggyVue } from '~ziggy-vue'
 import VueEcho from 'vue-echo-laravel'
 import { initFlowbite } from 'flowbite'
 import numbers from './numbers'
-import LoadScript from 'vue-plugin-load-script';
-
+import LoadScript from 'vue-plugin-load-script'
+import Vue3Signature from "vue3-signature"
 
 
 router.on('navigate', () => {
@@ -29,6 +29,7 @@ createInertiaApp({
         app.config.globalProperties.$goBack = () => window.history.back()
         app.config.globalProperties.$goForward = () => window.history.forward()
         app.use(LoadScript)
+        app.use(Vue3Signature)
         app.use(plugin)
             .use(ZiggyVue)
             /*.use(VueEcho, {
