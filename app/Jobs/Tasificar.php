@@ -115,7 +115,7 @@ class Tasificar implements ShouldQueue
                 }
             }
 
-            $valor_avaluo = (float) $avaluo->valor_avaluo / $vigencia_unidad->valor;
+            $valor_avaluo = ceil($avaluo->valor_avaluo / $vigencia_unidad->valor);
             $desde = (float) $rangoAvaluo->desde;
             $hasta = (float) $rangoAvaluo->hasta;
 
