@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Predio;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -33,10 +34,15 @@ class ImportPredios implements ShouldQueue
      */
     public function handle(): void
     {
+        Predio::all()->pluck('codigo_catastro');
+
         $this->tesoprediosavaluos = DB::table('tesoprediosavaluos')
             ->select('codigocatastral', 'tot', 'vigencia', 'pago', 'avaluo', 'tasa')
+            ->whereNotIn('codigocatastral', function (Builder $query) {
+                $query->select('codigo_catastro')->from('predios');
+            })
             ->orderBy('vigencia')
-            ->get();
+            ->lazy(500);
 
         foreach ($this->tesoprediosavaluos as $tesopredioavaluo) {
             if (strlen($tesopredioavaluo->codigocatastral) >= 25) {

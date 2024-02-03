@@ -71,10 +71,9 @@ class ParseIgac implements ShouldQueue
                 $predio_tipo = $predio_tipos->firstWhere('codigo', $r1_data->tipo_predio);
                 $predio_tipo ??= $predio_tipos->find(2); // Default to Urbano (2)
 
-                // Update or create Predio Informacion
+                // Create Predio Informacion
                 $predio->informacions()->create([
-                    'created_at' => $r1_data->vigencia
-                ], [
+                    'created_at' => $r1_data->vigencia,
                     'direccion' => $r1_data->direccion,
                     'hectareas' => $r1_data->hectareas,
                     'metros_cuadrados' => $r1_data->metros_cuadrados,
@@ -85,10 +84,9 @@ class ParseIgac implements ShouldQueue
             }
 
             if ($predio->avaluos()->firstWhere('vigencia', $r1_data->vigencia->year) === null) {
-                // Update or create Predio Avaluo
-                $predio->avaluos()->updateOrCreate([
-                    'vigencia' => $r1_data->vigencia->year
-                ], [
+                // Create Predio Avaluo
+                $predio->avaluos()->create([
+                    'vigencia' => $r1_data->vigencia->year,
                     'valor_avaluo' => $r1_data->valor_avaluo
                 ]);
             }
