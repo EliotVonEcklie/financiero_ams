@@ -57,7 +57,7 @@ class ParseIgac implements ShouldQueue
                 'orden' => $r1_data->orden,
                 'created_at' => $r1_data->vigencia
             ], [
-                'nombre' => $r1_data->nombre_propietario,
+                'nombre_propietario' => $r1_data->nombre_propietario,
                 'tipo_documento' => $r1_data->tipo_documento,
                 'documento' => $r1_data->documento
             ]);

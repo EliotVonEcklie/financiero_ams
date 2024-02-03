@@ -12,7 +12,7 @@
                 </a>
                 <div class="xl:block lg:hidden md:hidden lg:px-4 py-3 xl:px-2">
                     <div class="flex items-center justify-center">
-                        <ul class="flex flex-row font-medium mt-0 lg:space-x-8 xl:space-x-2 2xl:space-x-8 rtl:space-x-reverse text-sm">
+                        <ul class="flex flex-row font-medium mt-0 lg:space-x-8 xl:space-x-2  2xl:space-x-6 rtl:space-x-reverse text-sm">
                             <li class="px-2.5 py-2.5  rounded-lg hover:bg-blue-600 hover:text-white">
                                 <Link :href="route('public.index')" aria-current="page">Inicio</Link>
                             </li>
