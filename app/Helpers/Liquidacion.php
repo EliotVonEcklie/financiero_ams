@@ -123,6 +123,8 @@ class Liquidacion
 
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
 
+        $info = $this->predio->informacion_on($avaluo->vigencia);
+
         if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {
             $avaluo_anterior = $this->predio->avaluos()
                 ->where('tasa_por_mil', '<>', -1.0)
@@ -137,7 +139,13 @@ class Liquidacion
 
                 $predial_anterior *= 2;
 
-                $result['predial'] = $result['predial'] > $predial_anterior ? $predial_anterior : $result['predial'];
+                $info_anterior = $this->predio->informacion_on($avaluo->vigencia - 1);
+
+                $has_changed = $info_anterior->created_at >= Carbon::create($avaluo->vigencia) ||
+                    $info_anterior->area_construida > $info->area_construida;
+
+                $result['predial'] = (! $has_changed) && ($result['predial'] > $predial_anterior)
+                    ? $predial_anterior : $result['predial'];
             }
         }
 
@@ -161,8 +169,6 @@ class Liquidacion
                 $result['estatuto']->ambiental_tarifa
             );
         }
-
-        $info = $this->predio->informacion_on($avaluo->vigencia);
 
         if ($result['estatuto']->alumbrado) {
             if ($result['estatuto']->alumbrado_rural && $info->get_predio_tipo() === 1) {
