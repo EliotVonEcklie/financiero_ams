@@ -137,15 +137,20 @@ class Liquidacion
                     $avaluo_anterior->tasa_por_mil
                 );
 
-                $predial_anterior *= 2;
+                $predial_anterior_doble = $predial_anterior * 2;
 
                 $info_anterior = $this->predio->informacion_on($avaluo->vigencia - 1);
 
                 $has_changed = $info_anterior->created_at >= Carbon::create($avaluo->vigencia) ||
                     $info_anterior->area_construida > $info->area_construida;
 
-                $result['predial'] = (! $has_changed) && ($result['predial'] > $predial_anterior)
-                    ? $predial_anterior : $result['predial'];
+                $result['predial'] = (! $has_changed) && ($result['predial'] > $predial_anterior_doble)
+                    ? $predial_anterior + $this->calculate_tarifa(
+                        $predial_anterior,
+                        $result['estatuto']->norma_predial_tasa,
+                        false
+                    )
+                    : $result['predial'];
             }
         }
 
