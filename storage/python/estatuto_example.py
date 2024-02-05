@@ -29,16 +29,12 @@ unidad_monetaria(nombre: str, valor: int|float) -> float : Convertir un valor a 
 
 def en_rango():
     pass
-
 def unidad_monetaria():
     pass
-
 def aplicar_bomberil():
     pass
-
 def tiene_destino_nombre():
     pass
-
 EN_ADELANTE = -1
 PORCENTAJE = True
 TASA_POR_MIL = False
@@ -54,7 +50,8 @@ aplicar_bomberil(
 )
 
 aplicar_bomberil(
-    tiene_destino_nombre('Predios rurales para vivienda') and en_rango(valor_avaluo, 600, EN_ADELANTE),
+    tiene_destino_nombre('Predios rurales para vivienda') and
+    en_rango(valor_avaluo, 600, EN_ADELANTE),
     5,
     PORCENTAJE
 )
