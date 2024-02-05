@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 class Predio extends Model
 {
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are mass assignable
      *
      * @var array
      */
@@ -24,7 +24,7 @@ class Predio extends Model
     ];
 
     /**
-     * Get the predio avaluos for the predio.
+     * Get the predio avaluos for the predio
      */
     public function avaluos(): HasMany
     {
@@ -32,7 +32,7 @@ class Predio extends Model
     }
 
     /**
-     * Get the predio informacions for the predio.
+     * Get the predio informacions for the predio
      */
     public function informacions(): HasMany
     {
@@ -40,7 +40,7 @@ class Predio extends Model
     }
 
     /**
-     * Get the predio propietarios for the predio.
+     * Get the predio propietarios for the predio
      */
     public function propietarios(): HasMany
     {
@@ -48,7 +48,7 @@ class Predio extends Model
     }
 
     /**
-     * Get the latest predio avaluo for the predio.
+     * Get the latest predio avaluo for the predio
      */
     public function latest_avaluo(): PredioAvaluo
     {
@@ -58,7 +58,7 @@ class Predio extends Model
     }
 
     /**
-     * Get the latest predio avaluo for the predio.
+     * Get the latest predio avaluo for the predio
      */
     public function latest_informacion(): PredioInformacion
     {
@@ -70,7 +70,7 @@ class Predio extends Model
     /**
      * Get the closest informacion for a given vigencia
      */
-    public function informacion_on($vigencia): PredioInformacion
+    public function informacion_on($vigencia): PredioInformacion|null
     {
         return $this->informacions()
                 ->firstWhere('created_at', Carbon::create($vigencia))
@@ -93,7 +93,7 @@ class Predio extends Model
     }
 
     /**
-     * Get the main predio propietario for the predio.
+     * Get the main predio propietario for the predio
      */
     public function main_propietario(): PredioPropietario
     {
@@ -112,7 +112,7 @@ class Predio extends Model
     }
 
     /**
-     * Get a predio by searching a query.
+     * Get a predio by searching a query
      */
     public static function search(string|null $query, bool $sensible = true) {
         if (! $query) {

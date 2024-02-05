@@ -41,6 +41,11 @@ class Tasificar implements ShouldQueue
 
             $informacion = $avaluo->predio->informacion_on($avaluo->vigencia);
 
+            if ($informacion === null) {
+                Log::error('tenant: ' . tenant()->id . ', No se encontró información para el predio: ' . $avaluo->predio->id);
+                continue;
+            }
+
             $this->tasificar_avaluo($avaluo, $informacion, $estratificaciones);
         }
     }
