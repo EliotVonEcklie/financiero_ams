@@ -200,23 +200,28 @@
 
                 <div id="options-tab-content">
                     <div class="hidden rounded-lg bg-white dark:bg-gray-800" id="periodos" role="tabpanel" aria-labelledby="periodos-tab">
-                        <div class="flex flex-wrap justify-start lg:space-x-3 md:space-x-0 md:mt-10 lg:space-y-0 md:space-y-6">
-                            <button type="button" :disabled="vigencias.filter(vigencia => vigencia.isSelected).length == 0" @click="showWompi" :class="{'cursor-not-allowed text-gray-300 bg-gray-100 hover:bg-gray-100 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-800':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700':vigencias.filter(vigencia => vigencia.isSelected).length>0}" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5">
-                                <span>Pagar en línea</span>
-                                <svg :class="{'fill-gray-300 group-hover:fill-gray-300 dark:fill-gray-400 dark:group-hover:fill-gray-400':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'fill-blue-600 group-hover:fill-white dark:fill-white':vigencias.filter(vigencia => vigencia.isSelected)}" class="lg:w-5 lg:h-5 md:w-10 md:h-10"  xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="none"><g><rect fill="none" height="24" width="24"/></g><g><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20c-4.41,0-8-3.59-8-8c0-4.41,3.59-8,8-8 s8,3.59,8,8C20,16.41,16.41,20,12,20z M12.89,11.1c-1.78-0.59-2.64-0.96-2.64-1.9c0-1.02,1.11-1.39,1.81-1.39 c1.31,0,1.79,0.99,1.9,1.34l1.58-0.67c-0.15-0.44-0.82-1.91-2.66-2.23V5h-1.75v1.26c-2.6,0.56-2.62,2.85-2.62,2.96 c0,2.27,2.25,2.91,3.35,3.31c1.58,0.56,2.28,1.07,2.28,2.03c0,1.13-1.05,1.61-1.98,1.61c-1.82,0-2.34-1.87-2.4-2.09L8.1,14.75 c0.63,2.19,2.28,2.78,3.02,2.96V19h1.75v-1.24c0.52-0.09,3.02-0.59,3.02-3.22C15.9,13.15,15.29,11.93,12.89,11.1z"/></g></svg>
-                            </button>
-                            <button type="button" @click="createRecibo" :disabled="vigencias.filter(vigencia => vigencia.isSelected).length == 0" :class="{'cursor-not-allowed text-gray-300 bg-gray-100 hover:bg-gray-100 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-800':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700':vigencias.filter(vigencia => vigencia.isSelected).length>0}" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5">
-                                <span>Imprimir liquidación predial</span>
-                                <svg :class="{'fill-gray-300 group-hover:fill-gray-300 dark:fill-gray-400 dark:group-hover:fill-gray-400':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'fill-blue-600 group-hover:fill-white dark:fill-white':vigencias.filter(vigencia => vigencia.isSelected)}" class="lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 384 512"><path d="M14 2.2C22.5-1.7 32.5-.3 39.6 5.8L80 40.4 120.4 5.8c9-7.7 22.3-7.7 31.2 0L192 40.4 232.4 5.8c9-7.7 22.3-7.7 31.2 0L304 40.4 344.4 5.8c7.1-6.1 17.1-7.5 25.6-3.6s14 12.4 14 21.8V488c0 9.4-5.5 17.9-14 21.8s-18.5 2.5-25.6-3.6L304 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L192 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L80 471.6 39.6 506.2c-7.1 6.1-17.1 7.5-25.6 3.6S0 497.4 0 488V24C0 14.6 5.5 6.1 14 2.2zM96 144c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96zM80 352c0 8.8 7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96c-8.8 0-16 7.2-16 16zM96 240c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96z"/></svg>
-                            </button>
-                            <button type="button" @click="createEstadoCuenta" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white  font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5 dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700">
-                                <span>Imprimir estado de cuenta</span>
-                                <svg class="fill-blue-600 group-hover:fill-white dark:fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM80 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm16 96H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm0 32v64H288V256H96zM240 416h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
-                            </button>
-                            <button type="button" @click="createPazSalvo" class="cursor-not-allowed flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-gray-300 bg-gray-100  font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
-                                <span>Imprimir paz y salvo</span>
-                                <svg class="fill-gray-300 dark:fill-gray-400 lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
-                            </button>
+                        <div class="flex justify-between items-center">
+                            <div class="flex flex-wrap justify-start lg:space-x-3 lg:m-0 md:space-x-0 md:mt-10 lg:space-y-0 md:space-y-6">
+                                <button type="button" :disabled="vigencias.filter(vigencia => vigencia.isSelected).length == 0" @click="showWompi" :class="{'cursor-not-allowed text-gray-300 bg-gray-100 hover:bg-gray-100 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-800':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700':vigencias.filter(vigencia => vigencia.isSelected).length>0}" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5">
+                                    <span>Pagar en línea</span>
+                                    <svg :class="{'fill-gray-300 group-hover:fill-gray-300 dark:fill-gray-400 dark:group-hover:fill-gray-400':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'fill-blue-600 group-hover:fill-white dark:fill-white':vigencias.filter(vigencia => vigencia.isSelected)}" class="lg:w-5 lg:h-5 md:w-10 md:h-10"  xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="none"><g><rect fill="none" height="24" width="24"/></g><g><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20c-4.41,0-8-3.59-8-8c0-4.41,3.59-8,8-8 s8,3.59,8,8C20,16.41,16.41,20,12,20z M12.89,11.1c-1.78-0.59-2.64-0.96-2.64-1.9c0-1.02,1.11-1.39,1.81-1.39 c1.31,0,1.79,0.99,1.9,1.34l1.58-0.67c-0.15-0.44-0.82-1.91-2.66-2.23V5h-1.75v1.26c-2.6,0.56-2.62,2.85-2.62,2.96 c0,2.27,2.25,2.91,3.35,3.31c1.58,0.56,2.28,1.07,2.28,2.03c0,1.13-1.05,1.61-1.98,1.61c-1.82,0-2.34-1.87-2.4-2.09L8.1,14.75 c0.63,2.19,2.28,2.78,3.02,2.96V19h1.75v-1.24c0.52-0.09,3.02-0.59,3.02-3.22C15.9,13.15,15.29,11.93,12.89,11.1z"/></g></svg>
+                                </button>
+                                <button type="button" @click="createRecibo" :disabled="vigencias.filter(vigencia => vigencia.isSelected).length == 0" :class="{'cursor-not-allowed text-gray-300 bg-gray-100 hover:bg-gray-100 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-800':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700':vigencias.filter(vigencia => vigencia.isSelected).length>0}" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5">
+                                    <span>Imprimir liquidación predial</span>
+                                    <svg :class="{'fill-gray-300 group-hover:fill-gray-300 dark:fill-gray-400 dark:group-hover:fill-gray-400':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'fill-blue-600 group-hover:fill-white dark:fill-white':vigencias.filter(vigencia => vigencia.isSelected)}" class="lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 384 512"><path d="M14 2.2C22.5-1.7 32.5-.3 39.6 5.8L80 40.4 120.4 5.8c9-7.7 22.3-7.7 31.2 0L192 40.4 232.4 5.8c9-7.7 22.3-7.7 31.2 0L304 40.4 344.4 5.8c7.1-6.1 17.1-7.5 25.6-3.6s14 12.4 14 21.8V488c0 9.4-5.5 17.9-14 21.8s-18.5 2.5-25.6-3.6L304 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L192 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L80 471.6 39.6 506.2c-7.1 6.1-17.1 7.5-25.6 3.6S0 497.4 0 488V24C0 14.6 5.5 6.1 14 2.2zM96 144c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96zM80 352c0 8.8 7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96c-8.8 0-16 7.2-16 16zM96 240c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96z"/></svg>
+                                </button>
+                                <button type="button" @click="createEstadoCuenta" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white  font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5 dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700">
+                                    <span>Imprimir estado de cuenta</span>
+                                    <svg class="fill-blue-600 group-hover:fill-white dark:fill-white lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM80 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16s7.2-16 16-16zm16 96H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm0 32v64H288V256H96zM240 416h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
+                                </button>
+                                <button type="button" @click="createPazSalvo" class="cursor-not-allowed flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-gray-300 bg-gray-100  font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
+                                    <span>Imprimir paz y salvo</span>
+                                    <svg class="fill-gray-300 dark:fill-gray-400 lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
+                                </button>
+                            </div>
+                            <div  class="block max-w-sm p-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                <p class="font-normal text-gray-700 dark:text-gray-400"><span class="font-bold">Total:</span> {{ formatNumber(getTotal().liquidacion) }}</p>
+                            </div>
                         </div>
                         <div  class="mt-10 relative overflow-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
                             <table  class="w-full lg:text-xs md:text-3xl text-center  text-gray-500 dark:text-gray-400">
@@ -249,16 +254,16 @@
                                         <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                             Total Intereses Predial
                                         </th>
-                                        <th  scope="col" class="px-6 py-3 whitespace-nowrap">
+                                        <th  v-if="vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3 whitespace-nowrap">
                                             Sobretasa Bomberil
                                         </th>
-                                        <th  scope="col" class="px-6 py-3 whitespace-nowrap">
+                                        <th  v-if="vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3 whitespace-nowrap">
                                             Sobretasa Ambiental
                                         </th>
-                                        <th  scope="col" class="px-6 py-3 whitespace-nowrap">
+                                        <th  v-if="vigencias[0].estatuto.ambiental || vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3 whitespace-nowrap">
                                             Sobretasa intereses
                                         </th>
-                                        <th  scope="col" class="px-6 py-3 whitespace-nowrap">
+                                        <th  v-if="vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3 whitespace-nowrap">
                                             Alumbrado
                                         </th>
                                         <th scope="col" class="px-6 py-3 whitespace-nowrap">
@@ -298,17 +303,17 @@
                                         <td class="px-6 py-4">
                                             {{formatNumber(vigencia.total_intereses)}}
                                         </td>
-                                        <td  class="px-6 py-4">
-                                            {{ vigencias[0].estatuto.bomberil ? formatNumber(vigencia.bomberil) : formatNumber(0) }}
+                                        <td  v-if="vigencias[0].estatuto.bomberil" class="px-6 py-4">
+                                            {{ formatNumber(vigencia.bomberil) }}
                                         </td>
-                                        <td  class="px-6 py-4">
-                                            {{ vigencias[0].estatuto.bomberil ? formatNumber(vigencia.ambiental) : formatNumber(0) }}
+                                        <td  v-if="vigencias[0].estatuto.ambiental" class="px-6 py-4">
+                                            {{ formatNumber(vigencia.ambiental) }}
                                         </td>
-                                        <td  class="px-6 py-4">
-                                            {{ vigencias[0].estatuto.ambiental || vigencias[0].estatuto.bomberil ? formatNumber(vigencia.ambiental_intereses + vigencia.bomberil_intereses) : formatNumber(0) }}
+                                        <td v-if="vigencias[0].estatuto.ambiental || vigencias[0].estatuto.bomberil" class="px-6 py-4">
+                                            {{ formatNumber(vigencia.ambiental_intereses + vigencia.bomberil_intereses) }}
                                         </td>
-                                        <td  class="px-6 py-4">
-                                            {{ vigencias[0].estatuto.alumbrado ? formatNumber(vigencia.alumbrado) : formatNumber(0) }}
+                                        <td  v-if="vigencias[0].estatuto.alumbrado" class="px-6 py-4">
+                                            {{  formatNumber(vigencia.alumbrado) }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ formatNumber(vigencia.descuento_intereses) }}
@@ -317,51 +322,55 @@
                                             {{ formatNumber(vigencia.total_liquidacion) }}
                                         </td>
                                     </tr>
-                                    <tr class="text-center font-bold text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                        <td colspan="2" class="px-2 py-4 text-bold whitespace-nowrap">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div  class="mt-10 relative overflow-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
+                            <table  class="w-full lg:text-xs md:text-3xl text-center  text-gray-500 dark:text-gray-400">
+                                <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                             Total avaluo
-                                        </td>
-                                        <td colspan="2" class="px-2 py-4 text-bold whitespace-nowrap">
-                                            Total Predial
-                                        </td>
-                                        <td colspan="2"  class="px-2 py-4 text-bold whitespace-nowrap">
-                                            Total Bomberil
-                                        </td>
-
-                                        <td colspan="2"  class="px-2 py-4 text-bold whitespace-nowrap">
-                                            Total Ambiental
-                                        </td>
-
-                                        <td colspan="2"  class="px-2 py-4 text-bold whitespace-nowrap ">
-                                            Total Alumbrado
-                                        </td>
-
-                                        <td   class="px-2 py-4 text-bold whitespace-nowrap">
-                                            Total Intereses
-                                        </td>
-
-                                        <td   class="px-2 py-4 text-bold whitespace-nowrap">
-                                            Total Descuento
-                                        </td>
-                                        <td colspan="2" class="px-2 py-4 text-bold dark:text-white whitespace-nowrap">
-                                            Total Liquidación
-                                        </td>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                                            Total predial
+                                        </th>
+                                        <th  v-if="predio !='' && vigencias[0].estatuto.bomberil" scope="col" class="px-6 py-3 whitespace-nowrap">
+                                            Total bomberil
+                                        </th>
+                                        <th v-if="predio !='' && vigencias[0].estatuto.ambiental" scope="col" class="px-6 py-3 whitespace-nowrap">
+                                            Total ambiental
+                                        </th>
+                                        <th v-if="predio !='' && vigencias[0].estatuto.alumbrado" scope="col" class="px-6 py-3 whitespace-nowrap">
+                                            Total alumbrado
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                                            Total intereses
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                                            Total descuento
+                                        </th>
+                                        <th  scope="col" class="px-6 py-3 whitespace-nowrap">
+                                            Total liquidación
+                                        </th>
                                     </tr>
+                                </thead>
+                                <tbody>
                                     <tr class="text-center border-b border-gray-200 dark:border-gray-700">
-                                        <td  colspan="2" class="px-2 py-4 dark:bg-gray-800">
+                                        <td  class="px-2 py-4 dark:bg-gray-800">
                                             <p class="px-5 py-2">{{ formatNumber(getTotal().total_avaluo) }}</p>
                                         </td>
-                                        <td colspan="2" class="px-2 py-4 dark:bg-gray-800">
+                                        <td  class="px-2 py-4 dark:bg-gray-800">
                                             <p class="px-5 py-2">{{ formatNumber(getTotal().predial) }}</p>
                                         </td>
-                                        <td  colspan="2" class="px-2 py-4 dark:bg-gray-800">
-                                            <p class="px-5 py-2">{{ predio !='' && vigencias[0].estatuto.bomberil ? formatNumber(getTotal().bomberil) : formatNumber(0) }}</p>
+                                        <td   v-if="predio !='' && vigencias[0].estatuto.bomberil" class="px-2 py-4 dark:bg-gray-800">
+                                            <p class="px-5 py-2">{{ formatNumber(getTotal().bomberil)}}</p>
                                         </td>
-                                        <td colspan="2" class="px-2 py-4 dark:bg-gray-800">
-                                            <p class="px-5 py-2">{{ predio !='' && vigencias[0].estatuto.ambiental ? formatNumber(getTotal().ambiental) : formatNumber(0) }}</p>
+                                        <td  v-if="predio !='' && vigencias[0].estatuto.ambiental" class="px-2 py-4 dark:bg-gray-800">
+                                            <p class="px-5 py-2">{{ formatNumber(getTotal().ambiental) }}</p>
                                         </td>
-                                        <td colspan="2"  class="px-2 py-4 dark:bg-gray-800">
-                                            <p class="px-5 py-2">{{ predio !='' && vigencias[0].estatuto.alumbrado ? formatNumber(getTotal().alumbrado) : formatNumber(0) }}</p>
+                                        <td  v-if="predio !='' && vigencias[0].estatuto.alumbrado"  class="px-2 py-4 dark:bg-gray-800">
+                                            <p class="px-5 py-2">{{ formatNumber(getTotal().alumbrado) }}</p>
                                         </td>
                                         <td  class="px-2 py-4 dark:bg-gray-800">
                                             <p class="px-5 py-2 ">{{ formatNumber(getTotal().intereses) }}</p>
@@ -369,7 +378,7 @@
                                         <td class="px-2 py-4  dark:bg-gray-800">
                                             <p class="px-5 py-2">{{ formatNumber(getTotal().descuentos) }}</p>
                                         </td>
-                                        <td colspan="2" class="px-2 py-4 font-bold dark:bg-gray-800">
+                                        <td  class="px-2 py-4 font-bold dark:bg-gray-800">
                                             <p class="px-5 py-2 dark:text-white">{{ formatNumber(getTotal().liquidacion) }}</p>
                                         </td>
                                     </tr>
