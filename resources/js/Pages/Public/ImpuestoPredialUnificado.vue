@@ -200,7 +200,7 @@
 
                 <div id="options-tab-content">
                     <div class="hidden rounded-lg bg-white dark:bg-gray-800" id="periodos" role="tabpanel" aria-labelledby="periodos-tab">
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center lg:flex-row md:flex-col">
                             <div class="flex flex-wrap justify-start lg:space-x-3 lg:m-0 md:space-x-0 md:mt-10 lg:space-y-0 md:space-y-6">
                                 <button type="button" :disabled="vigencias.filter(vigencia => vigencia.isSelected).length == 0" @click="showWompi" :class="{'cursor-not-allowed text-gray-300 bg-gray-100 hover:bg-gray-100 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-800':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700':vigencias.filter(vigencia => vigencia.isSelected).length>0}" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5">
                                     <span>Pagar en línea</span>
@@ -219,8 +219,8 @@
                                     <svg class="fill-gray-300 dark:fill-gray-400 lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
                                 </button>
                             </div>
-                            <div  class="block max-w-sm p-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                <p class="font-normal text-gray-700 dark:text-gray-400"><span class="font-bold">Total:</span> {{ formatNumber(getTotal().liquidacion) }}</p>
+                            <div  class="lg:mt-0 md:mt-5 block max-w-sm p-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                <p class="lg:text-sm md:text-4xl font-normal text-gray-700 dark:text-gray-400"><span class="font-bold">Total:</span> {{ formatNumber(getTotal().liquidacion) }}</p>
                             </div>
                         </div>
                         <div  class="mt-10 relative overflow-auto shadow-md sm:rounded-lg overflow-y-auto h-max-96">
