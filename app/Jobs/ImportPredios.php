@@ -99,18 +99,17 @@ class ImportPredios implements ShouldQueue
 
             if ($codigo_destino_economico === null) {
                 Log::warning('Teso predio avaluo informacion invalida: ' . $tesopredioavaluo->codigocatastral . ' ' . $vigencia);
-                return;
+            } else {
+                $info = $predio->informacions()->create([
+                    'created_at' => $fecha_vigencia,
+                    'direccion' => '',
+                    'hectareas' => (int) $tesopredioavaluo->ha,
+                    'metros_cuadrados' => (int) $tesopredioavaluo->met2,
+                    'area_construida' => (int) $tesopredioavaluo->areacon,
+                    'predio_tipo_id' => $predio_tipo,
+                    'codigo_destino_economico_id' => $codigo_destino_economico->id
+                ]);
             }
-
-            $info = $predio->informacions()->create([
-                'created_at' => $fecha_vigencia,
-                'direccion' => '',
-                'hectareas' => (int) $tesopredioavaluo->ha,
-                'metros_cuadrados' => (int) $tesopredioavaluo->met2,
-                'area_construida' => (int) $tesopredioavaluo->areacon,
-                'predio_tipo_id' => $predio_tipo,
-                'codigo_destino_economico_id' => $codigo_destino_economico->id
-            ]);
         }
 
         $predio_estrato = PredioEstrato::firstWhere('estrato', $tesopredioavaluo->estratos);
