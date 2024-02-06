@@ -157,6 +157,9 @@ class Liquidacion
             }
         }
 
+        $result['predial'] = $result['predial'] > $result['estatuto']->min_predial
+            ? $result['predial'] : $result['estatuto']->min_predial;
+
         if ($result['vigencia'] == now()->year && $this->descuento_incentivo > 0) {
             $result['predial_descuento'] = $this->calculate_tarifa($result['predial'], $this->descuento_incentivo, false);
             $result['predial'] -= $result['predial_descuento'];
