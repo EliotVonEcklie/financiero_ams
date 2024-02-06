@@ -64,14 +64,21 @@ class ImportPredios implements ShouldQueue
 
         $avaluo = $predio->avaluos()->firstWhere('vigencia', $tesopredioavaluo->vigencia);
 
-        if ($avaluo !== null && ! $avaluo->pagado) {
-            $avaluo->pagado = $tesopredioavaluo->pago != 'N';
-            $avaluo->save();
-        } else if ($avaluo === null) {
+        if ($avaluo === null) {
             $avaluo = $predio->avaluos()->create([
                 'vigencia' => (int) substr($tesopredioavaluo->vigencia, 0, 4),
                 'pagado' => $tesopredioavaluo->pago != 'N',
                 'valor_avaluo' => (int) $tesopredioavaluo->avaluo
+            ]);
+        } else if (! $avaluo->pagado) {
+            $avaluo->update([
+                'pagado' => $tesopredioavaluo->pago != 'N'
+            ]);
+        }
+
+        if ($avaluo->vigencia != now()->year) {
+            $predio->avaluos()->firstWhere('vigencia', $tesopredioavaluo->vigencia)->update([
+                'tasa_por_mil' => (float) $tesopredioavaluo->tasa
             ]);
         }
 
