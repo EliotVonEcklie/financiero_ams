@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\CodigoDestinoEconomico;
 use App\Models\Predio;
+use App\Models\PredioEstrato;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -101,14 +102,22 @@ class ImportPredios implements ShouldQueue
             return;
         }
 
-        $predio->informacions()->create([
+        $predio_tipo = substr($tesopredioavaluo->codigocatastral, 0, 2) === '00' ? 1 : 2;
+
+        $info = $predio->informacions()->create([
             'created_at' => $fecha_vigencia,
             'direccion' => '',
             'hectareas' => (int) $tesopredioavaluo->ha,
             'metros_cuadrados' => (int) $tesopredioavaluo->met2,
             'area_construida' => (int) $tesopredioavaluo->areacon,
-            'predio_tipo_id' => substr($tesopredioavaluo->codigocatastral, 0, 2) === '00' ? 1 : 2,
+            'predio_tipo_id' => $predio_tipo,
             'codigo_destino_economico_id' => $codigo_destino_economico->id
         ]);
+
+        if ($predio_tipo === 2) {
+            $info->update([
+                'predio_estrato_id' => PredioEstrato::firstWhere('estrato', (int) $tesopredioavaluo->estratos)
+            ]);
+        }
     }
 }
