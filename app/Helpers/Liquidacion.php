@@ -141,8 +141,11 @@ class Liquidacion
 
                 $info_anterior = $this->predio->informacion_on($avaluo->vigencia - 1);
 
-                $has_changed = $info_anterior?->created_at >= Carbon::create($avaluo->vigencia) ||
-                    $info_anterior?->area_construida > $info->area_construida;
+                if ($info_anterior === null || Carbon::create($avaluo->vigencia - 1) != $info_anterior->created_at)  {
+                    $has_changed = true;
+                } else {
+                    $has_changed = $info->area_construida > $info_anterior->area_construida;
+                }
 
                 $result['predial'] = (! $has_changed) && ($result['predial'] > $predial_anterior_doble)
                     ? $predial_anterior + $this->calculate_tarifa(
