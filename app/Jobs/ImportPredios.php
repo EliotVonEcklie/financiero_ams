@@ -120,7 +120,7 @@ class ImportPredios implements ShouldQueue
 
         if ($predio_tipo === 2) {
             $info->update([
-                'predio_estrato_id' => $predio_estrato->id
+                'predio_estrato_id' => $predio_estrato?->id
             ]);
         }
     }
