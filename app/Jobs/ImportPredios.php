@@ -91,28 +91,26 @@ class ImportPredios implements ShouldQueue
 
         $fecha_vigencia = Carbon::create($vigencia);
 
-        if ($info !== null && $info->created_at == $fecha_vigencia) {
-            return;
-        }
-
-        $codigo_destino_economico = CodigoDestinoEconomico::firstWhere('codigo', $tesopredioavaluo->destino_economico);
-
-        if ($codigo_destino_economico === null) {
-            Log::warning('Teso predio avaluo informacion invalida: ' . $tesopredioavaluo->codigocatastral . ' ' . $vigencia);
-            return;
-        }
-
         $predio_tipo = substr($tesopredioavaluo->codigocatastral, 0, 2) === '00' ? 1 : 2;
 
-        $info = $predio->informacions()->create([
-            'created_at' => $fecha_vigencia,
-            'direccion' => '',
-            'hectareas' => (int) $tesopredioavaluo->ha,
-            'metros_cuadrados' => (int) $tesopredioavaluo->met2,
-            'area_construida' => (int) $tesopredioavaluo->areacon,
-            'predio_tipo_id' => $predio_tipo,
-            'codigo_destino_economico_id' => $codigo_destino_economico->id
-        ]);
+        if ($info === null || $info->created_at !== $fecha_vigencia) {
+            $codigo_destino_economico = CodigoDestinoEconomico::firstWhere('codigo', $tesopredioavaluo->destino_economico);
+
+            if ($codigo_destino_economico === null) {
+                Log::warning('Teso predio avaluo informacion invalida: ' . $tesopredioavaluo->codigocatastral . ' ' . $vigencia);
+                return;
+            }
+
+            $info = $predio->informacions()->create([
+                'created_at' => $fecha_vigencia,
+                'direccion' => '',
+                'hectareas' => (int) $tesopredioavaluo->ha,
+                'metros_cuadrados' => (int) $tesopredioavaluo->met2,
+                'area_construida' => (int) $tesopredioavaluo->areacon,
+                'predio_tipo_id' => $predio_tipo,
+                'codigo_destino_economico_id' => $codigo_destino_economico->id
+            ]);
+        }
 
         if ($predio_tipo === 2) {
             $info->update([
