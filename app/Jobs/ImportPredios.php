@@ -40,7 +40,7 @@ class ImportPredios implements ShouldQueue
         Predio::all()->pluck('codigo_catastro');
 
         $this->tesoprediosavaluos = DB::table('tesoprediosavaluos')
-            ->select('codigocatastral', 'tot', 'vigencia', 'pago', 'avaluo', 'tasa')
+            ->select('codigocatastral', 'tot', 'vigencia', 'pago', 'avaluo', 'tasa', 'destino_economico', 'ha', 'met2', 'areacon')
             ->whereNotIn('codigocatastral', function (Builder $query) {
                 $query->select('codigo_catastro')->from('predios');
             })
