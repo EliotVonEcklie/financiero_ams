@@ -93,7 +93,7 @@ class ImportPredios implements ShouldQueue
 
         $predio_tipo = substr($tesopredioavaluo->codigocatastral, 0, 2) === '00' ? 1 : 2;
 
-        if ($info === null || $info->created_at !== $fecha_vigencia) {
+        if ($info === null || $info->created_at != $fecha_vigencia) {
             $codigo_destino_economico = CodigoDestinoEconomico::firstWhere('codigo', $tesopredioavaluo->destino_economico);
 
             if ($codigo_destino_economico === null) {
