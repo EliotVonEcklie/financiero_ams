@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\CodigoDestinoEconomico;
 use App\Models\Predio;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Database\Query\Builder;
@@ -82,7 +83,9 @@ class ImportPredios implements ShouldQueue
             return;
         }
 
-        if (strlen($tesopredioavaluo->destino_economico) < 1) {
+        $codigo_destino_economico = CodigoDestinoEconomico::firstWhere('codigo', $tesopredioavaluo->destino_economico);
+
+        if ($codigo_destino_economico === null) {
             Log::warning('Teso predio avaluo informacion invalida: ' . $tesopredioavaluo->codigocatastral . ' ' . $tesopredioavaluo->vigencia);
             return;
         }
@@ -94,6 +97,7 @@ class ImportPredios implements ShouldQueue
             'metros_cuadrados' => (int) $tesopredioavaluo->met2,
             'area_construida' => (int) $tesopredioavaluo->areacon,
             'predio_tipo_id' => substr($tesopredioavaluo->codigocatastral, 0, 2) === '00' ? 1 : 2,
+            'codigo_destino_economico_id' => $codigo_destino_economico->id
         ]);
     }
 }

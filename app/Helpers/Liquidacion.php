@@ -200,7 +200,7 @@ class Liquidacion
         );
 
         if ($result['vigencia'] != now()->year || $this->descuento_incentivo == 0) {
-            $from = new Carbon($result['vigencia'] . '-01-01');
+            $from = Carbon::create($result['vigencia']);
 
             $result['dias_mora'] = Interes::diasMora($from);
 
