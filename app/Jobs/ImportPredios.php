@@ -38,16 +38,13 @@ class ImportPredios implements ShouldQueue
      */
     public function handle(): void
     {
-        Predio::all()->pluck('codigo_catastro');
-
         $this->tesoprediosavaluos = DB::table('tesoprediosavaluos')
             ->select(
                 'codigocatastral', 'tot', 'vigencia',
                 'pago', 'avaluo', 'tasa', 'destino_economico',
                 'ha', 'met2', 'areacon', 'estratos'
             )
-            ->orderBy('vigencia')
-            ->lazy(500);
+            ->orderBy('vigencia');
 
         foreach ($this->tesoprediosavaluos as $tesopredioavaluo) {
             if (strlen($tesopredioavaluo->codigocatastral) >= 25) {
@@ -85,7 +82,7 @@ class ImportPredios implements ShouldQueue
             ]);
         }
 
-        if ($avaluo->vigencia != now()->year) {
+        if ($avaluo->vigencia != now()->year && ((float) $tesopredioavaluo->tasa) != -1.0) {
             $predio->avaluos()->firstWhere('vigencia', $vigencia)->update([
                 'tasa_por_mil' => (float) $tesopredioavaluo->tasa
             ]);
