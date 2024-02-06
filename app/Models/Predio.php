@@ -172,6 +172,8 @@ class Predio extends Model
             $predio->total = sprintf('%03d', $predio->total);
             $predio->orden = sprintf('%03d', $predio->orden);
         }
+
+        return $predios;
     }
 
     public static function show($id, $sensible = true) {
