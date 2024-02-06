@@ -75,7 +75,7 @@ class ImportPredios implements ShouldQueue
             ]);
         }
 
-        $info = $predio->informacion_on($tesopredioavaluo->avaluo);
+        $info = $predio->informacion_on($tesopredioavaluo->vigencia);
 
         $fecha_vigencia = Carbon::create($tesopredioavaluo->vigencia);
 
