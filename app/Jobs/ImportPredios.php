@@ -116,9 +116,11 @@ class ImportPredios implements ShouldQueue
             ]);
         }
 
+        $predio_estrato = PredioEstrato::firstWhere('estrato', (int) $tesopredioavaluo->estratos);
+
         if ($predio_tipo === 2) {
             $info->update([
-                'predio_estrato_id' => PredioEstrato::firstWhere('estrato', (int) $tesopredioavaluo->estratos)
+                'predio_estrato_id' => $predio_estrato->id
             ]);
         }
     }
