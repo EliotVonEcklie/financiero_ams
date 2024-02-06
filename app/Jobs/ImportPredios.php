@@ -44,7 +44,8 @@ class ImportPredios implements ShouldQueue
                 'pago', 'avaluo', 'tasa', 'destino_economico',
                 'ha', 'met2', 'areacon', 'estratos'
             )
-            ->orderBy('vigencia');
+            ->orderBy('vigencia')
+            ->get();
 
         foreach ($this->tesoprediosavaluos as $tesopredioavaluo) {
             if (strlen($tesopredioavaluo->codigocatastral) >= 25) {
