@@ -86,8 +86,8 @@ class Predio extends Model
     {
         return $this->propietarios()
             ->whereBetween('orden', [1, $this->main_propietario])
-            ->where('created_at', '>=', Carbon::create($vigencia))
-            ->orderBy('created_at')
+            ->where('created_at', '<=', Carbon::create($vigencia))
+            ->orderByDesc('created_at')
             ->orderByDesc('orden')
             ->first();
     }
@@ -99,6 +99,7 @@ class Predio extends Model
     {
         return $this->propietarios()
                 ->where('orden', $this->main_propietario)
+                ->orderByDesc('created_at')
                 ->first()
             ?? $this->propietarios()
                 ->orderByDesc('created_at')
@@ -171,8 +172,6 @@ class Predio extends Model
             $predio->total = sprintf('%03d', $predio->total);
             $predio->orden = sprintf('%03d', $predio->orden);
         }
-
-        return $predios;
     }
 
     public static function show($id, $sensible = true) {
