@@ -41,7 +41,11 @@ class ImportPredios implements ShouldQueue
         Predio::all()->pluck('codigo_catastro');
 
         $this->tesoprediosavaluos = DB::table('tesoprediosavaluos')
-            ->select('codigocatastral', 'tot', 'vigencia', 'pago', 'avaluo', 'tasa', 'destino_economico', 'ha', 'met2', 'areacon')
+            ->select(
+                'codigocatastral', 'tot', 'vigencia',
+                'pago', 'avaluo', 'tasa', 'destino_economico',
+                'ha', 'met2', 'areacon', 'estratos'
+            )
             ->orderBy('vigencia')
             ->lazy(500);
 
