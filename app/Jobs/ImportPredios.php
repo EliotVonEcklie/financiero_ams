@@ -79,7 +79,7 @@ class ImportPredios implements ShouldQueue
 
         $fecha_vigencia = Carbon::create($tesopredioavaluo->vigencia);
 
-        if ($info !== null && $info->created_at == Carbon::create($fecha_vigencia)) {
+        if ($info !== null && $info->created_at == $fecha_vigencia) {
             return;
         }
 
