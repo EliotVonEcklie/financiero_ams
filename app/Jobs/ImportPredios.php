@@ -62,11 +62,15 @@ class ImportPredios implements ShouldQueue
             ]);
         }
 
-        $avaluo = $predio->avaluos()->firstWhere('vigencia', $tesopredioavaluo->vigencia);
+        $vigencia = strlen($tesopredioavaluo->vigencia) == 2
+            ? '20' . $tesopredioavaluo->vigencia
+            : substr($tesopredioavaluo->vigencia, 0, 4);
+
+        $avaluo = $predio->avaluos()->firstWhere('vigencia', $vigencia);
 
         if ($avaluo === null) {
             $avaluo = $predio->avaluos()->create([
-                'vigencia' => (int) substr($tesopredioavaluo->vigencia, 0, 4),
+                'vigencia' => (int) $vigencia,
                 'pagado' => $tesopredioavaluo->pago != 'N',
                 'valor_avaluo' => (int) $tesopredioavaluo->avaluo
             ]);
@@ -77,14 +81,14 @@ class ImportPredios implements ShouldQueue
         }
 
         if ($avaluo->vigencia != now()->year) {
-            $predio->avaluos()->firstWhere('vigencia', $tesopredioavaluo->vigencia)->update([
+            $predio->avaluos()->firstWhere('vigencia', $vigencia)->update([
                 'tasa_por_mil' => (float) $tesopredioavaluo->tasa
             ]);
         }
 
-        $info = $predio->informacion_on($tesopredioavaluo->vigencia);
+        $info = $predio->informacion_on($vigencia);
 
-        $fecha_vigencia = Carbon::create($tesopredioavaluo->vigencia);
+        $fecha_vigencia = Carbon::create($vigencia);
 
         if ($info !== null && $info->created_at == $fecha_vigencia) {
             return;
@@ -93,7 +97,7 @@ class ImportPredios implements ShouldQueue
         $codigo_destino_economico = CodigoDestinoEconomico::firstWhere('codigo', $tesopredioavaluo->destino_economico);
 
         if ($codigo_destino_economico === null) {
-            Log::warning('Teso predio avaluo informacion invalida: ' . $tesopredioavaluo->codigocatastral . ' ' . $tesopredioavaluo->vigencia);
+            Log::warning('Teso predio avaluo informacion invalida: ' . $tesopredioavaluo->codigocatastral . ' ' . $vigencia);
             return;
         }
 
