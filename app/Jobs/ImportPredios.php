@@ -41,9 +41,6 @@ class ImportPredios implements ShouldQueue
 
         $this->tesoprediosavaluos = DB::table('tesoprediosavaluos')
             ->select('codigocatastral', 'tot', 'vigencia', 'pago', 'avaluo', 'tasa', 'destino_economico', 'ha', 'met2', 'areacon')
-            ->whereNotIn('codigocatastral', function (Builder $query) {
-                $query->select('codigo_catastro')->from('predios');
-            })
             ->orderBy('vigencia')
             ->lazy(500);
 
@@ -56,11 +53,14 @@ class ImportPredios implements ShouldQueue
 
     private function import($tesopredioavaluo)
     {
-        $predio = Predio::updateOrCreate([
-            'codigo_catastro' => substr($tesopredioavaluo->codigocatastral, 0, 30)
-        ], [
-            'total' => (int) (($tesopredioavaluo->tot == '') ? 1 : $tesopredioavaluo->tot)
-        ]);
+        $predio = Predio::firstWhere('codigo_catastro', substr($tesopredioavaluo->codigocatastral, 0, 30));
+
+        if ($predio === null) {
+            $predio = Predio::create([
+                'codigo_catastro' => substr($tesopredioavaluo->codigocatastral, 0, 30),
+                'total' => (int) (($tesopredioavaluo->tot == '') ? 1 : $tesopredioavaluo->tot)
+            ]);
+        }
 
         $avaluo = $predio->avaluos()->firstWhere('vigencia', $tesopredioavaluo->vigencia);
 
