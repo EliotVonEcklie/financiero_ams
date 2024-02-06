@@ -9,7 +9,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ImportPredios implements ShouldQueue
 {
@@ -59,17 +61,39 @@ class ImportPredios implements ShouldQueue
             'total' => (int) (($tesopredioavaluo->tot == '') ? 1 : $tesopredioavaluo->tot)
         ]);
 
-        $avaluo = $predio->avaluos()->firstWhere('vigencia', (int) substr($tesopredioavaluo->vigencia, 0, 4));
+        $avaluo = $predio->avaluos()->firstWhere('vigencia', $tesopredioavaluo->vigencia);
 
-        if ($avaluo !== null) {
+        if ($avaluo !== null && ! $avaluo->pagado) {
             $avaluo->pagado = $tesopredioavaluo->pago != 'N';
             $avaluo->save();
-        } else {
+        } else if ($avaluo === null) {
             $avaluo = $predio->avaluos()->create([
                 'vigencia' => (int) substr($tesopredioavaluo->vigencia, 0, 4),
                 'pagado' => $tesopredioavaluo->pago != 'N',
                 'valor_avaluo' => (int) $tesopredioavaluo->avaluo
             ]);
         }
+
+        $info = $predio->informacion_on($tesopredioavaluo->avaluo);
+
+        $fecha_vigencia = Carbon::create($tesopredioavaluo->vigencia);
+
+        if ($info !== null && $info->created_at == Carbon::create($fecha_vigencia)) {
+            return;
+        }
+
+        if (strlen($tesopredioavaluo->destino_economico) < 1) {
+            Log::warning('Teso predio avaluo informacion invalida: ' . $tesopredioavaluo->codigocatastral . ' ' . $tesopredioavaluo->vigencia);
+            return;
+        }
+
+        $predio->informacions()->create([
+            'created_at' => $fecha_vigencia,
+            'direccion' => '',
+            'hectareas' => (int) $tesopredioavaluo->ha,
+            'metros_cuadrados' => (int) $tesopredioavaluo->met2,
+            'area_construida' => (int) $tesopredioavaluo->areacon,
+            'predio_tipo_id' => substr($tesopredioavaluo->codigocatastral, 0, 2) === '00' ? 1 : 2,
+        ]);
     }
 }
