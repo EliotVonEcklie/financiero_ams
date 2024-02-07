@@ -9,6 +9,7 @@ use App\Helpers\Censor;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Predio extends Model
 {
@@ -136,13 +137,19 @@ class Predio extends Model
             ->where('codigo_catastro', 'like', '%' . $query . '%')
             ->orWhere('predio_informacions.direccion', 'like', '%' . $query . '%');
 
+        $prediosQuery = Predio::select(DB::raw('distinct predios.id'))
+            ->join('predio_informacions', 'predios.id', '=', 'predio_informacions.predio_id')
+            ->where('codigo_catastro', 'like', '%' . $query . '%')
+            ->orWhere('predio_informacions.direccion', 'like', '%' . $query . '%');
+
         if (! $sensible) {
             $prediosQuery = $prediosQuery
+                ->join('predio_propietarios', 'predios.id', '=', 'predio_propietarios.predio_id')
                 ->orWhere('predio_propietarios.documento', 'like', '%' . $query . '%')
                 ->orWhere('predio_propietarios.nombre_propietario', 'like', '%' . $query . '%');
         }
 
-        $predios = $prediosQuery->groupBy(
+        $predios = $prediosQuery/*->groupBy(
                 'predios.id',
                 'codigo_catastro',
                 'total',
@@ -152,7 +159,7 @@ class Predio extends Model
                 'predio_propietarios.nombre_propietario',
                 'predio_tipos.nombre'
             )
-            ->orderBy('codigo_catastro', 'asc')
+            ->orderBy('codigo_catastro', 'asc')*/
             ->take(50)
             ->get();
 
