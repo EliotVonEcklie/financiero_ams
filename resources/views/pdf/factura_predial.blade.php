@@ -29,7 +29,6 @@
             $estatutoFlags['alumbrado'] = true;
         }
     });
-
 @endphp
 
 <!DOCTYPE html>
@@ -240,12 +239,12 @@
                 <div>
                     <table>
                         <tr>
-                            <td rowspan="2" class="w33">
+                            <td rowspan="4" class="w33">
                                 <div style="display: block; margin-left: auto; margin-right: auto; font-size: 16px; text-align: center;">
                                     <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="60" width="60"alt="">
                                 </div>
                             </td>
-                            <td rowspan="2" class="w33 text-center">
+                            <td rowspan="4" class="w33 text-center">
                                 <p class="fs-2">{{ tenant()->nombre }}</p>
                                 <p>NIT: {{ tenant()->nit }}</p>
                                 <p>{{ tenant()->entidad }}</p>
@@ -254,6 +253,12 @@
                         </tr>
                         <tr>
                             <td class="text-center">{{ $facturaPredial->id }}</td>
+                        </tr>
+                        <tr>
+                            <td class="bg-primary w-33 fs-2 fw-bold text-center">Fecha de liquidación</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">{{ (new \Illuminate\Support\Carbon($facturaPredial->created_at))->format('d/m/Y') }}</td>
                         </tr>
                     </table>
                     <table class="border-none">
@@ -358,7 +363,7 @@
                         </td>
                         <td class="text-center">
                             <p class="fs-0 vertical-top fw-bold">Fecha</p>
-                            <p class="fs-0">{{ (new \Illuminate\Support\Carbon($facturaPredial->data['pague_hasta']))->format('d/m/Y') }}
+                            <p class="fs-0">{{ (new \Illuminate\Support\Carbon($facturaPredial->data['pague_hasta']))->format('d/m/Y') }}</p>
                         </td>
                         <td class="text-right">
                             <p class="fs-0 vertical-top fw-bold">Valor</p>
