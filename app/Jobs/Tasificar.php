@@ -62,7 +62,7 @@ class Tasificar implements ShouldQueue
     private function tasificar_avaluo(PredioAvaluo $avaluo, PredioInformacion $informacion, $estratificaciones): void
     {
         if ($informacion->codigo_destino_economico->destino_economico === null) {
-            Log::error('tenant: ' . tenant()->id . ', No se encontró destino económico para el predio: ' . $avaluo->predio->id);
+            Log::error('tenant: ' . tenant()->id . ', No se encontró destino económico para el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
             return;
         }
 
