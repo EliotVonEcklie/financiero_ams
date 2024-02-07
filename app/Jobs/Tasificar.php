@@ -72,7 +72,7 @@ class Tasificar implements ShouldQueue
             ->where('destino_economico_id', $informacion->codigo_destino_economico->destino_economico->id);
 
         if ($estratificacionesAvaluo->count() === 0) {
-            Log::error('tenant: ' . tenant()->id . ', No se encontró estratificación para el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
+            Log::warning('tenant: ' . tenant()->id . ', No se encontró estratificación para el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
             return;
         }
 
@@ -86,7 +86,7 @@ class Tasificar implements ShouldQueue
         }
 
         if (! $found) {
-            Log::error('tenant: ' . tenant()->id . ', No se tasificó el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
+            Log::warning('tenant: ' . tenant()->id . ', No se tasificó el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
         }
     }
 
@@ -118,7 +118,8 @@ class Tasificar implements ShouldQueue
                     ->first();
 
                 if ($vigencia_unidad === null) {
-                    throw new RuntimeException('No se encontró vigencia unidad monetaria para la vigencia ' . $avaluo->vigencia);
+                    Log::error('No se encontró vigencia unidad monetaria para la vigencia ' . $avaluo->vigencia);
+                    return false;
                 }
             }
 
@@ -132,7 +133,7 @@ class Tasificar implements ShouldQueue
 
                 return true;
             } else {
-                Log::warning('tenant: ' . tenant()->id . ', El avaluo ' . $valor_avaluo . ' no está en el rango (' . $desde . ', ' . $hasta . ') ' . $vigencia_unidad->unidad_monetaria->nombre);
+                Log::debug('tenant: ' . tenant()->id . ', El avaluo ' . $valor_avaluo . ' no está en el rango (' . $desde . ', ' . $hasta . ') ' . $vigencia_unidad->unidad_monetaria->nombre);
             }
         } else if ($estratificacion->tarifa_type === '\App\Models\PredioEstrato') {
             $predioEstrato = $estratificacion->tarifa;
