@@ -48,6 +48,10 @@ class ReadPrescripciones implements ShouldQueue
         foreach ($prescripciones as $prescripcion) {
             $predio = $predios->firstWhere('codigo_catastro', substr($prescripcion->cedulacatastral, 0, 30));
 
+            if ($predio === null) {
+                continue;
+            }
+
             $predio->avaluos()
                 ->whereIn('vigencia', explode(',', $prescripcion->vigencias))
                 ->update(['pagado' => true]);

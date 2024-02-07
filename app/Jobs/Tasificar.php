@@ -37,9 +37,16 @@ class Tasificar implements ShouldQueue
         $this->vigencia_unidad_monetarias = VigenciaUnidadMonetaria::all();
 
         foreach (PredioAvaluo::where('tasa_por_mil', -1)
-            ->get() as $avaluo) {
+            ->orderBy('predio_id')
+            ->orderBy('vigencia')
+            ->lazyById() as $avaluo) {
 
             $informacion = $avaluo->predio->informacion_on($avaluo->vigencia);
+
+            if ($informacion === null) {
+                Log::error('tenant: ' . tenant()->id . ', No se encontró información para el predio: ' . $avaluo->predio->id);
+                continue;
+            }
 
             $this->tasificar_avaluo($avaluo, $informacion, $estratificaciones);
         }
@@ -78,7 +85,7 @@ class Tasificar implements ShouldQueue
             }
         }
 
-        if (!$found) {
+        if (! $found) {
             Log::error('tenant: ' . tenant()->id . ', No se tasificó el predio: ' . $avaluo->predio->id . ', vigencia: ' . $avaluo->vigencia);
         }
     }

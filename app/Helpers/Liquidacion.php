@@ -123,6 +123,8 @@ class Liquidacion
 
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
 
+        $info = $this->predio->informacion_on($avaluo->vigencia);
+
         if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {
             $avaluo_anterior = $this->predio->avaluos()
                 ->where('tasa_por_mil', '<>', -1.0)
@@ -135,11 +137,28 @@ class Liquidacion
                     $avaluo_anterior->tasa_por_mil
                 );
 
-                $predial_anterior *= 2;
+                $predial_anterior_doble = $predial_anterior * 2;
 
-                $result['predial'] = $result['predial'] > $predial_anterior ? $predial_anterior : $result['predial'];
+                $info_anterior = $this->predio->informacion_on($avaluo->vigencia - 1);
+
+                if ($info_anterior === null || Carbon::create($avaluo->vigencia - 1) != $info_anterior->created_at)  {
+                    $has_changed = true;
+                } else {
+                    $has_changed = $info->area_construida > $info_anterior->area_construida;
+                }
+
+                $result['predial'] = (! $has_changed) && ($result['predial'] > $predial_anterior_doble)
+                    ? $predial_anterior + $this->calculate_tarifa(
+                        $predial_anterior,
+                        $result['estatuto']->norma_predial_tasa,
+                        false
+                    )
+                    : $result['predial'];
             }
         }
+
+        $result['predial'] = $result['predial'] > $result['estatuto']->min_predial
+            ? $result['predial'] : $result['estatuto']->min_predial;
 
         if ($result['vigencia'] == now()->year && $this->descuento_incentivo > 0) {
             $result['predial_descuento'] = $this->calculate_tarifa($result['predial'], $this->descuento_incentivo, false);
@@ -161,8 +180,6 @@ class Liquidacion
                 $result['estatuto']->ambiental_tarifa
             );
         }
-
-        $info = $this->predio->informacion_on($avaluo->vigencia);
 
         if ($result['estatuto']->alumbrado) {
             if ($result['estatuto']->alumbrado_rural && $info->get_predio_tipo() === 1) {
@@ -189,7 +206,7 @@ class Liquidacion
         );
 
         if ($result['vigencia'] != now()->year || $this->descuento_incentivo == 0) {
-            $from = new Carbon($result['vigencia'] . '-01-01');
+            $from = Carbon::create($result['vigencia']);
 
             $result['dias_mora'] = Interes::diasMora($from);
 
