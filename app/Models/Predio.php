@@ -136,8 +136,6 @@ class Predio extends Model
         $predios = [];
 
         foreach ($prediosQuery->take(50)->get() as $predio) {
-            //$predio = self::find($predio);
-
             array_push($predios, [
                 'id' => $predio->id,
                 'codigo_catastro' => $predio->codigo_catastro,
