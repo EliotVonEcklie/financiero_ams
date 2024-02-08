@@ -129,7 +129,7 @@ class Liquidacion
 
         if ($result['estatuto']->norma_predial) {
             $liquidacion_anterior = $this->vigencias
-                ->whereNot('tasa_por_mil', -1.0)
+                ->where('tasa_por_mil', '<>', -1.0)
                 ->firstWhere('vigencia', $avaluo->vigencia - 1);
 
             if ($liquidacion_anterior === null) {
