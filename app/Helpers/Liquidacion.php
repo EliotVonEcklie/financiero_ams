@@ -50,7 +50,7 @@ class Liquidacion
 
         $this->avaluos = $this->predio->avaluos()
             ->whereIn('vigencia', $vigencias)
-            ->orderByDesc('vigencia')
+            ->orderBy('vigencia')
             ->get();
 
         $this->vigencias = new Collection();
@@ -65,7 +65,7 @@ class Liquidacion
     public function toArray() : array
     {
         return [
-            'vigencias' => $this->vigencias,
+            'vigencias' => $this->vigencias->sortByDesc('vigencia')->values()->all(),
             'predio_id' => $this->predio->id,
             'total_liquidacion' => $this->total_liquidacion,
             'total_valor_avaluo' => $this->total_valor_avaluo,
