@@ -202,13 +202,13 @@
                     <div class="hidden rounded-lg bg-white dark:bg-gray-800" id="periodos" role="tabpanel" aria-labelledby="periodos-tab">
                         <div class="flex justify-between items-center lg:flex-row md:flex-col">
                             <div class="flex flex-wrap justify-start lg:space-x-3 lg:m-0 md:space-x-0 md:mt-10 lg:space-y-0 md:space-y-6">
-                                <button type="button" :disabled="vigencias.filter(vigencia => vigencia.isSelected).length == 0" @click="showWompi" :class="{'cursor-not-allowed text-gray-300 bg-gray-100 hover:bg-gray-100 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-800':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700':vigencias.filter(vigencia => vigencia.isSelected).length>0}" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5">
+                                <button type="button" :disabled="vigencias.filter(vigencia => vigencia.selected).length == 0" @click="showWompi" :class="{'cursor-not-allowed text-gray-300 bg-gray-100 hover:bg-gray-100 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-800':vigencias.filter(vigencia => vigencia.selected).length == 0,'text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700':vigencias.filter(vigencia => vigencia.selected).length>0}" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5">
                                     <span>Pagar en línea</span>
-                                    <svg :class="{'fill-gray-300 group-hover:fill-gray-300 dark:fill-gray-400 dark:group-hover:fill-gray-400':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'fill-blue-600 group-hover:fill-white dark:fill-white':vigencias.filter(vigencia => vigencia.isSelected)}" class="lg:w-5 lg:h-5 md:w-10 md:h-10"  xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="none"><g><rect fill="none" height="24" width="24"/></g><g><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20c-4.41,0-8-3.59-8-8c0-4.41,3.59-8,8-8 s8,3.59,8,8C20,16.41,16.41,20,12,20z M12.89,11.1c-1.78-0.59-2.64-0.96-2.64-1.9c0-1.02,1.11-1.39,1.81-1.39 c1.31,0,1.79,0.99,1.9,1.34l1.58-0.67c-0.15-0.44-0.82-1.91-2.66-2.23V5h-1.75v1.26c-2.6,0.56-2.62,2.85-2.62,2.96 c0,2.27,2.25,2.91,3.35,3.31c1.58,0.56,2.28,1.07,2.28,2.03c0,1.13-1.05,1.61-1.98,1.61c-1.82,0-2.34-1.87-2.4-2.09L8.1,14.75 c0.63,2.19,2.28,2.78,3.02,2.96V19h1.75v-1.24c0.52-0.09,3.02-0.59,3.02-3.22C15.9,13.15,15.29,11.93,12.89,11.1z"/></g></svg>
+                                    <svg :class="{'fill-gray-300 group-hover:fill-gray-300 dark:fill-gray-400 dark:group-hover:fill-gray-400':vigencias.filter(vigencia => vigencia.selected).length == 0,'fill-blue-600 group-hover:fill-white dark:fill-white':vigencias.filter(vigencia => vigencia.selected)}" class="lg:w-5 lg:h-5 md:w-10 md:h-10"  xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="none"><g><rect fill="none" height="24" width="24"/></g><g><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20c-4.41,0-8-3.59-8-8c0-4.41,3.59-8,8-8 s8,3.59,8,8C20,16.41,16.41,20,12,20z M12.89,11.1c-1.78-0.59-2.64-0.96-2.64-1.9c0-1.02,1.11-1.39,1.81-1.39 c1.31,0,1.79,0.99,1.9,1.34l1.58-0.67c-0.15-0.44-0.82-1.91-2.66-2.23V5h-1.75v1.26c-2.6,0.56-2.62,2.85-2.62,2.96 c0,2.27,2.25,2.91,3.35,3.31c1.58,0.56,2.28,1.07,2.28,2.03c0,1.13-1.05,1.61-1.98,1.61c-1.82,0-2.34-1.87-2.4-2.09L8.1,14.75 c0.63,2.19,2.28,2.78,3.02,2.96V19h1.75v-1.24c0.52-0.09,3.02-0.59,3.02-3.22C15.9,13.15,15.29,11.93,12.89,11.1z"/></g></svg>
                                 </button>
-                                <button type="button" @click="createRecibo" :disabled="vigencias.filter(vigencia => vigencia.isSelected).length == 0" :class="{'cursor-not-allowed text-gray-300 bg-gray-100 hover:bg-gray-100 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-800':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700':vigencias.filter(vigencia => vigencia.isSelected).length>0}" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5">
+                                <button type="button" @click="createRecibo" :disabled="vigencias.filter(vigencia => vigencia.selected).length == 0" :class="{'cursor-not-allowed text-gray-300 bg-gray-100 hover:bg-gray-100 dark:border dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-800':vigencias.filter(vigencia => vigencia.selected).length == 0,'text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700':vigencias.filter(vigencia => vigencia.selected).length>0}" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5">
                                     <span>Imprimir liquidación predial</span>
-                                    <svg :class="{'fill-gray-300 group-hover:fill-gray-300 dark:fill-gray-400 dark:group-hover:fill-gray-400':vigencias.filter(vigencia => vigencia.isSelected).length == 0,'fill-blue-600 group-hover:fill-white dark:fill-white':vigencias.filter(vigencia => vigencia.isSelected)}" class="lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 384 512"><path d="M14 2.2C22.5-1.7 32.5-.3 39.6 5.8L80 40.4 120.4 5.8c9-7.7 22.3-7.7 31.2 0L192 40.4 232.4 5.8c9-7.7 22.3-7.7 31.2 0L304 40.4 344.4 5.8c7.1-6.1 17.1-7.5 25.6-3.6s14 12.4 14 21.8V488c0 9.4-5.5 17.9-14 21.8s-18.5 2.5-25.6-3.6L304 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L192 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L80 471.6 39.6 506.2c-7.1 6.1-17.1 7.5-25.6 3.6S0 497.4 0 488V24C0 14.6 5.5 6.1 14 2.2zM96 144c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96zM80 352c0 8.8 7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96c-8.8 0-16 7.2-16 16zM96 240c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96z"/></svg>
+                                    <svg :class="{'fill-gray-300 group-hover:fill-gray-300 dark:fill-gray-400 dark:group-hover:fill-gray-400':vigencias.filter(vigencia => vigencia.selected).length == 0,'fill-blue-600 group-hover:fill-white dark:fill-white':vigencias.filter(vigencia => vigencia.selected)}" class="lg:w-5 lg:h-5 md:w-10 md:h-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 384 512"><path d="M14 2.2C22.5-1.7 32.5-.3 39.6 5.8L80 40.4 120.4 5.8c9-7.7 22.3-7.7 31.2 0L192 40.4 232.4 5.8c9-7.7 22.3-7.7 31.2 0L304 40.4 344.4 5.8c7.1-6.1 17.1-7.5 25.6-3.6s14 12.4 14 21.8V488c0 9.4-5.5 17.9-14 21.8s-18.5 2.5-25.6-3.6L304 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L192 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L80 471.6 39.6 506.2c-7.1 6.1-17.1 7.5-25.6 3.6S0 497.4 0 488V24C0 14.6 5.5 6.1 14 2.2zM96 144c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96zM80 352c0 8.8 7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96c-8.8 0-16 7.2-16 16zM96 240c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96z"/></svg>
                                 </button>
                                 <button type="button" @click="createEstadoCuenta" class="group flex lg:justify-between md:justify-center md:w-full lg:w-auto lg:space-x-3 md:space-x-6 items-center text-blue-600 bg-white border border-blue-600 hover:bg-blue-600 hover:text-white  font-bold rounded-lg lg:text-sm md:text-4xl lg:px-2 lg:py-2.5 md:px-3 md:py-5 dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700">
                                     <span>Imprimir estado de cuenta</span>
@@ -278,7 +278,7 @@
                                     <tr v-for="vigencia in vigencias" :key="vigencia.vigencia"  class="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <td class="w-4 p-4">
                                             <div class="flex items-center">
-                                                <input id="checkbox-table-search-3" type="checkbox" :checked="vigencia.isSelected" @change="evt => updateCheckAll(evt, vigencia)" class="lg:w-4 lg:h-4 md:w-10 md:h-10 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                <input id="checkbox-table-search-3" type="checkbox" :checked="vigencia.selected" @change="evt => updateCheckAll(evt, vigencia)" class="lg:w-4 lg:h-4 md:w-10 md:h-10 text-greenp1 bg-gray-100 border-gray-300 rounded focus:ring-greenp1 dark:focus:ring-greenp1 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                 <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
                                             </div>
                                         </td>
@@ -536,7 +536,7 @@ function showWompi(){
 }
 onMounted(() => {
     isCheckAll.value = true
-    vigencias.forEach(vigencia => vigencia.isSelected = true)
+    vigencias.forEach(vigencia => vigencia.selected = true)
 })
 function showRecibo(id){
     let factura = {};
@@ -591,7 +591,7 @@ function createPazSalvo(){
     window.open(route('public.paz_salvos'));
 }
 function createRecibo() {
-    let periodosFacturados = vigencias.filter(vigencia => vigencia.isSelected);
+    let periodosFacturados = vigencias.filter(vigencia => vigencia.selected);
     periodosFacturados = periodosFacturados.reverse()
     predio.totales = getTotal()
     predio.factura_pagada = false
@@ -629,13 +629,13 @@ function formatNumber(value){
 async function updateCheckAll(evt, vigencia) {
     if (evt.target.id === 'checkbox-table-search-all') {
         isCheckAll.value = evt.target.checked
-        vigencias.forEach(vigencia => vigencia.isSelected = evt.target.checked)
+        vigencias.forEach(vigencia => vigencia.selected = evt.target.checked)
     } else {
-        vigencia.isSelected = evt.target.checked
+        vigencia.selected = evt.target.checked
 
         if (!evt.target.checked) {
             isCheckAll.value = false
-        } else if (vigencias.every(vigencia => vigencia.isSelected)) {
+        } else if (vigencias.every(vigencia => vigencia.selected)) {
             isCheckAll.value = true
         }
     }
@@ -654,7 +654,7 @@ function getTotal(bypass = false) {
     }
 
     if(vigencias.length > 0) {
-        vigencias.filter(vigencia => bypass || vigencia.isSelected).forEach(vigencia => {
+        vigencias.filter(vigencia => bypass || vigencia.selected).forEach(vigencia => {
             result.bomberil += vigencia.bomberil
             result.alumbrado += vigencia.alumbrado
             result.ambiental += vigencia.ambiental

@@ -125,7 +125,7 @@ class Liquidacion
 
         $info = $this->predio->informacion_on($avaluo->vigencia);
 
-        if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {
+        if ($result['estatuto']->norma_predial) {
             $avaluo_anterior = $this->predio->avaluos()
                 ->where('tasa_por_mil', '<>', -1.0)
                 ->where('vigencia', $avaluo->vigencia - 1)

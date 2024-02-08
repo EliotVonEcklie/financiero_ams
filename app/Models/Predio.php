@@ -9,6 +9,7 @@ use App\Helpers\Censor;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Predio extends Model
 {
@@ -53,7 +54,7 @@ class Predio extends Model
     public function latest_avaluo(): PredioAvaluo
     {
         return $this->avaluos()
-            ->orderBy('vigencia', 'desc')
+            ->orderByDesc('vigencia')
             ->first();
     }
 
@@ -63,7 +64,7 @@ class Predio extends Model
     public function latest_informacion(): PredioInformacion
     {
         return $this->informacions()
-            ->orderBy('created_at', 'desc')
+            ->orderByDesc('created_at')
             ->first();
     }
 
@@ -120,57 +121,35 @@ class Predio extends Model
             return [];
         }
 
-        $prediosQuery = Predio::select(
-                'predios.id',
-                'codigo_catastro',
-                'total',
-                'predio_propietarios.orden',
-                'predio_informacions.direccion',
-                'predio_propietarios.documento',
-                'predio_propietarios.nombre_propietario',
-                'predio_tipos.nombre as predio_tipo'
-            )
+        $prediosQuery = Predio::select(DB::raw('distinct predios.*'))
             ->join('predio_informacions', 'predios.id', '=', 'predio_informacions.predio_id')
-            ->join('predio_propietarios', 'predios.id', '=', 'predio_propietarios.predio_id')
-            ->join('predio_tipos', 'predio_tipos.id', '=', 'predio_tipo_id')
             ->where('codigo_catastro', 'like', '%' . $query . '%')
-            ->orWhere('predio_informacions.direccion', 'like', '%' . $query . '%');
+            ->orWhere('direccion', 'like', '%' . $query . '%');
 
         if (! $sensible) {
             $prediosQuery = $prediosQuery
-                ->orWhere('predio_propietarios.documento', 'like', '%' . $query . '%')
-                ->orWhere('predio_propietarios.nombre_propietario', 'like', '%' . $query . '%');
+                ->join('predio_propietarios', 'predios.id', '=', 'predio_propietarios.predio_id')
+                ->orWhere('documento', 'like', '%' . $query . '%')
+                ->orWhere('nombre_propietario', 'like', '%' . $query . '%');
         }
 
-        $predios = $prediosQuery->groupBy(
-                'predios.id',
-                'codigo_catastro',
-                'total',
-                'predio_propietarios.orden',
-                'predio_informacions.direccion',
-                'predio_propietarios.documento',
-                'predio_propietarios.nombre_propietario',
-                'predio_tipos.nombre'
-            )
-            ->orderBy('codigo_catastro', 'asc')
-            ->take(50)
-            ->get();
+        $predios = [];
 
-        if ($sensible) {
-            foreach ($predios as $predio) {
-                $predio->documento = Censor::str($predio->documento, -2);
-                $predio->nombre_propietario = Censor::str($predio->nombre_propietario);
-            }
-        }
+        foreach ($prediosQuery->take(50)->get() as $predio) {
+            //$predio = self::find($predio);
 
-        foreach ($predios as $predio) {
-            if ($sensible) {
-                $predio->documento = Censor::str($predio->documento, -2);
-                $predio->nombre_propietario = Censor::str($predio->nombre_propietario);
-            }
-
-            $predio->total = sprintf('%03d', $predio->total);
-            $predio->orden = sprintf('%03d', $predio->orden);
+            array_push($predios, [
+                'id' => $predio->id,
+                'codigo_catastro' => $predio->codigo_catastro,
+                'total' => sprintf('%03d', $predio->total),
+                'orden' => sprintf('%03d', $predio->main_propietario()->orden),
+                'direccion' => $predio->latest_informacion()->direccion,
+                'documento' => $sensible
+                    ? Censor::str($predio->main_propietario()->documento, -2) : $predio->main_propietario()->documento,
+                'nombre_propietario' => $sensible
+                    ? Censor::str($predio->main_propietario()->nombre_propietario) : $predio->main_propietario()->nombre_propietario,
+                'predio_tipo' => $predio->latest_informacion()->predio_tipo->nombre
+            ]);
         }
 
         return $predios;
