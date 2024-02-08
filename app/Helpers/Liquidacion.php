@@ -132,27 +132,39 @@ class Liquidacion
                 ->whereNot('tasa_por_mil', -1.0)
                 ->firstWhere('vigencia', $avaluo->vigencia - 1);
 
-            if ($liquidacion_anterior !== null) {
-                $predial_anterior = $liquidacion_anterior['predial'];
-                $predial_anterior_doble = $predial_anterior * 2;
-                $info_anterior = $this->predio->informacion_on($liquidacion_anterior['vigencia']);
+            if ($liquidacion_anterior === null) {
+                $avaluo_anterior = $this->predio->avaluos()
+                    ->whereNot('tasa_por_mil', -1.0)
+                    ->firstWhere('vigencia', $avaluo->vigencia - 1);
 
-                if ($info_anterior === null ||
-                    Carbon::create($liquidacion_anterior['vigencia']) != $info_anterior->created_at)
-                {
-                    $has_changed = true;
-                } else {
-                    $has_changed = $info->area_construida > $info_anterior->area_construida;
-                }
-
-                $result['predial'] = (! $has_changed) && ($result['predial'] > $predial_anterior_doble)
-                    ? $predial_anterior + $this->calculate_tarifa(
-                        $predial_anterior,
-                        $result['estatuto']->norma_predial_tasa,
-                        false
+                $liquidacion_anterior = [
+                    'vigencia' => $avaluo_anterior->vigencia,
+                    'predial' => $this->calculate_tarifa(
+                        $avaluo_anterior->valor_avaluo,
+                        $avaluo_anterior->tasa_por_mil
                     )
-                    : $result['predial'];
+                ];
             }
+
+            $predial_anterior = $liquidacion_anterior['predial'];
+            $predial_anterior_doble = $predial_anterior * 2;
+            $info_anterior = $this->predio->informacion_on($liquidacion_anterior['vigencia']);
+
+            if ($info_anterior === null ||
+                Carbon::create($liquidacion_anterior['vigencia']) != $info_anterior->created_at)
+            {
+                $has_changed = true;
+            } else {
+                $has_changed = $info->area_construida > $info_anterior->area_construida;
+            }
+
+            $result['predial'] = (! $has_changed) && ($result['predial'] > $predial_anterior_doble)
+                ? $predial_anterior + $this->calculate_tarifa(
+                    $predial_anterior,
+                    $result['estatuto']->norma_predial_tasa,
+                    false
+                )
+                : $result['predial'];
         }
 
         $result['predial'] = $result['predial'] > $result['estatuto']->min_predial
