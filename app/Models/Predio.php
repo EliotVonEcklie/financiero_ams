@@ -143,9 +143,11 @@ class Predio extends Model
                 'orden' => sprintf('%03d', $predio->main_propietario()->orden),
                 'direccion' => $predio->latest_informacion()->direccion,
                 'documento' => $sensible
-                    ? Censor::str($predio->main_propietario()->documento, -2) : $predio->main_propietario()->documento,
+                    ? Censor::str($predio->main_propietario()->documento, -2)
+                    : $predio->main_propietario()->documento,
                 'nombre_propietario' => $sensible
-                    ? Censor::str($predio->main_propietario()->nombre_propietario) : $predio->main_propietario()->nombre_propietario,
+                    ? Censor::str($predio->main_propietario()->nombre_propietario)
+                    : $predio->main_propietario()->nombre_propietario,
                 'predio_tipo' => $predio->latest_informacion()->predio_tipo->nombre
             ]);
         }

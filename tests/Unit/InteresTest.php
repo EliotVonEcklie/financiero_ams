@@ -2,11 +2,15 @@
 
 namespace Tests\Unit;
 
+use App\Models\Interes;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestTenantCase;
 
 class InteresTest extends TestTenantCase
 {
-    public function test_example(): void
+    use RefreshDatabase;
+
+    public function test_intereses(): void
     {
         $this->assertTrue(true);
     }

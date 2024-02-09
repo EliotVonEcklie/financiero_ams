@@ -12,79 +12,62 @@ class DescuentoTest extends TestTenantCase
 
     protected $tenancy = true;
 
-    public function test_nacional_descuento(): void
+    public function test_descuento_intereses(): void
     {
         Descuento::create([
             'es_nacional' => true,
             'hasta' => now()->year,
-            'porcentaje' => 10,
+            'porcentaje' => 69,
         ]);
 
-        $this->assertSame(Descuento::getDescuento(now()), 10);
+        $this->assertSame(Descuento::getDescuentoIntereses(now()->startOfYear()), 69);
     }
 
-    public function test_monthly_descuento(): void
+    public function test_descuento_incentivo(): void
     {
         Descuento::create([
             'es_nacional' => false,
             'hasta' => now()->month,
-            'porcentaje' => 10,
+            'porcentaje' => 69,
         ]);
 
-        $this->assertSame(Descuento::getDescuento(now()), 10);
+        $this->assertSame(Descuento::getDescuentoIncentivo(now()->startOfMonth()), 69);
     }
 
-    public function test_monthly_and_nacional_descuento(): void
+    public function test_many_descuentos(): void
     {
         Descuento::create([
-            'es_nacional' => true,
-            'hasta' => now()->year,
-            'porcentaje' => 10,
+            'es_nacional' => false,
+            'hasta' => 1,
+            'porcentaje' => 3,
         ]);
 
         Descuento::create([
             'es_nacional' => false,
-            'hasta' => now()->month,
-            'porcentaje' => 20,
+            'hasta' => 2,
+            'porcentaje' => 2,
         ]);
 
-        $this->assertSame(Descuento::getDescuento(now()), 10);
+        Descuento::create([
+            'es_nacional' => false,
+            'hasta' => 3,
+            'porcentaje' => 1,
+        ]);
+
+        $this->assertSame(Descuento::getDescuentoIncentivo(now()->setMonth(1)->startOfMonth()), 3);
+        $this->assertSame(Descuento::getDescuentoIncentivo(now()->setMonth(2)->startOfMonth()), 2);
+        $this->assertSame(Descuento::getDescuentoIncentivo(now()->setMonth(3)->startOfMonth()), 1);
+        $this->assertSame(Descuento::getDescuentoIncentivo(now()->setMonth(4)->startOfMonth()), 0);
     }
 
-    public function test_successive_descuentos(): void
+    public function test_last_day(): void
     {
-        $now = now();
-
-        Descuento::create([
-            'es_nacional' => true,
-            'hasta' => $now->year,
-            'porcentaje' => 50,
-        ]);
-
         Descuento::create([
             'es_nacional' => false,
-            'hasta' => $now->month,
-            'porcentaje' => 20,
+            'hasta' => 1,
+            'porcentaje' => 1,
         ]);
 
-        Descuento::create([
-            'es_nacional' => false,
-            'hasta' => $now->addMonth()->month,
-            'porcentaje' => 10,
-        ]);
-
-        Descuento::create([
-            'es_nacional' => false,
-            'hasta' => $now->addMonth()->month,
-            'porcentaje' => 5,
-        ]);
-
-        $now->subMonths(2);
-
-        $this->assertSame(Descuento::getDescuento($now), 50);
-        $this->assertSame(Descuento::getDescuento($now->addYear()), 20);
-        $this->assertSame(Descuento::getDescuento($now->addMonth()), 10);
-        $this->assertSame(Descuento::getDescuento($now->addMonth()), 5);
-        $this->assertSame(Descuento::getDescuento($now->addMonth()), 0);
+        $this->assertSame(Descuento::lastDay(), now()->setMonth(1)->endOfMonth());
     }
 }
