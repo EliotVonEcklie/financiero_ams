@@ -7,6 +7,7 @@ use App\Http\Controllers\EstatutoController;
 use App\Http\Controllers\EstratificacionController;
 use App\Http\Controllers\InteresController;
 use App\Http\Controllers\FacturaPredialController;
+use App\Http\Controllers\PazYSalvoController;
 use App\Http\Controllers\PredioEstratoController;
 use App\Http\Controllers\UploadIgacController;
 use App\Http\Controllers\RangoAvaluoController;
@@ -46,10 +47,6 @@ Route::group([
         Route::get('/login', function () {
             return inertia('Login');
         })->withoutMiddleware(FinancieroAuth::class)->name('login');
-
-        Route::get('/test', function () {
-            return Pdf::loadView('pdf.private.test')->stream();
-        })->name('test');
 
         Route::get('/', function () {
             return inertia('Index');
@@ -93,13 +90,19 @@ Route::group([
 
         Route::resource('upload_igac', UploadIgacController::class);
         Route::resource('estatutos', EstatutoController::class)->withTrashed();
-        Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['index', 'create', 'store', 'show']);
 
+        Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['index', 'create', 'store', 'show']);
         Route::get('/factura_predials/search', [FacturaPredialController::class, 'search'])->name('factura_predials.search');
         Route::resource('factura_predials', FacturaPredialController::class)->withTrashed();
+        Route::get('/paz_y_salvos/search', [PazYSalvoController::class, 'search'])->name('paz_y_salvos.search');
+        Route::resource('paz_y_salvos', PazYSalvoController::class)->withTrashed();
     });
 
     Route::name('public.')->group(function () {
+        Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
+        Route::resource('factura_predials', FacturaPredialController::class)->only(['store', 'show']);
+        Route::resource('paz_y_salvos', PazYSalvoController::class)->only(['store', 'show']);
+
         Route::get('/', function () {
             return inertia('Public/Index');
         })->name('index');
@@ -119,43 +122,40 @@ Route::group([
             ]);
         })->name('impuesto_predial_unificado');
 
-        Route::get('/impuesto_industria_comercio',function(){
+        Route::get('/impuesto_industria_comercio', function() {
             return inertia('Public/ImpuestoIndustriaComercio');
         })->name('impuesto_industria_comercio');
 
-        Route::get('/inscripcion',function(){
+        Route::get('/inscripcion', function() {
             return inertia('Public/Inscripcion');
         })->name('inscripcion');
 
-        Route::get('/normatividad',function(){
+        Route::get('/normatividad', function() {
             return inertia('Public/Normatividad');
         })->name('normatividad');
 
-        Route::get('/notificaciones',function(){
+        Route::get('/notificaciones', function() {
             return inertia('Public/NotificacionesJuridicas');
         })->name('notificaciones');
 
-        Route::get('/presentacion',function(){
+        Route::get('/presentacion', function() {
             return inertia('Public/PresentacionElectronica');
         })->name('presentacion');
 
-        Route::get('/contacto',function(){
+        Route::get('/contacto', function() {
             return inertia('Public/Contacto');
         })->name('contacto');
 
-        Route::get('/preguntas',function(){
+        Route::get('/preguntas', function() {
             return inertia('Public/PreguntasFrecuentes');
         })->name('preguntas');
 
-        Route::get('/manuales',function(){
+        Route::get('/manuales', function() {
             return inertia('Public/ManualSistema');
         })->name('manuales');
 
-        Route::get('/pago_confirmado',function(){
+        Route::get('/pago_confirmado', function() {
             return inertia('Public/PagoConfirmado');
         })->name('pago_confirmado');
-
-        Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
-        Route::resource('factura_predials', FacturaPredialController::class)->only(['store', 'show']);
     });
 });
