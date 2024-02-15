@@ -174,7 +174,7 @@ class Predio extends Model
         return $predios;
     }
 
-    public static function show(Predio|int $id, $sensible = true)
+    public static function show(Predio|mixed $id, $sensible = true)
     {
         if ($id instanceof Predio) {
             $predio = $id;
@@ -219,7 +219,7 @@ class Predio extends Model
         ];
     }
 
-    public static function show_on(string $codigo_catastro, Carbon|string $vigencia): array|null
+    public static function show_on(string $codigo_catastro, Carbon|mixed $vigencia): array|null
     {
         $predio = self::firstWhere('codigo_catastro', $codigo_catastro);
 
