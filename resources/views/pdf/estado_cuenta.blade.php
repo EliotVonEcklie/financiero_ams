@@ -170,11 +170,11 @@
     <body>
         <footer>
             <table class="border-none">
-                @isset (tenant()->cuenta_bancaria)
+                @isset (tenant()->cuenta_recaudo)
                 <tr>
                     <td class="border-none">
                         <p class="text-center fs-1">
-                            Consignar a: {{ tenant()->cuenta_bancaria }}
+                            Consignar a: {{ tenant()->cuenta_recaudo }}
                         </p>
                     </td>
                 </tr>
