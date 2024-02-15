@@ -170,6 +170,15 @@
     <body>
         <footer>
             <table class="border-none">
+                @isset (tenant()->cuenta_bancaria)
+                <tr>
+                    <td class="border-none">
+                        <p class="text-center fs-1">
+                            Consignar a: {{ tenant()->cuenta_bancaria }}
+                        </p>
+                    </td>
+                </tr>
+                @endif
                 <tr ><td colspan="10" class="border-none"></td></tr>
                 <tr>
                     <td class="border-none">
