@@ -43,7 +43,7 @@ class Descuento extends Model
         return $incentivo !== null ? $incentivo->porcentaje : 0;
     }
 
-    public static function firstDayWithoutDescuento()
+    public static function lastDay(): Carbon
     {
         $lastDescuento = self::where('es_nacional', false)
             ->where('hasta', '>=', now()->month)
@@ -51,6 +51,6 @@ class Descuento extends Model
             ->first();
 
         return $lastDescuento !== null ?
-            Carbon::createMidnightDate(null, $lastDescuento->hasta, 1)->lastOfMonth() : Carbon::createMidnightDate();
+            Carbon::create(null, $lastDescuento->hasta)->endOfMonth() : Carbon::createMidnightDate();
     }
 }

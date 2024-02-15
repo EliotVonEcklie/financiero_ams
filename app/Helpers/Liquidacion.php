@@ -17,7 +17,7 @@ class Liquidacion
     private Collection $avaluos;
     private Collection $intereses;
 
-    public array $vigencias = [];
+    public Collection $vigencias;
     public int $descuento_incentivo = 0;
     public int $descuento_intereses = 0;
     public float $total_liquidacion = 0;
@@ -50,12 +50,14 @@ class Liquidacion
 
         $this->avaluos = $this->predio->avaluos()
             ->whereIn('vigencia', $vigencias)
-            ->orderByDesc('vigencia')
+            ->orderBy('vigencia')
             ->get();
+
+        $this->vigencias = new Collection();
 
         foreach ($this->avaluos as $avaluo) {
             if (($result = $this->liquidar($avaluo)) !== null) {
-                array_push($this->vigencias, $result);
+                $this->vigencias->push($result);
             }
         }
     }
@@ -63,7 +65,7 @@ class Liquidacion
     public function toArray() : array
     {
         return [
-            'vigencias' => $this->vigencias,
+            'vigencias' => $this->vigencias->sortByDesc('vigencia')->values()->all(),
             'predio_id' => $this->predio->id,
             'total_liquidacion' => $this->total_liquidacion,
             'total_valor_avaluo' => $this->total_valor_avaluo,
@@ -125,23 +127,35 @@ class Liquidacion
 
         $info = $this->predio->informacion_on($avaluo->vigencia);
 
-        if ($result['estatuto']->norma_predial && $avaluo->vigencia == now()->year) {
-            $avaluo_anterior = $this->predio->avaluos()
+        if ($result['estatuto']->norma_predial) {
+            $liquidacion_anterior = $this->vigencias
                 ->where('tasa_por_mil', '<>', -1.0)
-                ->where('vigencia', $avaluo->vigencia - 1)
-                ->first();
+                ->firstWhere('vigencia', $avaluo->vigencia - 1);
 
-            if($avaluo_anterior !== null) {
-                $predial_anterior = $this->calculate_tarifa(
-                    $avaluo_anterior->valor_avaluo,
-                    $avaluo_anterior->tasa_por_mil
-                );
+            if ($liquidacion_anterior === null) {
+                $avaluo_anterior = $this->predio->avaluos()
+                    ->whereNot('tasa_por_mil', -1.0)
+                    ->firstWhere('vigencia', $avaluo->vigencia - 1);
 
+                if ($avaluo_anterior !== null) {
+                    $liquidacion_anterior = [
+                        'vigencia' => $avaluo_anterior->vigencia,
+                        'predial' => $this->calculate_tarifa(
+                            $avaluo_anterior->valor_avaluo,
+                            $avaluo_anterior->tasa_por_mil
+                        )
+                    ];
+                }
+            }
+
+            if ($liquidacion_anterior !== null) {
+                $predial_anterior = $liquidacion_anterior['predial'];
                 $predial_anterior_doble = $predial_anterior * 2;
+                $info_anterior = $this->predio->informacion_on($liquidacion_anterior['vigencia']);
 
-                $info_anterior = $this->predio->informacion_on($avaluo->vigencia - 1);
-
-                if ($info_anterior === null || Carbon::create($avaluo->vigencia - 1) != $info_anterior->created_at)  {
+                if ($info_anterior === null ||
+                    Carbon::create($liquidacion_anterior['vigencia']) != $info_anterior->created_at)
+                {
                     $has_changed = true;
                 } else {
                     $has_changed = $info->area_construida > $info_anterior->area_construida;

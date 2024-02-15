@@ -7,7 +7,6 @@ import numbers from './numbers'
 import LoadScript from 'vue-plugin-load-script'
 import Vue3Signature from "vue3-signature"
 
-
 router.on('navigate', () => {
     initFlowbite()
 })
@@ -28,10 +27,11 @@ createInertiaApp({
         app.config.globalProperties.$date = date => new Date(date).toLocaleString('es-CO', { month: 'long', day: 'numeric', year: 'numeric' })
         app.config.globalProperties.$goBack = () => window.history.back()
         app.config.globalProperties.$goForward = () => window.history.forward()
-        app.use(LoadScript)
-        app.use(Vue3Signature)
+
         app.use(plugin)
             .use(ZiggyVue)
+            .use(LoadScript)
+            .use(Vue3Signature)
             /*.use(VueEcho, {
                 broadcaster: 'pusher',
                 key: import.meta.env.VITE_PUSHER_APP_KEY,
@@ -42,7 +42,8 @@ createInertiaApp({
                 encrypted: true,
                 disableStats: true,
                 enabledTransports: ['ws', 'wss']
-            })*/
+            })
+            */
             .mount(el)
     },
 })

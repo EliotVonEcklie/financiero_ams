@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FacturaPredial extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $guarded = [];
 
@@ -17,12 +15,7 @@ class FacturaPredial extends Model
         'data' => 'array'
     ];
 
-    public function predio(): BelongsTo
-    {
-        return $this->belongsTo(Predio::class);
-    }
-
-    public static function getPagueHasta($vigencias)
+    public static function getPagueHasta($vigencias): \Illuminate\Support\Carbon
     {
         $pague_hasta = now();
 
@@ -34,7 +27,7 @@ class FacturaPredial extends Model
         });
 
         if (! $deuda) {
-            $pague_hasta = Descuento::firstDayWithoutDescuento();
+            $pague_hasta = Descuento::lastDay();
         }
 
         return $pague_hasta;
