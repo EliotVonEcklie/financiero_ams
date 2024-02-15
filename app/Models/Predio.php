@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Helpers\Liquidacion;
 use App\Helpers\Censor;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -51,7 +50,7 @@ class Predio extends Model
     /**
      * Get the latest predio avaluo for the predio
      */
-    public function latest_avaluo(): PredioAvaluo
+    public function latest_avaluo(): PredioAvaluo|null
     {
         return $this->avaluos()
             ->orderByDesc('vigencia')
@@ -61,42 +60,61 @@ class Predio extends Model
     /**
      * Get the latest predio avaluo for the predio
      */
-    public function latest_informacion(): PredioInformacion
+    public function latest_informacion(): PredioInformacion|null
     {
         return $this->informacions()
             ->orderByDesc('created_at')
             ->first();
+    }
+
+    /**
+     * Get the closest avaluo for a given vigencia
+     */
+    public function avaluo_on(Carbon|string $vigencia): PredioAvaluo|null
+    {
+        return $this->avaluos()
+                ->where('vigencia', '<=', Carbon::create($vigencia)->year)
+                ->orderByDesc('vigencia')
+                ->first()
+            ?? $this->latest_avaluo();
     }
 
     /**
      * Get the closest informacion for a given vigencia
      */
-    public function informacion_on($vigencia): PredioInformacion|null
+    public function informacion_on(Carbon|string $vigencia): PredioInformacion|null
     {
         return $this->informacions()
-                ->firstWhere('created_at', Carbon::create($vigencia))
-            ?? $this->informacions()
+                ->where('created_at', '<=', Carbon::create($vigencia)->endOfYear())
                 ->orderByDesc('created_at')
-                ->first();
+                ->first()
+            ?? $this->latest_informacion();
     }
 
     /**
      * Get the closest main propietario for a given vigencia
      */
-    public function main_propietario_on($vigencia): PredioPropietario
+    public function main_propietario_on(Carbon|string $vigencia): PredioPropietario|null
     {
+        $vigencia = Carbon::create($vigencia)->endOfYear();
+
         return $this->propietarios()
-            ->whereBetween('orden', [1, $this->main_propietario])
-            ->where('created_at', '<=', Carbon::create($vigencia))
+            ->where('created_at', '<=', $vigencia)
+            ->where('orden', $this->main_propietario)
             ->orderByDesc('created_at')
-            ->orderByDesc('orden')
-            ->first();
+            ->first()
+        ?? $this->propietarios()
+            ->where('created_at', '<=', $vigencia)
+            ->orderByDesc('created_at')
+            ->orderBy('orden')
+            ->first()
+        ?? $this->main_propietario();
     }
 
     /**
      * Get the main predio propietario for the predio
      */
-    public function main_propietario(): PredioPropietario
+    public function main_propietario(): PredioPropietario|null
     {
         return $this->propietarios()
                 ->where('orden', $this->main_propietario)
@@ -116,7 +134,8 @@ class Predio extends Model
     /**
      * Get a predio by searching a query
      */
-    public static function search(string|null $query, bool $sensible = true) {
+    public static function search(string|null $query, bool $sensible = true)
+    {
         if (! $query) {
             return [];
         }
@@ -155,8 +174,13 @@ class Predio extends Model
         return $predios;
     }
 
-    public static function show($id, $sensible = true) {
-        $predio = self::find($id);
+    public static function show(Predio|int $id, $sensible = true)
+    {
+        if ($id instanceof Predio) {
+            $predio = $id;
+        } else {
+            $predio = self::find($id);
+        }
 
         $liquidacion = new Liquidacion($predio);
 
@@ -192,6 +216,33 @@ class Predio extends Model
             'descuento_vigente' => $liquidacion->descuento_incentivo,
             'liquidacion' => $liquidacion->toArray(),
             'factura_predials' => $predio->factura_predials()
+        ];
+    }
+
+    public static function show_on(string $codigo_catastro, Carbon|string $vigencia): array|null
+    {
+        $predio = self::firstWhere('codigo_catastro', $codigo_catastro);
+
+        if ($predio === null) {
+            return null;
+        }
+
+        $propietario = $predio->main_propietario_on($vigencia);
+        $avaluo = $predio->avaluo_on($vigencia);
+        $info = $predio->informacion_on($vigencia);
+
+        return [
+            'id' => $predio->id,
+            'codigo_catastro' => $predio->codigo_catastro,
+            'total' => sprintf('%03d', $predio->total),
+            'orden' => sprintf('%03d', $propietario->orden),
+            'valor_avaluo' => $avaluo->valor_avaluo,
+            'documento' => $propietario->documento,
+            'nombre_propietario' => $propietario->nombre_propietario,
+            'direccion' => $info->direccion,
+            'hectareas' => $info->hectareas,
+            'metros_cuadrados' => $info->metros_cuadrados,
+            'area_construida' => $info->area_construida
         ];
     }
 }

@@ -2,7 +2,7 @@
 import Layout from '~Layouts/Private.vue'
 import SearchPredio from '~Components/SearchPredio.vue'
 
-const title = 'Consultar Predio'
+const title = 'Consultar Predio - Factura Predial'
 
 defineProps({ predios: Array })
 </script>

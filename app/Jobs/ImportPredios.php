@@ -45,7 +45,7 @@ class ImportPredios implements ShouldQueue
                 'ha', 'met2', 'areacon', 'estratos'
             )
             ->orderBy('vigencia')
-            ->get();
+            ->lazyById(1000, 'codigocatastral');
 
         foreach ($this->tesoprediosavaluos as $tesopredioavaluo) {
             if (strlen($tesopredioavaluo->codigocatastral) >= 25) {
@@ -115,7 +115,7 @@ class ImportPredios implements ShouldQueue
 
         $predio_estrato = PredioEstrato::firstWhere('estrato', $tesopredioavaluo->estratos);
 
-        if ($predio_tipo === 2) {
+        if ($predio_tipo === 2 && $info !== null) {
             $info->update([
                 'predio_estrato_id' => $predio_estrato?->id
             ]);

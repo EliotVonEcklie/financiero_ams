@@ -62,10 +62,9 @@ class FacturaPredialController extends Controller
     private function generateBarcode($id, $total_liquidacion, $pague_hasta)
     {
         $codigo_barras = DB::table('codigosbarras')
-            ->select('codigo', 'codini')
             ->where('estado', 'S')
             ->where('tipo', '01')
-            ->first();
+            ->first('codigo', 'codini');
 
         $barcode = chr(241) . $codigo_barras->codini . $codigo_barras->codigo . '802001' .
             sprintf('%07d', $id) . '111005001' .
@@ -92,6 +91,8 @@ class FacturaPredialController extends Controller
 
         $data['pague_hasta'] = FacturaPredial::getPagueHasta(collect($data['liquidacion']['vigencias']));
 
+        dd($data);
+
         $old_liquidacion_id = OldLiquidacion::save($data['liquidacion'], auth()->user()?->name ?? '');
 
         $facturaPredial = FacturaPredial::create([
@@ -110,25 +111,11 @@ class FacturaPredialController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, FacturaPredial $facturaPredial)
-    {
-        if ($request->has('toggle')) {
-            if (! $facturaPredial->data['factura_pagada']) {
-                $facturaPredial->delete();
-            }
-
-            return;
-        }
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(FacturaPredial $facturaPredial)
     {
-        if (($facturaPredial->data['private'] ?? false) && !Auth::check()) {
+        if (($facturaPredial->data['private'] ?? false) && ! Auth::check()) {
             throw new UnauthorizedException();
         }
 
@@ -138,8 +125,20 @@ class FacturaPredialController extends Controller
                 'ip' => $facturaPredial->ip,
                 'data' => $facturaPredial->data,
                 'created_at' => $facturaPredial->created_at,
-                'state' => !$facturaPredial->trashed()
+                'state' => ! $facturaPredial->trashed()
             ]
         ])->stream($facturaPredial->id . '_' . now()->format('YmdHis') . '_factura-de-pago.pdf');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(FacturaPredial $facturaPredial)
+    {
+        if (! ($facturaPredial->data['factura_pagada'] || $facturaPredial->trashed())) {
+            $facturaPredial->delete();
+        }
+
+        return back();
     }
 }

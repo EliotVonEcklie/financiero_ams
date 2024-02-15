@@ -48,8 +48,9 @@ class ParseIgac implements ShouldQueue
             $r1_data = $this->parse_line_r1($r1_line);
 
             // Find or create Predio
-            $predio = Predio::firstOrCreate([
-                'codigo_catastro' => $r1_data->codigo_catastro,
+            $predio = Predio::updateOrCreate([
+                'codigo_catastro' => $r1_data->codigo_catastro
+            ], [
                 'total' => $r1_data->total
             ]);
 

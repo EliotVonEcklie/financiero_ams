@@ -49,7 +49,7 @@ class TranscribeCatastros implements ShouldQueue
         foreach ($this->lines() as $predio) {
             $conversion = $conversions->firstWhere('old', $predio[0]);
 
-            if (! $conversion) {
+            if ($conversion === null) {
                 continue;
             }
 

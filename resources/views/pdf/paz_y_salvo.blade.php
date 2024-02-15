@@ -1,4 +1,11 @@
+@php
 
+use \Illuminate\Support\Carbon;
+
+$created_at = new Carbon($pazYSalvo->created_at);
+$hasta = new Carbon($pazYSalvo->data['hasta']);
+
+@endphp
 
 <!DOCTYPE html>
 <html lang="es">
@@ -164,18 +171,18 @@
                 <tr>
                     <td rowspan="4" class="w33">
                         <div style="display: block; margin-left: auto; margin-right: auto; font-size: 16px; text-align: center;">
-                            <img src="data:image/png;base64,"  height="60" width="60"alt="">
+                            <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="120" width="120" alt="Escudo del municipio">
                         </div>
                     </td>
                     <td rowspan="2" class="w33 text-center">
-                        <p class="fs-2"></p>
-                        <p>NIT: </p>
-                        <p></p>
+                        <p class="fs-2">{{ tenant()->nombre }}</p>
+                        <p>NIT: {{ tenant()->id }}</p>
+                        <p>{{ tenant()->entidad }}</p>
                     </td>
-                    <td class="bg-primary w-33 fs-2 fw-bold text-center">No. de liquidación</td>
+                    <td class="bg-primary w-33 fs-2 fw-bold text-center">No. Consecutivo</td>
                 </tr>
                 <tr>
-                    <td class="text-center">123</td>
+                    <td class="text-center">{{ $pazYSalvo->id }}</td>
                 </tr>
                 <tr>
                     <td class="bg-primary w-33 fs-2 fw-bold text-center">Paz y Salvo</td>
@@ -185,9 +192,9 @@
                 <tr>
                     <td class="text-center">
                         <p class="fw-bold"> Código catastral</p>
-                        <p>0001000000040006000000000l</p>
+                        <p>{{ $pazYSalvo->data['codigo_catastro'] }}</p>
                     </td>
-                    <td class="text-center">29/01/2024</td>
+                    <td class="text-center">{{ $created_at->format('d/m/Y') }}</td>
                 </tr>
             </table>
         </header>
@@ -196,19 +203,19 @@
                 <tr ><td colspan="10" class="border-none"></td></tr>
                 <tr>
                     <td colspan="10" class="border-none">
-                        <p class="text-center fs-0 m-0">Dirección: </p>
-                        <p class="text-center fs-0 m-0">Correo: </p>
+                        <p class="text-center fs-0 m-0">Dirección: {{ tenant()->direccion }}</p>
+                        <p class="text-center fs-0 m-0">Correo: {{ tenant()->correo }}</p>
                     </td>
                 </tr>
                 <tr >
                     <td class= "border-none">
-                        <p class="fs-0 text-start">Fecha y hora elaboración: </p>
+                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $pazYSalvo->created_at }}</p>
                     </td>
                     <td class="border-none">
-                        <p class="fs-0 text-center">Fecha y hora impresión: </p>
+                        <p class="fs-0 text-center">Fecha y hora impresión: {{ now() }}</p>
                     </td>
                     <td class="border-none" colspan="8">
-                        <p class="fs-0 text-center">Dirección IP: </p>
+                        <p class="fs-0 text-center">Dirección IP: {{ $pazYSalvo->ip }}</p>
                     </td>
                     <td class="border-none">
                         <p class="fs-0 text-right page-num"></p>
@@ -221,8 +228,8 @@
                 <tr>
                     <td class="border-none text-center">
                         <h2>
-                            LA SECRETARIA DE HACIENDA DEL MUNICIPIO DE
-                            CUBARRAL - META CERTIFICA
+                            LA {{ strtoupper(tenant()->entidad) }} DEL<br>
+                            {{ strtoupper(tenant()->nombre) }} - {{ strtoupper(tenant()->departamento ?? 'meta') }} CERTIFICA
                         </h2>
                     </td>
                 </tr>
@@ -234,13 +241,39 @@
                 <tr>
                     <td class="border-none">
                         <p class="fs-2">
-                            Que, el predio identificado con numero de cedula catastral 0001000000040006000000000 , inscrito
-                            en el listado de catastro para este municipio, a nombre de JAIRO HIGUERA SOTO con numero de
-                            documento 7842802 Denominado LOMA REDONDA con una Extension de 87 Hectareas, 2500
-                            Metros y 48 AC. Avaluo de $15,594,000.00 Se halla a PAZ Y SALVO con el Tesoro Municipal, Por
-                            concepto de IMPUESTO PREDIAL hasta el Treinta y Uno (31) de Diciembre de 2023. no se genera
-                            cobro por valorizacion para la vigencia actual ni vigencias anteriores
+                            Que, el predio identificado con numero de cedula catastral
+                            {{ $pazYSalvo->data['codigo_catastro'] }}, inscrito en el listado de catastro para este
+                            municipio, a nombre de {{ $pazYSalvo->data['nombre_propietario'] }} con numero
+                            de documento {{ $pazYSalvo->data['documento'] }} Denominado
+                            {{ $pazYSalvo->data['direccion'] }} con una Extension de {{ $pazYSalvo->data['hectareas'] }}
+                            Hectareas, {{ $pazYSalvo->data['metros_cuadrados'] }} Metros y
+                            {{ $pazYSalvo->data['area_construida'] }} AC. Avaluo de
+                            ${{ number_format($pazYSalvo->data['valor_avaluo'], 0, '.') }} Se halla a PAZ Y SALVO con el
+                            Tesoro Municipal, Por concepto de IMPUESTO PREDIAL hasta el
+                            {{ NumberFormatter::create('es', NumberFormatter::SPELLOUT)->format($hasta->day) }}
+                            {{ $hasta->locale('es')->isoFormat('(D) \d\e MMMM \d\e YYYY') }}. no se genera cobro por
+                            valorizacion para la vigencia actual ni vigencias anteriores.
                         </p>
+                    </td>
+                </tr>
+                <tr><td class="border-none"></td></tr>
+                <tr><td class="border-none"></td></tr>
+                <tr>
+                    <td class="border-none fs-2">
+                        @if (count($pazYSalvo->data['propietarios']) > 0)
+                            NOTA: el predio consiste de los siguientes propietarios,
+
+                            {{ implode(', ', array_map(fn ($p) => $p['nombre_propietario'] . ' con numero de documento ' . $p['documento'], $pazYSalvo->data['propietarios'])) }}.
+                        @endif
+                    </td>
+                </tr>
+                <tr><td class="border-none"></td></tr>
+                <tr><td class="border-none"></td></tr>
+                <tr>
+                    <td class="border-none fs-2">
+                        @isset($pazYSalvo->data['concepto'])
+                            Valido para: {{ $pazYSalvo->data['concepto'] }}
+                        @endisset
                     </td>
                 </tr>
                 <tr><td class="border-none"></td></tr>
@@ -249,15 +282,7 @@
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>
                 <tr>
-                    <td class="border-none fs-2">Valido para NOTARIA Y REGISTRO</td>
-                </tr>
-                <tr><td class="border-none"></td></tr>
-                <tr><td class="border-none"></td></tr>
-                <tr><td class="border-none"></td></tr>
-                <tr><td class="border-none"></td></tr>
-                <tr><td class="border-none"></td></tr>
-                <tr>
-                    <td class="border-none fs-2">Se Expide, a los 27 dias del Mes de Diciembre de 2023</td>
+                    <td class="border-none fs-2">Se Expide, a los {{ $created_at->locale('es')->isoFormat('D \d\i\a\s \d\e\l \m\e\s \d\e MMMM \d\e YYYY') }}.</td>
                 </tr>
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>
@@ -268,11 +293,11 @@
             <table class="border-none">
                 <tr>
                     <td class="border-none"></td>
-                    <td class="border-none text-center fs-2" colspan="2">fs-s-1</td>
+                    <td class="border-none text-center fs-2" colspan="2">FIRMA</td>
                     <td class="border-none"></td>
                 </tr>
                 <tr>
-                    <td  class="border-none"></td>
+                    <td class="border-none"></td>
                     <td colspan="2" class="border-none border-bottom"></td>
                     <td class="border-none"></td>
                 </tr>
@@ -280,7 +305,7 @@
                     <td class="border-none"></td>
                     <td class="border-none text-center fw-bold fs-2" colspan="2">
                         <p>LUZ OMAIRA MURILLO HERNANDEZ</p>
-                        <p>SECRETARIA DE HACIENDA</p>
+                        <p>{{ strtoupper(tenant()->entidad) }}</p>
                     </td>
                     <td class="border-none"></td>
                 </tr>

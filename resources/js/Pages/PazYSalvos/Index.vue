@@ -2,7 +2,7 @@
 import Layout from '~Layouts/Private.vue'
 import SearchPredio from '~Components/SearchPredio.vue'
 
-const title = 'Consultar Predio - Estado de Cuenta'
+const title = 'Consultar Predio - Paz y Salvo'
 
 defineProps({ predios: Array })
 </script>
@@ -13,7 +13,7 @@ defineProps({ predios: Array })
             <h1 class="text-3xl text-left">{{ title }}</h1>
 
             <section class="border-t-2 mt-2 pt-6">
-                <SearchPredio :href="route('estado_cuentas.create')" :predios="predios" />
+                <SearchPredio :href="route('paz_y_salvos.create')" :predios="predios" />
             </section>
         </main>
     </Layout>

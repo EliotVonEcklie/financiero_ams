@@ -19,6 +19,7 @@ use App\Http\Middleware\SetTenantDefaultParameter;
 use App\Jobs\Tasificar;
 use App\Models\Predio;
 use App\Models\PredioAvaluo;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByPath;
