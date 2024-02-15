@@ -70,7 +70,7 @@ class Predio extends Model
     /**
      * Get the closest avaluo for a given vigencia
      */
-    public function avaluo_on(Carbon|string $vigencia): PredioAvaluo|null
+    public function avaluo_on($vigencia): PredioAvaluo|null
     {
         return $this->avaluos()
                 ->where('vigencia', '<=', Carbon::create($vigencia)->year)
@@ -82,7 +82,7 @@ class Predio extends Model
     /**
      * Get the closest informacion for a given vigencia
      */
-    public function informacion_on(Carbon|string $vigencia): PredioInformacion|null
+    public function informacion_on($vigencia): PredioInformacion|null
     {
         return $this->informacions()
                 ->where('created_at', '<=', Carbon::create($vigencia)->endOfYear())
@@ -94,7 +94,7 @@ class Predio extends Model
     /**
      * Get the closest main propietario for a given vigencia
      */
-    public function main_propietario_on(Carbon|string $vigencia): PredioPropietario|null
+    public function main_propietario_on($vigencia): PredioPropietario|null
     {
         $vigencia = Carbon::create($vigencia)->endOfYear();
 
@@ -174,7 +174,7 @@ class Predio extends Model
         return $predios;
     }
 
-    public static function show(Predio|mixed $id, $sensible = true)
+    public static function show($id, $sensible = true)
     {
         if ($id instanceof Predio) {
             $predio = $id;
@@ -219,7 +219,7 @@ class Predio extends Model
         ];
     }
 
-    public static function show_on(string $codigo_catastro, Carbon|mixed $vigencia): array|null
+    public static function show_on(string $codigo_catastro, $vigencia): array|null
     {
         $predio = self::firstWhere('codigo_catastro', $codigo_catastro);
 
