@@ -16,7 +16,7 @@ const softDeleteId = ref(null)
 
 function closeModal (accept) {
     if (accept) {
-        axios.put(route('factura_predials.update', softDeleteId.value), { 'toggle': true })
+        axios.delete(route('factura_predials.destroy', softDeleteId.value))
         .then(router.reload())
     }
 
@@ -31,7 +31,7 @@ function showModal (id) {
 
 function softDelete(selectedElements) {
     selectedElements.forEach(async x =>
-        await axios.put(route('factura_predials.update', x.id), { 'toggle': true })
+        await axios.delete(route('factura_predials.destroy', x.id))
     )
 
     router.reload()
