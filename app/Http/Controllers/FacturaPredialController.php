@@ -91,8 +91,6 @@ class FacturaPredialController extends Controller
 
         $data['pague_hasta'] = FacturaPredial::getPagueHasta(collect($data['liquidacion']['vigencias']));
 
-        dd($data);
-
         $old_liquidacion_id = OldLiquidacion::save($data['liquidacion'], auth()->user()?->name ?? '');
 
         $facturaPredial = FacturaPredial::create([
