@@ -231,6 +231,10 @@ class Predio extends Model
         $avaluo = $predio->avaluo_on($vigencia);
         $info = $predio->informacion_on($vigencia);
 
+        if ($propietario === null || $avaluo === null || $info === null) {
+            return null;
+        }
+
         return [
             'id' => $predio->id,
             'codigo_catastro' => $predio->codigo_catastro,
