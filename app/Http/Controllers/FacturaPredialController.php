@@ -64,7 +64,7 @@ class FacturaPredialController extends Controller
         $codigo_barras = DB::table('codigosbarras')
             ->where('estado', 'S')
             ->where('tipo', '01')
-            ->first('codigo', 'codini');
+            ->first(['codigo', 'codini']);
 
         $barcode = chr(241) . $codigo_barras->codini . $codigo_barras->codigo . '802001' .
             sprintf('%07d', $id) . '111005001' .
