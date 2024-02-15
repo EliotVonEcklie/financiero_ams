@@ -76,7 +76,7 @@ class OldLiquidacion
                 $total_ambiental_descuento_intereses,
             'concepto' => substr('Años Liquidados: ' . implode(' ', array_column($selected_vigencias, 'vigencia')), 0, 200),
             'estado' => 'S',
-            'ord' => sprintf('%03d', $predio->orden),
+            'ord' => sprintf('%03d', $predio->main_propietario()->orden),
             'tot' => sprintf('%03d', $predio->total)
         ]);
 
