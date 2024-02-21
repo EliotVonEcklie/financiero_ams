@@ -240,11 +240,13 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                 <tr><td class="border-none"></td></tr>
                 <tr>
                     <td class="border-none">
-                        <p class="fs-2">
+                        <p class="fs-2" style="text-align: justify; text-align-last: justify;">
                             Que, el predio identificado con numero de cedula catastral
                             {{ $pazYSalvo->data['codigo_catastro'] }}, inscrito en el listado de catastro para este
                             municipio, a nombre de {{ $pazYSalvo->data['nombre_propietario'] }} con numero
-                            de documento {{ $pazYSalvo->data['documento'] }} Denominado
+                            de documento {{ $pazYSalvo->data['documento'] }}
+                            @if (count($pazYSalvo->data['propietarios']) > 0) y OTROS @endif
+                            Denominado
                             {{ $pazYSalvo->data['direccion'] }} con una Extension de {{ $pazYSalvo->data['hectareas'] }}
                             Hectareas, {{ $pazYSalvo->data['metros_cuadrados'] }} Metros y
                             {{ $pazYSalvo->data['area_construida'] }} AC. Avaluo de
@@ -259,11 +261,18 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>
                 <tr>
-                    <td class="border-none fs-2">
+                    <td class="border-none fs-2" style="text-align: justify; text-align-last: justify;">
                         @if (count($pazYSalvo->data['propietarios']) > 0)
-                            NOTA: el predio consiste de los siguientes propietarios,
+                            @php
+                                $propietarios = array_merge([[
+                                    'nombre_propietario' => $pazYSalvo->data['nombre_propietario'],
+                                    'documento' => $pazYSalvo->data['documento']
+                                ]], $pazYSalvo->data['propietarios'])
+                            @endphp
 
-                            {{ implode(', ', array_map(fn ($p) => $p['nombre_propietario'] . ' con numero de documento ' . $p['documento'], $pazYSalvo->data['propietarios'])) }}.
+                            NOTA: El predio No. {{ $pazYSalvo->data['codigo_catastro'] }} tiene {{ count($pazYSalvo->data['propietarios']) }} propietarios:
+
+                            {{ implode(', ', array_map(fn ($p) => $p['nombre_propietario'] . ' con numero de documento ' . $p['documento'], $propietarios)) }}.
                         @endif
                     </td>
                 </tr>
@@ -293,7 +302,7 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
             <table class="border-none">
                 <tr>
                     <td class="border-none"></td>
-                    <td class="border-none text-center fs-2" colspan="2">FIRMA</td>
+                    <td class="border-none text-center fs-2" colspan="2"></td>
                     <td class="border-none"></td>
                 </tr>
                 <tr>
@@ -304,8 +313,20 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                 <tr>
                     <td class="border-none"></td>
                     <td class="border-none text-center fw-bold fs-2" colspan="2">
-                        <p>LUZ OMAIRA MURILLO HERNANDEZ</p>
-                        <p>{{ strtoupper(tenant()->entidad) }}</p>
+                        <p>{{ strtoupper($pazYSalvo->data['firma']->funcionario) }}</p>
+                        <p>{{ strtoupper($pazYSalvo->data['firma']->titulo) }}</p>
+                    </td>
+                    <td class="border-none"></td>
+                </tr>
+                <tr>
+                    <td class="border-none"></td>
+                    <td colspan="2" class="border-none"></td>
+                    <td class="border-none"></td>
+                </tr>
+                <tr>
+                    <td class="border-none"></td>
+                    <td class="border-none text-left fw-bold fs-2" colspan="2">
+                        <p>Proyectó: {{ strtoupper($pazYSalvo->user->name) }}</p>
                     </td>
                     <td class="border-none"></td>
                 </tr>

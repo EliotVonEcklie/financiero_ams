@@ -285,10 +285,6 @@ class Liquidacion
 
     private function calculate_tarifa(float $value, float $tarifa, bool $is_tasa_por_mil = true): float
     {
-        if ($is_tasa_por_mil) {
-            return Round::pesos($value * ($tarifa / 1000));
-        } else {
-            return Round::pesos($value * ($tarifa / 100));
-        }
+        return Round::pesos($value * $tarifa * ($is_tasa_por_mil ? 0.001 : 0.01));
     }
 }

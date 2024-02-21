@@ -36,7 +36,7 @@ class FacturaPredialController extends Controller
                     'total_liquidacion' => $total_liquidacion,
                     'pague_hasta' => $facturaPredial->data['pague_hasta'],
                     'factura_pagada' => $facturaPredial->data['factura_pagada'],
-                    'state' => !$facturaPredial->trashed()
+                    'state' => ! $facturaPredial->trashed()
                 ];
             })
         ]);

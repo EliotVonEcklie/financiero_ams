@@ -46,7 +46,8 @@ class HandleInertiaRequests extends Middleware
                 'entidad',
                 'correo',
                 'pagina'
-            )
+            ),
+            'user' => fn () => $request->user()->only('id', 'name', 'username', 'theme'),
         ]);
     }
 }

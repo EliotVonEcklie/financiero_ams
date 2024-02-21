@@ -1,6 +1,8 @@
 <script setup>
 import Layout from '~Layouts/Private.vue'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
+import { Link } from '@inertiajs/vue3'
+import { FwbButton, FwbModal } from 'flowbite-vue'
 import axios from 'axios'
 
 const props = defineProps({ predio: Object, propietarios: Object })
@@ -23,7 +25,15 @@ const hasDebt = computed(() => {
     return props.predio.liquidacion.vigencias.length > 0
 })
 
+const tesorecibocaja_id = ref(0)
+const concepto = ref('')
 const pdfUrl = ref(null)
+const errorText = ref('')
+const isShowModal = ref(false)
+
+function closeModal() {
+    isShowModal.value = false
+}
 
 function create() {
     let data = {
@@ -36,11 +46,21 @@ function create() {
         area_construida: props.predio.area_construida,
         documento: props.predio.documento,
         nombre_propietario: props.predio.nombre_propietario,
-        propietarios: props.propietarios
+        propietarios: props.propietarios,
+        tesorecibocaja_id: tesorecibocaja_id.value,
+        concepto: concepto.value
     };
 
     axios.post(route('paz_y_salvos.store'), { data })
-    .then(res => pdfUrl.value = route('paz_y_salvos.show', res.data.id))
+    .then(res => {
+        if (res.data.error) {
+            tesorecibocaja_id.value = 0
+            errorText.value = res.data.error
+            isShowModal.value = true
+        } else {
+            pdfUrl.value = route('paz_y_salvos.show', res.data.id)
+        }
+    })
 }
 
 function openPdf(evt) {
@@ -56,6 +76,27 @@ function openPdf(evt) {
             <h1 class="text-3xl text-left">{{ title }}</h1>
 
             <section class="border-t-2 mt-2 pt-6">
+                <FwbModal v-if="isShowModal" persistent>
+                    <template #header>
+                        <div class="flex items-center text-lg">
+                            Error!
+                        </div>
+                    </template>
+                    <template #body>
+                        <div class="p-4 md:p-5 text-center">
+                            <svg class="mx-auto mb-4 w-12 h-12 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                            </svg>
+
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{{ errorText }}</h3>
+
+                            <FwbButton @click="closeModal" color="blue">
+                                Vale
+                            </FwbButton>
+                        </div>
+                    </template>
+                </FwbModal>
+
                 <h2 class="text-2xl text-left mb-5">Información del predio</h2>
 
                 <div class="relative overflow-x-auto mb-5">
@@ -161,16 +202,24 @@ function openPdf(evt) {
                         </a>
                     </div>
                     <div v-else>
-                        <div v-if="hasDebt" class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <div v-if="hasDebt" class="flex items-center p-4 mb-5 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                             </svg>
                             <span class="sr-only">Error</span>
                             <div>
-                                <span class="font-medium">No se puede generar un paz y salvo!</span> El predio tiene deuda pendiente por pagar, <Link :href="route('factura_predials.create', )" :data="{ predio: predio.id }" class="underline italic">puede crear una factura aquí</Link>
+                                <span class="font-medium">No se puede generar un paz y salvo!</span> El predio tiene deuda pendiente por pagar, <Link :href="route('factura_predials.create')" :data="{ predio: predio.id }" class="underline italic font-bold">puede crear una factura aquí.</Link>
                             </div>
                         </div>
-                        <button v-else @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-5">Generar paz y salvo</button>
+                        <div v-else class="flex flex-row gap-4 mb-5 border-2 rounded-md p-2">
+                            <label for="text-input" class="my-auto block text-md font-medium text-gray-900 dark:text-white">Destino:</label>
+                            <input v-model="concepto" type="text" id="text-input" class="w-64 h-10 me-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+
+                            <label for="number-input" class="my-auto block text-md font-medium text-gray-900 dark:text-white">Recibo de Caja:</label>
+                            <input v-model="tesorecibocaja_id" type="number" id="number-input" class="w-20 h-10 me-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+
+                            <button @click="create" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Generar paz y salvo</button>
+                        </div>
                     </div>
                 </div>
 
@@ -349,7 +398,6 @@ function openPdf(evt) {
                         </tfoot>
                     </table>
                 </div>
-
             </section>
         </main>
     </Layout>

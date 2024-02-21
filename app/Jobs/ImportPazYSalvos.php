@@ -45,11 +45,9 @@ class ImportPazYSalvos implements ShouldQueue
 
     private function import($tesopazysalvo)
     {
-        $vigencia = strlen($tesopazysalvo->fecha) == 2
-            ? '20' . $tesopazysalvo->fecha
-            : substr($tesopazysalvo->fecha, 0, 4);
+        $fecha = new Carbon($tesopazysalvo->fecha);
 
-        $predio_data = Predio::show_on($tesopazysalvo->codigocatastral, $vigencia);
+        $predio_data = Predio::show_on($tesopazysalvo->codigocatastral, (string) $fecha->year);
 
         if ($predio_data === null) {
             return;
@@ -59,9 +57,11 @@ class ImportPazYSalvos implements ShouldQueue
 
         $propietarios = $predio->propietarios()
             ->whereNot('orden', $predio_data['orden'])
-            ->where('created_at', '<=', Carbon::create($vigencia)->endOfYear())
+            ->where('created_at', '<=', $fecha->copy()->endOfDay())
+            ->select([DB::raw('distinct orden'), 'id', 'documento', 'nombre_propietario'])
             ->get()->map(function ($propietario) {
                 return [
+                    'orden' => $propietario->orden,
                     'id' => $propietario->id,
                     'documento' => $propietario->documento,
                     'nombre_propietario' => $propietario->nombre_propietario
@@ -70,13 +70,15 @@ class ImportPazYSalvos implements ShouldQueue
 
         $predio_data['concepto'] = $tesopazysalvo->destino == '' ? null : $tesopazysalvo->destino;
         $predio_data['propietarios'] = $propietarios;
-        $predio_data['hasta'] = Carbon::create($vigencia)->endOfYear();
+        $predio_data['tesorecibocaja_id'] = $tesopazysalvo->idrecibo;
+        $predio_data['hasta'] = $fecha->copy()->endOfYear();
 
         PazYSalvo::withTrashed()->updateOrCreate([
             'id' => $tesopazysalvo->id,
         ], [
             'ip' => '127.0.0.1',
             'data' => $predio_data,
+            'created_at' => $fecha->copy()->startOfDay(),
             'deleted_at' => $tesopazysalvo->estado === 'S' ? null : now()
         ]);
     }
