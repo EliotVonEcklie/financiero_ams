@@ -228,8 +228,8 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                 <tr>
                     <td class="border-none text-center">
                         <h2>
-                            LA {{ strtoupper(tenant()->entidad) }} DEL<br>
-                            {{ strtoupper(tenant()->nombre) }} - {{ strtoupper(tenant()->departamento ?? 'meta') }} CERTIFICA
+                            LA {{ mb_strtoupper(tenant()->entidad) }} DEL<br>
+                            {{ mb_strtoupper(tenant()->nombre) }} - {{ mb_strtoupper(tenant()->departamento ?? 'meta') }} CERTIFICA
                         </h2>
                     </td>
                 </tr>
@@ -245,8 +245,7 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                             {{ $pazYSalvo->data['codigo_catastro'] }}, inscrito en el listado de catastro para este
                             municipio, a nombre de {{ $pazYSalvo->data['nombre_propietario'] }} con numero
                             de documento {{ $pazYSalvo->data['documento'] }}
-                            @if (count($pazYSalvo->data['propietarios']) > 0) y OTROS @endif
-                            Denominado
+                            @if (count($pazYSalvo->data['propietarios']) > 0) y OTROS @endif Denominado
                             {{ $pazYSalvo->data['direccion'] }} con una Extension de {{ $pazYSalvo->data['hectareas'] }}
                             Hectareas, {{ $pazYSalvo->data['metros_cuadrados'] }} Metros y
                             {{ $pazYSalvo->data['area_construida'] }} AC. Avaluo de
@@ -313,8 +312,8 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                 <tr>
                     <td class="border-none"></td>
                     <td class="border-none text-center fw-bold fs-2" colspan="2">
-                        <p>{{ strtoupper($pazYSalvo->data['firma']->funcionario) }}</p>
-                        <p>{{ strtoupper($pazYSalvo->data['firma']->titulo) }}</p>
+                        <p>{{ mb_strtoupper($pazYSalvo->data['firma']->funcionario) }}</p>
+                        <p>{{ mb_strtoupper($pazYSalvo->data['firma']->titulo) }}</p>
                     </td>
                     <td class="border-none"></td>
                 </tr>
@@ -327,7 +326,7 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                     <td class="border-none"></td>
                     <td class="border-none text-left fw-bold fs-2" colspan="2">
                         @isset($pazYSalvo->user)
-                            <p>Proyectó: {{ strtoupper($pazYSalvo->user->name) }}</p>
+                            <p>Proyectó: {{ mb_strtoupper($pazYSalvo->user->name) }}</p>
                         @endisset
                     </td>
                     <td class="border-none"></td>
