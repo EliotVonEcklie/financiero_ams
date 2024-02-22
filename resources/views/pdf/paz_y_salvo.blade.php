@@ -176,7 +176,7 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                     </td>
                     <td rowspan="2" class="w33 text-center">
                         <p class="fs-2">{{ tenant()->nombre }}</p>
-                        <p>NIT: {{ tenant()->id }}</p>
+                        <p>NIT: {{ tenant()->nit }}</p>
                         <p>{{ tenant()->entidad }}</p>
                     </td>
                     <td class="bg-primary w-33 fs-2 fw-bold text-center">No. Consecutivo</td>
