@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Validation\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
 
 class FinancieroCentralAuth
@@ -19,7 +18,7 @@ class FinancieroCentralAuth
         if ($request->input('app_key') === env('APP_KEY')) {
             return $next($request);
         } else {
-            return response()->file(public_path('img/burro.png'));
+            return response()->file(resource_path('img/burro.png'));
         }
     }
 }
