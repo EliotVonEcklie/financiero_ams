@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const props = defineProps({ predio: Object })
 
-const title = 'Consultar Estado de Cuenta: Predio ' + props.predio.codigo_catastro
+const title = 'Consultar Estado de Cuenta: Predio ' + props.predio.codigo_catastro + ' - ID: ' + props.predio.id
 
 const estatutoFlags = computed(() => {
     return {
