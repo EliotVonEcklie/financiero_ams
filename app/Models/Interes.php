@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Helpers\Round;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Interes extends Model
@@ -20,7 +21,7 @@ class Interes extends Model
         'corriente'
     ];
 
-    public function dailyMoratorioInteres()
+    public function dailyMoratorioInteres(): float
     {
         $is_leap = !($this->vigencia % 4) && ($this->vigencia % 100 || !($this->vigencia % 400));
 
@@ -47,16 +48,22 @@ class Interes extends Model
         $to ??= now();
         $intereses ??= self::whereBetween('vigencia', [$from->year, $to->year])->get();
 
-        $total = 0;
+        $total = 0.0;
 
-        for ($d = $from->copy(); $d < $to; $d->addDay()) {
+        $period = CarbonPeriod::create($from, '1 month', $to->subDay());
+
+        foreach ($period as $d) {
             $interes = self::getInteresVigente($d, $intereses);
 
             if ($interes !== null) {
-                $total += ($interes->dailyMoratorioInteres() * $deuda) / 100;
+                $days = $d->year == $to->year && $d->month == $to->month
+                    ? $to->day
+                    : $d->copy()->endOfMonth()->day;
+
+                $total += ($interes->dailyMoratorioInteres() * $days * $deuda) / 100;
             }
         }
 
-        return Round::pesos($total);
+        return (int) round($total, 10, PHP_ROUND_HALF_EVEN);
     }
 }
