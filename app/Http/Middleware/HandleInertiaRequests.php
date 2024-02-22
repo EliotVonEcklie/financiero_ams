@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'tenant' => fn () => tenant()->only(
+            'tenant' => fn () => tenant()?->only(
                 'nombre',
                 'nit',
                 'lema',
@@ -47,7 +47,7 @@ class HandleInertiaRequests extends Middleware
                 'correo',
                 'pagina'
             ),
-            'user' => fn () => $request->user()->only('id', 'name', 'username', 'theme'),
+            'user' => fn () => $request->user()?->only('id', 'name', 'username', 'theme'),
         ]);
     }
 }
