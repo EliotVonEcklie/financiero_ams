@@ -5,8 +5,6 @@ import axios from 'axios'
 
 const props = defineProps({ predio: Object })
 
-//props.predio.liquidacion.vigencias.forEach(v => v.selected = false)
-
 const title = 'Consultar Factura Liquidación: Predio ' + props.predio.codigo_catastro + ' - ID: ' + props.predio.id
 
 const estatutoFlags = computed(() => {

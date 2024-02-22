@@ -326,7 +326,9 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                 <tr>
                     <td class="border-none"></td>
                     <td class="border-none text-left fw-bold fs-2" colspan="2">
-                        <p>Proyectó: {{ strtoupper($pazYSalvo->user->name) }}</p>
+                        @isset($pazYSalvo->user)
+                            <p>Proyectó: {{ strtoupper($pazYSalvo->user->name) }}</p>
+                        @endisset
                     </td>
                     <td class="border-none"></td>
                 </tr>
