@@ -158,7 +158,7 @@ class Liquidacion
                 {
                     $has_changed = true;
                 } else {
-                    $has_changed = $info->area_construida > $info_anterior->area_construida;
+                    $has_changed = $info_anterior->area_construida == 0 && $info->area_construida > 0;
                 }
 
                 $result['predial'] = (! $has_changed) && ($result['predial'] > $predial_anterior_doble)
