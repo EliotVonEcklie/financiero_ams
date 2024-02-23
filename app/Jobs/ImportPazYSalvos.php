@@ -70,7 +70,7 @@ class ImportPazYSalvos implements ShouldQueue
 
         $predio_data['concepto'] = $tesopazysalvo->destino == '' ? null : $tesopazysalvo->destino;
         $predio_data['propietarios'] = $propietarios;
-        $predio_data['tesorecibocaja_id'] = $tesopazysalvo->idrecibo;
+        $predio_data['tesorecibocaja_id'] = $tesopazysalvo->idrecibo ?? 0;
         $predio_data['hasta'] = $fecha->copy()->endOfYear();
 
         PazYSalvo::withTrashed()->updateOrCreate([
