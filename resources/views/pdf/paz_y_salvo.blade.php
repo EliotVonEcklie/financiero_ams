@@ -3,6 +3,11 @@
 use \Illuminate\Support\Carbon;
 
 $hasta = new Carbon($pazYSalvo->data['hasta']);
+
+if (tenant()->id === 'mapiripan') {
+    dd($hasta);
+}
+
 @endphp
 
 <!DOCTYPE html>
