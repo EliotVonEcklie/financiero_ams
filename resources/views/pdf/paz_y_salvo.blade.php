@@ -2,9 +2,7 @@
 
 use \Illuminate\Support\Carbon;
 
-$created_at = new Carbon($pazYSalvo->created_at);
 $hasta = new Carbon($pazYSalvo->data['hasta']);
-
 @endphp
 
 <!DOCTYPE html>
@@ -194,7 +192,7 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                         <p class="fw-bold"> Código catastral</p>
                         <p>{{ $pazYSalvo->data['codigo_catastro'] }}</p>
                     </td>
-                    <td class="text-center">{{ $created_at->format('d/m/Y') }}</td>
+                    <td class="text-center">{{ $pazYSalvo->created_at->format('d/m/Y') }}</td>
                 </tr>
             </table>
         </header>
@@ -290,7 +288,7 @@ $hasta = new Carbon($pazYSalvo->data['hasta']);
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>
                 <tr>
-                    <td class="border-none fs-2">Se Expide, a los {{ $created_at->locale('es')->isoFormat('D \d\i\a\s \d\e\l \m\e\s \d\e MMMM \d\e YYYY') }}.</td>
+                    <td class="border-none fs-2">Se Expide, a los {{ $pazYSalvo->created_at->locale('es')->isoFormat('D \d\i\a\s \d\e\l \m\e\s \d\e MMMM \d\e YYYY') }}.</td>
                 </tr>
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>

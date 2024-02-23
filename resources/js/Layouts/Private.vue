@@ -1,17 +1,20 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3'
-import { onMounted, computed } from 'vue'
+import { onMounted, ref } from 'vue'
 import { initFlowbite } from 'flowbite'
+import axios from 'axios'
 
 onMounted(() => {
     initFlowbite()
 })
 
-defineProps({ title: String, sidebar: Boolean })
-const html = computed(() => document.querySelector('html'))
+const props = defineProps({ title: String, sidebar: Boolean, user: Object })
+const isDark = ref(document.querySelector('html').classList.contains('dark'))
 
 function toggleTheme() {
-    html.value.classList.toggle('dark')
+    isDark.value = document.querySelector('html').classList.toggle('dark')
+
+    axios.post(route('users.update', props.user.id), { dark: isDark.value })
 }
 
 function duplicateWindow() {
@@ -20,6 +23,7 @@ function duplicateWindow() {
     window.open(`https://${tenantid}.ideal-10.com/teso-principal`, '_tab')
 }
 </script>
+
 <template>
     <Head :title="title + ' - Ideal10'"></Head>
 
@@ -61,7 +65,7 @@ function duplicateWindow() {
                 <div class="grid grid-cols-5 gap-1 sm:gap-3">
                     <button @click="toggleTheme" type="button" class="text-black dark:text-white bg-white dark:bg-black hover:bg-gray-400 hover:black:bg-gray-600 rounded-lg">
                         <svg class="w-6 h-6 mx-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                            <path v-if="html.classList.contains('dark')" fill-rule="evenodd" d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.3 5A1 1 0 0 0 5 6.2l1.4 1.5a1 1 0 0 0 1.5-1.5L6.3 5Zm12.8 1.3A1 1 0 0 0 17.7 5l-1.5 1.4a1 1 0 0 0 1.5 1.5L19 6.3ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.8 17.7a1 1 0 1 0-1.5-1.5L5 17.7A1 1 0 1 0 6.3 19l1.5-1.4Zm9.9-1.5a1 1 0 0 0-1.5 1.5l1.5 1.4a1 1 0 0 0 1.4-1.4l-1.4-1.5ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z" clip-rule="evenodd"/>
+                            <path v-if="isDark" fill-rule="evenodd" d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.3 5A1 1 0 0 0 5 6.2l1.4 1.5a1 1 0 0 0 1.5-1.5L6.3 5Zm12.8 1.3A1 1 0 0 0 17.7 5l-1.5 1.4a1 1 0 0 0 1.5 1.5L19 6.3ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.8 17.7a1 1 0 1 0-1.5-1.5L5 17.7A1 1 0 1 0 6.3 19l1.5-1.4Zm9.9-1.5a1 1 0 0 0-1.5 1.5l1.5 1.4a1 1 0 0 0 1.4-1.4l-1.4-1.5ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z" clip-rule="evenodd"/>
                             <path v-else fill-rule="evenodd" d="M11.7 2a10 10 0 1 0 9.8 13.3 1 1 0 0 0-1-1.3H20a8 8 0 0 1-7.6-10.6l.1-.4a1 1 0 0 0-.8-1Z" clip-rule="evenodd"/>
                         </svg>
                     </button>
