@@ -1,5 +1,5 @@
 @php
-$hasta = new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']);
+$hasta = new \Illuminate\Support\Carbon($pazYSalvo->data['hasta'])->shiftTimezone('America/Bogota');
 @endphp
 
 <!DOCTYPE html>
