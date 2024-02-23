@@ -1,13 +1,5 @@
 @php
-
-use \Illuminate\Support\Carbon;
-
-$hasta = new Carbon($pazYSalvo->data['hasta']);
-
-if (tenant()->id === 'mapiripan') {
-    dd($hasta);
-}
-
+$hasta = new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']);
 @endphp
 
 <!DOCTYPE html>
