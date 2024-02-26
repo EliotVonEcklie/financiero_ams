@@ -18,6 +18,7 @@ class Liquidacion
     private Collection $intereses;
 
     public Collection $vigencias;
+    public bool $has_deuda = false;
     public int $descuento_incentivo = 0;
     public int $descuento_intereses = 0;
     public float $total_liquidacion = 0;
@@ -52,6 +53,11 @@ class Liquidacion
             ->whereIn('vigencia', $vigencias)
             ->orderBy('vigencia')
             ->get();
+
+        $this->has_deuda = $this->avaluos
+            ->where('vigencia', '<>', now()->year)
+            ->where('pagado', false)
+            ->isNotEmpty();
 
         $this->vigencias = new Collection();
 
@@ -123,6 +129,12 @@ class Liquidacion
             return $result;
         }
 
+        if ((! $result['estatuto']->descuento_incentivo_deuda) && $this->has_deuda) {
+            $apply_descuento = false;
+        } else {
+            $apply_descuento = $result['vigencia'] == now()->year && $this->descuento_incentivo >= 0;
+        }
+
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
 
         $info = $this->predio->informacion_on($avaluo->vigencia);
@@ -174,7 +186,7 @@ class Liquidacion
         $result['predial'] = $result['predial'] > $result['estatuto']->min_predial
             ? $result['predial'] : $result['estatuto']->min_predial;
 
-        if ($result['vigencia'] == now()->year && $this->descuento_incentivo > 0) {
+        if ($apply_descuento) {
             $result['predial_descuento'] = $this->calculate_tarifa($result['predial'], $this->descuento_incentivo, false);
             $result['predial'] -= $result['predial_descuento'];
         }
@@ -219,7 +231,7 @@ class Liquidacion
             $result['estatuto']->recibo_caja
         );
 
-        if ($result['vigencia'] != now()->year || $this->descuento_incentivo == 0) {
+        if (! $apply_descuento) {
             $from = Carbon::create($result['vigencia']);
 
             $result['dias_mora'] = Interes::diasMora($from);
