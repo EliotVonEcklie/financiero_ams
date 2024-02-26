@@ -27,7 +27,7 @@ class Descuento extends Model
             ->orderByDesc('hasta')
             ->first();
 
-        return $nacional !== null ? $nacional->porcentaje : 0;
+        return $nacional?->porcentaje ?? 0;
     }
 
     public static function getDescuentoIncentivo($date = null)
@@ -40,7 +40,7 @@ class Descuento extends Model
             ->orderBy('hasta')
             ->first();
 
-        return $incentivo !== null ? $incentivo->porcentaje : 0;
+        return $incentivo?->porcentaje ?? -1;
     }
 
     public static function lastDay(): Carbon
