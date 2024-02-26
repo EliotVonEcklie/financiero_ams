@@ -7,7 +7,10 @@ const form = useForm({
     nombre: null,
     vigencia_desde: null,
     vigencia_hasta: null,
+    descuento_incentivo_deuda: true,
     norma_predial: false,
+    norma_predial_tasa: 100,
+    min_predial: 0,
     bomberil: false,
     bomberil_predial: true,
     bomberil_tarifa: true,
@@ -193,6 +196,20 @@ const form = useForm({
 
                     <label for="number-input4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cobro recibo de caja:</label>
                     <input v-model="form.recibo_caja" type="number" id="number-input4" class="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+
+                    <div v-if="form.norma_predial">
+                        <label for="norma_predial_tasa" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Porcentaje de cambio norma predial:</label>
+                        <input v-model="form.norma_predial_tasa" type="number" id="norma_predial_tasa" class="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+
+                    <label for="min_predial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cobro mínimo predial:</label>
+                    <input v-model="form.min_predial" type="number" id="min_predial" class="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+
+                    <label class="relative inline-flex items-center me-5 cursor-pointer">
+                        <input type="checkbox" value="" class="sr-only peer" v-model="form.descuento_incentivo_deuda">
+                        <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Aplicar descuento incentivo con deuda</span>
+                    </label>
 
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Crear</button>
                 </form>
