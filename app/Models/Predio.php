@@ -189,7 +189,7 @@ class Predio extends Model
 
         $codigo_destino_economico = $latest_info->codigo_destino_economico;
         $destino_economico = $codigo_destino_economico->destino_economico?->nombre ??
-            'Código: ' . $codigo_destino_economico->codigo;
+            'Destino ' . $codigo_destino_economico->codigo;
 
         $interes_vigente = Interes::getInteresVigente();
 
@@ -209,7 +209,7 @@ class Predio extends Model
             'metros_cuadrados' => $latest_info->metros_cuadrados,
             'area_construida' => $latest_info->area_construida,
             'predio_tipo' => $latest_info->predio_tipo->nombre,
-            'predio_tipo_codigo' => $sensible ? null : $latest_info->predio_tipo->codigo,
+            'predio_tipo_codigo' => $sensible ? null : substr($predio->codigo_catastro, 0, 2) /* $latest_info->predio_tipo->codigo */,
             'destino_economico' => $destino_economico,
             'codigo_destino_economico' => $sensible ? null : $codigo_destino_economico->codigo,
             'interes_vigente' => $interes_vigente?->moratorio ?? 0,
