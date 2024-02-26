@@ -7,7 +7,7 @@ import axios from 'axios'
 
 const props = defineProps({ predio: Object, propietarios: Object })
 
-const title = 'Consultar Paz y Salvo: Predio ' + props.predio.codigo_catastro + ' - ID: ' + props.predio.id
+const title = 'Consultar Paz y Salvo: Predio ' + props.predio.codigo_catastro + ' - ID ' + props.predio.id
 
 const estatutoFlags = computed(() => {
     return {
@@ -119,7 +119,10 @@ function openPdf(evt) {
                                     Descuento Incentivo<br>Vigente
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ predio.descuento_vigente }}%
+                                    {{ predio.descuento_vigente >= 0
+                                        ? predio.descuento_vigente + '%'
+                                        : 'MORA'
+                                    }}
                                 </td>
                             </tr>
                             <tr class="bg-white dark:bg-gray-800">

@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const props = defineProps({ predio: Object })
 
-const title = 'Consultar Estado de Cuenta: Predio ' + props.predio.codigo_catastro + ' - ID: ' + props.predio.id
+const title = 'Consultar Estado de Cuenta: Predio ' + props.predio.codigo_catastro + ' - ID ' + props.predio.id
 
 const estatutoFlags = computed(() => {
     return {
@@ -20,8 +20,17 @@ const estatutoFlags = computed(() => {
 })
 
 const allSelected = ref(false)
+function allSelectedUpdate() {
+    allSelected.value = !allSelected.value
+
+    if (!allSelected.value) {
+        props.predio.liquidacion.vigencias.forEach(v => v.selected = false)
+    }
+}
 watch(allSelected, allSelected => {
-    props.predio.liquidacion.vigencias.forEach(v => v.selected = allSelected)
+    if (allSelected) {
+        props.predio.liquidacion.vigencias.forEach(v => v.selected = true)
+    }
 })
 
 const selectedVigencias = computed(() => {
@@ -88,7 +97,10 @@ function openPdf(evt) {
                                     Descuento Incentivo<br>Vigente
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ predio.descuento_vigente }}%
+                                    {{ predio.descuento_vigente >= 0
+                                        ? predio.descuento_vigente + '%'
+                                        : 'MORA'
+                                    }}
                                 </td>
                             </tr>
                             <tr class="bg-white dark:bg-gray-800">
@@ -179,7 +191,7 @@ function openPdf(evt) {
                             <tr>
                                 <th scope="col" class="p-4 rounded-s-lg">
                                     <div class="flex items-center">
-                                        <input id="checkbox-all-search" type="checkbox" v-model="allSelected" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <input id="checkbox-all-search" type="checkbox" :checked="allSelected" @input="allSelectedUpdate" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="checkbox-all-search" class="sr-only">checkbox</label>
                                     </div>
                                 </th>

@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const props = defineProps({ predio: Object })
 
-const title = 'Consultar Factura Liquidación: Predio ' + props.predio.codigo_catastro + ' - ID: ' + props.predio.id
+const title = 'Consultar Factura Liquidación: Predio ' + props.predio.codigo_catastro + ' - ID ' + props.predio.id
 
 const estatutoFlags = computed(() => {
     return {
@@ -20,17 +20,25 @@ const estatutoFlags = computed(() => {
 })
 
 const allSelected = ref(false)
-function allSelectedUpdate(evt) {
-    allSelected.value = evt.target.checked
-    props.predio.liquidacion.vigencias.forEach(v => v.selected = allSelected.value)
-}
+function allSelectedUpdate() {
+    allSelected.value = !allSelected.value
 
-const selectedVigencias = computed(() =>
-    props.predio.liquidacion.vigencias.filter(v => v.selected)
-)
-watch(selectedVigencias, selectedVigencias =>
+    if (!allSelected.value) {
+        props.predio.liquidacion.vigencias.forEach(v => v.selected = false)
+    }
+}
+watch(allSelected, allSelected => {
+    if (allSelected) {
+        props.predio.liquidacion.vigencias.forEach(v => v.selected = true)
+    }
+})
+
+const selectedVigencias = computed(() => {
+    return props.predio.liquidacion.vigencias.filter(v => v.selected)
+})
+watch(selectedVigencias, selectedVigencias => {
     allSelected.value = selectedVigencias.length === props.predio.liquidacion.vigencias.length
-)
+})
 
 const pdfUrl = ref(null)
 
@@ -92,7 +100,10 @@ function openPdf(evt) {
                                     Descuento Incentivo<br>Vigente
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ predio.descuento_vigente }}%
+                                    {{ predio.descuento_vigente >= 0
+                                        ? predio.descuento_vigente + '%'
+                                        : 'MORA'
+                                    }}
                                 </td>
                             </tr>
                             <tr class="bg-white dark:bg-gray-800">
