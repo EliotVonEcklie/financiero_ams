@@ -176,11 +176,7 @@ class Predio extends Model
 
     public static function show($id, $sensible = true)
     {
-        if ($id instanceof Predio) {
-            $predio = $id;
-        } else {
-            $predio = self::find($id);
-        }
+        $predio = $id instanceof Predio ? $id : self::find($id);
 
         $liquidacion = new Liquidacion($predio);
 
