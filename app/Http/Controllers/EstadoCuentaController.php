@@ -38,7 +38,8 @@ class EstadoCuentaController extends Controller
     {
         $estadoCuenta = EstadoCuenta::create([
             'ip' => $request->ip(),
-            'data' => $request->input('data')
+            'data' => $request->input('data'),
+            'user_id' => auth()->id()
         ]);
 
         return response()->json(['id' => $estadoCuenta->id]);
