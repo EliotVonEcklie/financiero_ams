@@ -172,10 +172,14 @@ class Liquidacion
             return $result;
         }
 
-        if ((! $result['estatuto']->descuento_incentivo_deuda) && $this->has_deuda) {
-            $apply_descuento = -1;
+        if ($result['vigencia'] == now()->year) {
+            if ((! $result['estatuto']->descuento_incentivo_deuda) && $this->has_deuda) {
+                $apply_descuento = -1;
+            } else {
+                $apply_descuento = $this->descuento_incentivo >= 0 ? 0 : 1;
+            }
         } else {
-            $apply_descuento = $result['vigencia'] == now()->year && $this->descuento_incentivo >= 0 ? 0 : 1;
+            $apply_descuento = 1;
         }
 
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
