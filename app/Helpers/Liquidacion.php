@@ -173,9 +173,9 @@ class Liquidacion
         }
 
         if ((! $result['estatuto']->descuento_incentivo_deuda) && $this->has_deuda) {
-            $apply_descuento = false;
+            $apply_descuento = -1;
         } else {
-            $apply_descuento = $result['vigencia'] == now()->year && $this->descuento_incentivo >= 0;
+            $apply_descuento = $result['vigencia'] == now()->year && $this->descuento_incentivo >= 0 ? 0 : 1;
         }
 
         $result['predial'] = $this->calculate_tarifa($result['valor_avaluo'], $result['tasa_por_mil']);
@@ -211,7 +211,7 @@ class Liquidacion
         $result['predial'] = $result['predial'] > $result['estatuto']->min_predial
             ? $result['predial'] : $result['estatuto']->min_predial;
 
-        if ($apply_descuento) {
+        if ($apply_descuento == 0) {
             $result['predial_descuento'] = $this->calculate_tarifa($result['predial'], $this->descuento_incentivo, false);
             $result['predial'] -= $result['predial_descuento'];
         }
@@ -256,7 +256,7 @@ class Liquidacion
             $result['estatuto']->recibo_caja
         );
 
-        if (! $apply_descuento) {
+        if ($apply_descuento == 1) {
             $from = Carbon::create($result['vigencia']);
 
             $result['dias_mora'] = Interes::diasMora($from);
