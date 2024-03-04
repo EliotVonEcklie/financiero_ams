@@ -1,5 +1,17 @@
 @php
+
 $hasta = (new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']))->setTimezone('America/Bogota');
+$limite = 16;
+$constante = 40;
+$porPagina = 40;
+$totalPropietarios = count($pazYSalvo->data['propietarios']);
+$totalBucle = $totalPropietarios < $limite ? $totalPropietarios : $limite;
+$propietarios = array_merge([[
+    'nombre_propietario' => $pazYSalvo->data['nombre_propietario'],
+    'documento' => $pazYSalvo->data['documento']
+]], $pazYSalvo->data['propietarios']);
+$index =0;
+$paginas = ceil($totalPropietarios/$porPagina) > 0 ? ceil($totalPropietarios/$porPagina) : 1;
 @endphp
 
 <!DOCTYPE html>
@@ -143,7 +155,7 @@ $hasta = (new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']))->setTimezon
                 right: 0px;
                 height: 30px;
                 width: 100vw;
-            }
+            }/*
             header{
                 position: fixed;
                 top: 0;
@@ -151,7 +163,7 @@ $hasta = (new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']))->setTimezon
                 right: 0px;
                 height: 120px;
                 width: 100vw;
-            }
+            }*/
             .uppercase{
                 text-transform: uppercase;
             }
@@ -193,32 +205,8 @@ $hasta = (new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']))->setTimezon
                 </tr>
             </table>
         </header>
-        <footer>
-            <table class="border-none">
-                <tr ><td colspan="10" class="border-none"></td></tr>
-                <tr>
-                    <td colspan="10" class="border-none">
-                        <p class="text-center fs-0 m-0">Dirección: {{ tenant()->direccion }}</p>
-                        <p class="text-center fs-0 m-0">Correo: {{ tenant()->correo }}</p>
-                    </td>
-                </tr>
-                <tr >
-                    <td class= "border-none">
-                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $pazYSalvo->created_at }}</p>
-                    </td>
-                    <td class="border-none">
-                        <p class="fs-0 text-center">Fecha y hora impresión: {{ now() }}</p>
-                    </td>
-                    <td class="border-none" colspan="8">
-                        <p class="fs-0 text-center">Dirección IP: {{ $pazYSalvo->ip }}</p>
-                    </td>
-                    <td class="border-none">
-                        <p class="fs-0 text-right page-num"></p>
-                    </td>
-                </tr>
-            </table>
-        </footer>
-        <main style="margin-top:5cm">
+
+        <main>
             <table class="border-none">
                 <tr>
                     <td class="border-none text-center">
@@ -256,20 +244,19 @@ $hasta = (new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']))->setTimezon
                 <tr><td class="border-none"></td></tr>
                 <tr>
                     <td class="border-none fs-2" style="text-align: justify; text-align-last: justify;">
-                        @if (count($pazYSalvo->data['propietarios']) > 0)
-                            @php
-                                $propietarios = array_merge([[
-                                    'nombre_propietario' => $pazYSalvo->data['nombre_propietario'],
-                                    'documento' => $pazYSalvo->data['documento']
-                                ]], $pazYSalvo->data['propietarios'])
-                            @endphp
-
-                            NOTA: El predio No. {{ $pazYSalvo->data['codigo_catastro'] }} tiene {{ count($pazYSalvo->data['propietarios']) }} propietarios:
-
-                            {{ implode(', ', array_map(fn ($p) => $p['nombre_propietario'] . ' con numero de documento ' . $p['documento'], $propietarios)) }}.
-                        @endif
+                        NOTA: El predio No. {{ $pazYSalvo->data['codigo_catastro'] }} tiene {{ count($pazYSalvo->data['propietarios']) }} propietarios:
                     </td>
                 </tr>
+                @for ($i = 0; $i < $totalBucle;$i++)
+                    <tr>
+                        <td class="border-none">
+                            {{ $propietarios[$i]['nombre_propietario']." con número de documento ".$propietarios[$i]['documento'] }}.
+                        </td>
+                    </tr>
+                    @php
+                        $index++;
+                    @endphp
+                @endfor
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>
                 <tr>
@@ -279,6 +266,10 @@ $hasta = (new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']))->setTimezon
                         @endisset
                     </td>
                 </tr>
+
+            </table>
+            @if($totalPropietarios <= $limite)
+            <table class="border-none">
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>
@@ -292,8 +283,6 @@ $hasta = (new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']))->setTimezon
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>
                 <tr><td class="border-none"></td></tr>
-            </table>
-            <table class="border-none">
                 <tr>
                     <td class="border-none"></td>
                     <td class="border-none text-center fs-2" colspan="2"></td>
@@ -304,6 +293,7 @@ $hasta = (new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']))->setTimezon
                     <td colspan="2" class="border-none border-bottom"></td>
                     <td class="border-none"></td>
                 </tr>
+
                 <tr>
                     <td class="border-none"></td>
                     <td class="border-none text-center fw-bold fs-2" colspan="2">
@@ -327,6 +317,153 @@ $hasta = (new \Illuminate\Support\Carbon($pazYSalvo->data['hasta']))->setTimezon
                     <td class="border-none"></td>
                 </tr>
             </table>
+            @else
+            <div style="page-break-after: always;"></div>
+            @endif
         </main>
+        @if ($totalPropietarios > $limite)
+            @for ( $i = 0;  $i < $paginas;  $i++)
+
+                <table>
+                    <tr>
+                        <td rowspan="4" class="w33">
+                            <div style="display: block; margin-left: auto; margin-right: auto; font-size: 16px; text-align: center;">
+                                <img src="data:image/png;base64,{{ tenant()->imagen }}"  height="120" width="120" alt="Escudo del municipio">
+                            </div>
+                        </td>
+                        <td rowspan="2" class="w33 text-center">
+                            <p class="fs-2">{{ tenant()->nombre }}</p>
+                            <p>NIT: {{ tenant()->nit }}</p>
+                            <p>{{ tenant()->entidad }}</p>
+                        </td>
+                        <td class="bg-primary w-33 fs-2 fw-bold text-center">No. Consecutivo</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">{{ $pazYSalvo->id }}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-primary w-33 fs-2 fw-bold text-center">Paz y Salvo</td>
+
+                        <td class="bg-primary w-33 fs-2 fw-bold text-center">Fecha de expedición</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            <p class="fw-bold"> Código catastral</p>
+                            <p>{{ $pazYSalvo->data['codigo_catastro'] }}</p>
+                        </td>
+                        <td class="text-center">{{ $pazYSalvo->created_at->format('d/m/Y') }}</td>
+                    </tr>
+                </table>
+                <table class="border-none">
+
+                    <tbody>
+                        @if($i==1)
+
+                        @endif
+                        @for ($j = $index; $j <= $totalPropietarios;$j++)
+                            @if ($j > $porPagina)
+                                @php
+                                    $index += ($constante-$limite)+1;
+                                    $porPagina += ($constante-$limite)+1;
+                                @endphp
+                                @break
+                            @endif
+                            <tr>
+                                <td class="border-none">
+                                    {{ $propietarios[$j]['nombre_propietario']." con número de documento ".$propietarios[$j]['documento'] }}.
+                                </td>
+                            </tr>
+
+                        @endfor
+                    </tbody>
+                </table>
+                @if ( ($totalPropietarios - ($index-1 )) <= 19 && $i == $paginas-1)
+                <table class="border-none">
+                    <tbody>
+                        <tr><td class="border-none"></td></tr>
+                        <tr><td class="border-none"></td></tr>
+                        <tr><td class="border-none"></td></tr>
+                        <tr><td class="border-none"></td></tr>
+                        <tr><td class="border-none"></td></tr>
+                        <tr>
+                            <td class="border-none fs-2">Se Expide, a los {{ $pazYSalvo->created_at->locale('es')->isoFormat('D \d\i\a\s \d\e\l \m\e\s \d\e MMMM \d\e YYYY') }}.</td>
+                        </tr>
+                        <tr><td class="border-none"></td></tr>
+                        <tr><td class="border-none"></td></tr>
+                        <tr><td class="border-none"></td></tr>
+                        <tr><td class="border-none"></td></tr>
+                        <tr><td class="border-none"></td></tr>
+                    </tbody>
+                </table>
+                <table class="border-none">
+                    <tbody>
+
+                        <tr>
+                            <td class="border-none"></td>
+                            <td class="border-none text-center fs-2" colspan="2"></td>
+                            <td class="border-none"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-none"></td>
+                            <td colspan="2" class="border-none border-bottom"></td>
+                            <td class="border-none"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="border-none"></td>
+                            <td class="border-none text-center fw-bold fs-2" colspan="2">
+                                <p>{{ mb_strtoupper($pazYSalvo->data['firma']->funcionario) }}</p>
+                                <p>{{ mb_strtoupper($pazYSalvo->data['firma']->titulo) }}</p>
+                            </td>
+                            <td class="border-none"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-none"></td>
+                            <td colspan="2" class="border-none"></td>
+                            <td class="border-none"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-none"></td>
+                            <td class="border-none text-left fw-bold fs-2" colspan="2">
+                                @isset($pazYSalvo->user)
+                                    <p>Proyectó: {{ mb_strtoupper($pazYSalvo->user->name) }}</p>
+                                @endisset
+                            </td>
+                            <td class="border-none"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                @else
+                <div style="page-break-after: always;"></div>
+                @endif
+            @endfor
+
+
+        @endif
+        <footer>
+            <table class="border-none">
+                <tr ><td colspan="10" class="border-none"></td></tr>
+                <tr>
+                    <td colspan="10" class="border-none">
+                        <p class="text-center fs-0 m-0">Dirección: {{ tenant()->direccion }}</p>
+                        <p class="text-center fs-0 m-0">Correo: {{ tenant()->correo }}</p>
+                    </td>
+                </tr>
+                <tr >
+                    <td class= "border-none">
+                        <p class="fs-0 text-start">Fecha y hora elaboración: {{ $pazYSalvo->created_at }}</p>
+                    </td>
+                    <td class="border-none">
+                        <p class="fs-0 text-center">Fecha y hora impresión: {{ now() }}</p>
+                    </td>
+                    <td class="border-none" colspan="8">
+                        <p class="fs-0 text-center">Dirección IP: {{ $pazYSalvo->ip }}</p>
+                    </td>
+                    <td class="border-none">
+                        <p class="fs-0 text-right page-num"></p>
+                    </td>
+                </tr>
+            </table>
+        </footer>
     </body>
 </html>
