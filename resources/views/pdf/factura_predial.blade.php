@@ -1,34 +1,34 @@
 @php
-    $limite = 25;
-    $constante = 25;
-    $limiteLastTable = 7;
-    $periodosFacturados = array_values(array_filter($facturaPredial->data['liquidacion']['vigencias'], function($filter) {
-        return $filter['isSelected'] ?? $filter['selected'] ?? false;
-    }));
-    $longitud = count($periodosFacturados);
-    $tablas = ceil($longitud/$limite) > 0 ? ceil($longitud/$limite) : 1;
-    $index = 0;
-    $total=0;
-    $periodoFacturado =$periodosFacturados[count($periodosFacturados)-1]['vigencia'].' - '.$periodosFacturados[0]['vigencia'];
-    $estatutoFlags = [
-        'bomberil' => false,
-        'ambiental' => false,
-        'alumbrado' => false
-    ];
+$limite = 25;
+$constante = 25;
+$limiteLastTable = 7;
+$periodosFacturados = array_values(array_filter($facturaPredial->data['liquidacion']['vigencias'], function($filter) {
+    return $filter['isSelected'] ?? $filter['selected'] ?? false;
+}));
+$longitud = count($periodosFacturados);
+$tablas = ceil($longitud/$limite) > 0 ? ceil($longitud/$limite) : 1;
+$index = 0;
+$total = 0;
+$periodoFacturado =$periodosFacturados[count($periodosFacturados) - 1]['vigencia'] . ' - ' . $periodosFacturados[0]['vigencia'];
+$estatutoFlags = [
+    'bomberil' => false,
+    'ambiental' => false,
+    'alumbrado' => false
+];
 
-    array_walk($periodosFacturados, function($vigencia) use (&$estatutoFlags) {
-        if ($vigencia['estatuto']['bomberil']) {
-            $estatutoFlags['bomberil'] = true;
-        }
+array_walk($periodosFacturados, function($vigencia) use (&$estatutoFlags) {
+    if ($vigencia['estatuto']['bomberil']) {
+        $estatutoFlags['bomberil'] = true;
+    }
 
-        if ($vigencia['estatuto']['ambiental']) {
-            $estatutoFlags['ambiental'] = true;
-        }
+    if ($vigencia['estatuto']['ambiental']) {
+        $estatutoFlags['ambiental'] = true;
+    }
 
-        if ($vigencia['estatuto']['alumbrado']) {
-            $estatutoFlags['alumbrado'] = true;
-        }
-    });
+    if ($vigencia['estatuto']['alumbrado']) {
+        $estatutoFlags['alumbrado'] = true;
+    }
+});
 @endphp
 
 <!DOCTYPE html>
@@ -217,10 +217,10 @@
                 </tr>
                 <tr >
                     <td class= "border-none">
-                        <p class="fs-s-1 text-start">Fecha y hora elaboración: {{ $facturaPredial->created_at->format('Y-m-d H:i:s') }}</p>
+                        <p class="fs-s-1 text-start">Fecha y hora elaboración: {{ $facturaPredial->created_at->setTimezone('America/Bogota')->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none">
-                        <p class="fs-s-1 text-center">Fecha y hora impresión: {{ now()->format('Y-m-d H:i:s') }}</p>
+                        <p class="fs-s-1 text-center">Fecha y hora impresión: {{ now()->setTimezone('America/Bogota')->format('Y-m-d H:i:s') }}</p>
                     </td>
                     <td class="border-none" colspan="8">
                         <p class="fs-s-1 text-center">Dirección IP: {{ $facturaPredial->ip }}</p>
@@ -258,7 +258,7 @@
                             <td class="bg-primary w-33 fs-2 fw-bold text-center">Fecha de liquidación</td>
                         </tr>
                         <tr>
-                            <td class="text-center">{{ (new \Illuminate\Support\Carbon($facturaPredial->created_at))->format('d/m/Y') }}</td>
+                            <td class="text-center">{{ (new \Illuminate\Support\Carbon($facturaPredial->created_at))->setTimezone('America/Bogota')->format('d/m/Y') }}</td>
                         </tr>
                     </table>
                     <table class="border-none">
@@ -319,14 +319,14 @@
                         <th class="fs-0">Total</th>
                     </tr>
                     <tbody>
-                        @for ( $j =  $index;  $j < $longitud ;  $j++)
+                        @for ($j =  $index; $j < $longitud; $j++)
                             @php
-                                $total +=$periodosFacturados[$j]['total_liquidacion'];
+                                $total += $periodosFacturados[$j]['total_liquidacion'];
                             @endphp
                             @if ($j > $limite)
                                 @php
-                                $index += $constante+1;
-                                $limite +=$constante+1;
+                                $index += $constante + 1;
+                                $limite += $constante + 1;
                                 @endphp
                                 @break
                             @endif
@@ -353,7 +353,6 @@
                         @endfor
 
                         <tr><td class="border-none" colspan="12"></td></tr>
-
                     </tbody>
                 </table>
                 <table>
@@ -363,7 +362,7 @@
                         </td>
                         <td class="text-center">
                             <p class="fs-0 vertical-top fw-bold">Fecha</p>
-                            <p class="fs-0">{{ (new \Illuminate\Support\Carbon($facturaPredial->data['pague_hasta']))->format('d/m/Y') }}</p>
+                            <p class="fs-0">{{ (new \Illuminate\Support\Carbon($facturaPredial->data['pague_hasta']))->setTimezone('America/Bogota')->format('d/m/Y') }}</p>
                         </td>
                         <td class="text-right">
                             <p class="fs-0 vertical-top fw-bold">Valor</p>
