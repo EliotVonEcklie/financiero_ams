@@ -165,7 +165,12 @@
                         <tr class="border-b border-gray-200 dark:border-gray-700">
                             <td colspan="2" class="whitespace-nowrap border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 <p class="px-5 py-2 font-bold">Área del terreno:</p>
-                                <p v-if="predio.hectareas && predio.metros_cuadrados" class="px-5 py-2 text-black dark:text-gray-400">{{ predio.hectareas + ' Ha - ' + predio.metros_cuadrados + ' m²' }}</p>
+                                <p v-if="predio.metros_cuadrados" class="px-5 py-2 text-black dark:text-gray-400">
+                                    <span v-if="predio.hectareas > 0">
+                                        {{ predio.hectareas + ' Ha - ' }}
+                                    </span>
+                                    {{ predio.metros_cuadrados + ' m²' }}
+                                </p>
                             </td>
                             <td class="whitespace-nowrap border-b border-gray-300 text-bold text-black  bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 <p class="px-5 py-2 font-bold">Área construida:</p>
