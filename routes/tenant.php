@@ -126,6 +126,10 @@ Route::group([
             return inertia('Public/ImpuestoIndustriaComercio');
         })->name('impuesto_industria_comercio');
 
+        Route::get('/servicios_publicos', function() {
+            return inertia('Public/ServiciosPublicos');
+        })->name('servicios_publicos');
+
         Route::get('/inscripcion', function() {
             return inertia('Public/Inscripcion');
         })->name('inscripcion');

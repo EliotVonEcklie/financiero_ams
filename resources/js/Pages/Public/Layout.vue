@@ -35,6 +35,9 @@
                                             <Link v-if="login" href="#" class="text-start block px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white">Retención de industria y comercio</Link>
                                             <button v-else type="button" @click="showModal('modalRegistro')" class="text-start block px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white">Retención de industria y comercio</button>
                                         </li>
+                                        <li>
+                                            <Link :href="route('public.servicios_publicos')" class="block px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white">Servicios publicos triple A</Link>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -97,6 +100,9 @@
                     <li class="p-5 hover:bg-blue-600 transition-all">
                         <Link v-if="login" href="#" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</Link>
                         <button type="button" v-else @click="showModal('modalRegistro')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Retención de industria y comercio</button>
+                    </li>
+                    <li class="p-5 hover:bg-blue-600 transition-all">
+                        <Link :href="route('public.servicios_publicos')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Servicios públicos triple A</Link>
                     </li>
                     <li class="p-5 hover:bg-blue-600 transition-all">
                         <Link :href="route('public.normatividad')" class="block text-gray-900 hover:text-white hover:no-underline dark:text-white">Normatividad</Link>
