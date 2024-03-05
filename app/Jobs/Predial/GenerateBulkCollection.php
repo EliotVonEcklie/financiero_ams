@@ -99,7 +99,7 @@ class GenerateBulkCollection implements ShouldQueue
 
         $resolucion = 0;
         $resoluciones_ids = [];
-        $facturas = collect();
+        //$facturas = collect();
 
         $vigencias = null;
 
@@ -137,6 +137,7 @@ class GenerateBulkCollection implements ShouldQueue
                     'Destino ' . $latest_info->codigo_destino_economico->codigo;
 
                 // Save factura
+                /*
                 $facturas->push((object) [
                     'id' => $resolucion,
                     'ip' => null,
@@ -158,6 +159,7 @@ class GenerateBulkCollection implements ShouldQueue
                     'created_at' => now(),
                     'state' => true
                 ]);
+                */
             }
         }
 
