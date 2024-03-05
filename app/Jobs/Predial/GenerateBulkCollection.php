@@ -101,10 +101,14 @@ class GenerateBulkCollection implements ShouldQueue
         $resoluciones_ids = [];
         $facturas = collect();
 
-        $vigencias = [];
+        $vigencias = null;
 
-        for ($s = now()->year - $this->facturaMasiva->vigencias + 1, $y = 0; $y < $this->facturaMasiva->vigencias; $y++) {
-            $vigencias[$y] = $y + $s;
+        if ($this->facturaMasiva->vigencias > 0) {
+            $vigencias = [];
+
+            for ($s = now()->year - $this->facturaMasiva->vigencias + 1, $y = 0; $y < $this->facturaMasiva->vigencias; $y++) {
+                $vigencias[$y] = $y + $s;
+            }
         }
 
         foreach (Predio::lazyById() as $predio) {
