@@ -283,59 +283,59 @@ $paginas = ceil($totalPropietarios / $porPagina) > 0 ? ceil($totalPropietarios /
                         @if ($totalPropietarios > 1)
                             NOTA: El predio No. {{ $pazYSalvo->data['codigo_catastro'] }} tiene {{ $totalPropietarios }} propietarios:
                         @else
-                        <table class="border-none">
-                            <tbody>
-                                <tr><td class="border-none"></td></tr>
-                                <tr><td class="border-none"></td></tr>
-                                <tr><td class="border-none"></td></tr>
-                                <tr><td class="border-none"></td></tr>
-                                <tr><td class="border-none"></td></tr>
-                                <tr>
-                                    <td class="border-none fs-2">Se Expide, a los {{ $pazYSalvo->created_at->setTimezone('America/Bogota')->locale('es')->isoFormat('D \d\i\a\s \d\e\l \m\e\s \d\e MMMM \d\e YYYY') }}.</td>
-                                </tr>
-                                <tr><td class="border-none"></td></tr>
-                                <tr><td class="border-none"></td></tr>
-                                <tr><td class="border-none"></td></tr>
-                                <tr><td class="border-none"></td></tr>
-                                <tr><td class="border-none"></td></tr>
-                            </tbody>
-                        </table>
-                        <table class="border-none">
-                            <tbody>
-                                <tr>
-                                    <td class="border-none"></td>
-                                    <td class="border-none text-center fs-2" colspan="2"></td>
-                                    <td class="border-none"></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-none"></td>
-                                    <td colspan="2" class="border-none border-bottom"></td>
-                                    <td class="border-none"></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-none"></td>
-                                    <td class="border-none text-center fw-bold fs-2" colspan="2">
-                                        <p>{{ mb_strtoupper($pazYSalvo->data['firma']->funcionario) }}</p>
-                                        <p>{{ mb_strtoupper($pazYSalvo->data['firma']->titulo) }}</p>
-                                    </td>
-                                    <td class="border-none"></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-none"></td>
-                                    <td colspan="2" class="border-none"></td>
-                                    <td class="border-none"></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-none"></td>
-                                    <td class="border-none text-left fw-bold fs-2" colspan="2">
-                                        @isset($pazYSalvo->user)
-                                            <p>Proyectó: {{ mb_strtoupper($pazYSalvo->user->name) }}</p>
-                                        @endisset
-                                    </td>
-                                    <td class="border-none"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <table class="border-none">
+                                <tbody>
+                                    <tr><td class="border-none"></td></tr>
+                                    <tr><td class="border-none"></td></tr>
+                                    <tr><td class="border-none"></td></tr>
+                                    <tr><td class="border-none"></td></tr>
+                                    <tr><td class="border-none"></td></tr>
+                                    <tr>
+                                        <td class="border-none fs-2">Se Expide, a los {{ $pazYSalvo->created_at->setTimezone('America/Bogota')->locale('es')->isoFormat('D \d\i\a\s \d\e\l \m\e\s \d\e MMMM \d\e YYYY') }}.</td>
+                                    </tr>
+                                    <tr><td class="border-none"></td></tr>
+                                    <tr><td class="border-none"></td></tr>
+                                    <tr><td class="border-none"></td></tr>
+                                    <tr><td class="border-none"></td></tr>
+                                    <tr><td class="border-none"></td></tr>
+                                </tbody>
+                            </table>
+                            <table class="border-none">
+                                <tbody>
+                                    <tr>
+                                        <td class="border-none"></td>
+                                        <td class="border-none text-center fs-2" colspan="2"></td>
+                                        <td class="border-none"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-none"></td>
+                                        <td colspan="2" class="border-none border-bottom"></td>
+                                        <td class="border-none"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-none"></td>
+                                        <td class="border-none text-center fw-bold fs-2" colspan="2">
+                                            <p>{{ mb_strtoupper($pazYSalvo->data['firma']->funcionario) }}</p>
+                                            <p>{{ mb_strtoupper($pazYSalvo->data['firma']->titulo) }}</p>
+                                        </td>
+                                        <td class="border-none"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-none"></td>
+                                        <td colspan="2" class="border-none"></td>
+                                        <td class="border-none"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-none"></td>
+                                        <td class="border-none text-left fw-bold fs-2" colspan="2">
+                                            @isset($pazYSalvo->user)
+                                                <p>Proyectó: {{ mb_strtoupper($pazYSalvo->user->name) }}</p>
+                                            @endisset
+                                        </td>
+                                        <td class="border-none"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         @endif
                     </td>
                 </tr>
@@ -363,66 +363,66 @@ $paginas = ceil($totalPropietarios / $porPagina) > 0 ? ceil($totalPropietarios /
             </table>
             @if ($totalPropietarios > 1)
                 @if ($totalPropietarios <= $limite)
-                <table class="border-none">
-                    <tbody>
-                        <tr><td class="border-none"></td></tr>
-                        <tr><td class="border-none"></td></tr>
-                        <tr><td class="border-none"></td></tr>
-                        <tr><td class="border-none"></td></tr>
-                        <tr><td class="border-none"></td></tr>
-                        <tr>
-                            <td class="border-none fs-2">Se Expide, a los {{ $pazYSalvo->created_at->setTimezone('America/Bogota')->locale('es')->isoFormat('D \d\i\a\s \d\e\l \m\e\s \d\e MMMM \d\e YYYY') }}.</td>
-                        </tr>
-                        <tr><td class="border-none"></td></tr>
-                        <tr><td class="border-none"></td></tr>
-                        <tr><td class="border-none"></td></tr>
-                        <tr><td class="border-none"></td></tr>
-                        <tr><td class="border-none"></td></tr>
-                    </tbody>
-                </table>
-                <table class="border-none">
-                    <tbody>
-                        <tr>
-                            <td class="border-none"></td>
-                            <td class="border-none text-center fs-2" colspan="2"></td>
-                            <td class="border-none"></td>
-                        </tr>
-                        <tr>
-                            <td class="border-none"></td>
-                            <td colspan="2" class="border-none border-bottom"></td>
-                            <td class="border-none"></td>
-                        </tr>
-                        <tr>
-                            <td class="border-none"></td>
-                            <td class="border-none text-center fw-bold fs-2" colspan="2">
-                                <p>{{ mb_strtoupper($pazYSalvo->data['firma']->funcionario) }}</p>
-                                <p>{{ mb_strtoupper($pazYSalvo->data['firma']->titulo) }}</p>
-                            </td>
-                            <td class="border-none"></td>
-                        </tr>
-                        <tr>
-                            <td class="border-none"></td>
-                            <td colspan="2" class="border-none"></td>
-                            <td class="border-none"></td>
-                        </tr>
-                        <tr>
-                            <td class="border-none"></td>
-                            <td class="border-none text-left fw-bold fs-2" colspan="2">
-                                @isset($pazYSalvo->user)
-                                    <p>Proyectó: {{ mb_strtoupper($pazYSalvo->user->name) }}</p>
-                                @endisset
-                            </td>
-                            <td class="border-none"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table class="border-none">
+                        <tbody>
+                            <tr><td class="border-none"></td></tr>
+                            <tr><td class="border-none"></td></tr>
+                            <tr><td class="border-none"></td></tr>
+                            <tr><td class="border-none"></td></tr>
+                            <tr><td class="border-none"></td></tr>
+                            <tr>
+                                <td class="border-none fs-2">Se Expide, a los {{ $pazYSalvo->created_at->setTimezone('America/Bogota')->locale('es')->isoFormat('D \d\i\a\s \d\e\l \m\e\s \d\e MMMM \d\e YYYY') }}.</td>
+                            </tr>
+                            <tr><td class="border-none"></td></tr>
+                            <tr><td class="border-none"></td></tr>
+                            <tr><td class="border-none"></td></tr>
+                            <tr><td class="border-none"></td></tr>
+                            <tr><td class="border-none"></td></tr>
+                        </tbody>
+                    </table>
+                    <table class="border-none">
+                        <tbody>
+                            <tr>
+                                <td class="border-none"></td>
+                                <td class="border-none text-center fs-2" colspan="2"></td>
+                                <td class="border-none"></td>
+                            </tr>
+                            <tr>
+                                <td class="border-none"></td>
+                                <td colspan="2" class="border-none border-bottom"></td>
+                                <td class="border-none"></td>
+                            </tr>
+                            <tr>
+                                <td class="border-none"></td>
+                                <td class="border-none text-center fw-bold fs-2" colspan="2">
+                                    <p>{{ mb_strtoupper($pazYSalvo->data['firma']->funcionario) }}</p>
+                                    <p>{{ mb_strtoupper($pazYSalvo->data['firma']->titulo) }}</p>
+                                </td>
+                                <td class="border-none"></td>
+                            </tr>
+                            <tr>
+                                <td class="border-none"></td>
+                                <td colspan="2" class="border-none"></td>
+                                <td class="border-none"></td>
+                            </tr>
+                            <tr>
+                                <td class="border-none"></td>
+                                <td class="border-none text-left fw-bold fs-2" colspan="2">
+                                    @isset ($pazYSalvo->user)
+                                        <p>Proyectó: {{ mb_strtoupper($pazYSalvo->user->name) }}</p>
+                                    @endisset
+                                </td>
+                                <td class="border-none"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 @else
                     <div style="page-break-after: always;"></div>
                 @endif
             @endif
         </main>
         @if ($totalPropietarios > 1 && $totalPropietarios > $limite)
-            @for ( $i = 0;  $i < $paginas;  $i++)
+            @for ($i = 0; $i < $paginas; $i++)
                 <table>
                     <tr>
                         <td rowspan="4" class="w33">
