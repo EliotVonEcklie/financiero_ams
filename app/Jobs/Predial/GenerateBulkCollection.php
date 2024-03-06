@@ -24,7 +24,7 @@ class GenerateBulkCollection implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 5000;
+    public $timeout = 10000;
 
     private Collection $predios;
 
@@ -42,7 +42,7 @@ class GenerateBulkCollection implements ShouldQueue
 
         if (! $csv) return false;
 
-        fputcsv($csv, ['predio_id', 'resolucion', 'vigencia', 'valor_avaluo',
+        fputcsv($csv, ['predio_id', 'resolucion', 'codigo_catastro', 'vigencia', 'valor_avaluo',
             'tasa_por_mil', 'predial', 'predial_descuento', 'bomberil',
             'ambiental', 'alumbrado', 'total_liquidacion', 'dias_mora',
             'predial_intereses', 'predial_descuento_intereses',
@@ -62,6 +62,7 @@ class GenerateBulkCollection implements ShouldQueue
             fputcsv($csv, [
                 $liquidacion['predio_id'],
                 $resolucion,
+                $liquidacion['codigo_catastro'],
                 $result['vigencia'],
                 $result['valor_avaluo'],
                 $result['tasa_por_mil'],
@@ -90,6 +91,7 @@ class GenerateBulkCollection implements ShouldQueue
     public function handle(): void
     {
         $dir_path = 'factura_masivas/consulta_' . now()->toAtomString() . '/';
+        Storage::createDirectory('factura_masivas');
         Storage::createDirectory($dir_path);
         $path = Storage::path($dir_path);
 
@@ -97,11 +99,12 @@ class GenerateBulkCollection implements ShouldQueue
 
         if (! $csv) return;
 
-        $resolucion = 0;
+        $resolucion = FacturaMasiva::where('id', '<', $this->facturaMasiva->id)
+            ->orderByDesc('id')
+            ->first()?->last_resolucion ?? 0;
+
         $resoluciones_ids = [];
         //$facturas = collect();
-
-        $vigencias = null;
 
         if ($this->facturaMasiva->vigencias > 0) {
             $vigencias = [];
@@ -109,9 +112,11 @@ class GenerateBulkCollection implements ShouldQueue
             for ($s = now()->year - $this->facturaMasiva->vigencias + 1, $y = 0; $y < $this->facturaMasiva->vigencias; $y++) {
                 $vigencias[$y] = $y + $s;
             }
+        } else {
+            $vigencias = null;
         }
 
-        foreach (Predio::lazyById() as $predio) {
+        foreach (Predio::lazy() as $predio) {
             if ((! $this->facturaMasiva->rurales) && $predio->latest_informacion()->predio_tipo_id === 2) continue;
             if ((! $this->facturaMasiva->urbanos) && $predio->latest_informacion()->predio_tipo_id === 1) continue;
 
@@ -119,7 +124,7 @@ class GenerateBulkCollection implements ShouldQueue
 
             if ($liquidacion['total_liquidacion'] < $this->facturaMasiva->min_deuda) continue;
 
-            if ($liquidacion !== null) {
+            if ($liquidacion !== null && count($liquidacion['vigencias']) > 0) {
                 // Calculate Resolucion
                 if (! isset($resoluciones_ids[$liquidacion['predio_id']])) {
                     $resoluciones_ids[$liquidacion['predio_id']] = ++$resolucion;
@@ -128,6 +133,7 @@ class GenerateBulkCollection implements ShouldQueue
                 // Save the liquidacion to a file
                 $this->append_csv($csv, $liquidacion, $resolucion);
 
+                /*
                 $main_propietario = $predio->main_propietario();
                 $latest_info = $predio->latest_informacion();
 
@@ -137,7 +143,6 @@ class GenerateBulkCollection implements ShouldQueue
                     'Destino ' . $latest_info->codigo_destino_economico->codigo;
 
                 // Save factura
-                /*
                 $facturas->push((object) [
                     'id' => $resolucion,
                     'ip' => null,
@@ -173,9 +178,9 @@ class GenerateBulkCollection implements ShouldQueue
         */
 
         $this->facturaMasiva->update([
-            'resoluciones' => $resolucion,
-            'path' => $dir_path,
-            'processing' => false
+            'last_resolucion' => $resolucion,
+            'processing' => false,
+            'path' => $dir_path
         ]);
     }
 }
