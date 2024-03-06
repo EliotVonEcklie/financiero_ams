@@ -14,13 +14,13 @@ return new class extends Migration
     {
         Schema::create('factura_masivas', function (Blueprint $table) {
             $table->id();
-            $table->integer('min_deuda');
-            $table->integer('vigencias');
+            $table->integer('min_deuda')->default(0);
+            $table->integer('vigencias')->nullable()->default(0);
             $table->boolean('rurales');
             $table->boolean('urbanos');
-            $table->integer('last_resolucion');
-            $table->boolean('processing');
-            $table->string('path')->nullable();
+            $table->integer('last_resolucion')->nullable()->default(null);
+            $table->boolean('processing')->default(false);
+            $table->string('path')->nullable()->default(null);
             $table->foreignIdFor(User::class)->nullable()->default(null);
             $table->timestamps();
         });
