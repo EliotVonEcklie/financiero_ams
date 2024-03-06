@@ -98,11 +98,12 @@ class GenerateBulkCollection implements ShouldQueue
 
         if (! $csv) return;
 
-        $resolucion = 0;
+        $resolucion = FacturaMasiva::where('id', '<', $this->facturaMasiva->id)
+            ->orderByDesc('id')
+            ->first()?->last_resolucion ?? 0;
+
         $resoluciones_ids = [];
         //$facturas = collect();
-
-        $vigencias = null;
 
         if ($this->facturaMasiva->vigencias > 0) {
             $vigencias = [];
@@ -110,9 +111,11 @@ class GenerateBulkCollection implements ShouldQueue
             for ($s = now()->year - $this->facturaMasiva->vigencias + 1, $y = 0; $y < $this->facturaMasiva->vigencias; $y++) {
                 $vigencias[$y] = $y + $s;
             }
+        } else {
+            $vigencias = null;
         }
 
-        foreach (Predio::lazyById() as $predio) {
+        foreach (Predio::lazy() as $predio) {
             if ((! $this->facturaMasiva->rurales) && $predio->latest_informacion()->predio_tipo_id === 2) continue;
             if ((! $this->facturaMasiva->urbanos) && $predio->latest_informacion()->predio_tipo_id === 1) continue;
 
@@ -129,6 +132,7 @@ class GenerateBulkCollection implements ShouldQueue
                 // Save the liquidacion to a file
                 $this->append_csv($csv, $liquidacion, $resolucion);
 
+                /*
                 $main_propietario = $predio->main_propietario();
                 $latest_info = $predio->latest_informacion();
 
@@ -138,7 +142,6 @@ class GenerateBulkCollection implements ShouldQueue
                     'Destino ' . $latest_info->codigo_destino_economico->codigo;
 
                 // Save factura
-                /*
                 $facturas->push((object) [
                     'id' => $resolucion,
                     'ip' => null,
@@ -174,9 +177,9 @@ class GenerateBulkCollection implements ShouldQueue
         */
 
         $this->facturaMasiva->update([
-            'resoluciones' => $resolucion,
-            'path' => $dir_path,
-            'processing' => false
+            'last_resolucion' => $resolucion,
+            'processing' => false,
+            'path' => $dir_path
         ]);
     }
 }
