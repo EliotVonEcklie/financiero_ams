@@ -24,7 +24,7 @@ class GenerateBulkCollection implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 5000;
+    public $timeout = 10000;
 
     private Collection $predios;
 
