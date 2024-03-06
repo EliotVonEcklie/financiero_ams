@@ -73,6 +73,7 @@ class Liquidacion
         return [
             'vigencias' => $this->results->sortByDesc('vigencia')->values()->all(),
             'predio_id' => $this->predio->id,
+            'codigo_catastro' => $this->predio->codigo_catastro,
             'total_liquidacion' => $this->total_liquidacion,
             'total_valor_avaluo' => $this->total_valor_avaluo,
             'total_predial' => $this->total_predial,

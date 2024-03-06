@@ -42,7 +42,7 @@ class GenerateBulkCollection implements ShouldQueue
 
         if (! $csv) return false;
 
-        fputcsv($csv, ['predio_id', 'resolucion', 'vigencia', 'valor_avaluo',
+        fputcsv($csv, ['predio_id', 'codigo_catastro', 'resolucion', 'vigencia', 'valor_avaluo',
             'tasa_por_mil', 'predial', 'predial_descuento', 'bomberil',
             'ambiental', 'alumbrado', 'total_liquidacion', 'dias_mora',
             'predial_intereses', 'predial_descuento_intereses',
@@ -61,6 +61,7 @@ class GenerateBulkCollection implements ShouldQueue
         foreach ($liquidacion['vigencias'] as $result) {
             fputcsv($csv, [
                 $liquidacion['predio_id'],
+                $liquidacion['codigo_catastro'],
                 $resolucion,
                 $result['vigencia'],
                 $result['valor_avaluo'],
