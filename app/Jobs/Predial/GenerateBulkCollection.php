@@ -124,7 +124,7 @@ class GenerateBulkCollection implements ShouldQueue
 
             if ($liquidacion['total_liquidacion'] < $this->facturaMasiva->min_deuda) continue;
 
-            if ($liquidacion !== null) {
+            if ($liquidacion !== null && count($liquidacion['vigencias']) > 0) {
                 // Calculate Resolucion
                 if (! isset($resoluciones_ids[$liquidacion['predio_id']])) {
                     $resoluciones_ids[$liquidacion['predio_id']] = ++$resolucion;
