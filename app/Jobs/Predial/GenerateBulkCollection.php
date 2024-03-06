@@ -90,6 +90,7 @@ class GenerateBulkCollection implements ShouldQueue
     public function handle(): void
     {
         $dir_path = 'factura_masivas/consulta_' . now()->toAtomString() . '/';
+        Storage::createDirectory('factura_masivas');
         Storage::createDirectory($dir_path);
         $path = Storage::path($dir_path);
 
