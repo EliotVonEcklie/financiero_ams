@@ -34,11 +34,11 @@
                 <div class="mt-5 grid lg:grid-cols-2 lg:gap-4 md:grid-cols-1">
                     <div class="relative z-0 w-full mb-5 group">
                         <p class="lg:text-sm md:text-3xl font-bold">Número de factura:</p>
-                        <p class="lg:text-sm md:text-3xl">31114178</p>
+                        <p class="lg:text-sm md:text-3xl">11111111</p>
                     </div>
                     <div class="relative z-0 w-full mb-5 group">
                         <p class="lg:text-sm md:text-3xl font-bold">Nombre del cliente:</p>
-                        <p class="lg:text-sm md:text-3xl">TORRES PEREZ MARIA DEL CARMEN</p>
+                        <p class="lg:text-sm md:text-3xl">Fulano</p>
                     </div>
                     <div class="relative z-0 w-full mb-5 group">
                         <p class="lg:text-sm md:text-3xl font-bold">Fecha de vencimiento:</p>
