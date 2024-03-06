@@ -26,12 +26,10 @@ class GenerateBulkCollection implements ShouldQueue
      */
     public $timeout = 10000;
 
-    private Collection $predios;
-
     /**
      * Create a new job instance.
      */
-    public function __construct(public FacturaMasiva $facturaMasiva) {}
+    public function __construct(public FacturaMasiva $facturaMasiva, public array|Collection|null $predios = null) {}
 
     /**
      * @return resource|false
@@ -116,7 +114,9 @@ class GenerateBulkCollection implements ShouldQueue
             $vigencias = null;
         }
 
-        foreach (Predio::lazy() as $predio) {
+        $this->predios ??= Predio::lazy();
+
+        foreach ($this->predios as $predio) {
             if ((! $this->facturaMasiva->rurales) && $predio->latest_informacion()->predio_tipo_id === 2) continue;
             if ((! $this->facturaMasiva->urbanos) && $predio->latest_informacion()->predio_tipo_id === 1) continue;
 
