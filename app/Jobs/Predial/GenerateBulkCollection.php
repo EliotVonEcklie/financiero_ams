@@ -99,7 +99,7 @@ class GenerateBulkCollection implements ShouldQueue
 
         $resolucion = FacturaMasiva::where('id', '<', $this->facturaMasiva->id)
             ->orderByDesc('id')
-            ->first()?->last_resolucion ?? 0;
+            ->first()?->last_resolucion ?? 1;
 
         $resoluciones_ids = [];
         //$facturas = collect();
@@ -127,7 +127,7 @@ class GenerateBulkCollection implements ShouldQueue
             if ($liquidacion !== null && count($liquidacion['vigencias']) > 0) {
                 // Calculate Resolucion
                 if (! isset($resoluciones_ids[$liquidacion['predio_id']])) {
-                    $resoluciones_ids[$liquidacion['predio_id']] = ++$resolucion;
+                    $resoluciones_ids[$liquidacion['predio_id']] = $resolucion++;
                 }
 
                 // Save the liquidacion to a file
@@ -180,7 +180,7 @@ class GenerateBulkCollection implements ShouldQueue
         $this->facturaMasiva->update([
             'last_resolucion' => $resolucion,
             'processing' => false,
-            'path' => $dir_path
+            'path' => $path . 'consulta.csv'
         ]);
     }
 }
