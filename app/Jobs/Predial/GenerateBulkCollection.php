@@ -98,6 +98,7 @@ class GenerateBulkCollection implements ShouldQueue
         if (! $csv) return;
 
         $resolucion = FacturaMasiva::where('id', '<', $this->facturaMasiva->id)
+            ->where('last_resolucion', '<>', null)
             ->orderByDesc('id')
             ->first()?->last_resolucion ?? 1;
 
