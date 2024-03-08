@@ -55,7 +55,10 @@ class PazYSalvoController extends Controller
         return inertia('PazYSalvos/Create', [
             'predio' => $predio_show,
             'propietarios' => $predio->propietarios()
+                ->select(['orden', 'id', 'documento', 'nombre_propietario'])
+                ->distinct()
                 ->whereNot('orden', $predio_show['orden'])
+                ->orderByDesc('created_at')
                 ->get()->map(function ($propietario) {
                     return [
                         'orden' => $propietario->orden,
