@@ -21,7 +21,7 @@ class GenerateCarteraPredial implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 10000;
+    public $timeout = 10_000;
 
     /**
      * Create a new job instance.
@@ -105,7 +105,9 @@ class GenerateCarteraPredial implements ShouldQueue
         if ($this->facturaMasiva->vigencias > 0) {
             $vigencias = [];
 
-            for ($s = now()->year - $this->facturaMasiva->vigencias + 1, $y = 0; $y < $this->facturaMasiva->vigencias; $y++) {
+            for ($s = now()->year - $this->facturaMasiva->vigencias + 1, $y = 0;
+                $y < $this->facturaMasiva->vigencias; $y++
+            ) {
                 $vigencias[$y] = $y + $s;
             }
         } else {
