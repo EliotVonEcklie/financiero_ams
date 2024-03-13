@@ -178,7 +178,8 @@ class Predio extends Model
     {
         $predio = $id instanceof Predio ? $id : self::find($id);
 
-        $liquidacion = new Liquidacion($predio);
+        $liquidacion = new Liquidacion;
+        $liquidacion->liquidar($predio);
 
         $main_propietario = $predio->main_propietario();
         $latest_info = $predio->latest_informacion();

@@ -91,7 +91,9 @@ class LiquidacionTest extends TestTenantCase
     {
         $predio = Predio::firstWhere(['codigo_catastro' => '0000001234567890123456789']);
 
-        $liquidacion = (new Liquidacion($predio, [now()->year]))->toArray();
+        $liquidacion = new Liquidacion;
+        $liquidacion->liquidar($predio, [now()->year]);
+        $liquidacion = $liquidacion->toArray();
 
         print_r($liquidacion);
 
@@ -121,7 +123,9 @@ class LiquidacionTest extends TestTenantCase
 
         $y = now()->year - 1;
 
-        $liquidacion = (new Liquidacion($predio, [$y++, $y]))->toArray();
+        $liquidacion = new Liquidacion;
+        $liquidacion->liquidar($predio, [$y++, $y]);
+        $liquidacion = $liquidacion->toArray();
 
         print_r($liquidacion);
 
@@ -151,7 +155,9 @@ class LiquidacionTest extends TestTenantCase
 
         $y = now()->year - 4;
 
-        $liquidacion = (new Liquidacion($predio, [$y++, $y++, $y++, $y++, $y]))->toArray();
+        $liquidacion = new Liquidacion;
+        $liquidacion->liquidar($predio, [$y++, $y++, $y++, $y++, $y]);
+        $liquidacion = $liquidacion->toArray();
 
         print_r($liquidacion);
 
@@ -179,7 +185,9 @@ class LiquidacionTest extends TestTenantCase
     {
         $predio = Predio::firstWhere(['codigo_catastro' => '0000001234567890123456789']);
 
-        $liquidacion = (new Liquidacion($predio))->toArray();
+        $liquidacion = new Liquidacion;
+        $liquidacion->liquidar($predio);
+        $liquidacion = $liquidacion->toArray();
 
         print_r($liquidacion);
 

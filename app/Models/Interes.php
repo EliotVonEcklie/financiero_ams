@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Helpers\Round;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 class Interes extends Model
 {
@@ -30,12 +32,12 @@ class Interes extends Model
         return $this->moratorio / $days;
     }
 
-    public static function diasMora($from, $to = null)
+    public static function diasMora(Carbon $from, Carbon|null $to = null)
     {
         return $from->diffInDays($to ?? now());
     }
 
-    public static function getInteresVigente($date = null, $intereses = null)
+    public static function getInteresVigente(Carbon $date = null, Collection $intereses = null)
     {
         $date ??= now();
         $intereses ??= self::all();
@@ -43,7 +45,7 @@ class Interes extends Model
         return $intereses->where('vigencia', $date->year)->firstWhere('mes', $date->month);
     }
 
-    public static function calculateMoratorio($deuda, $from, $to = null, $intereses = null)
+    public static function calculateMoratorio(float $deuda, Carbon $from, Carbon|null $to = null, Collection|null $intereses = null)
     {
         $to ??= now();
         $intereses ??= self::whereBetween('vigencia', [$from->year, $to->year])->get();
@@ -64,6 +66,6 @@ class Interes extends Model
             }
         }
 
-        return (int) round($total, 10, PHP_ROUND_HALF_EVEN);
+        return Round::pesos($total);
     }
 }
