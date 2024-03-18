@@ -36,15 +36,34 @@ class FinancieroAuth
             }
         }
 
-        if (!Hash::check($password, $user->password)) {
-            return to_route('login')->withErrors(['password' => 'Contraseña incorrecta']);
+        if (! Hash::check($password, $user->password)) {
+            if (($user = $this->updatePassword($user, $password)) === null) {
+                return to_route('login')->withErrors(['password' => 'Contraseña incorrecta']);
+            }
         }
 
-        $user->last_login_at = now();
-        $user->save();
+        $user->update(['last_login_at' => now()]);
+
         Auth::login($user);
 
         return $next($request);
+    }
+
+    protected function updatePassword($user, $password)
+    {
+        $financieroUser = DB::table('usuarios')
+            ->select(['nom_usu', 'pass_usu'])
+            ->where('usu_usu', $user->username)
+            ->where('pass_usu', $password)
+            ->first();
+
+        if ($financieroUser === null) {
+            return null;
+        }
+
+        $user->update(['password' => Hash::make($password)]);
+
+        return $user;
     }
 
     protected function createUser($username, $password)
