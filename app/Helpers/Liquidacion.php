@@ -43,7 +43,7 @@ class Liquidacion
         $this->intereses = Interes::all();
     }
 
-    public function liquidar(Predio $predio, array $vigencias = null)
+    public function liquidar(Predio $predio, array $vigencias = null, $now = null)
     {
         $this->total_liquidacion = 0;
         $this->total_predial = 0;
@@ -78,7 +78,7 @@ class Liquidacion
         $this->results = new Collection();
 
         foreach ($this->avaluos as $avaluo) {
-            if (($result = $this->liquidar_avaluo($avaluo, $intereses)) !== null) {
+            if (($result = $this->liquidar_avaluo($avaluo, $intereses, $now)) !== null) {
                 $this->results->push($result);
             }
         }
@@ -149,7 +149,7 @@ class Liquidacion
         }
     }
 
-    private function liquidar_avaluo(PredioAvaluo $avaluo, Collection $intereses)
+    private function liquidar_avaluo(PredioAvaluo $avaluo, Collection $intereses, $now)
     {
         if ($avaluo->pagado) {
             return null;
@@ -279,23 +279,23 @@ class Liquidacion
         if ($apply_descuento == 1) {
             $from = Carbon::create($result['vigencia']);
 
-            $result['dias_mora'] = Interes::diasMora($from);
+            $result['dias_mora'] = Interes::diasMora($from, $now);
 
-            $result['predial_intereses'] = Interes::calculateMoratorio($result['predial'], $from, null, $intereses);
+            $result['predial_intereses'] = Interes::calculateMoratorio($result['predial'], $from, $now, $intereses);
             $result['predial_descuento_intereses'] = $this->calculate_tarifa(
                 $result['predial_intereses'],
                 $this->descuento_intereses,
                 false
             );
 
-            $result['bomberil_intereses'] = Interes::calculateMoratorio($result['bomberil'], $from, null, $intereses);
+            $result['bomberil_intereses'] = Interes::calculateMoratorio($result['bomberil'], $from, $now, $intereses);
             $result['bomberil_descuento_intereses'] = $this->calculate_tarifa(
                 $result['bomberil_intereses'],
                 $this->descuento_intereses,
                 false
             );
 
-            $result['ambiental_intereses'] = Interes::calculateMoratorio($result['ambiental'], $from, null, $intereses);
+            $result['ambiental_intereses'] = Interes::calculateMoratorio($result['ambiental'], $from, $now, $intereses);
             $result['ambiental_descuento_intereses'] = $this->calculate_tarifa(
                 $result['ambiental_intereses'],
                 $this->descuento_intereses,
