@@ -10,7 +10,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class GenerateFacturaMasiva implements ShouldQueue
@@ -22,7 +21,7 @@ class GenerateFacturaMasiva implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 10000;
+    public $timeout = 10_000;
 
     /**
      * Create a new job instance.
@@ -102,7 +101,6 @@ class GenerateFacturaMasiva implements ShouldQueue
             ->first()?->last_resolucion ?? 1;
 
         $resoluciones_ids = [];
-        //$facturas = collect();
 
         if ($this->facturaMasiva->vigencias > 0) {
             $vigencias = [];
@@ -139,12 +137,6 @@ class GenerateFacturaMasiva implements ShouldQueue
         }
 
         fclose($csv);
-
-        $pdf_request = Http::sink($path . 'consulta.pdf')
-            ->get('http://financiero.localhost/ams-pdf-factura_masivas', [
-                'csv' => $path . 'consulta.csv',
-                'date' => now()->toDateString(),
-            ]);
 
         $this->facturaMasiva->update([
             'last_resolucion' => $resolucion,

@@ -50,8 +50,7 @@ function create() {
         intereses: selectedVigencias.value.reduce((a, v) => a + v.total_intereses, 0),
         descuentos: selectedVigencias.value.reduce((a, v) => a + v.descuento_intereses, 0),
         liquidacion: selectedVigencias.value.reduce((a, v) => a + v.total_liquidacion, 0),
-        predial: selectedVigencias.value.reduce((a, v) => a + v.predial, 0),
-        total_avaluo: selectedVigencias.value.reduce((a, v) => a + v.valor_avaluo, 0)
+        predial: selectedVigencias.value.reduce((a, v) => a + v.predial, 0)
     }
 
     props.predio.factura_pagada = false

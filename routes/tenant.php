@@ -5,6 +5,7 @@ use App\Http\Controllers\DestinoEconomicoController;
 use App\Http\Controllers\EstadoCuentaController;
 use App\Http\Controllers\EstatutoController;
 use App\Http\Controllers\EstratificacionController;
+use App\Http\Controllers\FacturaMasivaController;
 use App\Http\Controllers\InteresController;
 use App\Http\Controllers\FacturaPredialController;
 use App\Http\Controllers\PazYSalvoController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\PredioTipoController;
 use App\Http\Middleware\FinancieroAuth;
 use App\Http\Middleware\SetTenantDefaultParameter;
 use App\Jobs\Tasificar;
+use App\Models\FacturaMasiva;
 use App\Models\Predio;
 use App\Models\PredioAvaluo;
 use Illuminate\Http\Request;
@@ -96,6 +98,9 @@ Route::group([
         Route::resource('factura_predials', FacturaPredialController::class)->withTrashed();
         Route::get('/paz_y_salvos/search', [PazYSalvoController::class, 'search'])->name('paz_y_salvos.search');
         Route::resource('paz_y_salvos', PazYSalvoController::class)->withTrashed();
+        Route::get('/factura_masivas/{factura_masiva}/pdf', [FacturaMasivaController::class, 'show_pdf'])->name('factura_masivas.show_pdf');
+        Route::get('/factura_masivas/{factura_masiva}/pdf/{resolucion}', [FacturaMasivaController::class, 'show_one_pdf'])->name('factura_masivas.show_one_pdf');
+        Route::resource('factura_masivas', FacturaMasivaController::class)->withTrashed();
     });
 
     Route::name('public.')->group(function () {

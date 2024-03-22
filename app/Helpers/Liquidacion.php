@@ -22,7 +22,6 @@ class Liquidacion
     public int $descuento_incentivo = 0;
     public int $descuento_intereses = 0;
     public float $total_liquidacion = 0;
-    public float $total_valor_avaluo = 0;
     public float $total_predial = 0;
     public float $total_predial_descuento = 0;
     public float $total_predial_intereses = 0;
@@ -47,7 +46,6 @@ class Liquidacion
     public function liquidar(Predio $predio, array $vigencias = null)
     {
         $this->total_liquidacion = 0;
-        $this->total_valor_avaluo = 0;
         $this->total_predial = 0;
         $this->total_predial_descuento = 0;
         $this->total_predial_intereses = 0;
@@ -93,7 +91,6 @@ class Liquidacion
             'predio_id' => $this->predio->id,
             'codigo_catastro' => $this->predio->codigo_catastro,
             'total_liquidacion' => $this->total_liquidacion,
-            'total_valor_avaluo' => $this->total_valor_avaluo,
             'total_predial' => $this->total_predial,
             'total_predial_descuento' => $this->total_predial_descuento,
             'total_predial_intereses' => $this->total_predial_intereses,
@@ -326,7 +323,6 @@ class Liquidacion
         );
 
         $this->total_liquidacion += $result['total_liquidacion'];
-        $this->total_valor_avaluo += $result['valor_avaluo'];
         $this->total_predial += $result['predial'];
         $this->total_predial_descuento += $result['predial_descuento'];
         $this->total_predial_intereses += $result['predial_intereses'];

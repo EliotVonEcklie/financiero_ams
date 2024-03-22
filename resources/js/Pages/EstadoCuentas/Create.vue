@@ -50,8 +50,7 @@ function create() {
         intereses: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.total_intereses, 0),
         descuentos: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.descuento_intereses, 0),
         liquidacion: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.total_liquidacion, 0),
-        predial: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.predial, 0),
-        total_avaluo: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.valor_avaluo, 0)
+        predial: props.predio.liquidacion.vigencias.reduce((a, v) => a + v.predial, 0)
     }
 
     props.predio.private = true

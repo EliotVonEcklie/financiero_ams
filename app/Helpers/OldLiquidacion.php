@@ -17,42 +17,18 @@ class OldLiquidacion
             return $vigencia['selected'] ?? $vigencia['isSelected'] ?? false;
         });
 
-        $total_liquidacion = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['total_liquidacion'];
-        }, 0);
-        $total_predial = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['predial'];
-        }, 0);
-        $total_bomberil = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['bomberil'];
-        }, 0);
-        $total_ambiental = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['ambiental'];
-        }, 0);
-        $total_intereses = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['total_intereses'];
-        }, 0);
-        $total_predial_intereses = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['predial_intereses'];
-        }, 0);
-        $total_bomberil_intereses = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['bomberil_intereses'];
-        }, 0);
-        $total_ambiental_intereses = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['ambiental_intereses'];
-        }, 0);
-        $total_predial_descuento = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['predial_descuento'];
-        }, 0);
-        $total_predial_descuento_intereses = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['predial_descuento_intereses'];
-        }, 0);
-        $total_bomberil_descuento_intereses = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['bomberil_descuento_intereses'];
-        }, 0);
-        $total_ambiental_descuento_intereses = array_reduce($selected_vigencias, function ($a, $v) {
-            return $a + $v['ambiental_descuento_intereses'];
-        }, 0);
+        $total_liquidacion = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['total_liquidacion'], 0);
+        $total_predial = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['predial'], 0);
+        $total_bomberil = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['bomberil'], 0);
+        $total_ambiental = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['ambiental'], 0);
+        $total_intereses = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['total_intereses'], 0);
+        $total_predial_intereses = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['predial_intereses'], 0);
+        $total_bomberil_intereses = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['bomberil_intereses'], 0);
+        $total_ambiental_intereses = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['ambiental_intereses'], 0);
+        $total_predial_descuento = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['predial_descuento'], 0);
+        $total_predial_descuento_intereses = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['predial_descuento_intereses'], 0);
+        $total_bomberil_descuento_intereses = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['bomberil_descuento_intereses'], 0);
+        $total_ambiental_descuento_intereses = array_reduce($selected_vigencias, fn ($a, $v) => $a + $v['ambiental_descuento_intereses'], 0);
 
         $tesoliquidapredial = DB::table('tesoliquidapredial')->insertGetId([
             'codigocatastral' => substr($predio->codigo_catastro, 0, 30),

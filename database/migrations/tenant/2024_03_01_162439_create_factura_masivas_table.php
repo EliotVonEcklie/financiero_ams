@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('processing')->default(true);
             $table->string('path')->nullable();
             $table->foreignIdFor(User::class)->nullable()->default(null);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
