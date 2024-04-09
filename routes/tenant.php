@@ -15,6 +15,7 @@ use App\Http\Controllers\RangoAvaluoController;
 use App\Http\Controllers\UnidadMonetariaController;
 use App\Http\Controllers\VigenciaUnidadMonetariaController;
 use App\Http\Controllers\PredioTipoController;
+use App\Http\Controllers\PrescripcionController;
 use App\Http\Middleware\FinancieroAuth;
 use App\Http\Middleware\SetTenantDefaultParameter;
 use App\Jobs\Tasificar;
@@ -101,11 +102,16 @@ Route::group([
         Route::get('/factura_masivas/{factura_masiva}/pdf', [FacturaMasivaController::class, 'show_pdf'])->name('factura_masivas.show_pdf');
         Route::get('/factura_masivas/{factura_masiva}/pdf/{resolucion}', [FacturaMasivaController::class, 'show_one_pdf'])->name('factura_masivas.show_one_pdf');
         Route::resource('factura_masivas', FacturaMasivaController::class)->withTrashed();
+        Route::get('/prescripciones/search', [PrescripcionController::class, 'search'])->name('prescripciones.search');
+        Route::resource('prescripciones', PrescripcionController::class)->withTrashed();
+
+        Route::get('/prescripciones1/importInfo', [PrescripcionController::class, 'importInfo'])->name('prescripciones1.importInfo');
     });
 
     Route::name('public.')->group(function () {
         Route::resource('estado_cuentas', EstadoCuentaController::class)->only(['store', 'show']);
         Route::resource('factura_predials', FacturaPredialController::class)->only(['store', 'show']);
+        Route::resource('prescripciones', PrescripcionController::class)->only(['store', 'show']);
         Route::resource('paz_y_salvos', PazYSalvoController::class)->only(['store', 'show']);
 
         Route::get('/', function () {
@@ -166,5 +172,7 @@ Route::group([
         Route::get('/pago_confirmado', function() {
             return inertia('Public/PagoConfirmado');
         })->name('pago_confirmado');
+
+        Route::get('/prescripciones/importInfo', [PrescripcionController::class, 'importInfo'])->name('prescripciones.importInfo');
     });
 });
