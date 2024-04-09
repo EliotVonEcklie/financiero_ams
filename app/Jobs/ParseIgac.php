@@ -135,10 +135,10 @@ class ParseIgac implements ShouldQueue
 
         while (($line = fgets($handle)) !== false) {
             $line = mb_convert_encoding($line, 'UTF-8', 'Windows-1252'); // IGAC files arrive encoded in CP1252
-            $line = rtrim($line, "\r\n");
+            $line = rtrim($line, "\n\r");
 
             if (mb_strlen($line) !== 312) {
-                Log::warning('IGAC line is not 312 characters long!: (' . mb_strlen($line) . ') ' . $line);
+                Log::warning('Invalid IGAC line, not 312 characters long: (' . mb_strlen($line) . ') ' . $line);
                 continue;
             }
 
